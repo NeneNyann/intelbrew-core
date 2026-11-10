@@ -8,12 +8,8 @@ class P11Kit < Formula
   head "https://github.com/p11-glue/p11-kit.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 arm64_golden_gate: "a7c4679040141c7c8cb0861e164126871f7e0eb485df6da5ebecc3665e185ce2"
-    sha256 arm64_tahoe:       "fd108a936783ac40b4c3ea4dda639e7d22faa063e9f40f92b0ed2b2a7e99efa6"
-    sha256 arm64_sequoia:     "6a61302c1be785c331903fe9252f87d0d4ca722fda0697c4e22f6063cd4f1be2"
-    sha256 arm64_linux:       "ddcba9bb43653115779bb59a0ffa39b54b38342fba6791c84211fc205df0918f"
-    sha256 x86_64_linux:      "4e8df948a2da3c78610d58f669b8dde39f2ef8ed879579cc7c338c44980209c6"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/p11-kit-0.26.5-b1d4e8a8d5122d125a36369ee"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "5f823358a230a089e729d190941a968e923d47439552eb2d4d239d3d2d1b05e7"
   end
 
   depends_on "meson" => :build
