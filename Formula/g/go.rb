@@ -22,11 +22,8 @@ class Go < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c7bf84a6f727873581b3e1b5f79c1254cd5856f1241534e2f6943a8acc193e6e"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "c7bf84a6f727873581b3e1b5f79c1254cd5856f1241534e2f6943a8acc193e6e"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c7bf84a6f727873581b3e1b5f79c1254cd5856f1241534e2f6943a8acc193e6e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "9ae86aba2107b26b5cf76658117eefa9803e9e2d3800872b93e81dac8f6dbae1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "979baea7402fd8b6b172fcb19a12477c4ee3db46d8d910af512d380121b063e9"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/go-1.27.3-bd88ff02a4e8cac9dd3af6e2c"
+    sha256 cellar: :any_skip_relocation, sequoia: "83f514ae47d542aaf8be2eefa7ae5dfd81ab8c9c9b1e9c67b4bd02208d8dac9a"
   end
 
   on_macos do
