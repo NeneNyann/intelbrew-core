@@ -15,11 +15,8 @@ class Lz4 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "464d0e2782c24627a2ffa99093daaf8a7f9e2acbdae1ac4587d8724b85f2dbf9"
-    sha256 cellar: :any, arm64_tahoe:       "f25384fe48be399693954cf6b1b48da50ae795a29058ca7abfe91fc4c3e8b623"
-    sha256 cellar: :any, arm64_sequoia:     "8c311d5e93bca17d53f8225dd8fabbb2626fa6ade09ff5713e3b85d428fec3bf"
-    sha256 cellar: :any, arm64_linux:       "73e9aabe8d8050adae8f0d71946169b0e915fb9d627e956b2377558d48285ae1"
-    sha256 cellar: :any, x86_64_linux:      "48865122616cc54135b0605f93ebc56a6fc7aecffb112019e91a90a5893b6903"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/lz4-1.11.0-b4917aa85b18f69296ecc48ed"
+    sha256 cellar: :any, sequoia: "a4529a75ce7b9c38cd7a0b4427e743e5ef972c920b55b542d12b31dbd391fe3f"
   end
 
   depends_on "cmake" => :build
