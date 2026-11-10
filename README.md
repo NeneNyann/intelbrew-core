@@ -1,13 +1,66 @@
-# Homebrew Core
+# Intelbrew
 
-Core formulae for the Homebrew package manager.
+Prebuilt Homebrew bottles for my own use on macOS 15 Intel.
 
- [Homebrew/discussions (forum)](https://github.com/orgs/Homebrew/discussions)
+**Only packages selected for my own use and their required dependencies are prebuilt.**
 
-## How do I install these formulae?
+[Releases](https://github.com/NeneNyann/intelbrew-core/releases) · [Builds](https://github.com/NeneNyann/intelbrew-builder/actions)
 
-Just `brew install <formula>`. This is the default tap for Homebrew and is installed by default.
+## Configuration
 
-## More Documentation, Troubleshooting, Contributing, Security, Community, Donations, License and Sponsors
+Add to `~/.homebrew/brew.env`:
 
-See these sections in [Homebrew/brew's README](https://github.com/Homebrew/brew#homebrew).
+```text
+HOMEBREW_NO_INSTALL_FROM_API=1
+HOMEBREW_CORE_GIT_REMOTE=https://github.com/NeneNyann/intelbrew-core
+```
+
+With `XDG_CONFIG_HOME` set, use `$XDG_CONFIG_HOME/homebrew/brew.env` instead.
+
+## Existing Homebrew
+
+```sh
+brew tap --force homebrew/core
+brew update
+```
+
+## New Homebrew installation
+
+```sh
+export HOMEBREW_NO_INSTALL_FROM_API=1
+export HOMEBREW_CORE_GIT_REMOTE="https://github.com/NeneNyann/intelbrew-core"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Follow the installer's next steps to configure your shell, then run:
+
+```sh
+eval "$(/usr/local/bin/brew shellenv)"
+brew update
+```
+
+## Usage
+
+Verify the Core remote:
+
+```sh
+git -C "$(brew --repository homebrew/core)" remote get-url origin
+```
+
+It should be `https://github.com/NeneNyann/intelbrew-core`. Continue using normal commands:
+
+```sh
+brew update
+brew install <formula>
+brew upgrade
+```
+
+## Return to official Core
+
+In your `brew.env`, remove `HOMEBREW_NO_INSTALL_FROM_API` and change the Core URL to `https://github.com/Homebrew/homebrew-core`. In the current terminal, run:
+
+```sh
+unset HOMEBREW_NO_INSTALL_FROM_API
+export HOMEBREW_CORE_GIT_REMOTE="https://github.com/Homebrew/homebrew-core"
+brew update
+```
