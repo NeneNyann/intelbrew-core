@@ -8,11 +8,8 @@ class Automake < Formula
   compatibility_version 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "4f537192c9c75892b2b7b87fa9f74db0949365a7991554ac9c3120dba44d949b"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4f537192c9c75892b2b7b87fa9f74db0949365a7991554ac9c3120dba44d949b"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "4f537192c9c75892b2b7b87fa9f74db0949365a7991554ac9c3120dba44d949b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "58ad63e21db904ff6e0ad954328cfe145b36d9900dbebe610a57ba3541dd8370"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "58ad63e21db904ff6e0ad954328cfe145b36d9900dbebe610a57ba3541dd8370"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/automake-1.20-b7e61e0fa089d467b8a66108b"
+    sha256 cellar: :any_skip_relocation, sequoia: "e7c3b4799b278827cfd590dcc3de4e63d54abe8944fa080a8c1c8d0c83c81cab"
   end
 
   depends_on "autoconf"
