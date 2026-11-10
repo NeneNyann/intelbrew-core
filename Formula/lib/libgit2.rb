@@ -14,11 +14,8 @@ class Libgit2 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "8087d62ae8c4802644b8f3b4057cb0df0aeb087a2393dc707f94a2d8a1ca4e12"
-    sha256 cellar: :any, arm64_tahoe:       "61cc4d0d03f5a400cede72fb57609df07909725a3f8cb6a1f75b2edaec3ddf85"
-    sha256 cellar: :any, arm64_sequoia:     "302c14f39d0308fc5efa27a6cbec77ad03a1c763419c05d08ce334a908720759"
-    sha256 cellar: :any, arm64_linux:       "250ca463b1e1b58ec5d6eb55d29b3bcbbda24b9707eee147e73fffe712ead625"
-    sha256 cellar: :any, x86_64_linux:      "ee9a37ee37860ddfeabf3f46dce5423930df4756a64c4430a448e88e7b9107e8"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libgit2-1.9.7_2-b13241ef688b9de2c86656eaf"
+    sha256 cellar: :any, sequoia: "4e68a379a5fce2978e0316c47d4b9660d35e8664a10ae5a39ed4f907e84242e7"
   end
 
   depends_on "cmake" => :build
