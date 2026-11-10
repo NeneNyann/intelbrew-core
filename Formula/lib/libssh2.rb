@@ -15,11 +15,8 @@ class Libssh2 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "5556a728575577915ed43171a3881c8aeed3d0d62c24d1eb13798f8a6a03834d"
-    sha256 cellar: :any, arm64_tahoe:       "d51f26fef662c9f562f8d6bee348c9e9fdd2a917cc96bb1b26aa53116b9e7481"
-    sha256 cellar: :any, arm64_sequoia:     "e0cd7666188510728b2e133ddfab7357437f4df5c347dfbe12cc89d8c06bd2ee"
-    sha256 cellar: :any, arm64_linux:       "d429e38ea1d9345a3590d16e1ef79b2d10b9689ac1b02f175c3725ded666d76e"
-    sha256 cellar: :any, x86_64_linux:      "67939513d8a056ee430572396dcae0446e75f7a6963cc34771971fc9eb2dfefb"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libssh2-1.11.1_7-b073193413a6aa6db112c4fd4"
+    sha256 cellar: :any, sequoia: "cf3f1acb7ca9147aa122a2743575690a7e7365f06c5a8731fa713f1edcddb583"
   end
 
   head do
