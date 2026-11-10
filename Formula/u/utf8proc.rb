@@ -8,11 +8,8 @@ class Utf8proc < Formula
   head "https://github.com/JuliaStrings/utf8proc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "3e63a31c768cc93f7743ee4ff460c459523fe33cd5282d4b13a59a8fec205498"
-    sha256 cellar: :any, arm64_tahoe:       "8486e0373e5c6cb0d3e6363ed03628c92949eb2ae628e427e7b0344600d79156"
-    sha256 cellar: :any, arm64_sequoia:     "19202e7aa4183f5fec9335ed196fd804e36c9ac3323040752df86aaec74f8724"
-    sha256 cellar: :any, arm64_linux:       "3e5c802a448f77106977c4b8b351feaa7841ea5a6312778541f6edacc50f6d06"
-    sha256 cellar: :any, x86_64_linux:      "dec70c02054fe975edbb51778338fd632edba7061d97be3527101bc84ddf3aa1"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/utf8proc-2.12.0-be05f6f5c376c566d236b3bcb"
+    sha256 cellar: :any, sequoia: "9e6c1e519f027d47112a4fc32c8d2398cd907824653d3697f45a189d55b53f3c"
   end
 
   depends_on "cmake" => :build
