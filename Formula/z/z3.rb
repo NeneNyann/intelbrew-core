@@ -1,8 +1,8 @@
 class Z3 < Formula
   desc "High-performance theorem prover"
   homepage "https://github.com/Z3Prover/z3"
-  url "https://github.com/Z3Prover/z3/archive/refs/tags/z3-5.4.0.tar.gz"
-  sha256 "93fd02f69cb4e2811cc20f20a9b34d4f511c21177ac9f8c288a18d6e7ada885e"
+  url "https://github.com/Z3Prover/z3/archive/refs/tags/z3-5.4.1.tar.gz"
+  sha256 "6a9196fb64e0460640beee08b8e823f0d51371bd3c4db78d161af275463846ef"
   license "MIT"
   compatibility_version 6
   head "https://github.com/Z3Prover/z3.git", branch: "master"
@@ -14,8 +14,11 @@ class Z3 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/z3-5.4.0-b43330a297975f02db56f97c7"
-    sha256 cellar: :any, sequoia: "012bba17a401e5953d8d16ee46e5095f2cbfce9a0eeb13b5405dd50f2231af08"
+    sha256 cellar: :any, arm64_golden_gate: "1bb351ad59044730ab9088dfaa9e64cc9f2370cd05f5fad97dd743ad2c1ba867"
+    sha256 cellar: :any, arm64_tahoe:       "0a1edb2cc2d6a9d6a0cab646e75f5ea8ce909f2ea80f0f38c96ab57ebd429a3d"
+    sha256 cellar: :any, arm64_sequoia:     "96f4f8878b2dca58c0e32cc5f5ba2d5a9996e00b66b11a33040764db66dcfae0"
+    sha256 cellar: :any, arm64_linux:       "38fb23d1bddbc367e2ffe7f7cb8ba5b5dcab284c84ce44f626e992fcb69f3de9"
+    sha256 cellar: :any, x86_64_linux:      "e217af632e357954bbf05507397d1b6134b783e27b8164134e11d32c595a955f"
   end
 
   depends_on "cmake" => :build
