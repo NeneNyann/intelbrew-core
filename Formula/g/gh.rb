@@ -13,11 +13,8 @@ class Gh < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "3a6c3b09eca8a065522c78d3c2ba739e866afd64eb2b0a6280527b05e5539151"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "901fc52c4611b1c716ed73b31d516d6bb6b37bcfb8abbedc537404bc80ec5e26"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "21e6314bf4f4f9d881b0ab6ba1f6bad3c940ab419f8b689f83a526eb646291f2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "2bf1cf7e6aa89f23f14a55646d70434e3014f68b72d53e67ac710a1b9269e1ca"
-    sha256 cellar: :any,                 x86_64_linux:      "bc13ea369179fe336f14316c11e4cddd020a84aa17e9113508ef5b43a475eefe"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gh-2.103.3-b48ae193a079e4141f3f16804"
+    sha256 cellar: :any_skip_relocation, sequoia: "e78363b06b09d05be1aa5225971f46b2b17f95983b78bf11576d3d205bd5f09e"
   end
 
   depends_on "go" => :build
