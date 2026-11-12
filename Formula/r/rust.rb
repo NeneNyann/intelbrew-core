@@ -84,11 +84,8 @@ class Rust < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "ad99261670bcdffa5ef4518662eaffecb4bb07e20c265e24ace2f7239366b6d5"
-    sha256 cellar: :any, arm64_tahoe:       "3e8f3b4af11744d0120a5759ea9e4b2ebd387549e59c77e70cc75d132aa04dad"
-    sha256 cellar: :any, arm64_sequoia:     "f64776767e36296e228aa92c2badf6ab1c2a434d64364cbdc36871da114b3f7a"
-    sha256 cellar: :any, arm64_linux:       "60bfac4b423bdb48812bac2e0718657f7b9db49021a4a8689de71db8dcc21f84"
-    sha256 cellar: :any, x86_64_linux:      "4e57acd710d4a84dd72812af61f4e2ee618c60dec758dc2b7b73abb0304f86a4"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/rust-1.99.1-bf6261bf87ffbf0cf9ad447e3"
+    sha256 cellar: :any, sequoia: "e4bdd792b321a72b350f8843a7322f09495bb8526fdd68bae5f909252bebfe0c"
   end
 
   depends_on "libgit2"
