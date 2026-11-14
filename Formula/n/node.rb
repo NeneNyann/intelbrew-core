@@ -23,11 +23,8 @@ class Node < Formula
   end
 
   bottle do
-    sha256 arm64_golden_gate: "55ddb379469402e702791d382ae5cbae8dec5dbbe155b525b59c052645f115bd"
-    sha256 arm64_tahoe:       "0a2c2e431bf6c120ae31a1c90bce000ddfb920722d7b34163ef057e61747fd85"
-    sha256 arm64_sequoia:     "c2e0b31f521bf4a29ee30145109f3f6bc6e5afdef5449eaf82c6167120fa81a3"
-    sha256 arm64_linux:       "7de901bc907f952ad7ca4d8044ec8b8db7d6e6369627a943be6dfc9547beb5ff"
-    sha256 x86_64_linux:      "1dee5142682a715ed6d9f40821a88fc3aaa89219668dd45cbfcd35233b63f3a2"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/node-26.13.1-bf323e203b89cb417344ba3d9"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "2d3a639235e27888f0e2de400e377a62d782528399499355b4981acec04c48b9"
   end
 
   depends_on "pkgconf" => :build
