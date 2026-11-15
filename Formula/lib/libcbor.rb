@@ -1,19 +1,17 @@
 class Libcbor < Formula
   desc "CBOR protocol implementation for C and others"
   homepage "https://github.com/PJK/libcbor"
-  url "https://github.com/PJK/libcbor/archive/refs/tags/v0.14.0.tar.gz"
-  sha256 "a8c1516e741562cf95aa4479c64916c3d4d2623e24fdc35e414e2320e7300aae"
+  url "https://github.com/PJK/libcbor/archive/refs/tags/v0.15.0.tar.gz"
+  sha256 "c94145d3c22e67cff9a3325dc036b4545a49a42231553995be4947d52cf2ef57"
   license "MIT"
-  compatibility_version 2
+  compatibility_version 3
 
   bottle do
-    sha256 cellar: :any,                 arm64_golden_gate: "eb1c39612f8967acd677cdbb3dac68bf3a831d3cb8ac747c6a936126aaa52d3e"
-    sha256 cellar: :any,                 arm64_tahoe:       "b0a83d57d590f7d6ecf8589e0796a0ff3c08d9f3fd0f82349d5cf92d1cf4cb73"
-    sha256 cellar: :any,                 arm64_sequoia:     "90ad93678b0065b521b482896d8c4f07e8274c80ee0fdcd8bc7334506e578ec6"
-    sha256 cellar: :any,                 arm64_sonoma:      "a1f3c5e389d8e6804c813783c0326dace6295b025b54373b77e828f8660eaae9"
-    sha256 cellar: :any,                 sonoma:            "d96512eea5afa2988783b04385f0eeba4b625c9bbf160e4bb3efa06c72d1d5fc"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "3a8784ee0cb9a8dfac1a2b7444571f8a621537932eb9bcfe1b0d65df31109007"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "c423643a3235f88959c0730450de47a6cd9d3a1005bcc00a6cb3f5ede22f45c4"
+    sha256 cellar: :any, arm64_golden_gate: "3f8eec24c56884c2cf6b5ca3749cef68d71e94277a97be05b24fd942b3d63fe3"
+    sha256 cellar: :any, arm64_tahoe:       "4a39325b18be5ce01f57a27618141a70b2887cd9cd0e824e857ca0439aa95f91"
+    sha256 cellar: :any, arm64_sequoia:     "2f4c156c3a23ef829ce56b6a696bd0fec01fb081f56a461ec22170ec5b17fe7e"
+    sha256 cellar: :any, arm64_linux:       "8f41e4a7ca665dbe2238d3dfb66dd18914013c16ba8fe2ef0210e9923854f0f1"
+    sha256 cellar: :any, x86_64_linux:      "01eee0ee578f2e9df1b056125c79ccd24477826c193438d81eeeba8442fccdf9"
   end
 
   depends_on "cmake" => :build

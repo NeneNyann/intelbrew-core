@@ -1,8 +1,8 @@
 class Bkmr < Formula
   desc "Unified CLI Tool for Bookmark, Snippet, and Knowledge Management"
   homepage "https://github.com/sysid/bkmr"
-  url "https://github.com/sysid/bkmr/archive/refs/tags/v8.4.0.tar.gz"
-  sha256 "13c163f5822cf5a839e8d566635e49d51eae8e1df53681110b775e534a938e7f"
+  url "https://github.com/sysid/bkmr/archive/refs/tags/v8.7.2.tar.gz"
+  sha256 "e85f26e9acdef2a70442df5c1ea2ff7bbccf5a8074f51cc71c58787675c08d7d"
   license "BSD-3-Clause"
   head "https://github.com/sysid/bkmr.git", branch: "main"
 
@@ -12,11 +12,11 @@ class Bkmr < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "95d94451eb6df6a00ffc31456e51ca7d58b3e44194085ef20a203ed9c1ddc0d8"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4b52bd7ca15b433d5ec51b99ef6f42f9afe4aa6f99cc79b7c294748220e182c1"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "f03a5405027b1331ca4377011c7dee4b889bcd0d80f08c0ae2ba9666ac134f6b"
-    sha256 cellar: :any,                 arm64_linux:       "e24e3b0ac8c3c9fa0107555c657a212769d690f6a70cd83d6a6875648535f598"
-    sha256 cellar: :any,                 x86_64_linux:      "9cbd89e84d98b3938f74ad07bdc65d064c9fa3b70c5e6b68c96455ab08fd0a4f"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "90e8b3d25f0435001d0663c42191a7935b7ac2d347b06e191ccb0728d5c85520"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "2076f11dbee46093f59a763da3bb955c3b4f246bf148d9abd903a7634075a46f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "fab09a44b84d0317a0c14024971c09326d0cc9fc9925b3ccbc06180986d6b795"
+    sha256 cellar: :any,                 arm64_linux:       "6497a4c32e5c98eb9675ea16d7f9e30d4680706f6441c0e24061661441e15d0d"
+    sha256 cellar: :any,                 x86_64_linux:      "6abcfe1428d7554423305816c09d71096b4c430c4b231bfcba682a8956434c37"
   end
 
   depends_on "rust" => :build
@@ -44,7 +44,12 @@ class Bkmr < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/bkmr --version")
 
-    expected_output = "The configured database does not exist"
-    assert_match expected_output, shell_output("#{bin}/bkmr info 2>&1", 1)
+    db_url = testpath/"bkmr.db"
+    ENV["BKMR_DB_URL"] = db_url
+    system bin/"bkmr", "create-db", db_url
+    system bin/"bkmr", "add", "https://brew.sh", "homebrew", "--title", "Homebrew", "--no-web", "--no-embed"
+
+    bookmarks = JSON.parse(shell_output("#{bin}/bkmr search --json --np Homebrew"))
+    assert_equal ["https://brew.sh"], bookmarks.map { |bookmark| bookmark.fetch("url") }
   end
 end
