@@ -12,11 +12,8 @@ class Libffi < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "9e9863c6a383c3d0d12166ffcbc52647287bad5215542ea5ec73233d69c7828a"
-    sha256 cellar: :any, arm64_tahoe:       "d4e31f96513d447db79bbee4c7c97be303964be636772957521c6a5e3ae01a6a"
-    sha256 cellar: :any, arm64_sequoia:     "b8c2e7ea5bddf49536a5394b3fc880ad8731177dbd3f7333081ba587e5634a7a"
-    sha256 cellar: :any, arm64_linux:       "0f67262b2617146853a072b974573a291cd14064b8b1996192cdc7127a95acf7"
-    sha256 cellar: :any, x86_64_linux:      "a719469ecf057ea71637b5cf198f91bd90af4c3816ddbf5cf44b3b6fb7f67346"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libffi-3.8.1-b4d24eaa21457863f71902265"
+    sha256 cellar: :any, sequoia: "44c8abdb639819d6d1f626e6d24ba6305297a2c41137f88902ca0a2f09033999"
   end
 
   head do
