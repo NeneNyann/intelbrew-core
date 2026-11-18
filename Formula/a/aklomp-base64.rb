@@ -7,8 +7,8 @@ class AklompBase64 < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/aklomp-base64-0.5.3-b33e79ed58f42ce7dabb844e8"
-    sha256 cellar: :any, sequoia: "a21e9d5432769934109851f98bf75635fa484cad73d2a05a628c577e1ccfeca3"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/aklomp-base64-0.5.3-b7b68ad20e6b5afe5037d6950"
+    sha256 cellar: :any, sequoia: "c59418d2f2b331e31ce7fbaad950241a209eef8a1fe4887a23e2edac502e1244"
   end
 
   depends_on "cmake" => :build
