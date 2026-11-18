@@ -1,17 +1,17 @@
 class Openapi < Formula
   desc "CLI tools for working with OpenAPI, Arazzo and Overlay specifications"
   homepage "https://www.speakeasy.com"
-  url "https://github.com/speakeasy-api/openapi/archive/refs/tags/v1.26.3.tar.gz"
-  sha256 "af4dfb380ec5d8845f979df9889d77368aee4cbeac68791b4cf4522bed81a5c1"
+  url "https://github.com/speakeasy-api/openapi/archive/refs/tags/v1.27.0.tar.gz"
+  sha256 "00744adae37a51bfa30f7a63ea8c1e47368897a5af7095de435fd4808d948307"
   license "MIT"
   head "https://github.com/speakeasy-api/openapi.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "f67628596367bc20f47027f3dcb3cecb2a7da18d3ec523414b54751fcb22894c"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "f67628596367bc20f47027f3dcb3cecb2a7da18d3ec523414b54751fcb22894c"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "f67628596367bc20f47027f3dcb3cecb2a7da18d3ec523414b54751fcb22894c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "3296b95c3070a10033498bbcf241aed2c2d7071365f3461f8f6dab5315ddcf57"
-    sha256 cellar: :any,                 x86_64_linux:      "18638443ece32f7d8719779f6dc0614bba250fb24d9176263b412282adc66753"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "d470babcc445c0a920ff6465b22e96bc530092eb5e167992104ef5346962aee2"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "d470babcc445c0a920ff6465b22e96bc530092eb5e167992104ef5346962aee2"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d470babcc445c0a920ff6465b22e96bc530092eb5e167992104ef5346962aee2"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "1534d1bdb778ff3e382671aafd5079aacc41023ff3e2042e6d5f205819b32bb8"
+    sha256 cellar: :any,                 x86_64_linux:      "4eaaee7c2c095650773ccbbb4694624ac98bad138ce27445a07f528146ac3de9"
   end
 
   depends_on "go" => :build

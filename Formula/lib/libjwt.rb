@@ -1,8 +1,8 @@
 class Libjwt < Formula
   desc "JSON Web Token C library"
   homepage "https://libjwt.io/"
-  url "https://github.com/benmcollins/libjwt/archive/refs/tags/v3.6.2.tar.gz"
-  sha256 "df794f41c1310fb96e3d45b6fc034ea9fbaf619b631c43bd86ff64dd597d33c4"
+  url "https://github.com/benmcollins/libjwt/archive/refs/tags/v3.6.4.tar.gz"
+  sha256 "08df4acca3d2ca76d4c557a896179a9d44cd4b5fe7003c336e4a56f68c43f685"
   license "MPL-2.0"
   head "https://github.com/benmcollins/libjwt.git", branch: "master"
 
@@ -12,11 +12,11 @@ class Libjwt < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "7801c86ed38def1af8feac00258cf6056dc9056b53ba695ae4a76097757d30d9"
-    sha256 cellar: :any, arm64_tahoe:       "4592d72fabd5c5494a9c6f744c677481e1306d8c2b1a23b85523fdb39664536c"
-    sha256 cellar: :any, arm64_sequoia:     "7ab3807d277316bc69a97ab050bd330be4fa3983c7fef426e2c5cca16a0661b6"
-    sha256 cellar: :any, arm64_linux:       "43db8c89e52d6b260a79a4692d2d72575ffce56d734fb8f129b2ddcab259e5bf"
-    sha256 cellar: :any, x86_64_linux:      "e8929f0133fc48e6f3528840b1dfa9840f1ae17a5ca03c8f10554707c174a397"
+    sha256 cellar: :any, arm64_golden_gate: "60f51c6ade9b76f980fe7c2053ca43293269baed3a89104474b8b09dcbc27041"
+    sha256 cellar: :any, arm64_tahoe:       "0403d4d576838e5089985f70b0706345bbe443bd1909c4df6bd07379266c1337"
+    sha256 cellar: :any, arm64_sequoia:     "67e7fe0ac5665dc94fadeb36e805d80c573c0b4b0ffa0e1c826c3bc72d7a12db"
+    sha256 cellar: :any, arm64_linux:       "dc85997cf2fec411a9f5f2f5dcf97e018b280412333b9dc68cf489f70d07053d"
+    sha256 cellar: :any, x86_64_linux:      "d525fbce0796e5eb6fab814e046a58aadb7ced40e5b2e85896c1ed799696c7d9"
   end
 
   depends_on "cmake" => :build

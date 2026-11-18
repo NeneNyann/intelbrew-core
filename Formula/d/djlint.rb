@@ -3,17 +3,17 @@ class Djlint < Formula
 
   desc "Lint & Format HTML Templates"
   homepage "https://djlint.com"
-  url "https://files.pythonhosted.org/packages/d7/ea/0823d94dedb912e183f5af5d2ca3aa8fcf820502465dfe5b64b1464a32bd/djlint-1.50.1.tar.gz"
-  sha256 "c9cae9b57d61ee670a7fa0e08d3af381dd0d14e49ef5faac187c185936d9f151"
+  url "https://files.pythonhosted.org/packages/14/a3/496bf03494295cfda6f07c84b33427cf5d779291d115d8dd3400605bc918/djlint-1.51.0.tar.gz"
+  sha256 "8761b2ee8e956a135c292d197b651080a76e2e90d802e25297cf06abf16f176f"
   license "GPL-3.0-or-later"
   head "https://github.com/djlint/djLint.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "c43bd1a9757c416ac81dabab0785e3561ccc88ef176ef48d783e7ecc070c75f6"
-    sha256 cellar: :any, arm64_tahoe:       "28a1b20da7b1ef39487252aafb000579115a633c2b0cbb91facd6f71086d5a15"
-    sha256 cellar: :any, arm64_sequoia:     "2d2d29c8dc121ec7148b16ce7a869452b42e32bed34601818783c23826d976da"
-    sha256 cellar: :any, arm64_linux:       "401b421c9e3b288690860e6a29ea42df332fe35983da0a8d00f207259d07a99a"
-    sha256 cellar: :any, x86_64_linux:      "7acbc19a965493c4264bdfeae12c6138503b794fe884741056ed65f82dd7665b"
+    sha256 cellar: :any, arm64_golden_gate: "e3ec4e675cf84340ca6153a4ca706e144871f7e77d2f7b4d9279aed6a236b428"
+    sha256 cellar: :any, arm64_tahoe:       "5b2aaf0ffa6f7b2797e52640d3f003ebb46b8c203384d5bcbc7f9827bab1c4ea"
+    sha256 cellar: :any, arm64_sequoia:     "a30b9808af258ac0d92d4f6f4ec158eb0f5176c52a8b700a4d2d3f9f37d33b55"
+    sha256 cellar: :any, arm64_linux:       "570895aba552238d85e7b501b65bb36bbce7dc8c9000a919cd94e8c32c21eb19"
+    sha256 cellar: :any, x86_64_linux:      "43b172c058cb07b2464e50bcb9779938a9e26f13447fa265b52ba0c570b89c21"
   end
 
   depends_on "libyaml"
@@ -55,8 +55,8 @@ class Djlint < Formula
   end
 
   resource "regex" do
-    url "https://files.pythonhosted.org/packages/61/27/a5afeb952577b84ee5fe48b8b9ce47ae662dbb69cc5b76c28eff98f83b1e/regex-2026.11.9.tar.gz"
-    sha256 "316a70fbd70e999c9664681cb0eb5b4982b2cc0f623c7c86a8a112e1bd4c6277"
+    url "https://files.pythonhosted.org/packages/cf/e7/67c67920a3b5183388e0853a0a564a4bf60f2dd190a4e7626f5dad2fed62/regex-2026.11.15.tar.gz"
+    sha256 "d6ec7e29e62ebf93ab2a593d1137022b6025497d8610e5cb666d52f9ee5bb0ce"
   end
 
   def install
