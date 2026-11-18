@@ -8,8 +8,8 @@ class Libvpx < Formula
   head "https://chromium.googlesource.com/webm/libvpx.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libvpx-1.17.0-b2e103d9f0d20842e47c36e71"
-    sha256 cellar: :any, sequoia: "c347bccbdb164ddd8a2d6f07eb71af336999eec5011c4850378e7c8717de4a76"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libvpx-1.17.0-be23f18adcf442df2ec6faf1c"
+    sha256 cellar: :any, sequoia: "08681b1396687af3a6e0891de57efe5a8a184f27d51f8d29cd528743155e0f25"
   end
 
   on_intel do
