@@ -13,8 +13,8 @@ class Gh < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gh-2.104.0-b087b75a106ea9560db932a73"
-    sha256 cellar: :any_skip_relocation, sequoia: "f9e3235d896a52f3ec9ab4e4ce19d95a73a51fc88c0e7085f4d28575561f4447"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gh-2.104.0-bdf6030227d9e2722d6c17a84"
+    sha256 cellar: :any_skip_relocation, sequoia: "32f77536c1083471a9a24c046bd580c9d62a1effba7437546f264cac9605ae2f"
   end
 
   depends_on "go" => :build
