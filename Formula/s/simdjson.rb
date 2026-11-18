@@ -8,8 +8,8 @@ class Simdjson < Formula
   head "https://github.com/simdjson/simdjson.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/simdjson-5.2.0-b9d88a06a548b0f35ac1cf22d"
-    sha256 cellar: :any, sequoia: "84833a28798ab43991526c4da4992ff4fee11aa1da19e1d4f435db9d4cdfb501"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/simdjson-5.2.0-b53cfd833765bbc5bc089d451"
+    sha256 cellar: :any, sequoia: "3bcbe6a38623c4c154865c00f06393d31ec97076aca59d2d632e4fe559c9ede4"
   end
 
   depends_on "cmake" => :build
