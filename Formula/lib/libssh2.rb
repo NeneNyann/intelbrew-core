@@ -15,8 +15,8 @@ class Libssh2 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libssh2-1.11.1_7-b073193413a6aa6db112c4fd4"
-    sha256 cellar: :any, sequoia: "cf3f1acb7ca9147aa122a2743575690a7e7365f06c5a8731fa713f1edcddb583"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libssh2-1.11.1_7-b2a39523786f263edbb4699c1"
+    sha256 cellar: :any, sequoia: "25cd7e450922262a1db2f155837091be08886c93f9fd6e37eb013cbbc87a36ce"
   end
 
   head do
