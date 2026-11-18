@@ -8,11 +8,8 @@ class Libtatsu < Formula
   head "https://github.com/libimobiledevice/libtatsu.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "b98c6d0a8be78ef52e8960b7d696dff98e45018e54f9551e7a237307b77dce6d"
-    sha256 cellar: :any, arm64_tahoe:       "eeb81f1250a7a1da79ea72e6511a37637a1e1bd1d0848ce0fd62819152f5fe3a"
-    sha256 cellar: :any, arm64_sequoia:     "5a56f78092905876385d4b32a91fae011e288fb6de414551af905f33ffaa4792"
-    sha256 cellar: :any, arm64_linux:       "8734e918eb67b666b3216424a424f2b68d413419b0fbfdc71397005c8ca28b7b"
-    sha256 cellar: :any, x86_64_linux:      "a31b28255dfa9d816b95c1a6ce0edd04a00a248cf3d685002a5a55a94041aba2"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libtatsu-1.1.1-b24e4c05fc3f70732532aaf49"
+    sha256 cellar: :any, sequoia: "83100e8f7e88fee41f6101d8d1ab56c5f9750f3dc4fc3f730833430114b59e21"
   end
 
   depends_on "autoconf" => :build
