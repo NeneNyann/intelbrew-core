@@ -13,8 +13,8 @@ class Ninja < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ninja-1.13.2-b69db39b5be9a0cad1d8d2664"
-    sha256 cellar: :any_skip_relocation, sequoia: "75fd24e50bf9baf46dd05fec892818cb19fd643ec81eca778c7ee2340628a0d7"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ninja-1.13.2-b97c8e023157dcdd7d6e9f85d"
+    sha256 cellar: :any_skip_relocation, sequoia: "a040bde29ca896f6566dd09d72e66ac329ef03ab266c4ded4a63e4b7988d31d3"
   end
 
   uses_from_macos "python" => [:build, :test]
