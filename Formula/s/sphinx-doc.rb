@@ -10,8 +10,8 @@ class SphinxDoc < Formula
   head "https://github.com/sphinx-doc/sphinx.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sphinx-doc-9.2.0-b1cbc15ec4fab8da3e5a8d0bd"
-    sha256 cellar: :any_skip_relocation, sequoia: "96e6d25b02e614164bb8e8c6f436559f171df629e3d4ebb45d3a0ff1b61c1e61"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sphinx-doc-9.2.0-b46627ada5b247502659666ef"
+    sha256 cellar: :any_skip_relocation, sequoia: "6ff3f7c4c71543eba0d877fb8cf0b57011a6233c8e8ed8a86db86a9ec4fba2ba"
   end
 
   depends_on "certifi"
