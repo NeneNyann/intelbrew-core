@@ -13,8 +13,8 @@ class CAres < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/c-ares-1.34.9-b640a0a476d3d255e70d77b14"
-    sha256 cellar: :any, sequoia: "e0d87523fe54f727e24fda2c5e7b421833769235cd4bba9dc9ecfde1a813fcac"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/c-ares-1.34.9-b6cd8a539ad1b5ff0cdec258a"
+    sha256 cellar: :any, sequoia: "efc152871d1254e610ee5247e8d7d13ab70e85c211b5c4e31c83075ce48d87d9"
   end
 
   depends_on "cmake" => :build
