@@ -7,8 +7,8 @@ class Jemalloc < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/jemalloc-5.4.0-b7bf9657cd77c3903c3e57770"
-    sha256 cellar: :any, sequoia: "4cc7f39ab6f018dccee2bc9f03d5e5da41ed8d53f10c8c66d99cf45c19f48401"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/jemalloc-5.4.0-bf80fcb4c9c1b0293ff7d1263"
+    sha256 cellar: :any, sequoia: "2bd6f837e299c5c13abe516d52ae8645c9ae09fc2026ae2ecdf475d463fb4ef6"
   end
 
   head do
