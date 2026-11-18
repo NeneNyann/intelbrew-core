@@ -13,8 +13,8 @@ class JsonC < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/json-c-0.19-b9a09515770601ed2f968cfc9"
-    sha256 cellar: :any, sequoia: "0585fd9067a1376c5c19578fe8010ea55e7c36fe3ab824dddb5d4b4b2f360f9a"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/json-c-0.19-b00c679e7afc684aa7fc8191e"
+    sha256 cellar: :any, sequoia: "17484f814f828c6c7d452764068e6499e4daf563c0c7fcee1537b6d3d1aff7bf"
   end
 
   depends_on "cmake" => :build
