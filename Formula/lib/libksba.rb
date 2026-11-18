@@ -12,11 +12,8 @@ class Libksba < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "aab958865fe3fc7810bb03912472c6392b5a5a50f7482bef223711e3d323bbb1"
-    sha256 cellar: :any, arm64_tahoe:       "0d843abb9cfa9de950ff2bfff1a7d3ac59a8fbde62887075dbd0399913326275"
-    sha256 cellar: :any, arm64_sequoia:     "8cf9f4148f5b71450f0ccf5002e087f9a3a80b6a074d0821b6299bb6d05d2058"
-    sha256 cellar: :any, arm64_linux:       "f50c8ef26457df3057ce964590bbe24d4ab911cd4e7e6a1fc2b30e7bce641e20"
-    sha256 cellar: :any, x86_64_linux:      "8402c17e39064e4cb5ce27750b4d0dae1e42b979b14cc61acd97812dd0d980c8"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libksba-1.9.0-b8221dc45f104b00a28582594"
+    sha256 cellar: :any, sequoia: "95713113fd94f0037ed1eda8f72623186d0876367ba1b434665d188037956554"
   end
 
   depends_on "libgpg-error"
