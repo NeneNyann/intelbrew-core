@@ -15,8 +15,8 @@ class Libuv < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libuv-1.53.0-bc8f2896bab617a1c602239e6"
-    sha256 cellar: :any, sequoia: "9115ba510abe8990b0c736850aac549a3cd07903810c8bcae5fc8bc9fac4bfd3"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libuv-1.53.0-bbd97190e74e5419a7971c204"
+    sha256 cellar: :any, sequoia: "74f11fd519dcf0079da3964e0d106e0406bf1af3534507c22ef37097678e37c4"
   end
 
   depends_on "cmake" => :build
