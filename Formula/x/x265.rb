@@ -8,8 +8,8 @@ class X265 < Formula
   head "https://github.com/Multicorewareinc/x265.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/x265-4.3-b6a943964ad095f304b179231"
-    sha256 cellar: :any, sequoia: "44f2552c697fd9c739cc06cf47aa73c70244f09c88cb4d6eedacd34930dd31b2"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/x265-4.3-b24676aadeefebbae3fd3f194"
+    sha256 cellar: :any, sequoia: "1d57e4d99f3a72028d98a1dbdcf215b2e433efa4da72356fbce1115900f23cdf"
   end
 
   depends_on "cmake" => :build
