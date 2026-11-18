@@ -15,8 +15,8 @@ class Lz4 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/lz4-1.11.1-bc10e06525e226e61646a70e2"
-    sha256 cellar: :any, sequoia: "7e960bf77788b69d016df858ced2b75fe01ef03f99ca0cafc853c26847a9f740"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/lz4-1.11.1-b639e324f7cc0366f8c72c3f5"
+    sha256 cellar: :any, sequoia: "06dd59b69f948eea62f49deec4e27c1414e8eefdc594ffde103d4e5083158a86"
   end
 
   depends_on "cmake" => :build
