@@ -8,8 +8,8 @@ class Utf8proc < Formula
   head "https://github.com/JuliaStrings/utf8proc.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/utf8proc-2.12.0-b694823cf7618eccbc8eb05b5"
-    sha256 cellar: :any, sequoia: "3d8d1e48adb70fc04fda28920eeaa589043a5a45a08cde33c87fe0de1498fe28"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/utf8proc-2.12.0-b0c20648aafba900e18a19a66"
+    sha256 cellar: :any, sequoia: "974910e5dd6ea91c5f71ae3c28ff66607b37fcecc32acf2d238ebb96bd6b09ab"
   end
 
   depends_on "cmake" => :build
