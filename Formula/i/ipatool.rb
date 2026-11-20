@@ -7,8 +7,8 @@ class Ipatool < Formula
   head "https://github.com/majd/ipatool.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ipatool-2.8.1-bae68f1cb50f121525fdf7549"
-    sha256 cellar: :any_skip_relocation, sequoia: "f9b4a33f9edf149dc35fe24e90f3502b065e9e1c8349f5d1051ed5ba1b49df0c"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ipatool-2.8.1-bf7412e598b034c8d4e3b21f4"
+    sha256 cellar: :any_skip_relocation, sequoia: "5f2bdf2ee630ad8854fd6bcf705653bea8b436dfc6ae59a9b469a94611f82bf1"
   end
 
   depends_on "go" => :build
