@@ -8,8 +8,8 @@ class Automake < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/automake-1.20-bfd86122d62fcc9b0d36cc15b"
-    sha256 cellar: :any_skip_relocation, sequoia: "019352bea3fc7c9021b326146f6312e3fb1290774ca438a9a6cd9332973655c4"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/automake-1.20-b2367f313b36434bea3dd270e"
+    sha256 cellar: :any_skip_relocation, sequoia: "44c4316bedd8ecfcb152e3799c9f5258d87f4f3332d4ba0af1f5a4ea4b9c1e5b"
   end
 
   depends_on "autoconf"
