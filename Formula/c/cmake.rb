@@ -18,8 +18,8 @@ class Cmake < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/cmake-4.5.0-b4cd52434eb5f35cf8beb0f0d"
-    sha256 cellar: :any_skip_relocation, sequoia: "d3a20301de44e97e08a0b93524d13e101fca57e5fa14fdd5978be7b16786bab8"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/cmake-4.5.0-b4814f5d956ad4e70d6271d0d"
+    sha256 cellar: :any_skip_relocation, sequoia: "fd458e20c8b2098eb5389ac63acb44363a2ab265cb3135d29a9abd42fb5e27d2"
   end
 
   uses_from_macos "ncurses"
