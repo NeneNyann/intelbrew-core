@@ -14,8 +14,8 @@ class Pkgconf < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/pkgconf-3.0.11-b40302973d448df8329fe0cd4"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "eea0e84568a6a25d9bc58a8a0f2f18135aec242dd8da6b3273f6f87fc0a42468"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/pkgconf-3.0.11-b190d28906b259ebaed27aa4d"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "7d932148577d741ed772c0b215398abe3ca111ae3af9a58245560e0fe0fb9f2e"
   end
 
   head do
