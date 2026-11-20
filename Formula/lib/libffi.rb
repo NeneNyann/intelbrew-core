@@ -12,8 +12,8 @@ class Libffi < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libffi-3.8.1-b652d8b0c4b15d5c9054d8375"
-    sha256 cellar: :any, sequoia: "5fe879dc3de68f8c9d8a0fc827c190ae022cfa51be0c27ea594b7b6801d24e31"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libffi-3.8.1-b5da508dcbddc173824c2b3ec"
+    sha256 cellar: :any, sequoia: "606ec6cd59bcd7cb60af5f0d278fd8f1239d1edbfe2dcff8dddab2aa7d138916"
   end
 
   head do
