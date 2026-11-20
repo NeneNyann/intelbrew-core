@@ -18,8 +18,8 @@ class Icu4cAT79 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/icu4c-at-79-79.1-b006b7db9745486dca6060e18"
-    sha256 cellar: :any, sequoia: "9a01c2ce7a31c4d1c1856961c249e2b33f04576102134a9057e767a80a05e7d7"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/icu4c-at-79-79.1-b17430cc9678f64f38edac339"
+    sha256 cellar: :any, sequoia: "6934373f60d5f082aab18366069fa8509230076e4fa2b30e557e7da69771f66c"
   end
 
   keg_only :shadowed_by_macos, "macOS provides libicucore.dylib (but nothing else)"
