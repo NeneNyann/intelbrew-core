@@ -12,8 +12,8 @@ class Mpdecimal < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/mpdecimal-4.0.1-b57942c9f21d4480fedfdf3e7"
-    sha256 cellar: :any, sequoia: "fd806950af7dc75474d769d279472cdcfc61f75c44f8367fe8f626aeda1076a3"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/mpdecimal-4.0.1-bfb51ab49ceb43837fb39ecfd"
+    sha256 cellar: :any, sequoia: "a957d239a8358ba8b4c59792ef5a4ca34a54b6e4856a53ffb420a8959fda8f01"
   end
 
   deny_network_access!
