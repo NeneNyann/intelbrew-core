@@ -13,8 +13,8 @@ class Xz < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/xz-5.8.4-b28130ccc9c0168a33dd00d4c"
-    sha256 cellar: :any, sequoia: "a2fc1dfc728918cff967b0fa7ec6660a35427516f571aadb1e649a008d6de91c"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/xz-5.8.4-bf64155bf4dec9495d09dad7e"
+    sha256 cellar: :any, sequoia: "ad8d01e2afd25d2ac0b52dde21c31e0a12d4b8635075dae439458308ebf05ee6"
   end
 
   deny_network_access!
