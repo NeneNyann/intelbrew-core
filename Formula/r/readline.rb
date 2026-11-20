@@ -75,8 +75,8 @@ class Readline < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/readline-8.3.6-bc20160adc32bc3547402e9da"
-    sha256 cellar: :any, sequoia: "98da8b61a76755f719c84d8de035953c2589f4edcfaed0d670443e2e99b7b267"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/readline-8.3.6-b71853051d2ba0145bdd712a3"
+    sha256 cellar: :any, sequoia: "f31f09c32b542e4fd8e424e9a147d557aefc91429602ee006ece00ee9aaefb9f"
   end
 
   keg_only :shadowed_by_macos, "macOS provides BSD libedit"
