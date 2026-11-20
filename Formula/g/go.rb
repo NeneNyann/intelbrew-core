@@ -22,8 +22,8 @@ class Go < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/go-1.27.4-b6c17f3ddcb2f1bd6da374bd6"
-    sha256 cellar: :any_skip_relocation, sequoia: "c356f19b228f67dd1ec904a3af175a474275ae1383ad8eedbcd0751fa23eb6af"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/go-1.27.4-bcca76c7ee1dac7dbe4939d7d"
+    sha256 cellar: :any_skip_relocation, sequoia: "8d5b2ebb13a3984b5e045a1a8c4bb4b7c2574f034d0d629813e380bc606c1b7b"
   end
 
   on_macos do
