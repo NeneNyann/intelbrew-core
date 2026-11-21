@@ -12,8 +12,8 @@ class Libzip < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libzip-1.12.1-b3a93b55003acf5befe7f2e58"
-    sha256 cellar: :any, sequoia: "9433a201675125a943d71601862480d61846f09f9f8dd259a9a8832d22bb6ea4"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libzip-1.12.1-b34307c94ada3d68b698a799c"
+    sha256 cellar: :any, sequoia: "fa6fad70bebecbdd2587107b611f12c6095a8774795edb4aeb245e3a86ce9e61"
   end
 
   depends_on "cmake" => :build
