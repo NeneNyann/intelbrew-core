@@ -14,8 +14,8 @@ class Sdl3 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sdl3-3.4.20-b49ec48d145fe1b90234ec7af"
-    sha256 cellar: :any, sequoia: "6f19b8e4a0946539b16b1f62eb94bee40e4a5558a6aa6b671c76fd5861f09bdd"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sdl3-3.4.20-bafc594bf3690626408543b74"
+    sha256 cellar: :any, sequoia: "d32625e2d9bd8e55202ddbca91a00d692dca07af5b688d4ede7be3ba5e29019f"
   end
 
   depends_on "cmake" => :build
