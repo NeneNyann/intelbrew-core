@@ -15,8 +15,8 @@ class Gmp < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gmp-6.3.0-beb2c300e6ea170d670be15dd"
-    sha256 cellar: :any, sequoia: "ec6c7dfdf0c347553bbb5ea99b5299621a6d4ac7c859da163faab56e99d5900f"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gmp-6.3.0-b85372789901902b2c990a00f"
+    sha256 cellar: :any, sequoia: "7f466d1927d171b4a3883791dd89efcf9747f50e15ea93d77f75c126ea44b573"
   end
 
   depends_on "autoconf" => :build
