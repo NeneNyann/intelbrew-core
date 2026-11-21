@@ -15,8 +15,8 @@ class Brotli < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/brotli-1.2.1-b8c53d52f3a6482925b4b0e65"
-    sha256 cellar: :any, sequoia: "8434456f3d1c27312840e111729b496f986fb3d8da3dd3a6dee953d0de0786ff"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/brotli-1.2.1-bf3bcc2ccaa7612340e1e0e64"
+    sha256 cellar: :any, sequoia: "6389693bc3653342d95fe5b2c4c48f283d86c064a3cd8ff93a1a029b647dbf4e"
   end
 
   depends_on "cmake" => :build
