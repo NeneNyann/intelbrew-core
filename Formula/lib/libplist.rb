@@ -8,8 +8,8 @@ class Libplist < Formula
   head "https://github.com/libimobiledevice/libplist.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libplist-2.8.1-b0809d7e7c135af15ccebd906"
-    sha256 cellar: :any, sequoia: "f94ce41d8b14ef4d5db71c5ab3b075e81b6994a6daeb331549d6711213a9aee0"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libplist-2.8.1-b73f23f4a9723972f25be28b8"
+    sha256 cellar: :any, sequoia: "10c43264ddfc5583c02a3a2d14dcfb984cf15366e686932bef3c9421a04526f5"
   end
 
   depends_on "autoconf" => :build
