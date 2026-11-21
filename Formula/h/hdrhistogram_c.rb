@@ -7,8 +7,8 @@ class HdrhistogramC < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/hdrhistogram_c-0.12.1-b0dd14be8f95bc8a6dd3daa05"
-    sha256 cellar: :any, sequoia: "fe394694bcdc411441d658a13413a25419ed15024c2b2de8b23bafdfda753720"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/hdrhistogram_c-0.12.1-b3feee812d84b39deb2989819"
+    sha256 cellar: :any, sequoia: "2a4af2b7e7262c61742b4074218ed3ed979807e40bc9b44bbe7f45ab761107f7"
   end
 
   depends_on "cmake" => :build
