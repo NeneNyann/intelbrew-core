@@ -15,8 +15,8 @@ class Libnghttp2 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libnghttp2-1.71.0-b6bf1213b67d12e059a63d9b0"
-    sha256 cellar: :any, sequoia: "a9432acf61f65e6340cc4a6fe6e8e419e47bc0122eecb69d5b39b38bfa8623bd"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libnghttp2-1.71.0-bd8131921a1dae6ecbc6fb7cb"
+    sha256 cellar: :any, sequoia: "301c9fb773660343c0c0b7e68f50fb6dd22921a5c08d93bc53ec721eff9030f3"
   end
 
   head do
