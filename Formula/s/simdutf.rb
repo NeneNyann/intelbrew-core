@@ -13,8 +13,8 @@ class Simdutf < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/simdutf-9.4.0-b7ac0160ac9b33c786bc413ca"
-    sha256 cellar: :any, sequoia: "3957a68d1197f07f7b036e6c31b8b6056b8bb538e2df86951d098a9446ca1fd3"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/simdutf-9.4.0-b6fab0051aa3e4a25ed2dc992"
+    sha256 cellar: :any, sequoia: "03bbc6f8bb1868e05c98922124bcca72df8ed8e109fea76b6d05e815a011d2d1"
   end
 
   depends_on "aklomp-base64" => :build
