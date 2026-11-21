@@ -12,8 +12,8 @@ class Libksba < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libksba-1.9.0-b8221dc45f104b00a28582594"
-    sha256 cellar: :any, sequoia: "95713113fd94f0037ed1eda8f72623186d0876367ba1b434665d188037956554"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libksba-1.9.0-b9fe90095465f59ec81b3fd64"
+    sha256 cellar: :any, sequoia: "f8d54fd0e5479e02dc8fb7fe86d6a17402c5af30eeb5e6cf5bc45977e38e82a2"
   end
 
   depends_on "libgpg-error"
