@@ -13,8 +13,8 @@ class SvtAv1 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/svt-av1-4.3.0-b3ca846ab491073b2061e83dd"
-    sha256 cellar: :any, sequoia: "5c4c77f9ed622238f7c45b6325a12bdf3be9db37f15c0545f028eeef8e9bf2cd"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/svt-av1-4.3.0-bfa6abb1155e71eccba4904c9"
+    sha256 cellar: :any, sequoia: "61169aca889096854145467d4c412ec3de201ce50cfc2b3ab412bbaed4443bbe"
   end
 
   depends_on "cmake" => :build
