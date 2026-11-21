@@ -8,8 +8,8 @@ class Fmt < Formula
   head "https://github.com/fmtlib/fmt.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/fmt-12.2.1-b7ec8e07631565a68793319d2"
-    sha256 cellar: :any, sequoia: "88aa1f896ee9c629b18a4b8cdb113a6a72951e75d017895cdc43ef253240e7d5"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/fmt-12.2.1-b808e446053d6ca19f3c4aa29"
+    sha256 cellar: :any, sequoia: "4a96fe055cde09a0a5e6aa15287e1c82bbcb16980816f7a8c5e92572f0f25111"
   end
 
   depends_on "cmake" => :build
