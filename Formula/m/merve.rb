@@ -8,8 +8,8 @@ class Merve < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/merve-1.2.2_5-b4b27ea4434ccb74426f59f4b"
-    sha256 cellar: :any, sequoia: "ea0f167cc1485771373c7ff8643f58eda43e49693064d989003a00f0ddef3b67"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/merve-1.2.2_5-b2915273a0795ff529e575c91"
+    sha256 cellar: :any, sequoia: "e41faf575332ef964eb309a0f69d79653778131162929d46e33e36ec2fdaf14f"
   end
 
   depends_on "cmake" => :build
