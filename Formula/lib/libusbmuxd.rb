@@ -8,8 +8,8 @@ class Libusbmuxd < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libusbmuxd-2.1.1_1-bd5d2c1133ab458a42d0b5d72"
-    sha256 cellar: :any, sequoia: "bc11ea90bddecfc2a4382cf049e09b23bc9855590e737233d81add1d739c1cdb"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libusbmuxd-2.1.1_1-b93c7538f184a2cb144c7c03b"
+    sha256 cellar: :any, sequoia: "c28fc6107fd40194865146d304bc0ce584400bc4c0e59e7db8feefa83f8edbc0"
   end
 
   head do
