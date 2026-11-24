@@ -9,8 +9,8 @@ class AdaUrl < Formula
   head "https://github.com/ada-url/ada.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ada-url-4.0.0_2-b9773392f45470e47a9d4921d"
-    sha256 cellar: :any, sequoia: "9ccbdca105527baced3427a1d397d9025db29e46f7dcc516db53b968a0a7640c"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ada-url-4.0.0_2-bc70572492307e7f9c8c3668a"
+    sha256 cellar: :any, sequoia: "55789a9920599ba116b9789d9c616d97c5c933c31650e1ebb3162e5035ab357b"
   end
 
   depends_on "cmake" => :build
