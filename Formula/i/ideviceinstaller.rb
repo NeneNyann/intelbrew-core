@@ -8,8 +8,8 @@ class Ideviceinstaller < Formula
   head "https://github.com/libimobiledevice/ideviceinstaller.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ideviceinstaller-1.2.0_1-bf8930a8fa5697647da1682ef"
-    sha256 cellar: :any, sequoia: "3684d42974d966d144a525f6cd1ab6eb969f3fd28d1beeedc0b85dced8eeb8ed"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ideviceinstaller-1.2.0_1-ba093479c809275f84c15ab45"
+    sha256 cellar: :any, sequoia: "16157f6fb5688bdaddb51970fb5835adfad28f9f3b7a814c349fc91839f6a808"
   end
 
   depends_on "autoconf" => :build
