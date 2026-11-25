@@ -17,8 +17,8 @@ class Ffmpeg < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ffmpeg-9.0.2_1-be65b9bf5707275b8f9982b88"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "ed5f11c9b82c996787eeb93f9691b9c2ebc205779f5ad9f10c9e38785cc1f1b3"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/ffmpeg-9.0.2_1-b37187083dbf582352ebc62f0"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "91e9c081d77b2d6526dd75b31ad41f0d58093f2ecc95ef56f1fc62190287100e"
   end
 
   depends_on "pkgconf" => :build
