@@ -12,8 +12,8 @@ class PythonAT315 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/python-at-3.15-3.15.2-bb7d2d0bd6b426930bb797c37"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "b6e7a73da5e54bf813baa3835210aa51c6f57cb956379e1fdbcde82ee3a1a4f3"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/python-at-3.15-3.15.2-b473f8f685ec2333fe7ac5d12"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "e06716ab2c2e56260047e2d893498ac0d654bf6975c0eecfe1974d7181268459"
   end
 
   # https://devguide.python.org/versions/#versions
