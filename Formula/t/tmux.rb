@@ -13,8 +13,8 @@ class Tmux < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/tmux-3.8-b9c9273f913b2e41bf719583d"
-    sha256 cellar: :any, sequoia: "88a172e18320d84cbd09b7a7435fac96ddc8f90c964ac18feb6b3cb99953dcf2"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/tmux-3.8-b7fb2f4ad6f6a19ed407da685"
+    sha256 cellar: :any, sequoia: "fd94382eba9af7ff4b95106b54e82de77321b5a4f962fca06e175a574acd76a5"
   end
 
   head do
