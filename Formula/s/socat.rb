@@ -13,8 +13,8 @@ class Socat < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/socat-1.8.1.3-b016f287c81ca2b0cfed2c4e8"
-    sha256 cellar: :any, sequoia: "93f81264b0f20129d342da3951b506a576b299a8164ea4275a2ef7995becfce9"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/socat-1.8.1.3-b0acb2bfe02acbb919e980db8"
+    sha256 cellar: :any, sequoia: "6b5353606009e358747a2c26c366262e89e51eaf7ca6085c0c317d9e0b625e08"
   end
 
   depends_on "openssl@4"
