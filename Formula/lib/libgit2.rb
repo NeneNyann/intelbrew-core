@@ -14,8 +14,8 @@ class Libgit2 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libgit2-1.9.7_2-b9f1790dc33360682e70a38cb"
-    sha256 cellar: :any, sequoia: "d8664a896f87f8f417c4a949c06cca83d8b4357aed3aacb4b0734bce9da06310"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libgit2-1.9.7_2-b5406f49876898d4b242dcee8"
+    sha256 cellar: :any, sequoia: "dc84fbf3b1a83680b16a09c2ded0d4da5ff4e8809a25150d4e76a09d042058a0"
   end
 
   depends_on "cmake" => :build
