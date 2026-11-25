@@ -7,8 +7,8 @@ class Libvmaf < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libvmaf-3.2.1-b77b62d8f3ee4b8db5dd6a892"
-    sha256 cellar: :any, sequoia: "787c1a6a7b9660329e05e79c441c92d5571154798df8778afbf98bca67ee63c8"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libvmaf-3.2.1-bbeafa9e4baaaffe82c81ea25"
+    sha256 cellar: :any, sequoia: "520715fc8415d9eec12e1bfd0fb41d41ee620d137b9f41786805f7b99897f5cb"
   end
 
   depends_on "meson" => :build
