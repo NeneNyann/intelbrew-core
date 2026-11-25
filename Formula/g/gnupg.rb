@@ -19,8 +19,8 @@ class Gnupg < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gnupg-2.5.24_1-b1f895236035fb04ed972ad2b"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "4048cf754879e0a97e1822cbf091e32353fad9cdf448382430c4660438db5385"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gnupg-2.5.24_1-b2cb9ba41043313433a174e0a"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "b06e6e9439118979322f6081cf7d0c3ed117e44df6e4a740e53249a4c6b3652f"
   end
 
   depends_on "pkgconf" => :build
