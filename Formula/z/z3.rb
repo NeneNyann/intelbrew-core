@@ -14,8 +14,8 @@ class Z3 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/z3-5.4.1-bf21da67a008cf5e7df1f913b"
-    sha256 cellar: :any, sequoia: "f29c056cc07ce27eeb479349e7af0e84fff01c7fd09667e3de494a21b636e054"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/z3-5.4.1-b879e7f2000f26b3440bee831"
+    sha256 cellar: :any, sequoia: "5228037dd789a135f2cc0be834601b490f64db870e24bdfb665e72c1dbef7bd1"
   end
 
   depends_on "cmake" => :build
