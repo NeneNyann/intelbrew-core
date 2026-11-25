@@ -7,8 +7,8 @@ class Dav1d < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/dav1d-1.5.5-b555c454e5ecd4be21b7cc4fc"
-    sha256 cellar: :any, sequoia: "442a47a200a6d311c78da0220b4c2dcd48712d48ef72e8d9bf29d962f4443826"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/dav1d-1.5.5-bb1bdafe46ab74a0317bbd648"
+    sha256 cellar: :any, sequoia: "de41bfd0f9a95d6a09b0601d76cef1bd24d0bc4d012d81578196852ba3744a66"
   end
 
   depends_on "meson" => :build
