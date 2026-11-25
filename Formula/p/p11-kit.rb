@@ -8,8 +8,8 @@ class P11Kit < Formula
   head "https://github.com/p11-glue/p11-kit.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/p11-kit-0.26.6-b50c8e1f7970078e88df41430"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "1c3363940c1d9263f0babf70f7f5568426a7d35fe22fa0d72f6ec7e87cc4c93c"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/p11-kit-0.26.6-b19983483985b888799c6a325"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "f01b00beeae1365043294d500f66d2643f98aad1222c339d3e9ed7df632417f9"
   end
 
   depends_on "meson" => :build
