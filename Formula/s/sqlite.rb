@@ -18,8 +18,8 @@ class Sqlite < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sqlite-3.54.1-bb6c8be7e04eac584bb14b025"
-    sha256 cellar: :any, sequoia: "ab51226b4bce617f1ea366343e24f278990213aed3401871fdee415dcab755fd"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sqlite-3.54.1-b2d360d334a5d285bd597c630"
+    sha256 cellar: :any, sequoia: "bc7b71a81ee0139448203f268eaf3c0e7d89f5cf59fe1cd69957a29584c869c3"
   end
 
   keg_only :provided_by_macos
