@@ -15,12 +15,8 @@ class Libnghttp2 < Formula
   end
 
   bottle do
-    manifest_sha256 "cd894e70d512e1982485cab4bffe367a9b881c3bd44e65a80082177e699e8894"
-    sha256 cellar: :any, arm64_golden_gate: "d9da888bfcca6b9e1cbf53b84d4664b02e12b38e04032fb985c7e4ff7068acb0"
-    sha256 cellar: :any, arm64_tahoe:       "b666811d826d75ddb25caf4ee321f54cb0a750e050b9857681c2b15538ee13f0"
-    sha256 cellar: :any, arm64_sequoia:     "88d1ab4c79c450318c8e65a3070578a533a11eff7dad6d3a4b79c580b0fbe6bb"
-    sha256 cellar: :any, arm64_linux:       "0f30d9054161da6b9b7b2506f8ea7ca7730a1297b8a0766126678ebee1c0873a"
-    sha256 cellar: :any, x86_64_linux:      "82b44983f47398ff3ebfe86e84d97e1bcb71916f93428c90bb95b7bb814b1671"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libnghttp2-1.71.0-b5e8564f9ba19cb84b9d0bca1"
+    sha256 cellar: :any, sequoia: "73c12ebe9da28f3ad9a0e2c456c398672efc61d80d88c227e066221ffa29c25e"
   end
 
   head do
