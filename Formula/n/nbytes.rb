@@ -7,12 +7,8 @@ class Nbytes < Formula
   compatibility_version 1
 
   bottle do
-    manifest_sha256 "4e8fbdd7072c42de97ae1e348a2a7f1df7338c4a1650ef3f9c6ebb29a388849b"
-    sha256 cellar: :any, arm64_golden_gate: "38a76d911a5ac69042db2acc0f639f672e1fe26e4f8372dcbf993bed6af4c367"
-    sha256 cellar: :any, arm64_tahoe:       "5a2accb231bac27986c58efd5552413830213723ebc3d62cd8de5058ac82a749"
-    sha256 cellar: :any, arm64_sequoia:     "274197cd3d7ed773e8693a715bb5d0d5498f1d799e82275ad28d4bb359cad127"
-    sha256 cellar: :any, arm64_linux:       "0366d9fd5ed77399526563bbad9953552f0c88859fe6c085bf4d54dac2349ad1"
-    sha256 cellar: :any, x86_64_linux:      "340fb555250888abef01c5648cbdae16b269e2ae31356d41e21e35225b94bc6e"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/nbytes-0.1.5-bf04a992b58615ddc7ff1bd8c"
+    sha256 cellar: :any, sequoia: "6d21a52b1c1cbc39e6edd67fa5ba9a50e2966b851550e4434de39abd2a70ed70"
   end
 
   depends_on "cmake" => :build
