@@ -12,8 +12,8 @@ class Libgcrypt < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libgcrypt-1.12.4-b6a9bfefa2d62092cefc758c0"
-    sha256 cellar: :any, sequoia: "117ed25099dff4e870786efc25dbcc77443e1f5ef36bede886bfa9e8b5ab0f9c"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libgcrypt-1.12.4-b900123aa094398443afea524"
+    sha256 cellar: :any, sequoia: "93867bdf4180e7d67d10db09cd11c7c3db97d9ef85b9398737065d2a07efcd6e"
   end
 
   depends_on "libgpg-error"
