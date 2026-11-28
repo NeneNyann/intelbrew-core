@@ -14,12 +14,8 @@ class Pkgconf < Formula
   end
 
   bottle do
-    manifest_sha256 "c1445e36a170f35a5317ac52d7f51e9f1196b3962333ce1903f53be3fe8c3273"
-    sha256 arm64_golden_gate: "f5da9ea7e060cd8a7d06e31bdb76dbf74e5d46d77b6657d0573ba1d548216d33"
-    sha256 arm64_tahoe:       "84d9b76f2382bca438590bb86a0e1d464147ec70d0bc9a20c25b665c29535aa3"
-    sha256 arm64_sequoia:     "984325551072d74b5c32e4c0a48464250612eaf835c39f8b23425fbaf7d3cbc1"
-    sha256 arm64_linux:       "1d8dc2d266572d5491b094de900891372681eb9a58b58d1dc4871fe6da145010"
-    sha256 x86_64_linux:      "4657c8c704d846d6b2a0b7e3a7d44513c7f9fe22721debe1a6292b02226f7c62"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/pkgconf-3.0.11-bb23f2bc289cadfce0548804a"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "42176a2dbca609d470980307aff9e646f3d6b73f5192e672fef2130ffdab878e"
   end
 
   head do
