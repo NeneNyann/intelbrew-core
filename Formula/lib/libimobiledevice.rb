@@ -21,12 +21,8 @@ class Libimobiledevice < Formula
   end
 
   bottle do
-    manifest_sha256 "1705e7586da22d7afa41d44872c7e0aa4a07820540d32ddaf4c1b6f6244baab6"
-    sha256 cellar: :any, arm64_golden_gate: "bc7cae16faf4ddedf0d6c75652bf0c82dd674fe96ed601917aaa3e70a714b549"
-    sha256 cellar: :any, arm64_tahoe:       "2d6452378134837c5948786665ae1084b73e26cc63ca7038775b8c8a63f0587e"
-    sha256 cellar: :any, arm64_sequoia:     "0dbe0bb370482fac0ab4198e5b0bf8b12dd81aebdfcd5bea9245987cf8054a9f"
-    sha256 cellar: :any, arm64_linux:       "4b58c01ae36e0a0ec96ed195ae542a3e495b3b4818b4940a8dfa4447a61ba02a"
-    sha256 cellar: :any, x86_64_linux:      "4ea9919dd1a53b560232ad9e9c8a955b4c6735dc2e24bcde616dc52342aec0df"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libimobiledevice-1.4.0_3-b90ef8f0406d0e2083579375e"
+    sha256 cellar: :any, sequoia: "8cafd9941b89a756945d3c18b58682a1a51c671fd89b44ea4821beeac39b58e9"
   end
 
   depends_on "autoconf" => :build
