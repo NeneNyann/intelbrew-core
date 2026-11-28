@@ -8,12 +8,8 @@ class Libplist < Formula
   head "https://github.com/libimobiledevice/libplist.git", branch: "master"
 
   bottle do
-    manifest_sha256 "51830c5a64607033894ac9a910c5144db66bf4d76953ce9606eb66b77420087f"
-    sha256 cellar: :any, arm64_golden_gate: "2321434c852fb7f232a377636d8ab168e546f720ea3628e695a05792065bf030"
-    sha256 cellar: :any, arm64_tahoe:       "6ff690a56dc4afd4aaf09d832a8ba64f7fc80ee6ecff64ad8b5673614ffaf3c8"
-    sha256 cellar: :any, arm64_sequoia:     "d88d984b12e68f8470e9f72631a4711df0f85b8728c53e6c04bf2956267e84cc"
-    sha256 cellar: :any, arm64_linux:       "3b79ee174bba2c391e206e86758a324b2e2fb3f9a6f366275075d5c4886ddb54"
-    sha256 cellar: :any, x86_64_linux:      "553bbd2e5b172dfcf89cd5a002e99a59ef0253ef933977ecab1d7dab2aaf2a93"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libplist-2.8.1-b306bee5a839484fdb2c901fc"
+    sha256 cellar: :any, sequoia: "f897b74337feac807d58a7d47baa7a20de078ae7228b9ec906747868f15b94b0"
   end
 
   depends_on "autoconf" => :build
