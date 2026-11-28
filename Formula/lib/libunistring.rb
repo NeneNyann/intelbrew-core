@@ -9,8 +9,8 @@ class Libunistring < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libunistring-1.5-b2a777559e144f655504d1e64"
-    sha256 cellar: :any, sequoia: "539d32ca027e4c3611ee6fa3c84172d904d964bcc03cc5061a61b36fa4a5f412"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libunistring-1.5-b75870bb1fee9301b56200ed3"
+    sha256 cellar: :any, sequoia: "256872e3e1f7e1553479b12f2e2b3c97bbe06f1e69e111576b12754b5b489fc8"
   end
 
   deny_network_access!
