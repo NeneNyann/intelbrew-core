@@ -13,8 +13,8 @@ class Mpg123 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/mpg123-1.33.7-b421bdede84c4a4769af21787"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "d4040363b79e5a211f4a810c7d4d8743845ac6dbfbcef74670fd8839b0cd7d7e"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/mpg123-1.33.7-b775b75948b3370c3111fd2fd"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "2ac10c9ddeb121c53f2ca7ea3d2ea2f1ce1e39157287d85442268479e6b42ceb"
   end
 
   deny_network_access!
