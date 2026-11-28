@@ -11,8 +11,8 @@ class Gettext < Formula
   compatibility_version 1
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gettext-1.0-b05de9c49dc9f8751f816e1fa"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "813bbf4683aad14d2be02d7c8c7bfeef3cfb191ff82042f148e8287c1737b08b"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/gettext-1.0-b12d583824ddc9a8f5f21d534"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "a43f3882dcdc6a032ec0198f72b5694bc16bd20ab5c6e995d667bce8c3ae35ea"
   end
 
   depends_on "json-c" # for spit
