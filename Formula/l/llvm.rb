@@ -23,12 +23,8 @@ class Llvm < Formula
   end
 
   bottle do
-    manifest_sha256 "047ad0827dfae7478a4df5ae7dbf0cfa83fabbcff489fb0aedf2b88d545fbc0c"
-    sha256               arm64_golden_gate: "a649443f745f103eeb1b3c59255bf9dcefd7287ec91ce45afcadc2976ca8541e"
-    sha256               arm64_tahoe:       "e8479b14cf92f2c1092ef31531a89b8c9b88e97207e3b80e330f2037e594963b"
-    sha256               arm64_sequoia:     "8a7215262526c9d76c252136eeb4b972ffd93fa6aa1820a5cd16d21cf1362ad8"
-    sha256 cellar: :any, arm64_linux:       "d13a82f06252670a45de41805399465a21491ed2707a8433968cc4d344d2a0f0"
-    sha256 cellar: :any, x86_64_linux:      "27fe7d5572c25de115a8c90c54a5664a8d59fc58db8412b30c5ccabcf15999b7"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/llvm-23.1.6-b26bd0e5097a4f44eeeb3c4aa"
+    sha256 cellar: :any, sequoia: "345ae80addcc0b8199b9f3fc86c61cf3d0b4046c53aa73df12157d082bff6017"
   end
 
   keg_only :provided_by_macos
