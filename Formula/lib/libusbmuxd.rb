@@ -8,12 +8,8 @@ class Libusbmuxd < Formula
   compatibility_version 1
 
   bottle do
-    manifest_sha256 "dda86851a5846a17d999dc6a14c5a54638c3a02bbcbeb9d69db39dbf80196d3f"
-    sha256 cellar: :any, arm64_golden_gate: "2839eb617eca09b376f3ca95de69418a682f9a726fbc99d0b4186ce3449c6434"
-    sha256 cellar: :any, arm64_tahoe:       "cd4e39092e81fef19d844c344b4c27f1be39002e4fe9e37a981e1ccb362e3d08"
-    sha256 cellar: :any, arm64_sequoia:     "16b44e022f024205a1eb1421829f3f60ed845f6c2c64d6f02eaa2372585abb25"
-    sha256 cellar: :any, arm64_linux:       "4f8b3df9782cce8f8ca82a35ad43db8b0a033bafd0b72268b9edcf17d3891e77"
-    sha256 cellar: :any, x86_64_linux:      "abc7d2a5420a7bc40d934cfd30058f3187814b11c5eb8dd955bc3c730ed6a74a"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libusbmuxd-2.1.1_1-b2383b59e1ea1747651133163"
+    sha256 cellar: :any, sequoia: "9337af9a130a3a38bba175fb773bc6824d5f355243a2565a4a6d55571857d008"
   end
 
   head do
