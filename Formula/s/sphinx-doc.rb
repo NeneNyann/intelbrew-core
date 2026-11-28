@@ -10,12 +10,8 @@ class SphinxDoc < Formula
   head "https://github.com/sphinx-doc/sphinx.git", branch: "master"
 
   bottle do
-    manifest_sha256 "b8c2080a3b4ccfbe0eb861e71893fa50a55017ec9b921d5f3b1f00ae5af2261d"
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "8f64c9383acf03dcfea724f2d41b984afb622cac65427dbe31a973f6f1dd62ce"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "2f100fe7fe707ba4b8b9b72db24feab67d1732dbd2ae106c029768278cb3d379"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c36688c0a70497f75a9289b92cd4a0213118de94b407eb95b9eb912832a9aed6"
-    sha256 cellar: :any,                 arm64_linux:       "709e51ce5d3bb3b6f8b14f1b05647a75302063a48ef991dcc474ed61ceeab58a"
-    sha256 cellar: :any,                 x86_64_linux:      "c2f57c70902484c2af17724758024f42ed7a00e7b8711d89077f8f60719f935f"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sphinx-doc-9.2.0-bb6871433ced630d403e9d682"
+    sha256 cellar: :any_skip_relocation, sequoia: "ca9f0e810f49a9e88424f364bdf9389408ec8f599c01a89f8764420db0316c2f"
   end
 
   depends_on "certifi"
