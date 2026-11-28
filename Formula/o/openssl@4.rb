@@ -13,8 +13,8 @@ class OpensslAT4 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/openssl-at-4-4.1.0-b44b3910aa8895e81b5f4e33b"
-    sha256 cellar: "/usr/local/Cellar", sequoia: "b7d5b071347ca9bc8f51c8729d597b872411f4b2dea201ca8af6e79d35b88d90"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/openssl-at-4-4.1.0-b0b5e0ada4b98cb43b3eb7c33"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "9511be0481241448e74bd07838cf1d7d9dbe22f228c7fe2ef7c2ffa500111f05"
   end
 
   depends_on "ca-certificates" => :no_linkage
