@@ -24,12 +24,8 @@ class Node < Formula
   end
 
   bottle do
-    manifest_sha256 "f1e435e4db4a2d99b0f432ca0dba04554ea26571c4b805cf7225fd698900db69"
-    sha256 arm64_golden_gate: "ce40077d5072a0f9a1f8a61c7c77c3ec130cd51df5ae67f26687c62cac215a59"
-    sha256 arm64_tahoe:       "0d1d5e1197685c957d7c3a91db68cfd07a1f8fa54ce842c79515fb3fe6782195"
-    sha256 arm64_sequoia:     "ee79e60003e444bd4560c62045e03ad01f140e483c02c588df633f91e0206710"
-    sha256 arm64_linux:       "1f436be648d7ea65043f7f1ee3cfab0d7c7f687462f4800e452937d58254abbc"
-    sha256 x86_64_linux:      "8ed09f45e9c1c95394ceadc839b84e2c33f16d562ccfd6f4d2fb11edc966c133"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/node-26.13.1_4-bcb94c9f1699d7efbc2db7bb4"
+    sha256 cellar: "/usr/local/Cellar", sequoia: "9ac8ebdcac76c24f44e0fd8837025269fe2c6401d04d2902132b474b9789d82a"
   end
 
   depends_on "pkgconf" => :build
