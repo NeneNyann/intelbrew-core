@@ -15,12 +15,8 @@ class Libuv < Formula
   end
 
   bottle do
-    manifest_sha256 "04d4978d96bdf444518cef4d9bd52124e10f7301698e9ba5ff1037241d7ec937"
-    sha256 cellar: :any, arm64_golden_gate: "2fea505cd00bcf4b00c6f39a8a70a7b669b57db9c7ced4195c59221f4647c9b6"
-    sha256 cellar: :any, arm64_tahoe:       "76e5d3743160ff4da9a91f35f1e10614ffef9c4aeafb8f44e8e7b07a9bfa32fe"
-    sha256 cellar: :any, arm64_sequoia:     "fd36aed546040f791778940d56586bbbeaa2f8ed804f1a957b4baf83657d5b1f"
-    sha256 cellar: :any, arm64_linux:       "d0980c41c5fd765f0e2936fccc4ab0e29c147ca464601fca52d2a75621817235"
-    sha256 cellar: :any, x86_64_linux:      "5697a3e2ebf129603045c088824fb7fcf5e99fcf139eeed6239bc50375ad4cae"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libuv-1.53.0-b001b5540f36c45b9a264885b"
+    sha256 cellar: :any, sequoia: "27acb98174ca8154cbb1a6ede238fce05f3b07d2fd5cd76bd866e631d5816aa5"
   end
 
   depends_on "cmake" => :build
