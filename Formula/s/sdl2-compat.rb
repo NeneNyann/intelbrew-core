@@ -8,12 +8,8 @@ class Sdl2Compat < Formula
   head "https://github.com/libsdl-org/sdl2-compat.git", branch: "main"
 
   bottle do
-    manifest_sha256 "b5d7ec84b220a905a73d931db26dbebc9d0ad6624cc9a38adbbf6d9c99578221"
-    sha256 cellar: :any, arm64_golden_gate: "139bf83cf71fda12c0ca21c6c5bd5b4d523b6129da62f4f4033b75550ff47a98"
-    sha256 cellar: :any, arm64_tahoe:       "32ef73fe92e17d21856399165bc902f74f3c0e87d03021e3e945dfc4dd2d771c"
-    sha256 cellar: :any, arm64_sequoia:     "0051ded084f7a73374bffe09df4cd6a0e70ccee6b3337a5843c152111bc01c28"
-    sha256 cellar: :any, arm64_linux:       "81a904017f0b11fa215ce84b108cde785efc99380a7bd72bad8e68784535dd77"
-    sha256 cellar: :any, x86_64_linux:      "ae3bfb210d01ab00c03a584cd5dff60271ad7ea152dbadac1e7ca35c850ce0d2"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/sdl2-compat-2.32.74-b25587a4258b077b668d2c8e9"
+    sha256 cellar: :any, sequoia: "25b0d363a9992bf6185bb26b9ab7112bfaddb0c8bdc45763396a02c8ecbd5ff0"
   end
 
   depends_on "cmake" => :build
