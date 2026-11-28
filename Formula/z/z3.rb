@@ -14,12 +14,8 @@ class Z3 < Formula
   end
 
   bottle do
-    manifest_sha256 "f01900be5ca8abbba52ef1b0f43975422ee9ad4939012cab0c070bc72844466f"
-    sha256 cellar: :any, arm64_golden_gate: "1bb351ad59044730ab9088dfaa9e64cc9f2370cd05f5fad97dd743ad2c1ba867"
-    sha256 cellar: :any, arm64_tahoe:       "0a1edb2cc2d6a9d6a0cab646e75f5ea8ce909f2ea80f0f38c96ab57ebd429a3d"
-    sha256 cellar: :any, arm64_sequoia:     "96f4f8878b2dca58c0e32cc5f5ba2d5a9996e00b66b11a33040764db66dcfae0"
-    sha256 cellar: :any, arm64_linux:       "38fb23d1bddbc367e2ffe7f7cb8ba5b5dcab284c84ce44f626e992fcb69f3de9"
-    sha256 cellar: :any, x86_64_linux:      "e217af632e357954bbf05507397d1b6134b783e27b8164134e11d32c595a955f"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/z3-5.4.1-b7dc88a1b06f07c6cfbe49c04"
+    sha256 cellar: :any, sequoia: "3c7a3639e4b3f98467802c0c5e1981cd5fab378f6932ab56c16e1e5e6dd39962"
   end
 
   depends_on "cmake" => :build
