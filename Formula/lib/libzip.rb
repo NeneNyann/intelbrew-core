@@ -12,12 +12,8 @@ class Libzip < Formula
   end
 
   bottle do
-    manifest_sha256 "44be726a2cf59d65f3e25aaeae0e01d6e57578c1dd3f11b0e76f8234ca556855"
-    sha256 cellar: :any, arm64_golden_gate: "904a47abb734c9c388a5e2cc0838b35327bbbe44f65fe0f89f7860b1c915db5e"
-    sha256 cellar: :any, arm64_tahoe:       "9c216cb9fcb520b58d2c2011e4cf8f04d36d2ddb6508ef05b1bddbb55992fc47"
-    sha256 cellar: :any, arm64_sequoia:     "cb823dd0266ec50ea17789d93c11ef1bcdaec9c1c7f6aa6e8cc9f8e48e0da58b"
-    sha256 cellar: :any, arm64_linux:       "af29e3d236c144d411f4d2ce00be8eb350152b1f9e766459adaef3559990b85a"
-    sha256 cellar: :any, x86_64_linux:      "3c741ad61d7b47ca1d29a932cde97a5d919c91265c3ea69d2df2f98860a67a21"
+    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libzip-1.12.1-ba6dbdf7bc8cb3cd823fd55c2"
+    sha256 cellar: :any, sequoia: "0d8b11bb5068e466c8d6b72e1470f1633415bc1cff6e986a7b69cfe6ee5ca141"
   end
 
   depends_on "cmake" => :build
