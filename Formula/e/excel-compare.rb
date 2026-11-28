@@ -7,6 +7,7 @@ class ExcelCompare < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "f63c382c7e45bddcb3c8573dce4fce884ef1d89de62668e170849f5fcba19fc8"
     sha256 cellar: :any_skip_relocation, all: "a711cca888cc9038f1b3d57586bd777495e17e849ff0fc5577d10cfca5bd329a"
   end
 
@@ -16,6 +17,8 @@ class ExcelCompare < Formula
     url "https://github.com/na-ka-na/ExcelCompare/raw/0.7.0/src/test/resources/ss1.xlsx"
     sha256 "f362153aea24092e45a3d306a16a49e4faa19939f83cdcb703a215fe48cc196a"
   end
+
+  deny_network_access!
 
   def install
     libexec.install Dir["lib/*"]

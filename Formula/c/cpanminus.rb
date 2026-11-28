@@ -10,6 +10,7 @@ class Cpanminus < Formula
   head "https://github.com/miyagawa/cpanminus.git", branch: "devel"
 
   bottle do
+    manifest_sha256 "d4b2e4160922a794843bd0aa9a5b25f57c7333d5b21b117cbbc763e605badc3e"
     sha256 cellar: :any_skip_relocation, all: "4c821fab27813b58a25595c949578c8b3316e51ab386edbb693e0f77a56ff049"
   end
 
@@ -33,7 +34,8 @@ class Cpanminus < Formula
     inreplace inreplace_files, "/usr/local", HOMEBREW_PREFIX, audit_result: build.stable?
 
     # Needed for dependents that might use Homebrew perl or system perl.
-    inreplace bin/"cpanm", %r{^#!#{Regexp.escape(formula_opt_bin("perl"))}/perl$}, "#!/usr/bin/env perl"
+    perl_bin_pattern = Regexp.escape(formula_opt_bin("perl"))
+    inreplace bin/"cpanm", %r{^#!#{perl_bin_pattern}/perl$}, "#!/usr/bin/env perl"
   end
 
   test do

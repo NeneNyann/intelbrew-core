@@ -13,6 +13,7 @@ class Minidjvu < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "b51fe18f4162736962f1785e29467f6be6a3d3a2922637c4860089ba72f9fe47"
     sha256 cellar: :any, arm64_golden_gate: "281b013a773e8ecbd20ce404552b3b052e7bd7769c407e2586e550ded44f6ca3"
     sha256 cellar: :any, arm64_tahoe:       "344f5764c5d83cb418143496312da7c9db8d17ca04b2f044e329ff5dbb450945"
     sha256 cellar: :any, arm64_sequoia:     "ce4a9e99a9b3148e38073ec4d59bb065d09a3c00bd39cc664269f05e2b10059a"
@@ -46,8 +47,19 @@ class Minidjvu < Formula
   end
 
   test do
-    circle = (0...16).map { |y| (0...16).map { |x| ((((x - 8)**2) + ((y - 8)**2)) < 25) ? 1 : 0 }.join }
-    box = (0...16).map { |y| (0...16).map { |x| (x.between?(3, 12) && y.between?(3, 12)) ? 1 : 0 }.join }
+    circle = (0...16).map do |y|
+      (0...16).map do |x|
+        squared_distance = ((x - 8)**2) + ((y - 8)**2)
+        inside_circle = squared_distance < 25
+        inside_circle ? 1 : 0
+      end.join
+    end
+    box = (0...16).map do |y|
+      (0...16).map do |x|
+        inside_box = x.between?(3, 12) && y.between?(3, 12)
+        inside_box ? 1 : 0
+      end.join
+    end
     (testpath/"circle.pbm").binwrite "P4\n16 16\n#{[circle.join].pack("B*")}"
     (testpath/"box.pbm").binwrite "P4\n16 16\n#{[box.join].pack("B*")}"
 

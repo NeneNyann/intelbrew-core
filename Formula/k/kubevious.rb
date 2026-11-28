@@ -7,12 +7,18 @@ class Kubevious < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "06a9faa3d1ea6973a35a5fef9bd185c8e2c3cb9d2124384785350472b116acbf"
     sha256 cellar: :any_skip_relocation, all: "0a90f43ca3f6dc2ce0eff8244708ad484bf9a6860f949a04fb124a0536f41b72"
   end
 
   depends_on "node"
 
+  allow_network_access! [:build, :test]
+
   def install
+    # Avoid the-logger==2.1.2 which is missing pino-multi-stream
+    inreplace "package.json", '"the-logger": "^2.1.1"', '"the-logger": "2.1.1"'
+
     system "npm", "install", *std_npm_args
     bin.install_symlink libexec.glob("bin/*")
   end

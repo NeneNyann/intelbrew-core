@@ -1,8 +1,8 @@
 class Bismark < Formula
   desc "Bisulfite read mapper and methylation caller"
   homepage "https://github.com/FelixKrueger/Bismark"
-  url "https://github.com/FelixKrueger/Bismark/archive/refs/tags/bismark-rust-v3.2.0.tar.gz"
-  sha256 "8b7261a2071a7c73e7b7e0337c243da126aacdb4feb526cac0d1d6a3431b65e5"
+  url "https://github.com/FelixKrueger/Bismark/archive/refs/tags/bismark-rust-v3.5.0.tar.gz"
+  sha256 "d81688b1457be6e1238cf2e353face61d5c2cb91ebcf1a108934517a3074e440"
   license "GPL-3.0-only"
   head "https://github.com/FelixKrueger/Bismark.git", branch: "master"
 
@@ -12,11 +12,12 @@ class Bismark < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "7206699650e4a46404abbf068a181a449f0797f8d378ef3ad89fe7ed20187141"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "1cf73ac9b3c7a76ee6e37e1eb7b6a22f9e0252fb20ee6f27e5147ff4cbd7be87"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "49440033fde2c39954670e0ce46c061d0b18e4d3f59093cb4b8b528cd2d64b31"
-    sha256 cellar: :any,                 arm64_linux:       "a57ca8f4092bf7c3a7cd06f4694f31b4ec229b2c1ec307642afb7dbfd48b7603"
-    sha256 cellar: :any,                 x86_64_linux:      "d6e3cb0a263b3805344b2ca5a6805e3a3a6e1acd02e3d94b04753b9e7ca89fef"
+    manifest_sha256 "b9fe5ee157769e13fc6c7292128ccca339303fa8e0e78d68f85deabbd12f426d"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "ad132d3db498156295dbb1fe6f54a44f38644ae0d879c687d2bb422b05458f45"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "039c171563d58638b7663b13d93a4862f807ecea0f9fdc05543da1f7635671c8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "37650678f4e60ca346fa66f69238ffc8223820b9b06dc4cc770c0fce3153941e"
+    sha256 cellar: :any,                 arm64_linux:       "16f83cc4e822c9b578f4288fa12bb8eb7fb5e3e7ed3e2b8cd59922bd0100e873"
+    sha256 cellar: :any,                 x86_64_linux:      "1be71673ad53f0430de7967b4111a4120ec6b845d14e6d62d17d76aa914232ca"
   end
 
   depends_on "rust" => :build

@@ -7,6 +7,7 @@ class Miniserve < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "6c8f0453295a8b1e02b227e99680863efe6b91fa2d1cff4d4b0f2754ccbd1a13"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "f8e174947c35124659b00977879bdfc6fb0b3d03d0459ac03cb31e8e50241d9a"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "29cd82cffcde691ad0e8faae29aacaea87345becfa60781208d9d10f511e163e"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "58b8e8d1cdbe0c34560eee97534ee2c2d618c87721935008054f33856adfaa55"
@@ -34,15 +35,10 @@ class Miniserve < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"miniserve", bin/"miniserve", "-i", "127.0.0.1", "--port", port.to_s
-
-    begin
+    with_test_process(bin/"miniserve", bin/"miniserve", "-i", "127.0.0.1", "--port", port.to_s, signal: "INT") do
       sleep 2
       read = (bin/"miniserve").read
       assert_equal read, shell_output("curl localhost:#{port}")
-    ensure
-      Process.kill("SIGINT", pid)
-      Process.wait(pid)
     end
   end
 end

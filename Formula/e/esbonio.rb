@@ -9,6 +9,7 @@ class Esbonio < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "dbde09ea99e62c773f1ecbe1de9959242135962cb074a4cf100242ce011c1823"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "278831a9f7ef18b32165461987eb4293d9ae26e6933c152e976774a4314506e9"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4de7dff017cf56b5463b1fa7a2ab744eea8c9e45df515dd74fcb738c5eae903f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "183da30c35fba7960d5aae46e549fa85ddf5578223d1667b830293982f388fb6"
@@ -62,6 +63,8 @@ class Esbonio < Formula
     url "https://files.pythonhosted.org/packages/01/89/3f825ab71c242fffb62ea8fe638741c290f62f8d7aadf8125ff897747af3/websockets-17.2.tar.gz"
     sha256 "36c2fb94c990cc2545143b12690e2de6c16300f9dbe5b4f33fa300cf57dc8792"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

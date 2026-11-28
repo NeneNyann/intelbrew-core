@@ -11,6 +11,7 @@ class Wren < Formula
   end
 
   bottle do
+    manifest_sha256 "127661c7c162353d3a953e74af6fce67103a6e700569c8562dfd1dd93fb4d86c"
     sha256 cellar: :any,                 arm64_golden_gate: "6ec79e03452e0b9d2464b2a5c6011a446377308320244895eb7ad4f92a3234fc"
     sha256 cellar: :any,                 arm64_tahoe:       "8c4291a4d7ced18176f129c62108b7a2f0286501d05b23ba5f3edcc3016f69c9"
     sha256 cellar: :any,                 arm64_sequoia:     "32ef27315c3c2718071ccbe516fbdc91934eb94d2a0e5f91ec63c215efb8aea0"
@@ -26,12 +27,11 @@ class Wren < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "e9129580dd56d4ad4ad66ac59e1d43533b54816936fc18d0216a445d576598e0"
   end
 
+  deny_network_access!
+
   def install
-    if OS.mac?
-      system "make", "-C", "projects/make.mac"
-    else
-      system "make", "-C", "projects/make"
-    end
+    makefile = OS.mac? ? "projects/make.mac" : "projects/make"
+    system "make", "-C", makefile
     lib.install Dir["lib/*"]
     include.install Dir["src/include/*"]
     pkgshare.install "example"

@@ -18,6 +18,7 @@ class Bashdb < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
+    manifest_sha256 "edfdf6679003e7f56ee96b1545f2176e2b0bd120a3dc543a4728dccd1bb32fb1"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "70c7d02ad0c3957640f26b2ba455f696c0aa1248db43c27cca1f56701e86310c"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "2aedb1af38194b056e6f3a31ff73c2995782f41d714955991a5d749abe53eb14"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "2aedb1af38194b056e6f3a31ff73c2995782f41d714955991a5d749abe53eb14"
@@ -35,7 +36,8 @@ class Bashdb < Formula
 
   def install
     # Update configure to support Bash 5.3 by replacing `'5.2' | '5.0' | '5.1'`
-    inreplace "configure", /(?:'5\.\d+'(?:\s+\|\s+)?)+/, "'#{Formula["bash"].version.major_minor}'"
+    bash_version = Formula["bash"].version.major_minor
+    inreplace "configure", /(?:'5\.\d+'(?:\s+\|\s+)?)+/, "'#{bash_version}'"
 
     system "./configure", "--with-bash=#{HOMEBREW_PREFIX}/bin/bash", *std_configure_args
     system "make", "install"

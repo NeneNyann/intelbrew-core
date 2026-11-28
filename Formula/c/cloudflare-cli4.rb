@@ -11,6 +11,7 @@ class CloudflareCli4 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "1844a736365ae1e78ab00d767f92a259476832af4e6bc4cd275b030ce1790ba1"
     sha256 cellar: :any, arm64_golden_gate: "66b7debc1448f7e784080a6e9e5fd5e1dac0f370dcd44590d56c1c8832c0dadc"
     sha256 cellar: :any, arm64_tahoe:       "08a8f55475eb70c4ab1776e55d8a2e944555740acb0799718f1921bc8be60649"
     sha256 cellar: :any, arm64_sequoia:     "26cb0ff5ee86c2de8b6edbe8793625740067340a4cea28c87b23d1f130dabc94"
@@ -58,6 +59,8 @@ class CloudflareCli4 < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! [:build, :test]
 
   def install
     virtualenv_install_with_resources

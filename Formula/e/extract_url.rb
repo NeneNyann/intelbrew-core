@@ -7,6 +7,7 @@ class ExtractUrl < Formula
   revision 5
 
   bottle do
+    manifest_sha256 "44d4714399174365bc373f9fdb65176dc6a5d169b2df5bdb164447a0be25fcca"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "345d044e2be5fa0c43e0b0faf6fa6d944647fb8142c8e98a7d681cf0060ed43a"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "e49fb941f701db09e15f864a94e2950b92b94fb8e7f903c297c9239dcb3c3e8f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "bee5b2a30c280fc97bb669c3530387ed70b6e0c93981737c268235925ac664b8"
@@ -131,6 +132,8 @@ class ExtractUrl < Formula
     url "https://cpan.metacpan.org/authors/id/M/MD/MDXI/Curses-UI-0.9609.tar.gz"
     sha256 "0ab827a513b6e14403184fb065a8ea1d2ebda122d2178cbf45c781f311240eaf"
   end
+
+  deny_network_access!
 
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"

@@ -7,12 +7,16 @@ class RevealMd < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "c4ec2cc04ec5cde7562299db7ef80ed3a523875d0bc6be0177e84ca0218d4c1f"
     sha256 cellar: :any, arm64_golden_gate: "9894ad668b98aac5215a89bdd31e39be7d73962f1d8101690c6022154e9c6f1a"
     sha256 cellar: :any, arm64_tahoe:       "9894ad668b98aac5215a89bdd31e39be7d73962f1d8101690c6022154e9c6f1a"
     sha256 cellar: :any, arm64_sequoia:     "9894ad668b98aac5215a89bdd31e39be7d73962f1d8101690c6022154e9c6f1a"
     sha256 cellar: :any, arm64_linux:       "dbde45bb72ba1e3d9fb548473ff026e1d4379abac971885236b1c365252c499c"
     sha256 cellar: :any, x86_64_linux:      "45100cb1686b30fdddbfc5cc0b516346dcf8c6170eac86edfbbcb52cbad2da4d"
   end
+
+  deprecate! date: "2026-11-22", because: :repo_archived
+  disable! date: "2027-11-22", because: :repo_archived
 
   depends_on "node"
 
@@ -34,13 +38,11 @@ class RevealMd < Formula
     (testpath/"test.md").write("# Hello, Reveal-md!")
 
     output_log = testpath/"output.log"
-    pid = spawn bin/"reveal-md", testpath/"test.md", [:out, :err] => output_log.to_s
-    sleep 8
-    assert_match "Serving reveal.js", output_log.read
+    with_test_process(bin/"reveal-md", testpath/"test.md", [:out, :err] => output_log.to_s) do
+      sleep 8
+      assert_match "Serving reveal.js", output_log.read
 
-    assert_match version.to_s, shell_output("#{bin}/reveal-md --version")
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      assert_match version.to_s, shell_output("#{bin}/reveal-md --version")
+    end
   end
 end

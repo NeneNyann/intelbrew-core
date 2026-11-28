@@ -13,6 +13,7 @@ class TemporalTables < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "74b72cad33518255a89ccf073fd7807de7a65b10f4e54e6863abe8e8dc5cbb1a"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "b4438829b45b83eff018291fb2bd91f919b8ecda5260b84547ed774b1e6428fa"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "961c3574dee3785c6a4a2d5dfee3fc55c758b09b06df2dc106a6f20caf555c18"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "2be633c14e63c4523d088fd0caadba5c804d7b2d9683f6a78e56f3e5111596d1"
@@ -22,11 +23,11 @@ class TemporalTables < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "41bcf18a2b6d4abee03cd3f87ddcceb820fee5410d2442ad1613075f7fc97c92"
   end
 
-  depends_on "postgresql@17" => [:build, :test]
+  depends_on "postgresql@17" => [:build, :test] # TODO: v19 - https://github.com/arkhipov/temporal_tables/issues/81
   depends_on "postgresql@18" => [:build, :test]
 
   def postgresqls
-    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("postgresql@") }
+    deps(/\Apostgresql@/).map(&:to_formula).sort_by(&:version)
   end
 
   def install
@@ -35,8 +36,8 @@ class TemporalTables < Formula
     postgresqls.each do |postgresql|
       args = %W[
         PG_CONFIG=#{postgresql.opt_bin}/pg_config
-        pkglibdir=#{lib/postgresql.name}
-        datadir=#{share/postgresql.name}
+        pkglibdir=#{lib}/#{postgresql.name}
+        datadir=#{share}/#{postgresql.name}
         docdir=#{doc}
       ]
       system "make", "install", *args

@@ -8,6 +8,7 @@ class PythonAT310 < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "1c43e734d860e50fd32d2d9cdd82e134fddae56f69e84074ad0863f6a5b5f21f"
     sha256 arm64_golden_gate: "3e0cc28d77d7099b06b9b92cafaa18aad1dbdc71f941b28e26f3b5200edae535"
     sha256 arm64_tahoe:       "937976ef51396eb7259ea45a3df2439df3a5bdc81f6f1c95072411f3c5875c21"
     sha256 arm64_sequoia:     "e16f7daed7561cfba57dcfc7537f97b28c55d655bbf17bb0a1f2a134c53494a3"
@@ -122,6 +123,7 @@ class PythonAT310 < Formula
     # these flags because they want one build that will work across many macOS
     # releases. Homebrew is not so constrained because the bottling
     # infrastructure specializes for each macOS major release.
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --prefix=#{prefix}
       --enable-ipv6
@@ -129,7 +131,7 @@ class PythonAT310 < Formula
       --datadir=#{share}
       --without-ensurepip
       --enable-loadable-sqlite-extensions
-      --with-openssl=#{formula_opt_prefix("openssl@3")}
+      --with-openssl=#{openssl_prefix}
       --with-dbmliborder=gdbm:ndbm
       --enable-optimizations
       --with-system-expat
@@ -174,7 +176,7 @@ class PythonAT310 < Formula
     # superenv makes cc always find includes/libs!
     inreplace "setup.py",
       /do_readline = self.compiler.find_library_file\(self.lib_dirs,\s*readline_lib\)/,
-      "do_readline = '#{formula_opt_lib("readline")/shared_library("libhistory")}'"
+      "do_readline = '#{formula_opt_lib("readline")}/#{shared_library("libhistory")}'"
 
     inreplace "setup.py" do |s|
       s.gsub! "sqlite_setup_debug = False", "sqlite_setup_debug = True"
@@ -196,8 +198,9 @@ class PythonAT310 < Formula
     # even if homebrew is not a /usr/local/lib. Try this with:
     # `brew install enchant && pip install pyenchant`
     inreplace "./Lib/ctypes/macholib/dyld.py" do |f|
+      openssl_lib = dep("openssl").opt_lib
       f.gsub! "DEFAULT_LIBRARY_FALLBACK = [",
-              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{formula_opt_lib("openssl@3")}',"
+              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{openssl_lib}',"
       f.gsub! "DEFAULT_FRAMEWORK_FALLBACK = [", "DEFAULT_FRAMEWORK_FALLBACK = [ '#{HOMEBREW_PREFIX}/Frameworks',"
     end
 
@@ -304,8 +307,10 @@ class PythonAT310 < Formula
 
     # Patch ensurepip to bootstrap our updated versions of setuptools/pip
     inreplace lib_cellar/"ensurepip/__init__.py" do |s|
-      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{resource("setuptools").version}\"")
-      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{resource("pip").version}\"")
+      setuptools_version = resource("setuptools").version
+      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{setuptools_version}\"")
+      pip_version = resource("pip").version
+      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{pip_version}\"")
     end
 
     # Write out sitecustomize.py

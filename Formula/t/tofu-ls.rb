@@ -12,6 +12,7 @@ class TofuLs < Formula
   end
 
   bottle do
+    manifest_sha256 "e5b6bf7926ea58db0a61220b5d5b0eb025ffcfceb11eec0595da046fa4e9cbd8"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "79c2f042d5c9fa78735e49a4718cd5240d67e56fba8319e8d49596846818093b"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "d4c9496b36a303f3143b4bd7b19edfa55b60abf222b1d97bb37a0e9266fffdfc"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d4c9496b36a303f3143b4bd7b19edfa55b60abf222b1d97bb37a0e9266fffdfc"
@@ -37,8 +38,7 @@ class TofuLs < Formula
   test do
     port = free_port
 
-    pid = spawn bin/"tofu-ls", "serve", "-port", port.to_s, File::NULL
-    begin
+    with_test_process(bin/"tofu-ls", "serve", "-port", port.to_s, File::NULL, signal: "INT") do
       sleep 2
       tcp_socket = TCPSocket.new("localhost", port)
       tcp_socket.puts <<~EOF
@@ -47,9 +47,6 @@ class TofuLs < Formula
         {"jsonrpc":"2.0","method":"initialize","params":{},"id":1}
       EOF
       assert_match "Content-Type", tcp_socket.gets("\n")
-    ensure
-      Process.kill("SIGINT", pid)
-      Process.wait(pid)
     end
   end
 end

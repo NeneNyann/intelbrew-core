@@ -3,16 +3,17 @@ class Gamdl < Formula
 
   desc "Python CLI app for downloading Apple Music songs, music videos and post videos"
   homepage "https://github.com/glomatico/gamdl"
-  url "https://files.pythonhosted.org/packages/36/61/f21a0652af1f51b854a55647d798564300ff4780998bf62c5515357df773/gamdl-4.0.2.tar.gz"
-  sha256 "2ddaf97c889ea4ae559d2bae7fc498534acf19e0904e345f1c36ffa9958ecdbd"
+  url "https://files.pythonhosted.org/packages/14/63/4c4345bb481b89fc1307d7c5c03f75b94ebc6f235835b3d32f0bc98c2906/gamdl-4.1.2.tar.gz"
+  sha256 "72fc8b7e8fe89572ae35f84607a9a76a0fb73fe9b653ed174cdf93b9d356f4e3"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "dc6c04f0207be0a4bfcad3a2e478993fc78a31f3628b835785f34f9f8e8901e5"
-    sha256 cellar: :any, arm64_tahoe:       "f74cb1b6b55818732a7eb17cf93bf82d4e24bcf5038cf7b684f2f6d158514768"
-    sha256 cellar: :any, arm64_sequoia:     "db8042b8d59adfd06c5f0b4dff37a44c75bfcc66b98ef542165e13c08479991a"
-    sha256 cellar: :any, arm64_linux:       "72f480c54e136f63c2572daf6d0521430d29651165193055c0fc9fd545e9be16"
-    sha256 cellar: :any, x86_64_linux:      "0857b323700139fa9330060d23cf9b1adcc4636201227fd2c8805e5655d3085c"
+    manifest_sha256 "8509c62c73b04817219310aa145e2b8027b4d8f40e40cf22bb4e2a966576a31e"
+    sha256 cellar: :any, arm64_golden_gate: "9c9168256337bd2275a8a7c000cdb7ef211aa61eb006d69d3bce67d6d7d2caa4"
+    sha256 cellar: :any, arm64_tahoe:       "5c10cfd7eee51adfb73099c63338ed2f69658b18d5d56554fbda0ab7c63b536f"
+    sha256 cellar: :any, arm64_sequoia:     "3c01ec98a90cca306a3b9e53f70a026df425d018f22e99fc7ec3082d2df669f3"
+    sha256 cellar: :any, arm64_linux:       "92000b0b53e8c6094c128735802a67234b3f4b3acb110800b1c8ff3d166c5ab3"
+    sha256 cellar: :any, x86_64_linux:      "91d02d51ea6a48b016865d1932c0da3a8d7ef2b87d2aadc0bb186f5cfc558764"
   end
 
   depends_on "rust" => :build
@@ -55,8 +56,8 @@ class Gamdl < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz"
-    sha256 "39de2a259fc954455c57274dc94c79d5842774e1247a016aff30bc0efed0f4ef"
+    url "https://files.pythonhosted.org/packages/c2/c3/cae6d3bdefd96a941ffc247c714ac4babc488a69012e11c058f6c17c6c47/charset_normalizer-3.5.3.tar.gz"
+    sha256 "a250888753faa289e2997962fbb17c4960cbdb58575533ca6fceee68c224bdff"
   end
 
   resource "click" do
@@ -95,8 +96,8 @@ class Gamdl < Formula
   end
 
   resource "httpx" do
-    url "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz"
-    sha256 "75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc"
+    url "https://files.pythonhosted.org/packages/9a/d5/b4d2c4d397b7c0222635cd069098f232fb5cba31f6749e77b339e263b52c/httpx-0.29.0.tar.gz"
+    sha256 "700928ee6c1f4213795e67c47eba8f8553639069fea89199f71d654e38edc593"
   end
 
   resource "httpx-retries" do
@@ -130,8 +131,8 @@ class Gamdl < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/d7/9a/8475be631fb33ca1466915e70fd594c42a4e84b512db650eaa14f90fe75d/platformdirs-4.14.5.tar.gz"
-    sha256 "32e9921db7385aa8169bee4fe9501923e5715ba9fb7ea3b9c69b0d8e0639f7a1"
+    url "https://files.pythonhosted.org/packages/71/18/0b0d99f5bf164f04a7a9534c3dbdbe4d5fd2b382667685ad40c192c4d3d1/platformdirs-4.14.8.tar.gz"
+    sha256 "96893d686e84e9e6f358a9ea41a8de544df66dbf2ba6cda250e7dc73acf85b9b"
   end
 
   resource "prompt-toolkit" do
@@ -175,8 +176,8 @@ class Gamdl < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-6.0.3.tar.gz"
-    sha256 "d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"
+    url "https://files.pythonhosted.org/packages/76/b8/c0b780928e2fb1c87e9e375818c6f121da2398b071012d1747be300b83f4/pyyaml-6.0.4.tar.gz"
+    sha256 "e24bf71af8a432d7808fabff134d38dfe16d3cbb41f2873bb4b1e42422de0a1a"
   end
 
   resource "questionary" do
@@ -210,8 +211,8 @@ class Gamdl < Formula
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/ea/01/e5ac23733628a6bbb91913a765fcf55ee8070d8d991bc88fdaaf805052c7/wcwidth-0.9.4.tar.gz"
-    sha256 "fd8d57d3cdfe570e3265c8fab1885c24e34ef40889c0759c0c304a19e9835954"
+    url "https://files.pythonhosted.org/packages/8e/da/d59374b2c893ae70a41fdb064637ccef218f25df8c67e5431a96708235d9/wcwidth-0.9.5.tar.gz"
+    sha256 "713534e2ecb16e0fc39f19e0a5dda997da76d010953e9e8f803e7971f8accd80"
   end
 
   resource "yarl" do

@@ -10,6 +10,7 @@ class Cellpose < Formula
   head "https://github.com/MouseLand/cellpose.git", branch: "main"
 
   bottle do
+    manifest_sha256 "447a135052466a2cbbbb17c8d2410e56326bc1f64a7f741cef2816eb1108bd3e"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a2433696b247e1250707c1a33c53a4f8896bdf5a5a911baf74b7a3505062b401"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "20bd8234e4d0d50e3cfde93f68efc194f681fcdf926e8ef1ecabbee083e2a7ba"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "adabc3ab263295b0b00e4fb2d83a89058473a1c17a939c33b8c3479f565ba6f3"
@@ -92,7 +93,7 @@ class Cellpose < Formula
     # Load torchvision's virtualenv and its pytorch .pth file.
     # NOTE: This is an exception to our usual policy as building `pytorch` is complicated
     site_packages = Language::Python.site_packages(venv.root/"bin/python3")
-    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("torchvision")/site_packages}')\n"
+    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("torchvision")}/#{site_packages}')\n"
     (venv.site_packages/"homebrew-torchvision.pth").write pth_contents
   end
 

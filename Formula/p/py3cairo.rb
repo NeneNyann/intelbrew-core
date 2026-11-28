@@ -8,6 +8,7 @@ class Py3cairo < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "9e1686fa551f722b1a3a6ddc34018f30c1b2a6f76c1a7ae4254d83f02dcd2dc2"
     sha256 cellar: :any, arm64_golden_gate: "f655280ba2f9f284b43ab39f3c6a2400d2844a7b1ce0a4c7386e3fb67e03c666"
     sha256 cellar: :any, arm64_tahoe:       "b514f1c006f63711ab230bf3833a5a29d18221777250ec51b6fe2269eb42e874"
     sha256 cellar: :any, arm64_sequoia:     "3bede70c829760bf17e9fa3d66969d3789c85e0927f23b97f07ecc3a2cdc8063"
@@ -24,18 +25,12 @@ class Py3cairo < Formula
 
   deny_network_access!
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.match?(/^python@\d\.\d+$/) }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def site_packages(python)
     prefix/Language::Python.site_packages(python)
   end
 
   def install
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       python_version = Language::Python.major_minor_version(python)
       builddir = "build#{python_version}"
       system "meson", "setup", builddir, "-Dpython=#{python}",
@@ -48,7 +43,7 @@ class Py3cairo < Formula
   end
 
   test do
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       system python, "-c", "import cairo; print(cairo.version)"
     end
   end

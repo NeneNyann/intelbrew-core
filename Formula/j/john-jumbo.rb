@@ -14,6 +14,7 @@ class JohnJumbo < Formula
 
   bottle do
     rebuild 4
+    manifest_sha256 "4aa50263ce938ac09b24abe65bc57aa29af5f7de4e1648baf13b9d5046c6742f"
     sha256 arm64_golden_gate: "52199f22fdef94eb0444037d86a80d20f060090a733cbc76c1553ffa56d219b0"
     sha256 arm64_tahoe:       "eb036c2f183b0b8577a2f6708cd79b87e300e11013eba20aba0d33ba9bc73627"
     sha256 arm64_sequoia:     "55a298783b6e1f11f54434c01e5d3c588444b54eb5a360035330cf162d176aa7"
@@ -87,8 +88,9 @@ class JohnJumbo < Formula
     ENV.append "CFLAGS", "-DJOHN_SYSTEMWIDE_EXEC='\"#{share}/john\"'"
     ENV.append "CFLAGS", "-DJOHN_SYSTEMWIDE_HOME='\"#{share}/john\"'"
 
-    ENV["OPENSSL_LIBS"] = "-L#{formula_opt_lib("openssl@4")}"
-    ENV["OPENSSL_CFLAGS"] = "-I#{formula_opt_include("openssl@4")}"
+    openssl = dep("openssl")
+    ENV["OPENSSL_LIBS"] = "-L#{openssl.opt_lib}"
+    ENV["OPENSSL_CFLAGS"] = "-I#{openssl.opt_include}"
 
     cd "src" do
       system "./configure", "--disable-native-tests"
@@ -108,7 +110,8 @@ class JohnJumbo < Formula
 
   test do
     touch "john2.pot"
-    (testpath/"test").write "dave:#{`printf secret | /usr/bin/openssl md5 -r | cut -d' ' -f1`}"
+    digest = `printf secret | /usr/bin/openssl md5 -r | cut -d' ' -f1`
+    (testpath/"test").write "dave:#{digest}"
     assert_match(/secret/, shell_output("#{bin}/john --pot=#{testpath}/john2.pot --format=raw-md5 test"))
     assert_match(/secret/, (testpath/"john2.pot").read)
   end

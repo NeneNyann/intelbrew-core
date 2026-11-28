@@ -12,6 +12,7 @@ class Zig < Formula
   end
 
   bottle do
+    manifest_sha256 "7a4026ffcb637dbc98324c1df34bf5b0aa95eced7497e1e46219d8b447cc312a"
     sha256 cellar: :any, arm64_golden_gate: "8cfb43412ab96df414cc0ebfe9713901a202b5b8cd1a1e3b920f128e91830d48"
     sha256 cellar: :any, arm64_tahoe:       "1c8ab891d1e7aea40c4c0a8e0eb0676de2d24e850b67a93c4a4e1c127b15f4f7"
     sha256 cellar: :any, arm64_sequoia:     "d362a466a649b7bef7e461ee630bbabf38277e5113eb22f509968ddb55ac0d74"
@@ -47,8 +48,7 @@ class Zig < Formula
     # Reduce max_rss to build on CI with less than 8GB memory available
     inreplace "build.zig", ".max_rss = 8_000_000_000,", ".max_rss = 6_900_000_000,"
 
-    llvm = deps.find { |dep| dep.name.match?(/^llvm(@\d+)?$/) }
-               .to_formula
+    llvm = dep("llvm").to_formula
     if llvm.versioned_formula? && deps.any? { |dep| dep.name == "z3" }
       # Don't remove this check even if we're using a versioned LLVM
       # to avoid accidentally keeping it when not needed in the future.
@@ -93,7 +93,8 @@ class Zig < Formula
           assert_match(/\b#{arch.tr("_", "-")}\b/, file_output)
         else
           assert_match(/\bMach-O\b/, file_output)
-          expected_arch = (arch == "aarch64") ? "arm64" : arch
+          expected_arch = arch
+          expected_arch = "arm64" if arch == "aarch64"
           assert_match(/\b#{expected_arch}\b/, file_output)
         end
       end

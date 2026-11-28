@@ -10,6 +10,7 @@ class PerlDbdMysql < Formula
   head "https://github.com/perl5-dbi/DBD-mysql.git", branch: "master"
 
   bottle do
+    manifest_sha256 "a899e92ed66f13b4f35876208ad7fae7b5c3bdd0edf61462e9f997551e851ed8"
     sha256 cellar: :any, arm64_golden_gate: "05199c71ae2bc27bbc225029a14f7a93496023fce856841c3e62b979cf97306c"
     sha256 cellar: :any, arm64_tahoe:       "4e6bf13b65ca2a5f764b27946fb7810c5ef9eef5fdeb97b55e7e5dfb04d31c0b"
     sha256 cellar: :any, arm64_sequoia:     "48a49b9a8bd7c5870b43539ba2a749f100e4f31c859ce66d432bdb864aca448c"
@@ -45,7 +46,11 @@ class PerlDbdMysql < Formula
 
     resources.each do |r|
       r.stage do
-        install_base = (r.name == "Devel::CheckLib") ? buildpath/"build_deps" : libexec
+        install_base = if r.name == "Devel::CheckLib"
+          buildpath/"build_deps"
+        else
+          libexec
+        end
         system "perl", "Makefile.PL", "INSTALL_BASE=#{install_base}", "INSTALLMAN1DIR=none", "INSTALLMAN3DIR=none"
         system "make", "install"
       end
@@ -70,7 +75,11 @@ class PerlDbdMysql < Formula
   end
 
   test do
-    perl = OS.mac? ? "/usr/bin/perl" : formula_opt_bin("perl")/"perl"
+    perl = if OS.mac?
+      "/usr/bin/perl"
+    else
+      formula_opt_bin("perl")/"perl"
+    end
     port = free_port
     socket = testpath/"mysql.sock"
     mysql = Formula["mysql"]

@@ -7,6 +7,7 @@ class PythonTkAT39 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "be307f708bbd1295f2e17dc138c0532abd097277dd6a8165fcf0ef2958743e50"
     sha256 cellar: :any, arm64_golden_gate: "63478fc978d0b0b41290c3c0e18c7bcaa497c174fc9ce820d350692e0601d71f"
     sha256 cellar: :any, arm64_tahoe:       "80211d3a9159e78e2cd78e0493b7d34b8cbaf0ef1cb4a565cdcb5808bdae1e12"
     sha256 cellar: :any, arm64_sequoia:     "98aa6a596cf7d748a60f2e89d764f41a8d8a783a966f536a26894c8e978a6951"
@@ -36,7 +37,7 @@ class PythonTkAT39 < Formula
               ext_modules = [
                 Extension("_tkinter", ["_tkinter.c", "tkappinit.c"],
                           define_macros=[("WITH_APPINIT", 1)],
-                          include_dirs=["#{tcltk.opt_include/"tcl-tk"}"],
+                          include_dirs=["#{tcltk.opt_include}/tcl-tk"],
                           libraries=["tcl#{tcltk_version}", "tk#{tcltk_version}"],
                           library_dirs=["#{tcltk.opt_lib}"])
               ]

@@ -8,6 +8,7 @@ class Termscp < Formula
   head "https://github.com/veeso/termscp.git", branch: "main"
 
   bottle do
+    manifest_sha256 "cbe82db71e3eb08ecc42810862d996d87abbfae5deca881d5cafee58abb4001a"
     sha256 cellar: :any, arm64_golden_gate: "6e4734f7db2dc7d3837cecd9bc37555c84bd80934670bdedc9521b98e3af9139"
     sha256 cellar: :any, arm64_tahoe:       "0b40c361a17a5da72c7473c23c08736c4a075b240640c911cd825492155074fe"
     sha256 cellar: :any, arm64_sequoia:     "1a62ad52c72a57f819332b44d8ea828376a2ac6fffeb9e40f8699b830f2ca6dc"
@@ -27,15 +28,13 @@ class Termscp < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def fetch
     system "cargo", "fetch", *std_cargo_fetch_args
   end
 
   def install
     # Ensure that the `openssl` crate picks up the intended library.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix(openssl)
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", *std_cargo_args
   end

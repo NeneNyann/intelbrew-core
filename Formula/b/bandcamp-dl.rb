@@ -10,6 +10,7 @@ class BandcampDl < Formula
   head "https://github.com/evolution0/bandcamp-dl.git", branch: "master"
 
   bottle do
+    manifest_sha256 "cf84c9202d4631a771fdc4f3feefec9339c38b9e4cf9a3c1b642d26d872cf52c"
     sha256 cellar: :any_skip_relocation, all: "d4ef13f929283ae83d5d9d7f0faa90712336783015bdab3e88ddfcc5cba14aab"
   end
 
@@ -77,6 +78,8 @@ class BandcampDl < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! [:build, :test]
 
   def install
     virtualenv_install_with_resources

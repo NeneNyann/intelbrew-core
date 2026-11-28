@@ -1,23 +1,18 @@
 class Vedic < Formula
   desc "Simple Sanskrit programming language"
   homepage "https://vedic-lang.github.io/"
-  url "https://github.com/vedic-lang/vedic/archive/refs/tags/v2.0.6.tar.gz"
-  sha256 "9bfb68dfa8a79c02d52905eb1403267209dae80ad05287b7f3706f14071c4800"
+  url "https://github.com/vedic-lang/vedic/archive/refs/tags/v3.0.0.tar.gz"
+  sha256 "4086cda18ed78fd6b42455062834ec7aefea1aceefed650370f2469e989e56e4"
   license "MIT"
   head "https://github.com/vedic-lang/vedic.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "26b125d85ad19bdd9e0190bb88ef5ea0fd253c71ba3f80e257e77efdb9931fec"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "56502244e08e30a3a86559996431cd27db1959096e6b465c56c793c2495ebd23"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "4afe71c7c4dae3f9edfd94229be33eab94b9349f1a50c787b2e98ba07a34861f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:      "c9bdcd049f25d6408a40c2693a39e098ae74512801535b6fa6539566375f679f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:     "3fe45503d405ec81208fa88cf42b7dbe9fa003316c3783dd4d53ff19f48e89ee"
-    sha256 cellar: :any_skip_relocation, arm64_monterey:    "b737a9a7256fc30550659cebf7214dadbeb155d49eed775b84a91dff83c7c5cd"
-    sha256 cellar: :any_skip_relocation, sonoma:            "a852103a96ff00273820b27230d0f482cf1690978c2f6587b1f7f778a343c4f4"
-    sha256 cellar: :any_skip_relocation, ventura:           "c012da02f916791259476071c8fc1bdf92e3273033411b90154b43672e39bbac"
-    sha256 cellar: :any_skip_relocation, monterey:          "7a53d21f56acac6b0322b0da98880f29efe8f24badfa62bb850d6ff52a4da378"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "1ea67bafadca41308429cc2ffa531885f65a4ce2eb6dc373148f87a8c00356e1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "2334b13281923d5c4f0964b6ce0ea51e8770866304de94b76e6de92d200566e9"
+    manifest_sha256 "f60ed99ed9afb3a345180790c4805873c4fb6a585df7ae709fc2c3a95596f016"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "1f427876bfb8aa9949f3825e90f9cdcb4f7932e8790dfdc204c8d4fbd8114e43"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "92b55b7bcd037492749cfd01a0e370f11c65fa836f5160800feb8492fc2c5cef"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a558892d0dc0b400eba6f8ad4b128585201516794c23b11caa1a975929082254"
+    sha256 cellar: :any,                 arm64_linux:       "121db67b9ae5bdfa5bf6fc1dcd05ec793c11edbb0afee339a6281731f5171e1c"
+    sha256 cellar: :any,                 x86_64_linux:      "853fb28f1be0c21e71a7371f319cb96a54c773e1114c0a7e1f47eb43e822c080"
   end
 
   depends_on "rust" => :build

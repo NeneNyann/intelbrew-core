@@ -16,6 +16,7 @@ class Apib < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "b434421feb10e6ec69d637d7eb2ac9f13232f761cfd3be8291ddf70b17f09828"
     sha256 cellar: :any, arm64_golden_gate: "95aac176ed13f2938a95a4b35b7de921d2b330d829f844d9e8d602a6d5d04dc0"
     sha256 cellar: :any, arm64_tahoe:       "0c555bcff37de6ecbb0013234d602121bc25b7681fa94cea758ac235dcb554bd"
     sha256 cellar: :any, arm64_sequoia:     "f30454422dad2befe6a123cb1ff6848b7d791f07525160d3fd0adfc37bf7a916"
@@ -30,9 +31,24 @@ class Apib < Formula
   depends_on "libev"
   depends_on "openssl@4"
 
+  resource "gtest" do
+    url "https://github.com/google/googletest/archive/refs/tags/release-1.10.0.tar.gz"
+    sha256 "9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb"
+  end
+
+  resource "absl" do
+    url "https://github.com/abseil/abseil-cpp/archive/refs/tags/20200225.1.tar.gz"
+    sha256 "0db0d26f43ba6806a8a3338da3e646bb581f0ca5359b3a201d8fb8e4752fd5f8"
+  end
+
+  deny_network_access!
+
   def install
+    resource("gtest").stage("build/_deps/gtest-src")
+    resource("absl").stage("build/_deps/absl-src")
+
     # Workaround to build with CMake 4
-    args = %w[-DCMAKE_POLICY_VERSION_MINIMUM=3.5]
+    args = %w[-DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DFETCHCONTENT_FULLY_DISCONNECTED=ON]
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     # Workaround to build bundled Abseil
     inreplace "build/_deps/absl-src/absl/strings/internal/str_format/extension.h",

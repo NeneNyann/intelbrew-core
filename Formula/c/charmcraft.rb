@@ -10,6 +10,7 @@ class Charmcraft < Formula
   head "https://github.com/canonical/charmcraft.git", branch: "main"
 
   bottle do
+    manifest_sha256 "8e6b0aaf4eb6a6013e3baa594ecdd2b821708994dfc7dae5cb0ffee8fff69417"
     sha256 cellar: :any, arm64_golden_gate: "c990f8611999114b86792885610f26a8dd25c7a8efd3fe62e9157a1e2d59495c"
     sha256 cellar: :any, arm64_tahoe:       "8864057d0605e3f875bd21586964a73b9f81f6c817c0c384acc83bd56f5a0f09"
     sha256 cellar: :any, arm64_sequoia:     "31f5570c5620c782ae8416399b8fe6d2e46df6d0098273ff473905493c540d00"
@@ -352,6 +353,8 @@ class Charmcraft < Formula
     url "https://files.pythonhosted.org/packages/fd/aa/3e0508d5a5dd96529cdc5a97011299056e14c6505b678fd58938792794b1/zstandard-0.25.0.tar.gz"
     sha256 "7713e1179d162cf5c7906da876ec2ccb9c3a9dcbdffef0cc7f70c3667a205f0b"
   end
+
+  allow_network_access! :build
 
   def install
     # Fix compile with newer Clang

@@ -13,6 +13,7 @@ class Energy < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "12f956c6810ef0369f514b26fc3e8c85543bd9a755a0cef2c1bc7b35635e0152"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "512746122c1dd841d86f75f79190f1cf6cdcd7ead34859f3752f7e081cb60565"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a27c25d9ad14623bd9965a490f8fa9b8c8f1752ae317f2555b3512bdb9322432"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a27c25d9ad14623bd9965a490f8fa9b8c8f1752ae317f2555b3512bdb9322432"
@@ -21,6 +22,9 @@ class Energy < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "f5d3cd5d47b2d5968e96a2446412cd22430b344f455db80e7918230720e8bc25"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "b5dede6e5a0d45f8785b7b0d3fecdd443f7d5bab5195e74e81608edd7c7fa690"
   end
+
+  deprecate! date: "2026-11-24", because: :unsupported
+  disable! date: "2027-11-24", because: :unsupported
 
   depends_on "go" => :build
 

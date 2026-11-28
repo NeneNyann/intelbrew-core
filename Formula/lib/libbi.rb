@@ -8,6 +8,7 @@ class Libbi < Formula
   head "https://github.com/lawmurray/LibBi.git", branch: "master"
 
   bottle do
+    manifest_sha256 "e7680a3e298d8e3a1dd478cbcec36cac97a4c29e9501133d9fe753af87bb6074"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "fe8a4192ab5aa72ea54f7575ab63a4175ad5dbe38522f667041603277ea658a9"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "e3f610a205375cf9c5655c96d7372187faaed42eeef648a510f3d9b2126aaeac"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "95233195d8bfdde4999c2d2c6776406b4810e4f1be7da204e94ecc7e04978edb"
@@ -123,7 +124,11 @@ class Libbi < Formula
         next if r.name == "thrust"
 
         # need to set TT_ACCEPT=y for Template library for non-interactive install
-        perl_flags = (r.name == "Template") ? "TT_ACCEPT=y" : ""
+        perl_flags = if r.name == "Template"
+          "TT_ACCEPT=y"
+        else
+          ""
+        end
         system "perl", "Makefile.PL", "INSTALL_BASE=#{libexec}", perl_flags
         system "make"
         system "make", "install"

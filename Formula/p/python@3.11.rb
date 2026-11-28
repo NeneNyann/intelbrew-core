@@ -12,6 +12,7 @@ class PythonAT311 < Formula
   end
 
   bottle do
+    manifest_sha256 "f61415c849befc375e3f76ae4354dae4a248b0c9ecbbf7b069c2103c20ea81e2"
     sha256 arm64_golden_gate: "82ddcbdd13d6e6aa1e959050aae5284c9286ceddc6ac56f02bf7b3dab23ee346"
     sha256 arm64_tahoe:       "3e9416f393391bb5f7e00c84d284e01ec508de9416c9c6cc7af57f7996e045b8"
     sha256 arm64_sequoia:     "c77feba77847b3293d30e63fefdecf06d261321745f37499aa534e36aedaf792"
@@ -108,8 +109,6 @@ class PythonAT311 < Formula
 
   def python3 = bin/"python#{version.major_minor}"
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     # Unset these so that installing pip and setuptools puts them where we want
     # and not into some other Python the user has installed.
@@ -119,8 +118,10 @@ class PythonAT311 < Formula
     # Override the auto-detection of libmpdec, which assumes a universal build.
     # This is currently an inreplace due to https://github.com/python/cpython/issues/98557.
     if OS.mac?
+      machine = Hardware::CPU.arm? ? "uint128" : "x64"
+      ENV["PYTHON_DECIMAL_WITH_MACHINE"] = machine
       inreplace "configure", "libmpdec_machine=universal",
-                "libmpdec_machine=#{ENV["PYTHON_DECIMAL_WITH_MACHINE"] = Hardware::CPU.arm? ? "uint128" : "x64"}"
+                "libmpdec_machine=#{machine}"
     end
 
     # The --enable-optimization and --with-lto flags diverge from what upstream
@@ -128,6 +129,7 @@ class PythonAT311 < Formula
     # these flags because they want one build that will work across many macOS
     # releases. Homebrew is not so constrained because the bottling
     # infrastructure specializes for each macOS major release.
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --prefix=#{prefix}
       --enable-ipv6
@@ -135,7 +137,7 @@ class PythonAT311 < Formula
       --datadir=#{share}
       --without-ensurepip
       --enable-loadable-sqlite-extensions
-      --with-openssl=#{formula_opt_prefix(openssl)}
+      --with-openssl=#{openssl_prefix}
       --enable-optimizations
       --with-system-expat
       --with-system-libmpdec
@@ -180,7 +182,7 @@ class PythonAT311 < Formula
     if OS.linux?
       inreplace "setup.py",
         /do_readline = self.compiler.find_library_file\(self.lib_dirs,\s*readline_lib\)/,
-        "do_readline = '#{formula_opt_lib("libedit")/shared_library("libedit")}'"
+        "do_readline = '#{formula_opt_lib("libedit")}/#{shared_library("libedit")}'"
     end
 
     if OS.linux?
@@ -197,8 +199,9 @@ class PythonAT311 < Formula
     # even if homebrew is not a /usr/local/lib. Try this with:
     # `brew install enchant && pip install pyenchant`
     inreplace "./Lib/ctypes/macholib/dyld.py" do |f|
+      openssl_lib = dep("openssl").opt_lib
       f.gsub! "DEFAULT_LIBRARY_FALLBACK = [",
-              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{formula_opt_lib("openssl@3")}',"
+              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{openssl_lib}',"
       f.gsub! "DEFAULT_FRAMEWORK_FALLBACK = [", "DEFAULT_FRAMEWORK_FALLBACK = [ '#{HOMEBREW_PREFIX}/Frameworks',"
     end
 
@@ -310,8 +313,10 @@ class PythonAT311 < Formula
 
     # Patch ensurepip to bootstrap our updated versions of setuptools/pip
     inreplace lib_cellar/"ensurepip/__init__.py" do |s|
-      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{resource("setuptools").version}\"")
-      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{resource("pip").version}\"")
+      setuptools_version = resource("setuptools").version
+      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{setuptools_version}\"")
+      pip_version = resource("pip").version
+      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{pip_version}\"")
     end
 
     # Ensure that our new pip wheel is globally readable.

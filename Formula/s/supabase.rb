@@ -1,8 +1,8 @@
 class Supabase < Formula
   desc "Postgres development platform"
   homepage "https://supabase.com/docs/reference/cli/about"
-  url "https://github.com/supabase/cli/archive/refs/tags/v3.2.0.tar.gz"
-  sha256 "39f354b995cb0935342b39ce7a521a419ed96a1a5ae753a5e11594b74ec14cb5"
+  url "https://github.com/supabase/cli/archive/refs/tags/v3.4.0.tar.gz"
+  sha256 "07df917b082137497f14961a67a8fb73494c7ac4accad923307a9aee471c6dd1"
   license "MIT"
   head "https://github.com/supabase/cli.git", branch: "develop"
 
@@ -12,11 +12,12 @@ class Supabase < Formula
   end
 
   bottle do
-    sha256 arm64_golden_gate: "b6429a71ee87a74b2169f39ab9de2f7df97a051c51f3e43b884899111f11e2fe"
-    sha256 arm64_tahoe:       "2cde621db6ea74aefacd0b551c07c153e1ea65bae3cc643d48ad864e6be503a5"
-    sha256 arm64_sequoia:     "36c8f3245f43c6dfd87b78e8fc72c454f9e4e14b7a3fe4bf0dd93118eea97885"
-    sha256 arm64_linux:       "c1a297c3b55cd77c61a5c2e523b088847809b0ddaf0274fc2157cf24e7c37483"
-    sha256 x86_64_linux:      "73a1aa4d5fb3278a2d245a00e69044c005990f416635690d6906647288d4fc8e"
+    manifest_sha256 "3f7c30caa8dc022b851e7e698cd09cb0a42f8af56e0f84a0608049b5ba7e7148"
+    sha256 arm64_golden_gate: "020e472b19b6e8a59486e82fe2f3f2ec2d48c0529f416251335e4ee1bdbad48a"
+    sha256 arm64_tahoe:       "e02b9cf7f84346bf458ad2e21112c63ab1a05ee66e328b631d52f60942c466d7"
+    sha256 arm64_sequoia:     "3eb10d15e2c37eea48409d56b7574a7c3c0b62af59b782aa182be567a4a5cd21"
+    sha256 arm64_linux:       "b9cc9d2aaf286a376df8a38072b073a841beedd5d85a2842cbd904027a22e7b5"
+    sha256 x86_64_linux:      "fbd496df7efe09a291ceda4ecb3b51aca1b4e534d7d44dff9f02e6e8398c9119"
   end
 
   depends_on "bun" => :build
@@ -55,7 +56,7 @@ class Supabase < Formula
     assert_match version.to_s, shell_output("#{bin}/supabase --version")
 
     system bin/"supabase", "init", "--yes"
-    assert_path_exists testpath/"supabase/config.toml"
+    assert_path_exists testpath/"supabase/config.jsonc"
     assert_match "failed to inspect container health", shell_output("#{bin}/supabase status 2>&1", 1)
     assert_match "Access token not provided", shell_output("#{bin}/supabase projects list 2>&1", 1)
   end

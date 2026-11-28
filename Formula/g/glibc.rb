@@ -54,6 +54,7 @@ class Glibc < Formula
   end
 
   bottle do
+    manifest_sha256 "1ed39fa955142c3b0bec4c480dbbcaaa404e177a4df5777448b56e0a7e970454"
     sha256 arm64_linux:  "33833fc43846b77959cfa9cb2877a4c8a3433615be9a8c1a0bc08971cac8a71b"
     sha256 x86_64_linux: "064894039ef74fc2f847f8a9112e4fbc68f889eba219d09acf986542562ba096"
   end
@@ -235,6 +236,7 @@ class Glibc < Formula
     localedir = opt_share/"locale"
 
     mkdir "build" do
+      linux_headers_include = dep("linux-headers").opt_include
       args = [
         "--disable-crypt",
         "--disable-debug",
@@ -246,7 +248,7 @@ class Glibc < Formula
         "--without-gd",
         "--without-selinux",
         "--with-binutils=#{bootstrap_dir}/bin",
-        "--with-headers=#{formula_opt_include("linux-headers@6.8")}",
+        "--with-headers=#{linux_headers_include}",
         "--with-bugurl=#{tap.issues_url}",
         "--with-pkgversion=Homebrew glibc (#{pkg_version})",
 
@@ -285,9 +287,10 @@ class Glibc < Formula
           "x86_64/64"
         end
         if sysv_dir
+          length_hex = (localedir.to_s.length + 1).to_s(16)
           inreplace "../sysdeps/unix/sysv/linux/#{sysv_dir}/libc.abilist",
                     /(_nl_default_dirname.*?)0x12/,
-                    "\\10x#{(localedir.to_s.length + 1).to_s(16)}"
+                    "\\10x#{length_hex}"
         end
 
         # Avoid Intel CI runner timeout on tst-malloc-too-large-malloc-hugetlb2

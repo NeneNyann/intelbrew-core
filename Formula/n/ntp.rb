@@ -14,6 +14,7 @@ class Ntp < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
+    manifest_sha256 "3a8fb45aec9f7f7fa2e8aed081967cd3ca293111bd16fcffab2f98f19462a604"
     sha256 cellar: :any,                 arm64_golden_gate: "056306bba2e7c882887f7a80e6ec87a6bf2a1a15c968c1f1fb794734e9294004"
     sha256 cellar: :any,                 arm64_tahoe:       "67f312e7b755756bb74869269cb8b4fd9e582e6f265be0730c39d541422b54cd"
     sha256 cellar: :any,                 arm64_sequoia:     "991683b9f1c1596bd5b8c518bc94efc07539371b2ef0c3ee49144e2db44d4e8e"
@@ -31,16 +32,15 @@ class Ntp < Formula
 
   allow_network_access! :test
 
-  def openssl = deps.map(&:name).find { |d| d.start_with?("openssl@") }
-
   def install
+    openssl = dep("openssl")
     args = %W[
       --disable-debug
       --disable-dependency-tracking
       --disable-silent-rules
       --prefix=#{prefix}
-      --with-openssl-libdir=#{formula_opt_lib(openssl)}
-      --with-openssl-incdir=#{formula_opt_include(openssl)}
+      --with-openssl-libdir=#{openssl.opt_lib}
+      --with-openssl-incdir=#{openssl.opt_include}
       --with-net-snmp-config=no
     ]
 
@@ -52,7 +52,7 @@ class Ntp < Formula
 
   test do
     # On Linux all binaries are installed in bin, while on macOS they are split between bin and sbin.
-    ntpdate_bin = OS.mac? ? sbin/"ntpdate" : bin/"ntpdate"
+    ntpdate_bin = (OS.mac? ? sbin : bin)/"ntpdate"
     if OS.mac? && ENV["HOMEBREW_GITHUB_HOSTED_RUNNER"]
       # NTP servers aren't reachable in GitHub's macOS runner?
       assert_match "Server dropped: no data", shell_output("#{ntpdate_bin} -bdq pool.ntp.org 2>&1", 1)

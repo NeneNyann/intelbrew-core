@@ -3,16 +3,17 @@ class Specify < Formula
 
   desc "Toolkit to help you get started with Spec-Driven Development"
   homepage "https://github.github.com/spec-kit/"
-  url "https://github.com/github/spec-kit/archive/refs/tags/v1.4.2.tar.gz"
-  sha256 "e2f860384fba1f213f860b3a125d594288059d80a5862e1651dfaca7a53be648"
+  url "https://github.com/github/spec-kit/archive/refs/tags/v1.4.5.tar.gz"
+  sha256 "41a077fd78c22475aea02e36e86ebf180712d56a7a35d2d069d3cb54a1cb975d"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "a4fe85ba37c9da33353d72eb7342485a951d8825fa60c67c4e1c1eaae5dcceab"
-    sha256 cellar: :any, arm64_tahoe:       "e81daa6daf4c99b5d422039c8441168c3cd297ae9afc589615c0487f12c9f80b"
-    sha256 cellar: :any, arm64_sequoia:     "429eb59f7dff6af162ac1c04a706f2700172d5531d493d86e6e719a57fe94081"
-    sha256 cellar: :any, arm64_linux:       "b8c7e645df0c3ba38955c57be2a1e3b4279fd87767bd18f62c86075ed385970e"
-    sha256 cellar: :any, x86_64_linux:      "9deb5d8823e6d82135106d90f0df3213da1394a89a5831f76f0c3f589e173e4c"
+    manifest_sha256 "cc5fb34ad7744d7563b4e8ffe75bc96c6f977408ded7b2013b7187677bfbf25d"
+    sha256 cellar: :any, arm64_golden_gate: "5f4f5b384b6d2858954343b93017b3bb3b9f1632a17debc2d6eb191a1701ff48"
+    sha256 cellar: :any, arm64_tahoe:       "331b61f9925f6056412b3e08e292f704aafcdfc2c8f2d6c0cc78c81e08758b5d"
+    sha256 cellar: :any, arm64_sequoia:     "e8d2a886f0080389e16ffb6119a13b824c17a9a3972c0b881c7ab06dd368719d"
+    sha256 cellar: :any, arm64_linux:       "a7c1cf891e8689209ecf4ea9a4b58e7bb4cca022dcf2cf28828a7ca862d2de3f"
+    sha256 cellar: :any, x86_64_linux:      "20480949fe3fe79b6a2e4caadc7a8d5f2f0d288967148acd7cc59c81896bbae1"
   end
 
   depends_on "certifi" => :no_linkage
@@ -25,8 +26,8 @@ class Specify < Formula
   pypi_packages exclude_packages: %w[certifi cryptography pydantic rpds-py]
 
   resource "annotated-doc" do
-    url "https://files.pythonhosted.org/packages/0f/6e/a61e86e43bb6039b31a33a8f5fba76fe1cdacf3661e7b9756d4ff1b28cdc/annotated_doc-0.0.6.tar.gz"
-    sha256 "7969bb69912085b2285849c0dcac0b4b374fd180c13cf10a87f284ffcf347bbf"
+    url "https://files.pythonhosted.org/packages/0b/7d/bdbf3062e5dae31da8b3de1e3269110beb93d268df4a7f6d22b167c6cee0/annotated_doc-0.0.7.tar.gz"
+    sha256 "0a30ef8f5322a4173720ae6712dc9a5e58f5a19868f3f167b4b5778db066c2b5"
   end
 
   resource "anyio" do
@@ -110,8 +111,8 @@ class Specify < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
-    sha256 "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+    url "https://files.pythonhosted.org/packages/c3/75/ffb1dc0ed12352139fb4ca0e3fde4325a23e3d0f3f40efe89717bc4f557b/packaging-26.4.tar.gz"
+    sha256 "c4b671c41ddb9bf26e543c37723610d28fb6bf7affc4da17cf048d419d2c062a"
   end
 
   resource "pathspec" do
@@ -135,8 +136,8 @@ class Specify < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-6.0.3.tar.gz"
-    sha256 "d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"
+    url "https://files.pythonhosted.org/packages/76/b8/c0b780928e2fb1c87e9e375818c6f121da2398b071012d1747be300b83f4/pyyaml-6.0.4.tar.gz"
+    sha256 "e24bf71af8a432d7808fabff134d38dfe16d3cbb41f2873bb4b1e42422de0a1a"
   end
 
   resource "readchar" do
@@ -160,8 +161,8 @@ class Specify < Formula
   end
 
   resource "sse-starlette" do
-    url "https://files.pythonhosted.org/packages/41/43/a232e3cd804293bd4f6d01e8895bc0f6f83ea148d712baf9d783c7d93d23/sse_starlette-3.7.0.tar.gz"
-    sha256 "326416da2ab52e9a41b3f409d3ff897eda45aa68c9f3b7b17d0913aab8d219c3"
+    url "https://files.pythonhosted.org/packages/12/c0/eb8c9eec5c0e29ce2a1c4d4654ddfb06c77b52b4db63ab40226198456be6/sse_starlette-3.7.1.tar.gz"
+    sha256 "9a8256e3e80a0fdc8d1dec14f2bb0b3f304c99f23a6d4d26c61ff50145761597"
   end
 
   resource "starlette" do
@@ -175,8 +176,8 @@ class Specify < Formula
   end
 
   resource "typer" do
-    url "https://files.pythonhosted.org/packages/6c/aa/0de7986aa1fa856adb961c67345189b97d13f6e250b34ba68884df865f07/typer-0.29.1.tar.gz"
-    sha256 "ab6eb3880bf67ce96147734717f9ec333c06f66e361f3ea947d0be43da39f242"
+    url "https://files.pythonhosted.org/packages/bf/21/37383ece7d0a4995fb8ea97729207c4292b3ff94085002f37b2387063cfb/typer-0.29.2.tar.gz"
+    sha256 "b1998dc5f2c3dedafa1517a9521fa944cc4dc1fadcea085d81a3b10ebcaeb075"
   end
 
   resource "uvicorn" do

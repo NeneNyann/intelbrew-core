@@ -13,8 +13,14 @@ class JsonC < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/json-c-0.19-b563a617d75468026d709e3e1"
-    sha256 cellar: :any, sequoia: "4011397620a0c2e65bf966e494ef4a07a46fc272f9bdd7fc8608d6e01413bd27"
+    rebuild 1
+    manifest_sha256 "6829b0cccf59df3cef1e87b4cf5ef0f8a6bcdf70ccbe6712f7e3dc5a63f92f5c"
+    sha256 cellar: :any, arm64_golden_gate: "6b45746f31780a84ae3ed11d056bd101d1b0a6d0f16bf91aad2d35a18f6107dc"
+    sha256 cellar: :any, arm64_tahoe:       "f2da9c816501d9c3c0e5f883b60b3d2758b35a3995e20d541d4b029d8b35ef13"
+    sha256 cellar: :any, arm64_sequoia:     "5624048dbb067f1a6d3784081029c3d738edeefd57188ce6724bb93d01aa53aa"
+    sha256 cellar: :any, arm64_sonoma:      "ce9c5f6c7095110cd5c9336b9277e1845cc55bb0fc98c7550576587fd28abbb1"
+    sha256 cellar: :any, arm64_linux:       "64475f64c83a75a0438e4d652bd75b0e7428f2e33e33377c88f087f4c652ed90"
+    sha256 cellar: :any, x86_64_linux:      "9745b482f9c14d66b5ec02f567a61f7ef29f9060cded74e5b37e322c139580af"
   end
 
   depends_on "cmake" => :build

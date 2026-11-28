@@ -10,6 +10,7 @@ class Bagels < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "0e19db31a89ef62e3e180efcc62c8424f9fd62787693751efd3c09d7706a6c13"
     sha256 cellar: :any, arm64_golden_gate: "aa8a67fac185732b1bfdeb6154bbc5d448bf121a8e1719cc7cd1c17b3996e897"
     sha256 cellar: :any, arm64_tahoe:       "b0441a35532e09d4dc4299e6c84e88b5d25798d12d403afa1f90b2bfa6f76bbd"
     sha256 cellar: :any, arm64_sequoia:     "61834c7101d7ea107b9f7f6038bed0df85cfa57d6aabd57367e59c84888287c5"
@@ -215,6 +216,8 @@ class Bagels < Formula
     url "https://files.pythonhosted.org/packages/75/16/e8be8e2fb175bbf41a0680381a319f1199fae256588241a2ac8677eafb49/yarl-1.25.1.tar.gz"
     sha256 "03dd38de09bc213e9a8b29761eec33ee1d5318dac0e49d8af36e4d27830e23a7"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

@@ -12,6 +12,7 @@ class Webfs < Formula
   end
 
   bottle do
+    manifest_sha256 "541445e4dcca10487466eeb134a27e6d71ca963d54f756365139ef2b0d678867"
     sha256               arm64_golden_gate: "0748d6becb3db7598c4d1ba478f9ccf2c6dac0ef4b386e8f51f563deebd6459f"
     sha256               arm64_tahoe:       "f9f5bab18e9e95db07eac63bc5912da746d6c65079ad9f369c02707eac6231ae"
     sha256               arm64_sequoia:     "028458cad840c4a8702c7cef628be8ab33c46d7fa5cbdb9695990b0ac581b8ed"
@@ -38,11 +39,9 @@ class Webfs < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"webfsd", "-F", "-p", port.to_s
-    sleep 5
-    assert_match %r{webfs/1.21}, shell_output("curl localhost:#{port}")
-  ensure
-    Process.kill("SIGINT", pid)
-    Process.wait(pid)
+    with_test_process(bin/"webfsd", "-F", "-p", port.to_s, signal: "INT") do
+      sleep 5
+      assert_match %r{webfs/1.21}, shell_output("curl localhost:#{port}")
+    end
   end
 end

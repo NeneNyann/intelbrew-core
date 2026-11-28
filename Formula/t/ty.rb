@@ -1,17 +1,18 @@
 class Ty < Formula
   desc "Extremely fast Python type checker, written in Rust"
   homepage "https://docs.astral.sh/ty/"
-  url "https://files.pythonhosted.org/packages/9b/e4/38d3c128d8ec95c80344c030ed5402c846390f391105fa5789340b454b1d/ty-0.0.105.tar.gz"
-  sha256 "1d4398bd74821b57e6da93f3adcad71699769e3429d099a2d86aa783b6c3fbec"
+  url "https://files.pythonhosted.org/packages/d8/94/e6c3f8ed304bc5d7ae66ae5cced39b5c48151527b5bc69693e169918b9c0/ty-0.0.112.tar.gz"
+  sha256 "8e7eb8c95fa08b35f7e86eccacaf2be5e1fe34a7c7da164280d292e1180d5907"
   license "MIT"
   head "https://github.com/astral-sh/ty.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "cdb7b7e9828b12c05eb542413a6dfaf933d5679aa336ec05a9e9616a374d344a"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "b2a037c9afb7a134370ffdf17c2dba54106089155c49e7c235102a1c8e881177"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a28218f6a6eb4ce6998bfad81baafca1e487fbf0f32a3dacc4227093292efeeb"
-    sha256 cellar: :any,                 arm64_linux:       "610e8c962b309dee3b3e2f6bbd488804631510aa98613096cb1f6c24a4de77f6"
-    sha256 cellar: :any,                 x86_64_linux:      "080f3fcd4ede8c3bd1f379bf739e0598edee2e0757d13159fb48549ba0604586"
+    manifest_sha256 "657ec31866c0a45d7c5c1a0afe665f04bd0b1c3ae1f0cb0f161f041110edabed"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e7a1e5a2cde7f00c8bf2067e780d34e3a68e06998adba19eb743dcd4dfd03801"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "7945cb24059b405570a7db654f29f138e1e89f1e2330f460b173cae7d93a4328"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d1952d6e67202673f5078537fd85497ba2514de74838f7e9c0e40ef542ab8bb6"
+    sha256 cellar: :any,                 arm64_linux:       "9874a7ce143de5b658778b182edaa95ea346c1d17799a856b20a33ed05f54441"
+    sha256 cellar: :any,                 x86_64_linux:      "03e7d89125bece446f727df20761d93081ee1100cf3a180634a933268b105539"
   end
 
   depends_on "rust" => :build

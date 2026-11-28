@@ -18,6 +18,7 @@ class Flagd < Formula
   end
 
   bottle do
+    manifest_sha256 "4003ce6827b1ce559c2207103055bf44b760a632484c671aa4c79107cee10665"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "4bd434c992a08ed2c9e1333f372ef4ca775c3983497e1a57094790d0fbc9ffa2"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4325693a58531b01d95c3b56619a3b41981db8e4c6a7be65cf5e2a59001c40f5"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e300ebbf405990ddf36b748aaed03fd4bd9c87ef60a7dd75bc0366e763c4f52f"
@@ -58,13 +59,9 @@ class Flagd < Formula
       localhost:#{port}/schema.v1.Service/ResolveBoolean
     BASH
 
-    pid = spawn bin/"flagd", "start", "-f", json_url, "-p", port.to_s
-    begin
+    with_test_process(bin/"flagd", "start", "-f", json_url, "-p", port.to_s) do
       sleep 3
       assert_match(/true/, shell_output(resolve_boolean_command))
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

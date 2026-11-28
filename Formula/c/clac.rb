@@ -6,6 +6,7 @@ class Clac < Formula
   license "BSD-2-Clause"
 
   bottle do
+    manifest_sha256 "918edec321e19a7039de65decee0722436945168ad2229ee8a09f5da8d8a5c5e"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "187acb2a1112c89920ef3cf2551d62467098bae2decb8d1c6ef0b9e68a3b50e9"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "ce7b9be1e3f562a2f9be027bc7d521ab4495d6e7a27b6b2b3883b855aae67c29"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "b83f24a4d7ed1ac56bee1eb3088bd43b5fa6e3b03653e34097efeca25371aed2"
@@ -14,6 +15,8 @@ class Clac < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "32529a83e8e0dad368f129c2509d0a6d67538455934d2b48d49c715ebe69e18a"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "7938397708c73afe67e251fc647f7dbec82854b1b5590acdf87fe09a8d696fbf"
   end
+
+  deny_network_access!
 
   def install
     system "make", "PREFIX=#{prefix}", "install"

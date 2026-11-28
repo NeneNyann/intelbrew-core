@@ -8,6 +8,7 @@ class Cfripper < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "624f88e9c2d88c322edc2dae13a102268295d09d974404a8fbee7e6674b09526"
     sha256 cellar: :any, arm64_golden_gate: "2334702a23d9094948845be7c6a6b928d4f0f45cce80ae48ea30b8e61abfdbb2"
     sha256 cellar: :any, arm64_tahoe:       "9e31b33c73075e9e082412ed0ec651d33de9e373178c3c026c88ba87bc42a6fb"
     sha256 cellar: :any, arm64_sequoia:     "4c3383454e5038acc0ed3f5dbe2dd374e279cc855a957b2f30e5f39861d7a5b3"
@@ -85,6 +86,8 @@ class Cfripper < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

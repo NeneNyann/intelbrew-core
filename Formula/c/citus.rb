@@ -15,6 +15,7 @@ class Citus < Formula
   end
 
   bottle do
+    manifest_sha256 "1e4ce11a807cf40da394629bf3c4f81cdf236fc39dc2dda5afff548aa466ae59"
     sha256 cellar: :any, arm64_golden_gate: "ac819d8486fcf4ed4c4f1613fbcb81d2cd8ca671e83a7c6817ec3a2141af21fa"
     sha256 cellar: :any, arm64_tahoe:       "1d67147c5193c45df3fd0a093991fdbe3db9bf6c12391e588b97cad453baab0e"
     sha256 cellar: :any, arm64_sequoia:     "9af430e377cc19d6c71bbe03c000d15a63c77fe967c9e0e24a7d5d6ffefda26a"
@@ -32,9 +33,10 @@ class Citus < Formula
   uses_from_macos "curl"
 
   def postgresqls
-    deps.filter_map { |f| f.to_formula if f.name.start_with?("postgresql@") }
-        .sort_by(&:version)
+    deps(/\Apostgresql@/).map(&:to_formula).sort_by(&:version)
   end
+
+  allow_network_access! :test
 
   def install
     odie "Too many postgresql dependencies!" if postgresqls.count > 2
@@ -43,7 +45,7 @@ class Citus < Formula
     # The major soversion is hardcoded to at least make sure compatibility version hasn't changed.
     # If it does change, then need to confirm if API/ABI change impacts running on older PostgreSQL.
     libpq_args = %W[
-      libpq=#{formula_opt_lib("libpq")/shared_library("libpq", 5)}
+      libpq=#{formula_opt_lib("libpq")}/#{shared_library("libpq", 5)}
       rpathdir=#{formula_opt_lib("libpq")}
     ]
 
@@ -55,9 +57,9 @@ class Citus < Formula
         system "make", *libpq_args
         # Override the hardcoded install paths set by the PGXS makefiles.
         system "make", "install", "bindir=#{bin}",
-                                  "datadir=#{share/postgresql.name}",
-                                  "pkglibdir=#{lib/postgresql.name}",
-                                  "pkgincludedir=#{include/postgresql.name}"
+                                  "datadir=#{share}/#{postgresql.name}",
+                                  "pkglibdir=#{lib}/#{postgresql.name}",
+                                  "pkgincludedir=#{include}/#{postgresql.name}"
       end
     end
   end

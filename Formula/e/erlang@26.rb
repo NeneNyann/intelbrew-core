@@ -14,6 +14,7 @@ class ErlangAT26 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "2e566f2a3308f919dcd96ac35df5a777c7256131ebcfcb83b11b520474941176"
     sha256 cellar: :any, arm64_golden_gate: "d977a0f4ce46804747d701bc660aefebf8374e87dbe51b2ed048bad457fa0028"
     sha256 cellar: :any, arm64_tahoe:       "5fb2436c16382f76b0b7710424fc335df5ec22cf18448213eebf9ee8377bb181"
     sha256 cellar: :any, arm64_sequoia:     "90678c5300e6b09e19a142d0063d70fe372cc809a76f833f3411a8379e784b51"
@@ -60,9 +61,10 @@ class ErlangAT26 < Formula
     # Do this if building from a checkout to generate configure
     system "./otp_build", "autoconf" unless File.exist? "configure"
 
-    wxwidgets = deps.find { |dep| dep.name.match?(/^wxwidgets(@\d+(\.\d+)*)?$/) }.to_formula
+    wxwidgets = dep("wxwidgets").to_formula
     wx_config = wxwidgets.opt_bin/"wx-config-#{wxwidgets.version.major_minor}"
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --enable-dynamic-ssl-lib
       --enable-hipe
@@ -71,7 +73,7 @@ class ErlangAT26 < Formula
       --enable-threads
       --enable-wx
       --with-odbc=#{formula_opt_prefix("unixodbc")}
-      --with-ssl=#{formula_opt_prefix("openssl@4")}
+      --with-ssl=#{openssl_prefix}
       --without-javac
       --with-wx-config=#{wx_config}
     ]

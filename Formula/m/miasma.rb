@@ -7,6 +7,7 @@ class Miasma < Formula
   head "https://github.com/austin-weeks/miasma.git", branch: "main"
 
   bottle do
+    manifest_sha256 "09fa99de1f3dad8f3ddb8f360a6730e268df94e47c87bbb472a2606e1b11f4c1"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "88c37e192aec909ae1ebca7ff73f7bda6a10e3f253858f49c489a5f61b5142d9"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "74756db53c6d2fcec363a9bb3d81ca3b6fd1ffdc38d64d42d3c6db7eb69d86c1"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "b85721569acd61cf9cb20a6f477b51325d970f4ff53f3d7a985a4813e7270342"
@@ -30,13 +31,10 @@ class Miasma < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"miasma", "--host", "127.0.0.1", "--port", port.to_s
-
-    # give the server a second to start up
-    sleep 3
-    system "curl", "-sSf", "http://127.0.0.1:#{port}/"
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"miasma", "--host", "127.0.0.1", "--port", port.to_s) do
+      # give the server a second to start up
+      sleep 3
+      system "curl", "-sSf", "http://127.0.0.1:#{port}/"
+    end
   end
 end

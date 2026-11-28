@@ -1,17 +1,18 @@
 class Muffet < Formula
   desc "Fast website link checker in Go"
   homepage "https://github.com/raviqqe/muffet"
-  url "https://github.com/raviqqe/muffet/archive/refs/tags/v2.11.8.tar.gz"
-  sha256 "85a398fabcad07950184f13222e289647e4ef87ace46138225453c6bf269940b"
+  url "https://github.com/raviqqe/muffet/archive/refs/tags/v2.11.10.tar.gz"
+  sha256 "886e89be8a43c9ce769f38b6929e137fe1d1b9008f5d62fb6e2af0084713d97b"
   license "MIT"
   head "https://github.com/raviqqe/muffet.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "72d81b0af27b3f6f05d18cc1f95c427457b9c7005a16468b12e15ffcb1028b4d"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "72d81b0af27b3f6f05d18cc1f95c427457b9c7005a16468b12e15ffcb1028b4d"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "72d81b0af27b3f6f05d18cc1f95c427457b9c7005a16468b12e15ffcb1028b4d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "0e85f30d3020968682ce2a208f9f10186658c35de16ddc683259442337a3611b"
-    sha256 cellar: :any,                 x86_64_linux:      "f5595244376764b552d8c1f4099b893495d8b403a2d3ec1b8f8088d6d48a51f5"
+    manifest_sha256 "646ef92646258a7035f287f92111b0320f0b90af425635b738a9140a5332aae8"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "76fa88797c42b640a4d401ddc905e3db4710c6546c1514a2dfefaba4cd9783f1"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "76fa88797c42b640a4d401ddc905e3db4710c6546c1514a2dfefaba4cd9783f1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "76fa88797c42b640a4d401ddc905e3db4710c6546c1514a2dfefaba4cd9783f1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "fb31ce4075c5a55c3dd2023f9de4eabb75f24f01624360cec3a2b478383a0864"
+    sha256 cellar: :any,                 x86_64_linux:      "5703747176b5f8555dde422a351601866f1f4846d6fe3bd0cbc9fd90d102c012"
   end
 
   depends_on "go" => :build

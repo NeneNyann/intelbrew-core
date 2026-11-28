@@ -8,6 +8,7 @@ class Nuraft < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "fd05bbed1569ba91ed8c7b18d1f1c450696faa2147d7ca6debfb755b0ba128ee"
     sha256 cellar: :any, arm64_golden_gate: "517e0a885621767c861246519db093fe346ab22726f7ea48401944b11c040890"
     sha256 cellar: :any, arm64_tahoe:       "3fe144bec835ae99558360ce66dba39bf6d3c4ca19e38c66a579e14927e11418"
     sha256 cellar: :any, arm64_sequoia:     "31b701afa908f0ab05f611ce43f4fc12dd462ad5284ca17a00a70c4e0c11b76c"
@@ -38,12 +39,13 @@ class Nuraft < Formula
 
   test do
     cp_r pkgshare/"examples/.", testpath
+    openssl = dep("openssl")
     system ENV.cxx, "-std=c++11", "-o", "test",
                     "quick_start.cxx", "logger.cc", "in_memory_log_store.cxx",
                     "-I#{include}/libnuraft", "-I#{testpath}/echo",
-                    "-I#{formula_opt_include("openssl@4")}",
+                    "-I#{openssl.opt_include}",
                     "-L#{lib}", "-lnuraft",
-                    "-L#{formula_opt_lib("openssl@4")}", "-lcrypto", "-lssl"
+                    "-L#{openssl.opt_lib}", "-lcrypto", "-lssl"
     assert_match "hello world", shell_output("./test")
   end
 end

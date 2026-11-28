@@ -10,6 +10,7 @@ class PythonTkAT312 < Formula
   end
 
   bottle do
+    manifest_sha256 "4321688759a4550b0bce4535e3de610ce126e6a91dd4f85c74ec94fad1f9dd1f"
     sha256 cellar: :any, arm64_golden_gate: "1ae2665d755fdabe486520abf29166abc4dc396fd2e97178afca8e506ee5e212"
     sha256 cellar: :any, arm64_tahoe:       "4ac87c4866deaf415263f9f0174d2ce3f5bb3e620df1e3c5f1ed6f01dcf3778c"
     sha256 cellar: :any, arm64_sequoia:     "ab60e6a0dfa41f7d56656bc0cfc929959a00d75d84f253c9c8fab008bfbc9276"
@@ -57,7 +58,7 @@ class PythonTkAT312 < Formula
               ext_modules = [
                 Extension("_tkinter", ["_tkinter.c", "tkappinit.c"],
                           define_macros=[("WITH_APPINIT", 1), ("TCL_WITH_EXTERNAL_TOMMATH", 1)],
-                          include_dirs=["#{python_include}/internal", "#{formula_opt_include("tcl-tk")/"tcl-tk"}"],
+                          include_dirs=["#{python_include}/internal", "#{formula_opt_include("tcl-tk")}/tcl-tk"],
                           libraries=["tcl#{tcltk_version}", "tcl#{tcltk_version.major}tk#{tcltk_version}"],
                           library_dirs=["#{formula_opt_lib("tcl-tk")}"])
               ]

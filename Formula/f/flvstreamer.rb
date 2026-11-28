@@ -7,6 +7,7 @@ class Flvstreamer < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "111970af1482c31649ec18c0bbb6001fe291909cbec80917ba615df3637e073a"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "c55b7127c5b5b17a88d10808cd4056b2a1ceb2e8fa8a5477c6bc4318a3c43207"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:  "dcbbbb87db99f0140c73453fd12af2023b37d44c42302d99156335b0cd69891d"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "116c69614242e07bfb2be2d34177335c12a19ef86c8ab5a70e2b3157695f3368"
@@ -26,6 +27,8 @@ class Flvstreamer < Formula
   disable! date: "2026-03-21", because: :unmaintained
 
   conflicts_with "rtmpdump", because: "both install 'rtmpsrv', 'rtmpsuck' and 'streams' binary"
+
+  allow_network_access!
 
   def install
     system "make", "posix"

@@ -10,6 +10,7 @@ class Bashate < Formula
   head "https://github.com/openstack/bashate.git", branch: "master"
 
   bottle do
+    manifest_sha256 "7711b810b67fdc3ccfc53cd872e2512d18ee346051fc71c27db429b879717105"
     sha256 cellar: :any_skip_relocation, all: "fa569171730e9b35fcb109fe707a4df0e73ebc2c494b3668863c5ef4f3499df2"
   end
 
@@ -24,6 +25,8 @@ class Bashate < Formula
     url "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz"
     sha256 "3ff8b3b5492a0aa66960f4419365a86b84e013070d4313e4d4a6894f5d64d6bc"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

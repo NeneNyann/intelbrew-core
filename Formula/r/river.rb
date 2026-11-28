@@ -8,6 +8,7 @@ class River < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "d8fbc066da607172ea1e43f3426464a16cb43f1c6a22c800f9e12fd0063fdc00"
     sha256 cellar: :any, arm64_golden_gate: "ae1e3320e450302e6beb74cdb0e318341c2a7951a11f3a4795ccef36407ecfe6"
     sha256 cellar: :any, arm64_tahoe:       "ddb809719d4724d1456b74877c9a54aabf7f62facb52872b92233326133a41e1"
     sha256 cellar: :any, arm64_sequoia:     "c4816a178a1648664702bb58d7c0dedc738eb0c2029fa23e39409e4d7f073d59"
@@ -39,7 +40,7 @@ class River < Formula
 
   def install
     # Ensure that the `openssl` crate picks up the intended library.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", *std_cargo_args(path: "source/river")
   end
@@ -57,8 +58,8 @@ class River < Formula
     system bin/"river", "--validate-configs", "--config-toml", testpath/"example-config.toml"
 
     [
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
-      formula_opt_lib("openssl@4")/shared_library("libcrypto"),
+      dep("openssl").opt_lib/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libcrypto"),
     ].each do |library|
       assert Utils.binary_linked_to_library?(bin/"river", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."

@@ -82,6 +82,7 @@ class Creduce < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "e448deb2ef5daf713b81769bb3e93f39518ca55ef5371fafc0eba95db9b2aef9"
     sha256 cellar: :any, arm64_golden_gate: "096bef3ceffea0fa2cbcd931d047d69bed6871c1498e301d343adbd700238300"
     sha256 cellar: :any, arm64_tahoe:       "76e18543f131c54b6c861c2cca96cf026c5633bdf6bc00dbe44332ff01d3d917"
     sha256 cellar: :any, arm64_sequoia:     "26320842d4a1e06aae66d7d760b0cf236539e96f4b01e776779555939967c3e6"
@@ -156,10 +157,8 @@ class Creduce < Formula
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
 
-    llvm = deps.find { |dep| dep.name.match?(/^llvm(@\d+)?$/) }
-               .to_formula
     # Avoid ending up with llvm's Cellar path hard coded.
-    ENV["CLANG_FORMAT"] = llvm.opt_bin/"clang-format"
+    ENV["CLANG_FORMAT"] = dep("llvm").opt_bin/"clang-format"
 
     resources.each do |r|
       r.stage do

@@ -12,6 +12,7 @@ class Lua < Formula
   end
 
   bottle do
+    manifest_sha256 "81be85b160815d77bcc636168eec1a8df1e4078e11b2acad2f6eec569c865508"
     sha256 cellar: :any, arm64_golden_gate: "058cec4331d0939089cf953851a35bd4bd108d932e0356d30636ad08327d2183"
     sha256 cellar: :any, arm64_tahoe:       "494c75d37ed889cd4deaf7cb40613e8ba2206b53af68a5ab3d47167c22138b50"
     sha256 cellar: :any, arm64_sequoia:     "4dc6f450952c63886e1293adb7798fb8bfe9093c72400471ba160561affe6dc4"
@@ -41,6 +42,7 @@ class Lua < Formula
     # Fix path in the config header
     inreplace "src/luaconf.h", "/usr/local", HOMEBREW_PREFIX
 
+    platform = OS.mac? ? "macosx" : "linux"
     args = %W[
       CC=#{ENV.cc}
       INSTALL_INC=#{include}/lua
@@ -48,7 +50,7 @@ class Lua < Formula
       INSTALL_TOP=#{prefix}
       MYCFLAGS=#{ENV.cflags}
       MYLDFLAGS=#{ENV.ldflags}
-      PLAT=#{OS.mac? ? "macosx" : "linux"}
+      PLAT=#{platform}
     ]
 
     system "make", *args
@@ -58,11 +60,12 @@ class Lua < Formula
     # We ship our own pkg-config file as Lua no longer provide them upstream.
     libs = %w[-llua -lm]
     libs << "-ldl" if OS.linux?
+    install_prefix = versioned_formula? ? opt_prefix : HOMEBREW_PREFIX
     (lib/"pkgconfig/lua.pc").write <<~PC
       V=#{version.major_minor}
       R=#{version}
 
-      prefix=#{versioned_formula? ? opt_prefix : HOMEBREW_PREFIX}
+      prefix=#{install_prefix}
       INSTALL_BIN=${prefix}/bin
       INSTALL_INC=${prefix}/include/lua
       INSTALL_LIB=${prefix}/lib

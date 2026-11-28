@@ -9,6 +9,7 @@ class FregeRepl < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "c6997189ad7956099c3b50bd96445828720967fe0a7c9885ab00c63195b2edbe"
     sha256 cellar: :any_skip_relocation, all: "f68a61801c7e99908489f6339d178107252377a08db65607849027d869df9bd0"
   end
 
@@ -22,7 +23,7 @@ class FregeRepl < Formula
   def install
     rm(Dir["bin/*.bat"])
     libexec.install "bin", "lib"
-    (bin/"frege-repl").write_env_script libexec/"bin/frege-repl", JAVA_HOME: formula_opt_prefix("openjdk@17")
+    (bin/"frege-repl").write_env_script libexec/"bin/frege-repl", JAVA_HOME: dep("openjdk").opt_prefix
   end
 
   test do

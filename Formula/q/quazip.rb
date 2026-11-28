@@ -6,6 +6,7 @@ class Quazip < Formula
   license "LGPL-2.1-only"
 
   bottle do
+    manifest_sha256 "8cba0e892bda0aed7bb914a4173e1c0b2d5c8ed0717fdddc9bbfab91261b05b6"
     sha256 cellar: :any, arm64_golden_gate: "20ba08c520e415717bbd43d11462fc3b578c3bcbec320547eb6898a8626f57d8"
     sha256 cellar: :any, arm64_tahoe:       "949ca6bbf73c080cbaced4a9611eb02b94876055ed843a2dc1b0fa12463d9ef8"
     sha256 cellar: :any, arm64_sequoia:     "b7c21a9875e6cba5caf39d35749de86f8ce77e35b780e4634f08911299a046e2"
@@ -33,12 +34,14 @@ class Quazip < Formula
     system "cmake", "--install", "build"
 
     cd include do
-      include.install_symlink "QuaZip-Qt#{Formula["qtbase"].version.major}-#{version}/quazip" => "quazip"
+      qt_major = Formula["qtbase"].version.major
+      include.install_symlink "QuaZip-Qt#{qt_major}-#{version}/quazip" => "quazip"
     end
   end
 
   test do
     ENV.delete "CPATH"
+    qt_major = Formula["qt"].version.major
     (testpath/"test.pro").write <<~EOS
       QT             += core5compat
       TEMPLATE        = app
@@ -48,7 +51,7 @@ class Quazip < Formula
       SOURCES        += test.cpp
       INCLUDEPATH    += #{include} #{formula_opt_include("zlib-ng-compat")}
       LIBPATH        += #{lib}
-      LIBS           += -lquazip#{version.major}-qt#{Formula["qt"].version.major}
+      LIBS           += -lquazip#{version.major}-qt#{qt_major}
       QMAKE_RPATHDIR += #{lib}
     EOS
 

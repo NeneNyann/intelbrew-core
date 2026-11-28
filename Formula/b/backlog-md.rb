@@ -1,17 +1,17 @@
 class BacklogMd < Formula
   desc "Markdown‑native Task Manager & Kanban visualizer for any Git repository"
   homepage "https://github.com/MrLesk/Backlog.md"
-  url "https://github.com/MrLesk/Backlog.md/archive/refs/tags/v1.55.3.tar.gz"
-  sha256 "d61d27116a36e01ce368d014a2717c792cb592d4aee6081e265cd8d543ce3b2d"
+  url "https://github.com/MrLesk/Backlog.md/archive/refs/tags/v1.57.4.tar.gz"
+  sha256 "cdbbf444445f63a4cd2fe9a3e815269e80d71d218f9ea80474afc01a9de61cb5"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 arm64_golden_gate: "b8f9828e88cf7a8a6bafb301e54e06eb683a3b8876815482587198c8b8349005"
-    sha256 arm64_tahoe:       "0a60f582649988e0b436d10ef49781d1766670d2f7a0968eaa47bc5c8b12912c"
-    sha256 arm64_sequoia:     "6129eda92ccd3efabbe43dc7bc808a23a1ba0a665e0580798c281b02fb1ff8d5"
-    sha256 arm64_linux:       "03a16a2123fe8dcecd7923ca02ae9c99cec9733361dd0558caf4af0fc7422a19"
-    sha256 x86_64_linux:      "fd4a66d504867e9c3fb1b390367e4b928d3f681249bb963e7d5a46c7a8e72cb7"
+    manifest_sha256 "ae015aa9c8ce692240d527815626decfc15125484de901b1b3c7e682a3eab74a"
+    sha256 arm64_golden_gate: "eb8080ecd5ae24f46d0b00ea3eee3c16b62da2cabaf6e66d0958649fd9feb9dd"
+    sha256 arm64_tahoe:       "8d9e28aaf061fbb86c476c44a518002fe11c1a39fb914671a8a19942e5abed6b"
+    sha256 arm64_sequoia:     "a23c0711d06c7190016be2bbca4072ce05d94d4804ebcafa976fd0e898bd0b1f"
+    sha256 arm64_linux:       "eb11a7e45b5419d1bd9d0cb47cb21e60a83f2fe8040bd4a303c85c823a6cfb06"
+    sha256 x86_64_linux:      "ec9a4cfebd0703433c63033c1d0a960b55222f199780b80dbf8d843dffc51c3d"
   end
 
   depends_on "bun" => :build
@@ -29,8 +29,8 @@ class BacklogMd < Formula
 
   def install
     if OS.linux?
-      bun_icu = Formula["bun"].deps.find { |dep| dep.name.match?(/^icu4c/) }.to_formula
-      icu = deps.find { |dep| dep.name.match?(/^icu4c/) }.to_formula
+      bun_icu = Formula["bun"].dep("icu4c").to_formula
+      icu = dep("icu4c").to_formula
 
       odie "Update icu4c dependency!" if bun_icu.name != icu.name
     end

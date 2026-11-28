@@ -3,8 +3,8 @@ class Esphome < Formula
 
   desc "Make creating custom firmwares for ESP32/ESP8266 super easy"
   homepage "https://esphome.io/"
-  url "https://files.pythonhosted.org/packages/84/74/04cb42f48a2e7a52b372c8c3c58948342c772915ff53d90a1e0a940f8f6b/esphome-2026.10.2.tar.gz"
-  sha256 "bc37f004a511886d93872dcdfbe7311337c4f48aee7bb71cf464bd054658e758"
+  url "https://files.pythonhosted.org/packages/ba/d7/0538d8fdd480be93041947f9f0b96eeb976e6dd820b4709c5cda5cfbaf58/esphome-2026.11.1.tar.gz"
+  sha256 "fa5fbaa0ef6002206de66acdf36a38fe476f75b71792694ee3daadd44fd29580"
   license "MIT"
   head "https://github.com/esphome/esphome.git", branch: "dev"
 
@@ -12,11 +12,12 @@ class Esphome < Formula
   no_autobump! because: "macOS resources cannot be updated on linux CI"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "1873f328feb456384c6d1760554cab8fe352a9afa65c5e9c23c001d24be9c480"
-    sha256 cellar: :any, arm64_tahoe:       "e24bbfb4b504793c2a778c7a6d00bc4890db41366d9646a84e695cb5d492f647"
-    sha256 cellar: :any, arm64_sequoia:     "f30181261e28ab782fda9dcf903246abe9cae6c0b939376a707149c06dead1b7"
-    sha256 cellar: :any, arm64_linux:       "11b5f142a993ab5a271545a2c7e87a3c70b2325d14dcad8db15907752b2ac9bd"
-    sha256 cellar: :any, x86_64_linux:      "c31461251bc1d9d4ba3dfe781e1de9232a18e8d2ec812a52a7f157eb4f2223b9"
+    manifest_sha256 "178b5ffffb0144226d9faf02b56f771ef1f62e0353dce1c146a6446d1e8f0ed8"
+    sha256 cellar: :any, arm64_golden_gate: "90c04035fc06d43b74f5116d0a6e2a7869c8abd8a0a8b7fbe5bdf5a821682ee4"
+    sha256 cellar: :any, arm64_tahoe:       "a2d4a73bb8e5c28ac3856ffb2f954217539d1b09e2748a4bb56282f2dc205d53"
+    sha256 cellar: :any, arm64_sequoia:     "e3dcdfd7086959d9572a6df51ef3d77fa140a15d8a8876f399089b259a80e6d4"
+    sha256 cellar: :any, arm64_linux:       "f66e0c13ab5b9cedc8b4005b945de514dd348e7bfaeb1b7a537f256794022f6b"
+    sha256 cellar: :any, x86_64_linux:      "46c14857490e05a1b0dc7f3cf857fc4b969cbc56f410d73616188273e85f9d94"
   end
 
   depends_on "cmake" => :build
@@ -41,8 +42,8 @@ class Esphome < Formula
                 extra_packages:   %w[chardet dbus-fast pyobjc-framework-corebluetooth pyobjc-framework-libdispatch]
 
   resource "aioesphomeapi" do
-    url "https://files.pythonhosted.org/packages/2d/d0/68a8652a11b52b26ec60a24aa0802d2bb087c15ac21226920cd1a8a3e6e3/aioesphomeapi-46.12.0.tar.gz"
-    sha256 "d7d6e20eba8085488fbde4310a44263045110b3df371fde7d888665fa925046b"
+    url "https://files.pythonhosted.org/packages/87/6c/9e8688afb1a717b4b8366c2f5e467120b6eb3cafde8c431c8e912bff0928/aioesphomeapi-46.25.1.tar.gz"
+    sha256 "74572dfde85a7ceab5fb135ac8ae39a163598c0a37d895bd22c279a6b05c51ef"
   end
 
   resource "aiohappyeyeballs" do
@@ -61,18 +62,13 @@ class Esphome < Formula
   end
 
   resource "argcomplete" do
-    url "https://files.pythonhosted.org/packages/87/6f/5a73f04007ca950701765949209f068da628bd11f9c2da287278ce91e0ee/argcomplete-3.7.2.tar.gz"
-    sha256 "aad8b69a0b9969edb62db0d1752354c0d50717b10e0cbb00e2a958381b9fc6b9"
+    url "https://files.pythonhosted.org/packages/19/0d/ca63f1b8b706c70590d0a4acc9c3c94ea8ed4dd9c83b4f7af195868abe76/argcomplete-3.8.0.tar.gz"
+    sha256 "0114d634013e11ac92cc329b3a7d886c3506e98ddc7bb23c99b1782aacc8b8bd"
   end
 
   resource "async-interrupt" do
     url "https://files.pythonhosted.org/packages/56/79/732a581e3ceb09f938d33ad8ab3419856181d95bb621aa2441a10f281e10/async_interrupt-1.2.2.tar.gz"
     sha256 "be4331a029b8625777905376a6dc1370984c8c810f30b79703f3ee039d262bf7"
-  end
-
-  resource "bitstring" do
-    url "https://files.pythonhosted.org/packages/21/58/145086ca4da6caf7bef25e957bdff9775b781310d6f57ab27f2f2fde91ba/bitstring-5.0.0.tar.gz"
-    sha256 "01d876b6e7bbd912bfa3ae1d028ed419ed2193245fe2337f21d30afaa391c053"
   end
 
   resource "bleak" do
@@ -91,8 +87,8 @@ class Esphome < Formula
   end
 
   resource "cbor2" do
-    url "https://files.pythonhosted.org/packages/cd/eb/e2ef5f241f15131babf4854032953b97c88b2c2700d7712a0ba8f57cbe81/cbor2-6.2.0.post2.tar.gz"
-    sha256 "3b08ba9f3a556186515000949d478e47e6d55322f9d86bdaef5b4e3d27d48298"
+    url "https://files.pythonhosted.org/packages/df/61/be007e3421969a4a318b486e4eaf4205872bbc1baf063ea7e679f74015cf/cbor2-6.3.0.tar.gz"
+    sha256 "fd4d6b3533e966eec3fb33ce0f17e925fc09b512500ab7770867ebec7d7d5dc1"
   end
 
   resource "chacha20poly1305-reuseable" do
@@ -106,8 +102,8 @@ class Esphome < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz"
-    sha256 "39de2a259fc954455c57274dc94c79d5842774e1247a016aff30bc0efed0f4ef"
+    url "https://files.pythonhosted.org/packages/c2/c3/cae6d3bdefd96a941ffc247c714ac4babc488a69012e11c058f6c17c6c47/charset_normalizer-3.5.3.tar.gz"
+    sha256 "a250888753faa289e2997962fbb17c4960cbdb58575533ca6fceee68c224bdff"
   end
 
   resource "click" do
@@ -141,13 +137,13 @@ class Esphome < Formula
   end
 
   resource "esptool" do
-    url "https://files.pythonhosted.org/packages/2c/43/1a2ae2dd8ae97bf1ec9991db097e52626d35b57d242f9687c9314eac5b57/esptool-5.4.0.tar.gz"
-    sha256 "fd756598db0a26c9975fa18511b08687c54bf2ce7322ede80cf1f5117dad1f50"
+    url "https://files.pythonhosted.org/packages/96/4c/a949409e527b87f863f237cea9f997d25644607f799293a3d247f1b40e67/esptool-5.6.0.tar.gz"
+    sha256 "86c7249e9cc3a824e032ede9ba20abad057a2c49e231418cc4f02b177bb36f42"
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/4b/51/a182494d1d8dde1240bff84dda57d48165d982e59582ce8f167e8e3d7628/filelock-4.0.10.tar.gz"
-    sha256 "00d6a81f976a6332551c2c10f39e12b4abb7e01c64d4c497b81a615bc9186f1f"
+    url "https://files.pythonhosted.org/packages/35/6c/730b340182f1fd74d4ef8d3f35431ce84f8f97b1a1f2afd145174b7bb047/filelock-4.2.6.tar.gz"
+    sha256 "ee7af8ede36dcaf12e1016d9f7c3a63ecd5497d46f85dab21b8c779b8f944e97"
   end
 
   resource "freetype-py" do
@@ -186,8 +182,8 @@ class Esphome < Formula
   end
 
   resource "markdown-it-py" do
-    url "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz"
-    sha256 "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
+    url "https://files.pythonhosted.org/packages/16/fc/cee2c45553c9a9bf77d8b0c391560c556d7ed756b1f0bb35eb5d48db09ea/markdown_it_py-4.3.0.tar.gz"
+    sha256 "91a58fa5b72c71a40cf7177250fd767480d7a2bb3ac426ccfb76fb90305fdaaa"
   end
 
   resource "markupsafe" do
@@ -196,8 +192,8 @@ class Esphome < Formula
   end
 
   resource "marshmallow" do
-    url "https://files.pythonhosted.org/packages/4e/d7/611e68d57e6a903c29cb33b5afec0f93b4baecacc6c6c62e33cde9eb9dcb/marshmallow-4.3.1.tar.gz"
-    sha256 "fb6b8048af08d4ab061610d5b7d3696a7e4c95337dbda880edb9f95812cabc20"
+    url "https://files.pythonhosted.org/packages/0d/3e/2b75ae631789fc13191ab82bc08957af381c00fffc5fefc6248b719bc9d2/marshmallow-4.4.0.tar.gz"
+    sha256 "9e6ffa8511012ca89732324c1c253efd7b4d35632dcbdf80aa793fe01804af3e"
   end
 
   resource "mdurl" do
@@ -221,13 +217,13 @@ class Esphome < Formula
   end
 
   resource "paho-mqtt" do
-    url "https://files.pythonhosted.org/packages/f8/dd/4b75dcba025f8647bc9862ac17299e0d7d12d3beadbf026d8c8d74215c12/paho-mqtt-1.6.1.tar.gz"
-    sha256 "2a8291c81623aec00372b5a85558a372c747cbca8e9934dfe218638b8eefc26f"
+    url "https://files.pythonhosted.org/packages/39/15/0a6214e76d4d32e7f663b109cf71fb22561c2be0f701d67f93950cd40542/paho_mqtt-2.1.0.tar.gz"
+    sha256 "12d6e7511d4137555a3f6ea167ae846af2c7357b10bc6fa4f7c3968fc1723834"
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/42/23/4a86fc741c38c5b69792a4ef954b281afa69bea9f083f881de1b0d23bc07/platformdirs-4.12.3.tar.gz"
-    sha256 "427fc0bb321ae0c5b037fa03238ca74820437be162e78b4848c4d4055b9b766c"
+    url "https://files.pythonhosted.org/packages/6e/4e/2684728d9f2c8c4110738dcadca7e0bed4b60c8dc68c40c2a9e0cf017900/platformdirs-4.14.2.tar.gz"
+    sha256 "6d13b4c1d66b7548dcec9e3db13c1ba9d9adb65041b5d07869313afc07e6e41b"
   end
 
   resource "platformio" do
@@ -251,8 +247,8 @@ class Esphome < Formula
   end
 
   resource "py7zr" do
-    url "https://files.pythonhosted.org/packages/59/3f/ac248f25f3901d3d6cf80ac99d5bac6fd1e5e6543c1812c79b02b6074c60/py7zr-1.1.3.tar.gz"
-    sha256 "8d51894abb38355bf14881088bb97f01fe4cb5b14ebe22f66d6297668c7e1a74"
+    url "https://files.pythonhosted.org/packages/d6/31/d5469ec310b57c730785068c227caf2263391be846ae5e99488f69b394eb/py7zr-1.1.4.tar.gz"
+    sha256 "7674697559bd06b697bf6e8249985cee6dc704a4b07b8e11f24d0b1695707c3e"
   end
 
   resource "pybcj" do
@@ -261,8 +257,8 @@ class Esphome < Formula
   end
 
   resource "pycryptodomex" do
-    url "https://files.pythonhosted.org/packages/f4/e7/50e72301e32acb73a314e663c2014e1ddefc019d5f434ff14ec89861d664/pycryptodomex-3.24.1.tar.gz"
-    sha256 "09081666ffc599976c0b8b29caf2cf82212c0f05bed233c8f8ed53e4f6e1d356"
+    url "https://files.pythonhosted.org/packages/f3/c2/f5855412372e47d635599a97c00cfcf9fc40accac9436a11bf9ded19f859/pycryptodomex-3.24.2.tar.gz"
+    sha256 "e4dbc29e2575365d15e272f769329106277649aea081e2119cf43d66950f8f8f"
   end
 
   resource "pyelftools" do
@@ -276,23 +272,23 @@ class Esphome < Formula
   end
 
   resource "pyobjc-core" do
-    url "https://files.pythonhosted.org/packages/83/58/7bab095330b8893e1ac58f3cf9710462c3242b600f8fa5db0d5dda795775/pyobjc_core-13.0.tar.gz"
-    sha256 "ffe154462d14aa4852f424e9116f17b5f8d44f78fc0f6c4727e721a5fa7177da"
+    url "https://files.pythonhosted.org/packages/36/5f/b14b6b66a38f628af7a0983728f8d7360f17b68075bcd86631872aa7bb71/pyobjc_core-13.1.tar.gz"
+    sha256 "fd73c9020389c325d2045992134a8d89f8f554b46084c8ff36fe05a54bc9996e"
   end
 
   resource "pyobjc-framework-cocoa" do
-    url "https://files.pythonhosted.org/packages/30/50/55a8779d35f1f86d795264cbd6fe62e35b2cf4fb8343fc888e99268c988a/pyobjc_framework_cocoa-13.0.tar.gz"
-    sha256 "bb7a23941fc8d7866578dbc84e56140efd343a1d28510f530dd1dbf80807daf4"
+    url "https://files.pythonhosted.org/packages/8d/f9/20f550e334092a7e762fc9a9e8214ea4750b622c08b594c20782910daa31/pyobjc_framework_cocoa-13.1.tar.gz"
+    sha256 "2f373dedbfffc236ed2f6278b45ea5f053940e621a486b2e9f4d23a06b06ba22"
   end
 
   resource "pyobjc-framework-corebluetooth" do
-    url "https://files.pythonhosted.org/packages/dc/5b/9fd06be0f5815eba5fe8708f6a3f0e37c3e6c6e8aaf2a480c3e5b99cdab6/pyobjc_framework_corebluetooth-13.0.tar.gz"
-    sha256 "06c11f81d25286665460facd0b53562faff30d92d3c4a15517042b878c295443"
+    url "https://files.pythonhosted.org/packages/58/bb/ceadd2f642b1bf66ba84aaa6b93a93a849efd53bda71681be021239a28d9/pyobjc_framework_corebluetooth-13.1.tar.gz"
+    sha256 "60de5e6818c9450f27a6526132698fc0c1a06cb88c83858a227bdd00b2009214"
   end
 
   resource "pyobjc-framework-libdispatch" do
-    url "https://files.pythonhosted.org/packages/ca/67/ec3a8e6dce218dc78968d2a5580d7140b6d93541b76e6ab89147663e7d49/pyobjc_framework_libdispatch-13.0.tar.gz"
-    sha256 "840f8f719984b1128ce69e3a586cd10f89a394795885a54be8c1769158cf8555"
+    url "https://files.pythonhosted.org/packages/aa/6c/53da55ff4f20be25218eb74c2cc8cb38d0f0043fda56eee6904db42663dc/pyobjc_framework_libdispatch-13.1.tar.gz"
+    sha256 "a6b83be8295de0f0391006ab113100a3a1564b115bc41230794dbadcfd06a475"
   end
 
   resource "pyparsing" do
@@ -376,13 +372,8 @@ class Esphome < Formula
   end
 
   resource "texttable" do
-    url "https://files.pythonhosted.org/packages/03/19/9590fd39a668ea0a0869493441fe65852246a3ec67616877baad98bcb039/texttable-1.7.2.tar.gz"
-    sha256 "dc16ea6b35fbf5291ba6ef79d79e37d9b3ca6acd7bae3ca3450488d7c2e19c99"
-  end
-
-  resource "tibs" do
-    url "https://files.pythonhosted.org/packages/9f/4e/731ae9c3ccc0e65363a4ce411cb8d887e07fa0cb6a3a860b8ce0c57483dd/tibs-2.0.2.tar.gz"
-    sha256 "63a7b87e262c558ccc16be67d34fe60620e39b49bf644ac65e71c4553173ac8f"
+    url "https://files.pythonhosted.org/packages/92/f2/2d43e9505895dc66929a26a46d89c7e96835aff72a28ec5ef54d6e96ee24/texttable-1.7.3.tar.gz"
+    sha256 "ff99aa7562c6cbcd0982cb6fae9145126b19878182496cdc46b8d6816721c5da"
   end
 
   resource "tzdata" do
@@ -391,8 +382,8 @@ class Esphome < Formula
   end
 
   resource "tzlocal" do
-    url "https://files.pythonhosted.org/packages/81/5b/879b2f932adfa7a053c360d50bc896c977fa6426109185f7c12ebdd0cb9d/tzlocal-5.4.4.tar.gz"
-    sha256 "8dbb8660838688a7b6ba4fed31d18dedf842afb4d47ca050d6d891c2c15f3be4"
+    url "https://files.pythonhosted.org/packages/d8/89/2bd035df331499589fc92e59375c17c6cea6a500453b2c5f6a6ec9572825/tzlocal-5.4.5.tar.gz"
+    sha256 "ba976898bad27945178c9ca25c222c19e322b30c10342b9f40b46714f70d2d5f"
   end
 
   resource "urllib3" do
@@ -421,14 +412,11 @@ class Esphome < Formula
   end
 
   resource "zeroconf" do
-    url "https://files.pythonhosted.org/packages/93/20/69744d9de9d375dae2639dda9add7dae85d52d690b68c61b23b8a6468434/zeroconf-0.151.5.tar.gz"
-    sha256 "28c2ec9d772007eedf11b41a9c9fd3d5c684c17b00721ff8f1ee31b20ad286a1"
+    url "https://files.pythonhosted.org/packages/c2/ad/e321ee148e871fdb257e9fd5840748d06a72db132815ecb47d42d13b1a3a/zeroconf-0.153.0.tar.gz"
+    sha256 "28bd0baa208f4ea481a386e9eefdd3a65663fada34233432301a0c221d741d1d"
   end
 
   def install
-    # Allow Python 3.15
-    inreplace "pyproject.toml", 'requires-python = ">=3.12.0,<3.15"', 'requires-python = ">=3.12.0,<3.16"'
-
     # Help `pyobjc-framework-cocoa` pick correct SDK after removing -isysroot from Python formula
     ENV.append_to_cflags "-isysroot #{MacOS.sdk_path}" if OS.mac?
     # Make `pyobjc-core` detect the SDK that superenv compiles with rather than the newer Xcode one

@@ -7,6 +7,7 @@ class BigqueryEmulator < Formula
   head "https://github.com/goccy/bigquery-emulator.git", branch: "main"
 
   bottle do
+    manifest_sha256 "c964899feb3ee1c8d6f59553036c91618ad69dbb802f898055ddc40e15a475d7"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "9f981a28ec826694ca25a27d38cb3125a6eb8cc4d7fb106d4437185aeaa8e756"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a397c8bc93742701c7799ee2ecddabfec3df714726796fcb4e8e6d61f14d1497"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a397c8bc93742701c7799ee2ecddabfec3df714726796fcb4e8e6d61f14d1497"
@@ -70,20 +71,18 @@ class BigqueryEmulator < Formula
 
     port = free_port
     grpc_port = free_port
-    pid = spawn bin/"bigquery-emulator", "--project=test",
-                                         "--data-from-yaml=./data.yaml",
-                                         "--port=#{port}",
-                                         "--grpc-port=#{grpc_port}"
-    sleep 10
+    with_test_process(bin/"bigquery-emulator", "--project=test",
+                                               "--data-from-yaml=./data.yaml",
+                                               "--port=#{port}",
+                                               "--grpc-port=#{grpc_port}") do
+      sleep 10
 
-    query = '{"query": "SELECT name FROM dataset1.table_a WHERE id = 2"}'
-    query_url = "http://localhost:#{port}/bigquery/v2/projects/test/queries"
-    response = JSON.parse(shell_output("curl -s -X POST -d '#{query}' #{query_url}"))
-    assert_equal [{ "f" => [{ "v" => "bob" }] }], response["rows"]
+      query = '{"query": "SELECT name FROM dataset1.table_a WHERE id = 2"}'
+      query_url = "http://localhost:#{port}/bigquery/v2/projects/test/queries"
+      response = JSON.parse(shell_output("curl -s -X POST -d '#{query}' #{query_url}"))
+      assert_equal [{ "f" => [{ "v" => "bob" }] }], response["rows"]
 
-    assert_match "version: #{version} (Homebrew)", shell_output("#{bin}/bigquery-emulator --version")
-  ensure
-    Process.kill "TERM", pid
-    Process.wait pid
+      assert_match "version: #{version} (Homebrew)", shell_output("#{bin}/bigquery-emulator --version")
+    end
   end
 end

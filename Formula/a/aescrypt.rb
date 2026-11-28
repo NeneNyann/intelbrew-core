@@ -11,6 +11,7 @@ class Aescrypt < Formula
   end
 
   bottle do
+    manifest_sha256 "53c3706f3c45708ba4cab82c09a8487f859fdd43e31289b0309808ae39df59ff"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2f6f5148072ecf7afa7ebaa061ac1e7d02f886d31e78dec17c5ca521ca748ff6"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "9b39aab473142edc7f8e5eaea2122edcd3bebcea70810914d8d9735a4d82fd0f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "b4ec90c9ff44239c6cf43b35377e7ff709983c1b76577ea84cd8dbc638d763ee"
@@ -26,13 +27,19 @@ class Aescrypt < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "2a2705c4423a86919b9309235a468b5cc1ac66200501bd255cefe0d26d1f07c6"
   end
 
+  deny_network_access!
+
   def install
     # Workaround for newer Clang
     ENV.append_to_cflags "-Wno-implicit-int" if DevelopmentTools.clang_build_version >= 1403
 
-    # Work around failure from GCC 10+ using default of `-fno-common`
-    # multiple definition of `ROUNDS'; aescrypt.o:(.bss+0x180): first defined here
-    ENV.append_to_cflags "-fcommon" if OS.linux?
+    if OS.linux?
+      # Work around failure from GCC 10+ using default of `-fno-common`
+      # multiple definition of `ROUNDS'; aescrypt.o:(.bss+0x180): first defined here
+      ENV.append_to_cflags "-fcommon"
+      # Work around "buffer overflow detected" with Ubuntu gcc default of -D_FORTIFY_SOURCE=3
+      ENV.append_to_cflags "-D_FORTIFY_SOURCE=2"
+    end
 
     system "./configure"
     system "make"

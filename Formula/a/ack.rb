@@ -11,6 +11,7 @@ class Ack < Formula
   end
 
   bottle do
+    manifest_sha256 "8574aca2d7de376a7403f96174336b6fb0976269845095bef15423a2c0175e7a"
     sha256 cellar: :any_skip_relocation, all: "0f50e7b207da891500f42b5671413f290d4db5fea49943cfefcc74a3684760d9"
   end
 
@@ -48,7 +49,8 @@ class Ack < Formula
       (bin/"ack").write_env_script("#{libexec}/ack", PERL5LIB: ENV["PERL5LIB"])
       man1.install "blib/man1/ack.1"
     else
-      bin.install "ack-v#{version.to_s.tr("-", "_")}" => "ack"
+      archive_version = version.to_s.tr("-", "_")
+      bin.install "ack-v#{archive_version}" => "ack"
       system "#{formula_opt_bin("pod2man")}/pod2man", bin/"ack", "ack.1", "--release=ack v#{version}"
       man1.install "ack.1"
     end

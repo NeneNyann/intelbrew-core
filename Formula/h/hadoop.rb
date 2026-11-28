@@ -13,6 +13,7 @@ class Hadoop < Formula
   end
 
   bottle do
+    manifest_sha256 "01f182189f8acb3f4e98ca4ed6561029e23d10aa397390a1b1ed643bc92a768a"
     sha256 cellar: :any_skip_relocation, all: "7ed2ca815df59d77574e8d86b9e66a5283c565e39b75e71b1c242e94c881565f"
   end
 
@@ -64,7 +65,7 @@ class Hadoop < Formula
     pid = Process.spawn({
       "JAVA_HOME" => Language::Java.java_home("17"),
       "CLASSPATH" => classpaths.join(":"),
-    }, formula_opt_bin("openjdk@17")/"java", "org.apache.hadoop.yarn.server.resourcemanager.ResourceManager",
+    }, dep("openjdk").opt_bin/"java", "org.apache.hadoop.yarn.server.resourcemanager.ResourceManager",
                                              "-Dyarn.resourcemanager.webapp.address=127.0.0.1:#{port}")
     sleep 15
 

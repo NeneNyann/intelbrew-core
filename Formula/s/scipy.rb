@@ -9,6 +9,7 @@ class Scipy < Formula
   head "https://github.com/scipy/scipy.git", branch: "main"
 
   bottle do
+    manifest_sha256 "7791ff8afa820b1b1fcfc56975162e205756d1cedef85c9e150432299880ba68"
     sha256 cellar: :any, arm64_golden_gate: "e8ae830f596de5db64742e9002200e2c5dd446931329ab827699e2ea9e17b216"
     sha256 cellar: :any, arm64_tahoe:       "2c9d141fcf20b4d940ae8f6afc72f2701575fc01a43d9405c856ce6ac7de4c7b"
     sha256 cellar: :any, arm64_sequoia:     "0e257740e396f1681e4db35423db83f19233d25b2d9d4f24d57e243f0c725ed7"
@@ -32,14 +33,8 @@ class Scipy < Formula
 
   pypi_packages exclude_packages: "numpy"
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.start_with?("python@") }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def install
-    pythons.each do |python3|
+    python3_interpreters.each do |python3|
       system python3, "-m", "pip", "install", *std_pip_args(build_isolation: true), "."
     end
   end
@@ -49,7 +44,7 @@ class Scipy < Formula
       from scipy import special
       print(special.exp10(3))
     PYTHON
-    pythons.each do |python3|
+    python3_interpreters.each do |python3|
       assert_equal "1000.0", shell_output("#{python3} test.py").chomp
     end
   end

@@ -1,8 +1,8 @@
 class Flowrs < Formula
   desc "TUI application for Apache Airflow"
   homepage "https://github.com/jvanbuel/flowrs"
-  url "https://github.com/jvanbuel/flowrs/archive/refs/tags/flowrs-tui-v0.16.6.tar.gz"
-  sha256 "fe05bc00eaf9c89d2b03d313296eae94b19706a890573047895857a0050fda0c"
+  url "https://github.com/jvanbuel/flowrs/archive/refs/tags/flowrs-tui-v0.17.0.tar.gz"
+  sha256 "4cbe6353e0e6b4a90e1d2b30182b6bc585673fa7f9590b17e7171180ac202ada"
   license "MIT"
   head "https://github.com/jvanbuel/flowrs.git", branch: "main"
 
@@ -12,11 +12,12 @@ class Flowrs < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "3860163923b967c4864573216419037d0e7620b1d43cf24448650ecedb2c8c67"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "b8ae9a4ab2d0b065b6e447d4011269f11397289b29361589db3c97fa8cbca15b"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "9560b04831edeb7348e7b2202394930c3dae7ec2523edcbcad694775745d5177"
-    sha256 cellar: :any,                 arm64_linux:       "32ea9af951250bb13348e50c4a6c460e9b99810d0abc7097e097fe6e299960e2"
-    sha256 cellar: :any,                 x86_64_linux:      "d50460a985fb0146b4c84cfd68e726fbf14be63dc2b6489b6e04237afc550a5a"
+    manifest_sha256 "e2c8fef0c5b9c82c3837324b101fb1a2ac9c40700f2c1308befa259dde165650"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "82634273c8ff5e0c6eb6d8c5702a63f940959fd6d1967ebf7e497e3f5a3f3a4a"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "6b95e9fce75c44c7f3ed049e2b2541813053796c76c6e93b1392e1218cae10f8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "7454810fa7f992a49c9cbfd39ebd5357e71923509f3e7dfaa1365f88fb285c30"
+    sha256 cellar: :any,                 arm64_linux:       "d2c381c76ccdc5b520d17ba4e425894a7cf6a82b2afa57a26d228bfcc34cd0eb"
+    sha256 cellar: :any,                 x86_64_linux:      "b7bf1e40ca16ea4f03d883579634b2a1324157bf9236c77d60284987bc784dac"
   end
 
   depends_on "pkgconf" => :build

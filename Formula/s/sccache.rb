@@ -1,9 +1,8 @@
 class Sccache < Formula
   desc "Used as a compiler wrapper and avoids compilation when possible"
   homepage "https://github.com/mozilla/sccache"
-  # TODO: Migrate to `openssl@4` after https://github.com/mozilla/sccache/issues/2780 is resolved
-  url "https://github.com/mozilla/sccache/archive/refs/tags/v0.19.0.tar.gz"
-  sha256 "2da079033cd19fd8e2a09f56f9a7d9d1a72d591ff3acdc47d95b920145cf2671"
+  url "https://github.com/mozilla/sccache/archive/refs/tags/v0.20.1.tar.gz"
+  sha256 "1568b19b3e9bcf911986670dbf92264100974319ddde0b1ccaeecfa82b953632"
   license "Apache-2.0"
   head "https://github.com/mozilla/sccache.git", branch: "main"
 
@@ -13,18 +12,19 @@ class Sccache < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "b6bfdee03ac342b05651bd8dfd5ed432ec777c3546a4b30b9551b07d548998c1"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "7270ad53a598948172dc7603d84bddb80efdced568ea5707fb5b4942cf8aedc4"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "afe7d11a3ef2dc181b849c73815abeeb13d478768c566b9b1f935dd8711bcd8b"
-    sha256 cellar: :any,                 arm64_linux:       "4e916202f37c48ee3c0c30b83d3a77ec0ee30ce42409597569a099cbf0575b3c"
-    sha256 cellar: :any,                 x86_64_linux:      "18964bb16d5f0df652ddc0705fdd1687e7c884fa4314a1f1b905bd475879dafc"
+    manifest_sha256 "248c32d373641f7e31ca5b1045354f0c8d02c97669be01d22576a3cdb9d76986"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a4d8386abba67e21607b310fb7ca27f6d0adfd10b1908439537c4137171caccb"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "f8390e6e59cb5e237493f8feb76b323dc6f11ba841e344dce4d41c408b2b09c8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e14de5a95969a95807d6b154e8dc63f7740d5d89dc113ae78568ddaf7e7dcbf9"
+    sha256 cellar: :any,                 arm64_linux:       "aed28b9da76df973a5c4485c4c8db23a5e17fdc3c58c56657b6a17b503cc86de"
+    sha256 cellar: :any,                 x86_64_linux:      "3aacba58c4a7f6f52cb9180eb7dd7fd27874ad439fc69d79d07857d2420444e1"
   end
 
   depends_on "pkgconf" => :build
   depends_on "rust" => :build
 
   on_linux do
-    depends_on "openssl@3" # Uses Secure Transport on macOS
+    depends_on "openssl@4" # Uses Secure Transport on macOS
   end
 
   # `test do` block starts a local sccache server

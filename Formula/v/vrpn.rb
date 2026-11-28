@@ -9,6 +9,7 @@ class Vrpn < Formula
   head "https://github.com/vrpn/vrpn.git", branch: "master"
 
   bottle do
+    manifest_sha256 "3cea732bb380f21339744be146e80b9c1ed49bfa45390144b8ea2b0bd0a1b838"
     sha256 cellar: :any,                 arm64_golden_gate: "630e6bbc95a65b982e7775a820a03ede59221a3af92f6112f5590ebbc882d321"
     sha256 cellar: :any,                 arm64_tahoe:       "9603f17d75a969d12480768a545cc130101048f060fcd729183634d424989822"
     sha256 cellar: :any,                 arm64_sequoia:     "46b2a9dea5c5c51546765597b55f52c5ae57e5925dc02b1e78cdaf2ebed0ccb2"
@@ -30,7 +31,7 @@ class Vrpn < Formula
     # a side effect of switching the `jsoncpp` build to meson.
     inreplace "cmake/FindJsonCpp.cmake",
               "set(JSONCPP_LIBRARY ${JSONCPP_IMPORTED_LIBRARY})",
-              "set(JSONCPP_LIBRARY \"#{formula_opt_lib("jsoncpp")/shared_library("libjsoncpp")}\")"
+              "set(JSONCPP_LIBRARY \"#{formula_opt_lib("jsoncpp")}/#{shared_library("libjsoncpp")}\")"
 
     args = %w[
       -DBUILD_SHARED_LIBS=ON

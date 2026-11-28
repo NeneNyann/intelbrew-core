@@ -12,6 +12,7 @@ class LlvmAT15 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "67e457c8bb6112f4d9492acbbf0e77382b0eea798873e9ed3c36106090652b6f"
     sha256 cellar: :any,                 arm64_sonoma:   "b767f1c1ae0719c1a8d1b5f7e7c7d9cead4eca26cab4b204c72800e824c06845"
     sha256 cellar: :any,                 arm64_ventura:  "e276f3ea90967ffe838f28280405e98ceb6c0b1452fde16019fd4bce899575f4"
     sha256 cellar: :any,                 arm64_monterey: "08432060d1e42f11dc887211a2ccc5ab7785d9283dccc37534b207c50a9aba54"
@@ -310,7 +311,8 @@ class LlvmAT15 < Formula
       # Testing Command Line Tools
       if OS.mac? && MacOS::CLT.installed?
         toolchain_path = "/Library/Developer/CommandLineTools"
-        cpp_base = (MacOS.version >= :big_sur) ? MacOS::CLT.sdk_path : toolchain_path
+        cpp_base = toolchain_path
+        cpp_base = MacOS::CLT.sdk_path if MacOS.version >= :big_sur
         system bin/"clang++", "-v",
                "-isysroot", MacOS::CLT.sdk_path,
                "-isystem", "#{cpp_base}/usr/include/c++/v1",
@@ -325,7 +327,11 @@ class LlvmAT15 < Formula
 
       # Testing Xcode
       if OS.mac? && MacOS::Xcode.installed?
-        cpp_base = (MacOS::Xcode.version >= "12.5") ? MacOS::Xcode.sdk_path : MacOS::Xcode.toolchain_path
+        cpp_base = if MacOS::Xcode.version >= "12.5"
+          MacOS::Xcode.sdk_path
+        else
+          MacOS::Xcode.toolchain_path
+        end
         system bin/"clang++", "-v",
                "-isysroot", MacOS::Xcode.sdk_path,
                "-isystem", "#{cpp_base}/usr/include/c++/v1",
@@ -342,7 +348,8 @@ class LlvmAT15 < Formula
 
       # link against installed libc++
       # related to https://github.com/Homebrew/legacy-homebrew/issues/47149
-      cxx_libdir = OS.mac? ? opt_lib/"c++" : opt_lib
+      cxx_libdir = opt_lib
+      cxx_libdir /= "c++" if OS.mac?
       system bin/"clang++", "-v",
              "-isystem", "#{opt_include}/c++/v1",
              "-std=c++11", "-stdlib=libc++", "test.cpp", "-o", "testlibc++",

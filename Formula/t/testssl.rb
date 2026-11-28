@@ -7,6 +7,7 @@ class Testssl < Formula
   head "https://github.com/testssl/testssl.sh.git", branch: "3.3dev"
 
   bottle do
+    manifest_sha256 "9a07da5784941d5e6d46128caefcb087795e0050086bf9e8baf73783668b6f2b"
     sha256 cellar: :any_skip_relocation, all: "160c21907a8cf6415c74f2ecc97b4315825a71445fff4a167a880e5a74988217"
   end
 
@@ -21,8 +22,9 @@ class Testssl < Formula
     bin.install "testssl.sh"
     man1.install "doc/testssl.1"
     prefix.install "etc"
+    openssl_bin = dep("openssl").opt_bin
     env = {
-      PATH:                "#{formula_opt_bin("openssl@4")}:$PATH",
+      PATH:                "#{openssl_bin}:$PATH",
       TESTSSL_INSTALL_DIR: prefix,
     }
     bin.env_script_all_files(libexec/"bin", env)

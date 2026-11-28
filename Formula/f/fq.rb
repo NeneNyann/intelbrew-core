@@ -8,6 +8,7 @@ class Fq < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "b3d259dc4df40e40625371b9591d3b8cd35bc8f540cc07781464dd00e1a34015"
     sha256 arm64_golden_gate: "0ee4f40eee6d68ea8e39759b2bdb59036eb03863b435c0ca11d21243e2b3a26c"
     sha256 arm64_tahoe:       "af9f15d2ab89561c12e797f7e709e1b26e47cce0759823f5c6d0478a003b6198"
     sha256 arm64_sequoia:     "9bb54081fd33ccff3f7cbef0361a7cd1744ba09cbb67f41e779a1dda1b4cd251"
@@ -40,13 +41,9 @@ class Fq < Formula
   test do
     ipv4 = shell_output("dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'").strip
     port = free_port
-    pid = spawn sbin/"fqd", "-p", port.to_s, "-n", ipv4, "-D", "-c", testpath/"test.sqlite"
-    begin
+    with_test_process(sbin/"fqd", "-p", port.to_s, "-n", ipv4, "-D", "-c", testpath/"test.sqlite") do
       output = shell_output("curl --silent --retry 5 --retry-connrefused 127.0.0.1:#{port}")
       assert_match "Circonus Fq Operational Dashboard", output
-    ensure
-      Process.kill "TERM", pid
-      Process.wait pid
     end
   end
 end

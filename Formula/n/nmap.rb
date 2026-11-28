@@ -12,6 +12,7 @@ class Nmap < Formula
   end
 
   bottle do
+    manifest_sha256 "25f05a4a24826434ae5487f69cba4a8a9706b3262ee4fcd8b5aebe99be4845e0"
     sha256 arm64_golden_gate: "224b7bc076c6dc0f138c257625c4d8ac29d13f35b5f03bf49adc2677617e9970"
     sha256 arm64_tahoe:       "d73f46bc48f88239668916175d56817240f6e8673b1411b55560d9e9828dc067"
     sha256 arm64_sequoia:     "8f09090b946adaf527925c0a837250fc791166fbc5263e21774a067cb5079ce6"
@@ -54,12 +55,17 @@ class Nmap < Formula
 
     ENV.deparallelize
 
-    libpcap_path = OS.mac? ? MacOS.sdk_path/"usr/" : formula_opt_prefix("libpcap")
+    libpcap_path = if OS.mac?
+      MacOS.sdk_path/"usr/"
+    else
+      formula_opt_prefix("libpcap")
+    end
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --with-liblua=#{formula_opt_prefix("lua")}
       --with-libpcre=#{formula_opt_prefix("pcre2")}
-      --with-openssl=#{formula_opt_prefix("openssl@4")}
+      --with-openssl=#{openssl_prefix}
       --with-libpcap=#{libpcap_path}
       --without-nmap-update
       --disable-universal

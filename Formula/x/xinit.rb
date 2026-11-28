@@ -7,6 +7,7 @@ class Xinit < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "eae970941c7e8d6b6a941d1f70dada43c78813aa12e1e4ae86e280f597eb9721"
     sha256 arm64_golden_gate: "0c877dd24259cd1bf5a2955f66ff37e4dc28d7dcca5e0867a4a08984af7f5fd1"
     sha256 arm64_tahoe:       "f053c34789bb75669b4afd247a5d9e735c2439a4337ce08a6901d20d99439ba7"
     sha256 arm64_sequoia:     "679e5e4c52c1a10ad16584abaece9f95e0f39acf14692c5492b6ffe3408be5fb"
@@ -62,7 +63,8 @@ class Xinit < Formula
         # align with formula `font-util`
         font_paths = %w[misc TTF OTF Type1 75dpi 100dpi].map do |f|
           p = HOMEBREW_PREFIX/"share/fonts/X11"/f
-          %Q(    [ -e #{p}/fonts.dir ] && fontpath="$fontpath,#{p}#{",#{p}/:unscaled" if /\d+dpi/.match? p}"\n)
+          unscaled_path = ",#{p}/:unscaled" if /\d+dpi/.match? p
+          %Q(    [ -e #{p}/fonts.dir ] && fontpath="$fontpath,#{p}#{unscaled_path}"\n)
         end
         lines = File.readlines prefix/"etc/X11/xinit/xinitrc.d/10-fontdir.sh"
         lines[1] = %Q(    fontpath="built-ins"\n) + font_paths.join

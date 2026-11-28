@@ -7,6 +7,7 @@ class Lunarr < Formula
   head "https://github.com/lunarr-app/lunarr-go.git", branch: "main"
 
   bottle do
+    manifest_sha256 "c225a047994d7037617c7d8e3fac59faf7eed4d4514d594ac547cf4df7f11d2f"
     sha256 cellar: :any, arm64_golden_gate: "06bed68be6afcec061f7fcdf800b2bc096369ff8c397476164a095116dddd649"
     sha256 cellar: :any, arm64_tahoe:       "23482bcf4d90f553b209c97b638b39a5265bfedf477bdb5178d930341652e64f"
     sha256 cellar: :any, arm64_sequoia:     "fdf2cdeafd2eea7ce0a31b39a9a6c1e066ab44654d19aa0a0d546fb42643f4de"
@@ -69,14 +70,10 @@ class Lunarr < Formula
     port = free_port
     ENV["LUNARR_DATA_DIR"] = (testpath/"data").to_s
     ENV["PORT"] = port.to_s
-    pid = spawn bin/"lunarr"
-    begin
+    with_test_process(bin/"lunarr") do
       output = shell_output("curl --silent --retry 10 --retry-connrefused --retry-delay 3 " \
                             "http://127.0.0.1:#{port}/api/health")
       assert_match "\"ok\":true", output
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

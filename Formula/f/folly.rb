@@ -1,25 +1,25 @@
 class Folly < Formula
   desc "Collection of reusable C++ library artifacts developed at Facebook"
-  homepage "https://github.com/facebook/folly"
-  url "https://github.com/facebook/folly/archive/refs/tags/v2026.10.26.00.tar.gz"
-  sha256 "b47fe04b804adfb51c65cda6b171505e67b9d1d69621106e54697821d1bf7ebc"
+  homepage "https://github.com/meta/folly"
+  url "https://github.com/meta/folly/archive/refs/tags/v2026.11.23.00.tar.gz"
+  sha256 "44946e05dbeb6cf1d74ff590c76586e87de54fdf7e045388341b5755af8edb0b"
   license "Apache-2.0"
   compatibility_version 1
-  head "https://github.com/facebook/folly.git", branch: "main"
+  head "https://github.com/meta/folly.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "50a8093a63f295161d17bb70379ab1e26a3100fd200499f61cd13f5fc4d29fda"
-    sha256 cellar: :any, arm64_tahoe:       "f3ad9a1b7bf85f1caa59f3272d916e62e89a5887b84179bb667c029f53fa3a06"
-    sha256 cellar: :any, arm64_sequoia:     "544e259254279aa5260749f2e7d8242e79b86cb89405a3d76ab406545731e648"
-    sha256 cellar: :any, arm64_linux:       "0dc49073b933e704f532022d0fc7eb5410b10d90be3c4d6765994328227cf266"
-    sha256 cellar: :any, x86_64_linux:      "f94f57af252acbf7ec4a2195f26d64f2179e131efd61a23c4f6495572e62defa"
+    manifest_sha256 "2758a206a6975ecfd49f4d41b746417d2b11e801fa3aafb35266c29a8fe63834"
+    sha256 cellar: :any, arm64_golden_gate: "314705552081fa4d4a84a705678ca284dd57871837eb630ca85dfd93d697573e"
+    sha256 cellar: :any, arm64_tahoe:       "0ba7fe1a37b49384dbb14de321151eb6af77e2f1c5cc2e308781009bc52be856"
+    sha256 cellar: :any, arm64_sequoia:     "1c6354f87ceff8da427ee76f587e48197ddb31114edd601c9f73dfda603e411f"
+    sha256 cellar: :any, arm64_linux:       "2e6a92915e1d88c26a86b238eb8cdde58b68cdaccbe6e97cf369f192218be6b1"
+    sha256 cellar: :any, x86_64_linux:      "b1f5f71b1ee197caafbeba16a56466b54ac6afd1d69c3ce7d559679d7f2e97fb"
   end
 
   depends_on "cmake" => :build
   depends_on "fast_float" => :build
   depends_on "pkgconf" => :build
   depends_on "boost"
-  depends_on "double-conversion"
   depends_on "fmt"
   depends_on "gflags"
   depends_on "glog"
@@ -36,6 +36,8 @@ class Folly < Formula
   on_linux do
     depends_on "zlib-ng-compat"
   end
+
+  deny_network_access!
 
   def install
     args = %w[

@@ -9,6 +9,7 @@ class Autodiff < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "eca642b780be44cac1f38e057b16c761efc7a22716fa4e200ac25f41b4028cb2"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "36551a892c3f9563a9b82689a5797d34335a409ae348d4d79d94e1989bad50dc"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a73c6ac9d02e8c1c3ca4d3f306dda985d499c8c0ee8783b3e3add6d4dee5d884"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d4b5db595e0ad1b19a770f4474bbbe1f8143bc425bdafec13eb69696de271ca6"
@@ -26,7 +27,11 @@ class Autodiff < Formula
   depends_on "eigen@3"
   depends_on "pybind11"
 
+  deny_network_access!
+
   def install
+    ENV["PIP_NO_BUILD_ISOLATION"] = "0"
+
     args = %W[
       -DAUTODIFF_BUILD_TESTS=OFF
       -DPYTHON_EXECUTABLE=#{python3}
@@ -40,10 +45,11 @@ class Autodiff < Formula
   end
 
   test do
+    eigen_include = dep("eigen").opt_include
     system ENV.cxx, pkgshare/"test/forward.cpp", "--std=c++17",
-                    "-I#{include}", "-I#{formula_opt_include("eigen@3")}/eigen3", "-o", "forward"
+                    "-I#{include}", "-I#{eigen_include}/eigen3", "-o", "forward"
     system ENV.cxx, pkgshare/"test/reverse.cpp", "--std=c++17",
-                    "-I#{include}", "-I#{formula_opt_include("eigen@3")}/eigen3", "-o", "reverse"
+                    "-I#{include}", "-I#{eigen_include}/eigen3", "-o", "reverse"
     assert_match "u = 8.19315\ndu/dx = 5.25\n", shell_output(testpath/"forward")
     assert_match "u = 8.19315\nux = 5.25\n", shell_output(testpath/"reverse")
     system python3, "-c", "import autodiff"

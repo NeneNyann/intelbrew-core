@@ -6,6 +6,7 @@ class Base91 < Formula
   license "BSD-3-Clause"
 
   bottle do
+    manifest_sha256 "8bae0d31113b8603d01535cd5d627dc65c5ea28dd901d01bf1f5dafaebc73048"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "5c310462fe237cbc952a44e53173c2ad2e1cd37088dcbf585dab5f64bdd8301d"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "3c288d4a7310b87b44e080c9b10ae3f541945cc7ba1e990edd1006df84c6ad9e"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c592a7056137ae37fd39f580b4f5b94abb84943d2c9910854ddf149d4099becf"
@@ -20,6 +21,8 @@ class Base91 < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "570aa4d67d764052049d02bb6f3843b306378950a45ac01145b0e11e183bebc0"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "c611713705345338da5415ea274901781c883f71e870384f92866fb7275083b3"
   end
+
+  deny_network_access!
 
   def install
     system "make"

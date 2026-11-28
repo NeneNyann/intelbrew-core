@@ -6,6 +6,7 @@ class Pgweb < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "13658b13905f6a47b3cbfa6e9173cc23b102e6f24590af499a05989726da7c34"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a9f45b8452506918de10a86474d3a30866e1ae8023417efa14397b1dc9985b75"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "23107185892b8505ddbcadd2d8b65d27d70aa3967e70739bc5116076156970e0"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "23107185892b8505ddbcadd2d8b65d27d70aa3967e70739bc5116076156970e0"
@@ -34,13 +35,9 @@ class Pgweb < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"pgweb", "--listen=#{port}", "--skip-open", "--sessions"
-    begin
+    with_test_process(bin/"pgweb", "--listen=#{port}", "--skip-open", "--sessions") do
       sleep 2
       assert_match "\"version\":\"#{version}\"", shell_output("curl http://localhost:#{port}/api/info")
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

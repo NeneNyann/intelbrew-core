@@ -4,7 +4,7 @@ class Sapling < Formula
   url "https://github.com/meta/sapling/archive/refs/tags/0.2.20261103-145137+6282ac56.tar.gz"
   sha256 "0dd35dba5f99bbb97fbfbb18075aa183ae7d63d28954c2d92160ed50bba9cdfb"
   license "GPL-2.0-or-later"
-  head "https://github.com/facebook/sapling.git", branch: "main"
+  head "https://github.com/meta/sapling.git", branch: "main"
 
   livecheck do
     url :stable
@@ -15,6 +15,7 @@ class Sapling < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
+    manifest_sha256 "436228e739a70b165fb00bccb983a801f5e72b4031b5f7b041d5ac017a731085"
     sha256 arm64_golden_gate: "6dca61c1fac4aafc98fe53f8e93ad1a53e647ab8700137643dd72239a85f475d"
     sha256 arm64_tahoe:       "da1fe12a02ea54125c7a95fe5c37788f832279c490cca9cca7783d53b18d946a"
     sha256 arm64_sequoia:     "7d498da8a2906c4ee2bb4c4792da413676ae6ade743070257886bd848462a720"
@@ -47,7 +48,7 @@ class Sapling < Formula
   conflicts_with "sl", because: "both install `sl` binaries"
 
   def watchman_rev
-    watchman_repo = "https://github.com/facebook/watchman.git"
+    watchman_repo = "https://github.com/meta/watchman.git"
     max_date = version.patch.to_s.match(/^(\d{4})(\d{2})(\d{2})\b/).captures.join(".")
     tags = Utils.safe_popen_read("git", "ls-remote", "--sort=-version:refname", "--tags", watchman_repo)
     tags.scan(%r{^(\S+)\trefs/tags/v(\d{4}\.\d{2}\.\d{2})(?:\.\d+)+$}) do |rev, date|
@@ -60,7 +61,7 @@ class Sapling < Formula
     # Workaround to improve reproducibility as Cargo.toml uses branch for some dependencies.
     # Actual reproducible builds won't be possible without a Cargo.lock.
     #
-    # Related issue: https://github.com/facebook/sapling/issues/547
+    # Related issue: https://github.com/meta/sapling/issues/547
     if build.stable?
       github_hashes = buildpath.glob("build/deps/github_hashes/*/*-rev.txt").to_h do |revfile|
         commit = revfile.read[/commit ([0-9a-f]+)$/i, 1]
@@ -92,7 +93,7 @@ class Sapling < Formula
     end
 
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
     ENV["PYTHON_SYS_EXECUTABLE"] = ENV["PYO3_PYTHON"] = python3
     ENV["SAPLING_VERSION"] = if build.stable?
       version
@@ -122,8 +123,8 @@ class Sapling < Formula
 
     dylibs = [
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
-      formula_opt_lib("openssl@4")/shared_library("libcrypto"),
+      dep("openssl").opt_lib/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libcrypto"),
     ]
     dylibs << (formula_opt_lib("curl")/shared_library("libcurl")) if OS.linux?
 

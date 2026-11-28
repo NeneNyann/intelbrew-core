@@ -7,6 +7,7 @@ class Rammap < Formula
   head "https://github.com/jwanglab/rammap.git", branch: "main"
 
   bottle do
+    manifest_sha256 "c740fea960d16cafb00f1178d5015d0c37c195f4d89ce03472a5de3c26a93889"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2fedad69bfb4425e5c0373f617dffeb98562f29fbac5e8f8b49816dbe1f05773"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "c581cab3411839cea869625335457898c9e597b57d9d9c454eabc51438511a9a"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "38b1ce9ff42b9f110c8602eb394c284e30bd8e4b103d781642151c8005974fd0"
@@ -33,11 +34,13 @@ class Rammap < Formula
       seed = ((seed * 1_103_515_245) + 12_345) % (2**31)
       "ACGT"[(seed >> 16) % 4]
     end.join
-    (testpath/"ref.fa").write ">chr1\n#{reference.scan(/.{1,60}/).join("\n")}\n"
+    wrapped_reference = reference.scan(/.{1,60}/).join("\n")
+    (testpath/"ref.fa").write ">chr1\n#{wrapped_reference}\n"
 
     # A read lifted verbatim out of the reference, so it must align exactly.
     read = reference[300, 200]
-    (testpath/"reads.fq").write "@read1\n#{read}\n+\n#{"I" * read.length}\n"
+    quality = "I" * read.length
+    (testpath/"reads.fq").write "@read1\n#{read}\n+\n#{quality}\n"
 
     paf = shell_output("#{bin}/rammap -x map-ont ref.fa reads.fq 2>/dev/null")
     fields = paf.lines.first.chomp.split("\t")

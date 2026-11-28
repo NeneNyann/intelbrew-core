@@ -15,6 +15,7 @@ class RuffLsp < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "bfc7b02987470ebe49c77500d01e38b6a6893e2faeb78c647757aebe598a7196"
     sha256 cellar: :any_skip_relocation, all: "c88a2f5b966aadd8114418e1e38eac7504373c4d7bddc3ecfd37944fa7976e85"
   end
 
@@ -55,6 +56,8 @@ class RuffLsp < Formula
     url "https://files.pythonhosted.org/packages/72/94/1a15dd82efb362ac84269196e94cf00f187f7ed21c242792a923cdb1c61f/typing_extensions-4.15.0.tar.gz"
     sha256 "0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"
   end
+
+  allow_network_access!
 
   def install
     virtualenv_install_with_resources

@@ -1,23 +1,23 @@
 class Mvfst < Formula
   desc "QUIC transport protocol implementation"
-  homepage "https://github.com/facebook/mvfst"
-  url "https://github.com/facebook/mvfst/archive/refs/tags/v2026.10.26.00.tar.gz"
-  sha256 "7b2f2a84a5df3689d29a2c3c482b508e1d26251d568e9faf0ced22fb113e6dcd"
+  homepage "https://github.com/meta/mvfst"
+  url "https://github.com/meta/mvfst/archive/refs/tags/v2026.11.23.00.tar.gz"
+  sha256 "1990ea9839c72b15ec33aef42cf2cdb89ffb6d4a153cef1d85d020e3f6d48dd6"
   license "MIT"
   compatibility_version 1
-  head "https://github.com/facebook/mvfst.git", branch: "main"
+  head "https://github.com/meta/mvfst.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "89fa1ce0871b16ac60e273cb788f983df5aff7319d00877a0f1a1429d0953154"
-    sha256 cellar: :any, arm64_tahoe:       "997a97a073d2a9827dd8db719ff76e0baf772db94d538d9caf158f926740b343"
-    sha256 cellar: :any, arm64_sequoia:     "c25999d24871d15de07ca28ee9b7b067f900db2fc6d5728ee92fe1fdcc250796"
-    sha256 cellar: :any, arm64_linux:       "e091bdbaffa2b13a9748784498364fee187692d1db29724231071711487897e4"
-    sha256 cellar: :any, x86_64_linux:      "33b4cc07cf0aa5714a215d11efc5272938e53f1561583fb2129eadbc40283820"
+    manifest_sha256 "3c6c024b85acec853cf6a5aefdfaa5ff07c414242cf2dda2f2a8e3261745bbca"
+    sha256 cellar: :any, arm64_golden_gate: "ce8fc6b20fea01a7cb7a4ed66eba5e22b1ed292c8634c20f82d655edb132efc9"
+    sha256 cellar: :any, arm64_tahoe:       "6e97e7c626f2b50c5a37c4a51d0a4d9901e231197f6b6d6adbd83091fbd5e60b"
+    sha256 cellar: :any, arm64_sequoia:     "53e2851843d068ba44dcaf95a1dec292c8d3c7450bf60b2d75cc223e17294556"
+    sha256 cellar: :any, arm64_linux:       "6aa05ef58c131baab3981348418ecc7f3dc3570580d2ff69e9be980097b93f2e"
+    sha256 cellar: :any, x86_64_linux:      "c05b1a55151e0edccf40e80261de732e4b193d69ea332eb8a38ec9d86bee54c0"
   end
 
   depends_on "cmake" => [:build, :test]
   depends_on "googletest" => :test
-  depends_on "double-conversion"
   depends_on "fizz"
   depends_on "fmt"
   depends_on "folly"
@@ -62,7 +62,7 @@ class Mvfst < Formula
       set_target_properties(echo PROPERTIES BUILD_RPATH "#{lib};#{HOMEBREW_PREFIX}/lib")
     CMAKE
 
-    ENV.append_path "CMAKE_PREFIX_PATH", formula_opt_prefix("openssl@4")
+    ENV.append_path "CMAKE_PREFIX_PATH", dep("openssl").opt_prefix
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"
 

@@ -12,6 +12,7 @@ class LibvirtPython < Formula
   end
 
   bottle do
+    manifest_sha256 "c4d43844646cb1c4a2ab50880f49ad69fe88580e1a6887798d5f5b7f804867a2"
     sha256 cellar: :any, arm64_golden_gate: "87ba5e625d38aa12810e6f0c3926104129e5e75c5d60c31de3a0efed959ce01d"
     sha256 cellar: :any, arm64_tahoe:       "aa5358083a0d8b4b756d4ffa19eddb6f044c446c226d406632b91348243f30d1"
     sha256 cellar: :any, arm64_sequoia:     "6de51deb46723dc43f314d0a404d197cadccf14b713e92713af3e94f04d98024"
@@ -27,14 +28,8 @@ class LibvirtPython < Formula
 
   deny_network_access!
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.match?(/^python@\d\.\d+$/) }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def install
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       system python, "-m", "pip", "install", *std_pip_args, "."
     end
   end
@@ -48,7 +43,7 @@ class LibvirtPython < Formula
           raise SystemError("Failed to open a test connection")
     PYTHON
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       system python, "test.py"
     end
   end

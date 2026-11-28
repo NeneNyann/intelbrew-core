@@ -10,6 +10,7 @@ class Btcli < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "c00ce1a3f1172f519ee9f2dbea00efc1d03392a6920c97df2554565bbb582dbe"
     sha256 cellar: :any, arm64_golden_gate: "618772884f53325079c11c9a705059ceaaf630dbc3ba4486c2e38bb8428cf4eb"
     sha256 cellar: :any, arm64_tahoe:       "a20f9df2cfb19458f8199d0ccbfd238c7cc7a83d8a8dc2d217310702c10acee1"
     sha256 cellar: :any, arm64_sequoia:     "747d7d2b2ed643867ad7eeb461f303dd2d566e444c8092b5d9e26abb2ea9cd61"
@@ -216,10 +217,8 @@ class Btcli < Formula
     sha256 "9ac374123c6fd7abf64d1fec93962b0bd4ee2c19751755a762a72dd96c0378f8"
   end
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
-    ENV["OPENSSL_DIR"] = formula_opt_prefix(openssl)
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
     ENV["XXHASH_LINK_SO"] = "1"
     without = "async-substrate-interface"
     venv = virtualenv_install_with_resources(without:)

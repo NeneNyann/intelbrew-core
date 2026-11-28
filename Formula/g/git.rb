@@ -20,6 +20,7 @@ class Git < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "9cf42fee36999d5168d150749bf5b86438f22b16655f6e61bd259cf04cd09776"
     sha256 arm64_golden_gate: "8caaa00047a7ca648393c4f4d2903c847803af37d0ee62cec2108889d1d80b6d"
     sha256 arm64_tahoe:       "af9b2944636a6e8652de99fb695822c2ef0a71d022959e2601eab9853a02fa91"
     sha256 arm64_sequoia:     "a564068b6421007b7140189381ff070270964669b2128be09e8110e7f9327516"
@@ -119,8 +120,7 @@ class Git < Formula
     args += if OS.mac?
       %w[NO_OPENSSL=1 APPLE_COMMON_CRYPTO=1]
     else
-      openssl_prefix = formula_opt_prefix("openssl@4")
-
+      openssl_prefix = dep("openssl").opt_prefix
       %W[NO_APPLE_COMMON_CRYPTO=1 OPENSSLDIR=#{openssl_prefix}]
     end
 

@@ -9,6 +9,7 @@ class Cryptography < Formula
   head "https://github.com/pyca/cryptography.git", branch: "main"
 
   bottle do
+    manifest_sha256 "d9205b2b98860bc5656a04eb2ed47d93575d88f2762c05e9abd008a73cf7a782"
     sha256 cellar: :any, arm64_golden_gate: "e418279b26e607bfb4512bc15c31e551e228b015becb407e548e9c6d868fb2bf"
     sha256 cellar: :any, arm64_tahoe:       "d79b516ffa80d7a8d12da5b3ff55fc6c1b029ec6f424e8525c6d32836c27516d"
     sha256 cellar: :any, arm64_sequoia:     "6ba0ff5affb3b1780347d85fe626a18954fd67ef9d3bc40ede1d0d1645d0e640"
@@ -27,15 +28,9 @@ class Cryptography < Formula
 
   pypi_packages exclude_packages: ["cffi", "pycparser"]
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.start_with?("python@") }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def install
     # TODO: Avoid building multiple times as binaries are already built in limited API mode
-    pythons.each do |python3|
+    python3_interpreters.each do |python3|
       system python3, "-m", "pip", "install", *std_pip_args, "."
     end
   end
@@ -49,7 +44,7 @@ class Cryptography < Formula
       print(f.decrypt(token))
     PYTHON
 
-    pythons.each do |python3|
+    python3_interpreters.each do |python3|
       assert_match "b'homebrew'", shell_output("#{python3} test.py")
     end
   end

@@ -7,6 +7,7 @@ class Fjira < Formula
   head "https://github.com/mk-5/fjira.git", branch: "master"
 
   bottle do
+    manifest_sha256 "264fd8e9f2d168e256bf2a7060695a355e96eee38e559d16a508f00793175827"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2bb4ce37d929ccad4618eed8dc23a3199e5f0f8f22b46b3a09f292950a4acc06"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a5b12f169a54c1ff9d45081cc020f3cea87ac1657341ce667114e2d991d9c46d"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a5b12f169a54c1ff9d45081cc020f3cea87ac1657341ce667114e2d991d9c46d"
@@ -36,11 +37,9 @@ class Fjira < Formula
     ENV["XDG_CONFIG_HOME"] = testpath
 
     output_log = testpath/"output.log"
-    pid = spawn bin/"fjira", testpath, [:out, :err] => output_log.to_s
-    sleep 1
-    assert_match "Create new workspace default", output_log.read
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"fjira", testpath, [:out, :err] => output_log.to_s) do
+      sleep 1
+      assert_match "Create new workspace default", output_log.read
+    end
   end
 end

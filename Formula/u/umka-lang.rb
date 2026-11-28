@@ -7,6 +7,7 @@ class UmkaLang < Formula
   head "https://github.com/vtereshkov/umka-lang.git", branch: "master"
 
   bottle do
+    manifest_sha256 "cd0a3b486a4058a56c5e5bd04fc635b53b613252def28accb50d40ec334ebafe"
     sha256 cellar: :any, arm64_golden_gate: "76f4a58912abd874777ddd36479fccd85c38f4af2a9b5a6ba8e206a1eeedb7fc"
     sha256 cellar: :any, arm64_tahoe:       "9ffe7dadd236feba2e82c1f46bc6b6611fe763acd2b870025f14c2a01543793a"
     sha256 cellar: :any, arm64_sequoia:     "d94f2d1e20ac0059aee234c228fafede9805cae32b06bd1055c56da7cae7f623"
@@ -15,6 +16,8 @@ class UmkaLang < Formula
     sha256 cellar: :any, arm64_linux:       "b2f01f3004b96eea9ad51fa1422024e9d5b26de6df0e307870bf8633940dd2a9"
     sha256 cellar: :any, x86_64_linux:      "44c64007151458d2943d83b9b9e1b65f38c5f521fd31efb89ad6b4895eab7cb6"
   end
+
+  deny_network_access!
 
   def install
     # Workaround to build on arm64 linux
@@ -37,11 +40,12 @@ class UmkaLang < Formula
 
     assert_match "Hello Umka!", shell_output("#{bin}/umka #{testpath}/hello.um")
 
-    (testpath/"test.c").write <<~C
+    (testpath/"test.c").write <<~'C'
       #include <stdio.h>
       #include <umka_api.h>
+
       int main(void) {
-          printf("Umka version: %s\\n", umkaGetVersion());
+          printf("Umka version: %s\n", umkaGetVersion());
           return 0;
       }
     C

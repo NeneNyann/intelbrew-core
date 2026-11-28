@@ -1,16 +1,17 @@
 class AngularCli < Formula
   desc "CLI tool for Angular"
   homepage "https://angular.dev/cli/"
-  url "https://registry.npmjs.org/@angular/cli/-/cli-22.2.7.tgz"
-  sha256 "f77fef613d5afac2d68b5a0f80153655b58b07d6cc8c4f21f2682e5f57b9950b"
+  url "https://registry.npmjs.org/@angular/cli/-/cli-22.3.0.tgz"
+  sha256 "cb7eb35f2aa5242e5e161c5a906eaf2f72dd78423d3dcff1b564ef8a23646336"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_golden_gate: "5c4fd2510031645562cc41de59299b0db09d72fae71708f226569c656927e6cd"
-    sha256 cellar: :any,                 arm64_tahoe:       "4c57d6fe437fe256dfa7b2d8231c6c635090358f43843524192a868b417a47f9"
-    sha256 cellar: :any,                 arm64_sequoia:     "4053d18b622fff6a838f45766d0afde1228d83887c9852e926ea3921d2bf26eb"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "282f71761f5a05618f271411f5e917d6b253f269ba44b42fc20f6e21470dda74"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "6c4d25117f40e6692b3a1f0b3f3461595e25fdb2aa814892c4232aa4c23bfe2d"
+    manifest_sha256 "c6e0f4abaf0c2fb1925a102479943c94e086a355c8e0d33ba0f1acfe42521c51"
+    sha256 cellar: :any,                 arm64_golden_gate: "0d570cccad2b6113affa89b9a5acdd9b29badf457117e4143a6401f57112e7c7"
+    sha256 cellar: :any,                 arm64_tahoe:       "d42f7af670da8c9cbbbb0d8599354611caf701fe565e52e839805848a821a898"
+    sha256 cellar: :any,                 arm64_sequoia:     "0aab1e9039d340eb6724a6288cc6e77e2a14bd5c80d59b4e6e15f6a519a7cc1a"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "556d1216c9aff4ae2554ecf7dd5c5f3d3d1acc4cbd33e07ac7fa6934e22cb0d7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:      "b9c5bf939b37630ed859e7d564f59cdd544c2ba5ec18d65cc2023eb815ffe377"
   end
 
   depends_on "node"
@@ -20,8 +21,8 @@ class AngularCli < Formula
 
     # Rebuild the prebuilt `oxc-parser` binding as it lacks header space for relocation
     resource "oxc" do
-      url "https://github.com/oxc-project/oxc/archive/refs/tags/crates_v0.156.0.tar.gz"
-      sha256 "6d27e3c3458bffbd466091dbfd9edda06021e77aa680f508dfaafe8406669c6d"
+      url "https://github.com/oxc-project/oxc/archive/refs/tags/crates_v0.158.0.tar.gz"
+      sha256 "c26aeb000af3ab57bd65b237a857444f4b0d955a5df7bd06a3356e4f62e51e66"
 
       livecheck do
         url "https://registry.npmjs.org/@schematics/angular/latest"

@@ -8,6 +8,7 @@ class CabalInstall < Formula
   head "https://github.com/haskell/cabal.git", branch: "master"
 
   bottle do
+    manifest_sha256 "4b7c9a13a99f019914471a70667ca47cdd739b1f8f6cd431492a1bef556f3167"
     sha256 cellar: :any, arm64_golden_gate: "e8a22d63f75f48a9aa72b598547e759380799e3814760880df6f81bba8d7d6c2"
     sha256 cellar: :any, arm64_tahoe:       "e13c6ede5f2e25dd19b7d58ca06fc5129103e3dcbfb648732847e3d3f5c7a7a9"
     sha256 cellar: :any, arm64_sequoia:     "5bce40512dced3f12d8511bee51b1661021ea097aa66457d76d48e69c07d5a7b"
@@ -48,12 +49,18 @@ class CabalInstall < Formula
     end
   end
 
-  def install
+  allow_network_access! :test
+
+  def fetch
     resource("bootstrap").stage(buildpath/"bin")
-    cabal = buildpath/"bin/cabal"
     cd "cabal-install" if build.head?
-    system cabal, "v2-update"
-    system cabal, "v2-install", *std_cabal_v2_args
+    system buildpath/"bin/cabal", "v2-update"
+    system buildpath/"bin/cabal", "v2-install", "--only-download", *std_cabal_v2_args
+  end
+
+  def install
+    cd "cabal-install" if build.head?
+    system buildpath/"bin/cabal", "v2-install", *std_cabal_v2_args
     bash_completion.install "bash-completion/cabal"
   end
 

@@ -7,6 +7,7 @@ class Pycparser < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "2d9b8acf820a3c000cf7851cad51dcb47ef1b98d156b1c9b0977795ae3c2de0b"
     sha256 cellar: :any_skip_relocation, all: "a7a56dfe603baa785cb95e964e6e726284786b4cc5ef1d61b0e6aeb016680dce"
   end
 
@@ -23,7 +24,8 @@ class Pycparser < Formula
     # Add symlinks to use on all externally-managed pythons
     extra_pythons = Keg.for(python3).to_formula.versioned_formulae.select { |f| f.version >= "3.12" }
     extra_site_packages_list = extra_pythons.map { |f| lib/"python#{f.version.major_minor}/site-packages" }
-    extra_site_packages_list << (lib/"python#{Formula["python-freethreading"].version.major_minor}t/site-packages")
+    python_version = Formula["python-freethreading"].version.major_minor
+    extra_site_packages_list << (lib/"python#{python_version}t/site-packages")
     site_packages = prefix/Language::Python.site_packages(python3)
     site_packages.find.select(&:file?).each do |path|
       extra_site_packages_list.each do |extra_site_packages|

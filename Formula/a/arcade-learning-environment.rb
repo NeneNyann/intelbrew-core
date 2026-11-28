@@ -8,6 +8,7 @@ class ArcadeLearningEnvironment < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "90af0b92ba2ba446140c02cdc21cf927a271b3b5270f63c624f5bb797dda9d13"
     sha256 cellar: :any, arm64_golden_gate: "c259e8b4017e598eae705b27b51775028f2503d46337fd07611559d9edd0fae8"
     sha256 cellar: :any, arm64_tahoe:       "8ec5becbe24e85c88b8c53dcd22ea41676a963795421d331db5a5e628f26d9c6"
     sha256 cellar: :any, arm64_sequoia:     "2b9cd238cdae5d0005454fbba547ecfc098c650a7702bcb31443d8e4da3e2c9e"
@@ -71,7 +72,8 @@ class ArcadeLearningEnvironment < Formula
     # We build without XLA and jax has no sdists
     inreplace "pyproject.toml", '"jax >= 0.4.31', "#"
 
-    cmake_args << "-DCMAKE_INSTALL_RPATH=#{rpath(source: prefix/Language::Python.site_packages(python3)/"ale_py")}"
+    module_rpath = rpath(source: prefix/Language::Python.site_packages(python3)/"ale_py")
+    cmake_args << "-DCMAKE_INSTALL_RPATH=#{module_rpath}"
     ENV["CMAKE_ARGS"] = cmake_args.join(" ")
     system python3, "-m", "pip", "install", *std_pip_args(build_isolation: true), "."
   end

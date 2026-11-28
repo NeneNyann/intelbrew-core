@@ -17,6 +17,7 @@ class Julia < Formula
   end
 
   bottle do
+    manifest_sha256 "622c6c4102d6d0f2fefdf106578809e66059f6d140a2feb2de203b96f8617ca0"
     sha256 cellar: :any, arm64_golden_gate: "d63fd3799057df4562e21076754305e56657eee7bbe9517ee1e746e24c3b15ff"
     sha256 cellar: :any, arm64_tahoe:       "6c7a4619906848bdce915f9ded0e71bf8135aca96aa47c8dbe008146463cc5f9"
     sha256 cellar: :any, arm64_sequoia:     "6a1264fb7d448748ffb37a7969f0b0f800637502b96ba51025f354a656c60b71"
@@ -131,7 +132,8 @@ class Julia < Formula
       WITH_TERMINFO=0
     ]
 
-    args << "TAGGED_RELEASE_BANNER=Built by #{tap&.user || "unknown user"} (v#{pkg_version})"
+    build_user = tap&.user || "unknown user"
+    args << "TAGGED_RELEASE_BANNER=Built by #{build_user} (v#{pkg_version})"
     if OS.mac?
       args << "MACOSX_DEPLOYMENT_TARGET=#{MacOS.version}"
       # `-force_load` takes an archive path, so pass the `-lutf8proc` of `USE_SYSTEM_UTF8PROC` through as-is
@@ -171,7 +173,7 @@ class Julia < Formula
     ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/julia"
     if OS.mac?
       # Help Julia find keg-only or unlinked dependencies
-      deps.select(&:required?).map(&:to_formula).map(&:opt_lib).select(&:directory?).each do |libdir|
+      deps.required.map(&:opt_lib).select(&:directory?).each do |libdir|
         ENV.append "LDFLAGS", "-Wl,-rpath,#{libdir}"
       end
 
@@ -198,7 +200,7 @@ class Julia < Formula
     system "make", *args, "install"
     if OS.linux?
       # Replace symlinks referencing Cellar paths with ones using opt paths
-      deps.reject(&:build?).map(&:to_formula).map(&:opt_lib).each do |libdir|
+      deps.reject(&:build?).map(&:opt_lib).each do |libdir|
         libdir.glob(shared_library("*")) do |so|
           next unless (lib/"julia"/so.basename).exist?
 

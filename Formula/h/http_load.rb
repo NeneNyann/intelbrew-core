@@ -14,7 +14,7 @@ class HttpLoad < Formula
       # Convert date-based version from 09Mar2016 format to 20160309
       page.scan(regex).map do |match|
         date_str = match&.first
-        date_str ? Date.parse(date_str)&.strftime("%Y%m%d") : nil
+        Date.parse(date_str)&.strftime("%Y%m%d") if date_str
       end
     end
   end
@@ -23,6 +23,7 @@ class HttpLoad < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "1a51b3bf954505b42bb11149931e0df3aa912c764864ceb7bd84eb49ef81c33e"
     sha256 cellar: :any,                 arm64_tahoe:    "5b5b959ce2f9aae731f7234d123194dfc5694d31b1dcd505b98546a0bbec14f7"
     sha256 cellar: :any,                 arm64_sequoia:  "3d19f59b28f7f602e80aef16d2455d98513a6886a58910287ac5845bdcd9733b"
     sha256 cellar: :any,                 arm64_sonoma:   "185664add7e628ad4614228aef6bf0b18356077ddd71abf3eae39ae12a2e2d03"
@@ -42,16 +43,19 @@ class HttpLoad < Formula
 
   depends_on "openssl@3"
 
+  allow_network_access!
+
   def install
     bin.mkpath
     man1.mkpath
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       BINDIR=#{bin}
       LIBDIR=#{lib}
       MANDIR=#{man1}
       CC=#{ENV.cc}
-      SSL_TREE=#{formula_opt_prefix("openssl@3")}
+      SSL_TREE=#{openssl_prefix}
     ]
 
     inreplace "Makefile", "#SSL_", "SSL_"

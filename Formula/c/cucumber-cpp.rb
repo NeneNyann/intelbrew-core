@@ -7,6 +7,7 @@ class CucumberCpp < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "d88e103388e598002097aa72a3b65cf8eb2191ff097d2ddee4032b1882d097b0"
     sha256 cellar: :any, arm64_golden_gate: "87fbd1fde771e87cc1cf6912f0ce365b2b543255c6bc75da2f1c2fadcb11a7b6"
     sha256 cellar: :any, arm64_tahoe:       "9378982184549953aca702549098a4ae2d5a222d04f1b1a66127e2debfecd685"
     sha256 cellar: :any, arm64_sequoia:     "9faf7c36dd7918e0eea7b3f7e6bbd1945906930d87e0bb65b345b5a8c0519520"
@@ -67,8 +68,7 @@ class CucumberCpp < Formula
 
     system ENV.cxx, "-std=c++17", "test.cpp", "-o", "test", "-I#{include}", "-L#{lib}", "-lcucumber-cpp", "-pthread"
 
-    begin
-      pid = spawn "./test"
+    with_test_process("./test", signal: "INT") do
       sleep 1
       expected = <<~EOS
         Feature: Test
@@ -82,9 +82,6 @@ class CucumberCpp < Formula
         3 steps (3 passed)
       EOS
       assert_match expected, shell_output("#{testpath}/bin/cucumber --quiet")
-    ensure
-      Process.kill("SIGINT", pid)
-      Process.wait(pid)
     end
   end
 end

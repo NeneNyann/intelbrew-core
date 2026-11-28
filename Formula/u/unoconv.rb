@@ -11,6 +11,7 @@ class Unoconv < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "de1a57692758009dcd46dbc06e6e613275c52c6bf9665ed67433f04bddab7403"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:   "f291c61047fa90c216cc24d8363d849594bfac8ecbe103a4163a5fdd1c2621ab"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "f291c61047fa90c216cc24d8363d849594bfac8ecbe103a4163a5fdd1c2621ab"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f291c61047fa90c216cc24d8363d849594bfac8ecbe103a4163a5fdd1c2621ab"
@@ -30,6 +31,8 @@ class Unoconv < Formula
     url "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz"
     sha256 "f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c"
   end
+
+  allow_network_access!
 
   def install
     virtualenv_install_with_resources

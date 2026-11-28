@@ -8,6 +8,7 @@ class PythonArgcomplete < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "b649a5084671ebf031d65a39910c12d7d0f92bf354c4c4b7ef3e8609ae8bd094"
     sha256 cellar: :any_skip_relocation, all: "3cbfebfe5fc664a233aec15fcd7049e5ded3cd8d69b7ba58bce32e084e2a2db7"
   end
 
@@ -15,6 +16,8 @@ class PythonArgcomplete < Formula
   disable! date: "2026-08-13", because: "does not meet homebrew/core's requirements for Python library formulae"
 
   depends_on "python@3.14"
+
+  allow_network_access!
 
   def install
     venv = virtualenv_install_with_resources

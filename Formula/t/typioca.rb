@@ -8,6 +8,7 @@ class Typioca < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "36ca26a5ddfaf2ee000b4956279df0c87c07eb1d6291ed8c2cb4211db3b4d77e"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "5670d0ba037b3f8c41b6f0a59dbe3b07bdfbbe99941d3681208f67909a22238f"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "31591811d9bcd2c334d1c82cd42b775dcda3fc16434fd1281bf3ec26f96c91b0"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "31591811d9bcd2c334d1c82cd42b775dcda3fc16434fd1281bf3ec26f96c91b0"
@@ -35,12 +36,10 @@ class Typioca < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/typioca --version")
 
-    pid = spawn bin/"typioca", "serve"
-    sleep 1
-    assert_path_exists testpath/"typioca"
-    assert_path_exists testpath/"typioca.pub"
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"typioca", "serve") do
+      sleep 1
+      assert_path_exists testpath/"typioca"
+      assert_path_exists testpath/"typioca.pub"
+    end
   end
 end

@@ -15,6 +15,7 @@ class Tarantool < Formula
   end
 
   bottle do
+    manifest_sha256 "18ea643ab9a216af36a7a799d08f6e4dd9ba405d1fd2cf4b6b10aa9691b251a5"
     sha256 cellar: :any, arm64_golden_gate: "f618eddaf4623349b7862c51b33f90596a36adc7d70125ab9c5809c6d3e33e2a"
     sha256 cellar: :any, arm64_tahoe:       "69e51ceadecce0a6c62f2164701f5f3855269dfa967e884203a4779e6cfaf767"
     sha256 cellar: :any, arm64_sequoia:     "bf46e1dadea709cf177cad6885bad6633d0142561f4e2d00e7b4483e1c10454c"
@@ -37,14 +38,14 @@ class Tarantool < Formula
   end
 
   def install
-    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-                .to_formula
+    icu4c_prefix = dep("icu4c").opt_prefix
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       -DCMAKE_INSTALL_SYSCONFDIR=#{etc}
       -DCMAKE_INSTALL_LOCALSTATEDIR=#{var}
       -DENABLE_DIST=ON
-      -DICU_ROOT=#{icu4c.opt_prefix}
-      -DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}
+      -DICU_ROOT=#{icu4c_prefix}
+      -DOPENSSL_ROOT_DIR=#{openssl_prefix}
       -DREADLINE_ROOT=#{formula_opt_prefix("readline")}
       -DENABLE_BUNDLED_LIBCURL=OFF
       -DENABLE_BUNDLED_LIBUNWIND=OFF
@@ -52,7 +53,10 @@ class Tarantool < Formula
       -DENABLE_BUNDLED_ZSTD=OFF
       -DLUAJIT_NO_UNWIND=ON
     ]
-    args << "-DCURL_ROOT_DIR=#{MacOS.sdk_for_formula(self).path}/usr" if OS.mac?
+    if OS.mac?
+      sdk_path = MacOS.sdk_for_formula(self).path
+      args << "-DCURL_ROOT_DIR=#{sdk_path}/usr"
+    end
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"

@@ -1,17 +1,18 @@
 class Atuin < Formula
   desc "Improved shell history for zsh, bash, fish and nushell"
   homepage "https://atuin.sh/"
-  url "https://github.com/atuinsh/atuin/releases/download/v18.24.8/source.tar.gz"
-  sha256 "2dda9f81e1b42c4f7107aeb7dc8d957f55b43d4b104db73d05caa72a0a675c71"
+  url "https://github.com/atuinsh/atuin/releases/download/v18.25.1/source.tar.gz"
+  sha256 "ee4114ceada5d0acf000b306a1a1479ba6dd1f9fec69612f511a013ffa6fcd12"
   license "MIT"
   head "https://github.com/atuinsh/atuin.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "f515113ffd35bcd9c523f7b459e58b57889bcff457f4adfb84b6c40ba797cec5"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "83ba4fc19ee86f0fb84bd3bc0ff2fe4b90a2f06724cbecb2d6dca58a529aa97e"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "308df06e6411b91b8fc25d0f25b1e8f50246aaad2ad58a731809f723c972921d"
-    sha256 cellar: :any,                 arm64_linux:       "a3e6a0ca04e07e0fcca16a37886683fd0df725e7eb3376008a3b2389ef296087"
-    sha256 cellar: :any,                 x86_64_linux:      "ee22b934d25387f79c46f72aa933e96a49b78a434a0a1b6207ee04948129a635"
+    manifest_sha256 "28caff7ba8bd75cd48475dc5d811ac3acfbc1e2fe86fbfb746938cfc7b6956df"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "9aca8634df20ac4c71be79eb584b407b71aadb1f5727713a01b05f2ce0211bf8"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "6638103998791995d4ade6d12e9af2de113d487590df67de0a88e6ae18ecd363"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "5bbb80517936fde6a4608fb8ff7629e63bc21644ccab5b1ac013fcb41c269f2d"
+    sha256 cellar: :any,                 arm64_linux:       "f119d47fd36975cd037e8998e1facceb7031a9e915dfa8d2871ec8b97dd6c0c7"
+    sha256 cellar: :any,                 x86_64_linux:      "e82568a44892aa8135cb77a2e09568f0bd3051a9d1e999ce6ad6e105526cffc0"
   end
 
   depends_on "pkgconf" => :build

@@ -6,6 +6,7 @@ class Cdxgen < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "b93b9d443b0f0841b219808e11f6ab3332e009b912c4d63eff9f5339d352766d"
     sha256               arm64_golden_gate: "e9444ae6319836c56c6dba6007dd7b31db8331acb27328f8b3f73b2a683b96ae"
     sha256               arm64_tahoe:       "b47705f154c7ed813cb246350db71934e4eed82e1e9e94eb9bdbc8546871896f"
     sha256               arm64_sequoia:     "07568f162e43b75395d7bd69e7753090383a55b9ad9e754069c61ec8dc80bc6d"
@@ -27,15 +28,14 @@ class Cdxgen < Formula
   # For `npm` and `dotnet`
   allow_network_access! :build
 
-  def dotnet = deps.find { |d| d.name.match?(/^dotnet(@\d+(\.\d+)*)?$/) }.to_formula
-
-  def ruby = deps.map(&:name).find { |d| d.match?(/^ruby(@\d+(\.\d+)*)?$/) }
+  def dotnet = dep("dotnet").to_formula
 
   def install
     # https://github.com/cdxgen/cdxgen/blob/master/lib/managers/binary.js
     # https://github.com/AppThreat/atom/blob/main/wrapper/nodejs/rbastgen.js
+    ruby_bin = dep("ruby").opt_bin
     cdxgen_env = {
-      RUBY_CMD:         "${RUBY_CMD:-#{formula_opt_bin(ruby)}/ruby}",
+      RUBY_CMD:         "${RUBY_CMD:-#{ruby_bin}/ruby}",
       SOURCEKITTEN_CMD: "${SOURCEKITTEN_CMD:-#{formula_opt_bin("sourcekitten")}/sourcekitten}",
       TRIVY_CMD:        "${TRIVY_CMD:-#{formula_opt_bin("trivy")}/trivy}",
     }
@@ -63,13 +63,14 @@ class Cdxgen < Formula
       ENV["XDG_RUNTIME_DIR"] = buildpath
       dosai_cmd = "dosai-#{os}-#{arch}"
       # .NET 11 SDK fails to bundle a single-file app with `AppHostRelativeDotNet`
+      dotnet_path = dotnet.opt_libexec.relative_path_from(cdxgen_plugins/"dosai")
       args = %W[
         --configuration Release
         --framework net#{dotnet.version.major_minor}
         --no-self-contained
         --output #{cdxgen_plugins}/dosai
         --use-current-runtime
-        -p:AppHostRelativeDotNet=#{dotnet.opt_libexec.relative_path_from(cdxgen_plugins/"dosai")}
+        -p:AppHostRelativeDotNet=#{dotnet_path}
         -p:AssemblyName=#{dosai_cmd}
         -p:DebugType=None
         -p:PublishSingleFile=false

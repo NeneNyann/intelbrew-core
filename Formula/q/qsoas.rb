@@ -20,6 +20,7 @@ class Qsoas < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "8270374d73ec59e70b95229c5061599c01b73735a54c990ea790fa185db0ce90"
     sha256 cellar: :any, arm64_golden_gate: "42dc3f046f8b07e9a2c660ad2fab02624b0806be8d6b930a57d4f05963b9dda8"
     sha256 cellar: :any, arm64_tahoe:       "19888b18f9cde40f6b7b7f366345da60612d94d09134fd0480fd05f4e06f201d"
     sha256 cellar: :any, arm64_sequoia:     "08dd560419d14904c9dc2f91e60da338774d3c88daa8c8f820b2e2d46e6377e1"
@@ -43,6 +44,8 @@ class Qsoas < Formula
     sha256 "183711c7a26d932b5342e64860d16953f1cc6518d07b2c30a02937fb362563f8"
   end
 
+  allow_network_access!
+
   def install
     resource("mruby").stage do
       system "make"
@@ -59,7 +62,7 @@ class Qsoas < Formula
     inreplace "QSoas.pro", "mruby-config --cflags)", "mruby-config --cxxflags)"
 
     gsl = formula_opt_prefix("gsl")
-    qt5 = formula_opt_prefix("qt@5")
+    qt5 = dep("qt").opt_prefix
 
     system "#{qt5}/bin/qmake", "MRUBY_DIR=#{libexec}",
                                "GSL_DIR=#{gsl}/include",

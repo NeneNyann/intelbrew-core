@@ -18,6 +18,7 @@ class Buku < Formula
   end
 
   bottle do
+    manifest_sha256 "e9c1ee2242e897fd2c2218de610dadb4ffd493b700e943777ec2c01f601cc9e9"
     sha256 cellar: :any, arm64_golden_gate: "9222efd0015ac3b4328f27cfa5ea67fb893de249cbc1d2313dea64b2a002591a"
     sha256 cellar: :any, arm64_tahoe:       "4bd16839a2a544e81bb730bcc72c0742ec7eaa645d3b9f5968f52a45b8b17508"
     sha256 cellar: :any, arm64_sequoia:     "3d48780bd81ffa0d72aae2db3c3c0515e01dd6ee923af2081a31c72ace297c5a"
@@ -198,6 +199,8 @@ class Buku < Formula
     resolves "https://github.com/jarun/buku/pull/883"
   end
 
+  allow_network_access! [:build, :test]
+
   def install
     # Workaround for https://github.com/html5lib/html5lib-python/issues/593
     odie "Check if setuptools workaround can be removed!" if resource("html5lib").version > "1.1.0"
@@ -287,15 +290,10 @@ class Buku < Formula
     # Test bukuserver
     assert_match version.to_s, shell_output("#{bin}/bukuserver --version")
 
-    port = free_port
-    pid = spawn bin/"bukuserver", "run", "--host", "127.0.0.1", "--port", port.to_s, [:out, :err] => File::NULL
-
-    begin
-      result = shell_output("curl -s --retry 5 --retry-connrefused 127.0.0.1:#{port}/api/bookmarks")
+    port = free_port.to_s
+    with_test_process(bin/"bukuserver", "run", "--host", "127.0.0.1", "--port", port, [:out, :err] => File::NULL) do
+      result = shell_output("curl --silent --retry 5 --retry-connrefused 127.0.0.1:#{port}/api/bookmarks")
       assert_match "https://github.com/Homebrew/brew", result
-    ensure
-      Process.kill "SIGINT", pid
-      Process.wait pid
     end
   end
 end

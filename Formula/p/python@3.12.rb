@@ -12,6 +12,7 @@ class PythonAT312 < Formula
   end
 
   bottle do
+    manifest_sha256 "e28d0e2cab284884c022032e40d2f4a64c4e04994e904a87ac639ad4906f46e7"
     sha256 arm64_golden_gate: "2f1228508f17ca03b67d2cbbeeb72bf804d5a30439721142c23ef66d5d4eac40"
     sha256 arm64_tahoe:       "496ae8d9b36ecf8ccbbff547717f0c7c52eb13b079ad3057fd93416287df0883"
     sha256 arm64_sequoia:     "ddfece91b4d292c9906b537aa0aa960f807e54104ed27aac1a52f382dd901707"
@@ -106,8 +107,10 @@ class PythonAT312 < Formula
     # Override the auto-detection of libmpdec, which assumes a universal build.
     # This is currently an inreplace due to https://github.com/python/cpython/issues/98557.
     if OS.mac?
+      machine = Hardware::CPU.arm? ? "uint128" : "x64"
+      ENV["PYTHON_DECIMAL_WITH_MACHINE"] = machine
       inreplace "configure", "libmpdec_machine=universal",
-                "libmpdec_machine=#{ENV["PYTHON_DECIMAL_WITH_MACHINE"] = Hardware::CPU.arm? ? "uint128" : "x64"}"
+                "libmpdec_machine=#{machine}"
     end
 
     # The --enable-optimization and --with-lto flags diverge from what upstream
@@ -115,6 +118,7 @@ class PythonAT312 < Formula
     # these flags because they want one build that will work across many macOS
     # releases. Homebrew is not so constrained because the bottling
     # infrastructure specializes for each macOS major release.
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --prefix=#{prefix}
       --enable-ipv6
@@ -122,7 +126,7 @@ class PythonAT312 < Formula
       --datadir=#{share}
       --without-ensurepip
       --enable-loadable-sqlite-extensions
-      --with-openssl=#{formula_opt_prefix("openssl@3")}
+      --with-openssl=#{openssl_prefix}
       --enable-optimizations
       --with-system-expat
       --with-system-libmpdec
@@ -170,8 +174,9 @@ class PythonAT312 < Formula
     # even if homebrew is not a /usr/local/lib. Try this with:
     # `brew install enchant && pip install pyenchant`
     inreplace "./Lib/ctypes/macholib/dyld.py" do |f|
+      openssl_lib = dep("openssl").opt_lib
       f.gsub! "DEFAULT_LIBRARY_FALLBACK = [",
-              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{formula_opt_lib("openssl@3")}',"
+              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{openssl_lib}',"
       f.gsub! "DEFAULT_FRAMEWORK_FALLBACK = [", "DEFAULT_FRAMEWORK_FALLBACK = [ '#{HOMEBREW_PREFIX}/Frameworks',"
     end
 
@@ -195,7 +200,7 @@ class PythonAT312 < Formula
       #   https://github.com/python/cpython#installing-multiple-versions
       #
       # Tell Python not to install into /Applications (default for framework builds)
-      target = "#{"alt" if altinstall?}install"
+      target = altinstall? ? "altinstall" : "install"
       system "make", target, "PYTHONAPPSDIR=#{prefix}"
       system "make", "frameworkinstallextras", "PYTHONAPPSDIR=#{pkgshare}" if OS.mac?
     end
@@ -281,25 +286,30 @@ class PythonAT312 < Formula
     end
 
     # Patch ensurepip to bootstrap our updated version of pip
+    pip_version = resource("pip").version
     inreplace lib_cellar/"ensurepip/__init__.py" do |s|
-      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{resource("pip").version}\"")
+      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{pip_version}\"")
     end
 
     # Ensure that our new pip wheel is globally readable.
     chmod "ugo+r", lib_cellar.glob("ensurepip/_bundled/pip-*.whl")
 
     # Install unversioned (and for an altinstall, major-versioned) symlinks in libexec/bin.
-    {
+    links = {
       "idle"          => "idle#{version.major_minor}",
       "pydoc"         => "pydoc#{version.major_minor}",
       "python"        => "python#{version.major_minor}",
       "python-config" => "python#{version.major_minor}-config",
-    }.merge(altinstall? ? {
-      "idle3"          => "idle#{version.major_minor}",
-      "pydoc3"         => "pydoc#{version.major_minor}",
-      "python3"        => "python#{version.major_minor}",
-      "python3-config" => "python#{version.major_minor}-config",
-    } : {}).each do |short_name, long_name|
+    }
+    if altinstall?
+      links.merge!({
+        "idle3"          => "idle#{version.major_minor}",
+        "pydoc3"         => "pydoc#{version.major_minor}",
+        "python3"        => "python#{version.major_minor}",
+        "python3-config" => "python#{version.major_minor}-config",
+      })
+    end
+    links.each do |short_name, long_name|
       (libexec/"bin").install_symlink (bin/long_name).realpath => short_name
     end
 
@@ -313,14 +323,15 @@ class PythonAT312 < Formula
     # have been picked up (and we can't pass --ignore-installed).
     root_site_packages = lib/"python#{version.major_minor}/site-packages"
     bundled = lib_cellar/"ensurepip/_bundled"
+    wheel_version = resource("wheel").version
     system python3, "-Im", "pip", "install", "-v",
            "--no-deps",
            "--no-index",
            "--upgrade",
            "--isolated",
            "--target=#{root_site_packages}",
-           bundled/"pip-#{resource("pip").version}-py3-none-any.whl",
-           libexec/"wheel-#{resource("wheel").version}-py3-none-any.whl"
+           bundled/"pip-#{pip_version}-py3-none-any.whl",
+           libexec/"wheel-#{wheel_version}-py3-none-any.whl"
 
     # pip install with --target flag will just place the bin folder into the
     # target, so move its contents into the appropriate location

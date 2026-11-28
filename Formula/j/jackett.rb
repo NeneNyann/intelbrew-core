@@ -1,28 +1,25 @@
 class Jackett < Formula
   desc "API Support for your favorite torrent trackers"
   homepage "https://github.com/Jackett/Jackett"
-  url "https://github.com/Jackett/Jackett/archive/refs/tags/v0.24.3036.tar.gz"
-  sha256 "bbc01b322c24b5cb1520c22dfd58b266175431300743516603c9b91e766e0007"
+  url "https://github.com/Jackett/Jackett/archive/refs/tags/v0.25.48.tar.gz"
+  sha256 "7a5fb38c8c052ed3098dde2594672a9c0762a05be4f0970d94f42da77a41b074"
   license "GPL-2.0-only"
   head "https://github.com/Jackett/Jackett.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "29d8fc90be3f13011b9feb8b0f4f3e9f960c5220b98a2b4b45acb38d39419896"
-    sha256 cellar: :any, arm64_tahoe:       "eba6b23a08096a233cd99f8fadd470dc0deac583793f5b4326c204bd725a3ef0"
-    sha256 cellar: :any, arm64_sequoia:     "4122663c8a1628272eabcaee7c75216bf6d7eca153dfe806f0ad499c4b7b84d3"
-    sha256 cellar: :any, arm64_linux:       "743a97e06103f044e9ebc95533b9a8d1f730a55a399c84e3771b26a698b20cc2"
-    sha256 cellar: :any, x86_64_linux:      "40873c7c59eb1a1405f14e12eadbadeedc90a8829dcaa978b3224467748d870d"
+    manifest_sha256 "09b50a9c1f5933558b78ed3f5efe87f7265b38b1fd8a49c7cffcbc48df9130e6"
+    sha256 cellar: :any, arm64_golden_gate: "6bcdc9c831f2298da7b01f6d35ae4bf892497e6f263fada6908bcb9fd6b8bf38"
+    sha256 cellar: :any, arm64_tahoe:       "ffa209417af4dfcc6f990e8f9998d7a9ea7f3fcbae6aa623bfe12fc666aacade"
+    sha256 cellar: :any, arm64_sequoia:     "1b8638c7f7f5cab93499a1eec17f1fbe1166002ebc8a57eec45e92b6316a11fb"
+    sha256 cellar: :any, arm64_linux:       "4fc97988786e6e5a1fb8d5f8ca6f4563f7647f8da0951f320adbb37966001b0f"
+    sha256 cellar: :any, x86_64_linux:      "3434a490611bbd69331e1e3a8a899dc6742a12464f5ca1aa46eef8ae03ed3660"
   end
 
-  # Aligned to .NET dependency. Can remove if updated to latest .NET
-  deprecate! date: "2026-11-10", because: "needs end-of-life .NET 9"
-  disable! date: "2027-11-10", because: "needs end-of-life .NET 9"
-
-  depends_on "dotnet@9"
+  depends_on "dotnet@10"
 
   allow_network_access! :test
 
-  def dotnet = deps.find { |d| d.name.match?(/^dotnet(@\d+)?$/) }.to_formula
+  def dotnet = dep("dotnet").to_formula
 
   def fetch
     ENV["XDG_RUNTIME_DIR"] = buildpath

@@ -73,6 +73,7 @@ class GlibcAT217 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "4171321028f81556a322419bab521ee1ca72b3ff40413997d98f71c1960669fd"
     sha256 arm64_linux:  "c7e6ac88b5b12fdbecfe5f82846bbd0071fc7ff7c5b8d01c6896ed1318416499"
     sha256 x86_64_linux: "23e8506f5365138f86d33a39c62dd543813acdc71d160c9de6bde623c6b2d1ef"
   end
@@ -129,6 +130,7 @@ class GlibcAT217 < Formula
               '= SYSCONFDIR "/ld.so.preload";'
 
     mkdir "build" do
+      linux_headers_include = dep("linux-headers").opt_include
       args = [
         "--disable-debug",
         "--disable-dependency-tracking",
@@ -137,7 +139,7 @@ class GlibcAT217 < Formula
         "--sysconfdir=#{etc}",
         "--without-gd",
         "--without-selinux",
-        "--with-headers=#{formula_opt_include("linux-headers@4.4")}",
+        "--with-headers=#{linux_headers_include}",
       ]
       system "../configure", *args
       system "make", "all"

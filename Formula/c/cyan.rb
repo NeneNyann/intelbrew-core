@@ -11,6 +11,7 @@ class Cyan < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "3d59b78bd2cb0910eeba4627f3fc455c4c7ad2ede69225fdf61495a1f1b531e4"
     sha256 cellar: :any, arm64_golden_gate: "52cc6000a9a67a242f455db1e13ba2a31664d164f251cf92d2c61a6b21630f1e"
     sha256 cellar: :any, arm64_tahoe:       "9482f01935c9f0df5f2b5b910622901b2e696d25ae49957674578f9760ded5e9"
     sha256 cellar: :any, arm64_sequoia:     "b7963eb2fb7d37c639f19ffb38c93e428ec366afead86daa3e617c5b4e24f0dd"
@@ -46,7 +47,11 @@ class Cyan < Formula
     end
 
     # Keep only tool binaries for the current OS/architecture pair.
-    tools_arch = (!OS.mac? && Hardware::CPU.arm64?) ? "aarch64" : Hardware::CPU.arch.to_s
+    tools_arch = if !OS.mac? && Hardware::CPU.arm64?
+      "aarch64"
+    else
+      Hardware::CPU.arch.to_s
+    end
     tools_root = venv.site_packages/"cyan/tools"
     tools_os_dir = tools_root/OS.kernel_name
     tools_dir = tools_os_dir/tools_arch

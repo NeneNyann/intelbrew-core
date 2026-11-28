@@ -18,6 +18,7 @@ class Qscintilla2 < Formula
   end
 
   bottle do
+    manifest_sha256 "644955157f08eb985f942f5c3f989bfe977b0b44395e3ddce0ef9e77cebb7c25"
     sha256 cellar: :any, arm64_golden_gate: "93a24d7ccc16cd7a9f8d60b13454e967e454c53e1cb2acaf8822982e1da2256a"
     sha256 cellar: :any, arm64_tahoe:       "93a24d7ccc16cd7a9f8d60b13454e967e454c53e1cb2acaf8822982e1da2256a"
     sha256 cellar: :any, arm64_sequoia:     "56b396fd81246ea9521595ba013b1363c8ed63560d6327bde0085c9a4e3ed40c"
@@ -33,7 +34,11 @@ class Qscintilla2 < Formula
   def install
     args = %w[-config release]
     if OS.mac?
-      spec = (ENV.compiler == :clang) ? "macx-clang" : "macx-g++"
+      spec = if ENV.compiler == :clang
+        "macx-clang"
+      else
+        "macx-g++"
+      end
       args += %W[-spec #{spec}]
     end
 
@@ -66,11 +71,11 @@ class Qscintilla2 < Formula
       mv "pyproject-qt#{qt.version.major}.toml", "pyproject.toml"
       (buildpath/"Python/pyproject.toml").append_lines <<~TOML
         [tool.sip.project]
-        sip-include-dirs = ["#{pyqt.opt_prefix/site_packages}/PyQt#{pyqt.version.major}/bindings"]
+        sip-include-dirs = ["#{pyqt.opt_prefix}/#{site_packages}/PyQt#{pyqt.version.major}/bindings"]
       TOML
 
       args = %W[
-        --target-dir #{prefix/site_packages}
+        --target-dir #{prefix}/#{site_packages}
         --qsci-features-dir #{share}/qt/mkspecs/features
         --qsci-include-dir #{include}
         --qsci-library-dir #{lib}

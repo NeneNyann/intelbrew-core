@@ -6,6 +6,7 @@ class Nrpe < Formula
   license "GPL-2.0-or-later"
 
   bottle do
+    manifest_sha256 "7820c141b6f32b99fc874f7ff1c4d702b1e4b23e868ed83c50040e332cccf045"
     sha256 cellar: :any, arm64_golden_gate: "53a9deab35083b2965d61f1984df70dd46f845bad0fec3b9d7758d7b69ac6fa0"
     sha256 cellar: :any, arm64_tahoe:       "573e537c720f51d9d7bc3c35100c0f89366369199194aab434bdace272f1486f"
     sha256 cellar: :any, arm64_sequoia:     "039145ca0194d851d6f147b2b0538be03ffaee183772b2745cd4981556e387ed"
@@ -27,6 +28,7 @@ class Nrpe < Formula
       (etc/"tmpfiles.d").mkpath
     end
 
+    openssl = dep("openssl")
     system "./configure", "--prefix=#{prefix}",
                           "--libexecdir=#{HOMEBREW_PREFIX}/sbin",
                           "--with-piddir=#{var}/run",
@@ -35,9 +37,9 @@ class Nrpe < Formula
                           "--with-nrpe-group=#{group}",
                           "--with-nagios-user=#{user}",
                           "--with-nagios-group=#{group}",
-                          "--with-ssl=#{formula_opt_prefix("openssl@3")}",
+                          "--with-ssl=#{openssl.opt_prefix}",
                           # Set both or it still looks for /usr/lib
-                          "--with-ssl-lib=#{formula_opt_lib("openssl@3")}",
+                          "--with-ssl-lib=#{openssl.opt_lib}",
                           "--enable-ssl",
                           "--enable-command-args"
 

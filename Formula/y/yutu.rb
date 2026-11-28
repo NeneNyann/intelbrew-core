@@ -12,6 +12,7 @@ class Yutu < Formula
   end
 
   bottle do
+    manifest_sha256 "d366cadc261d8d9261d1bb1ba3be91c86e06b218aafc54f7872b5c737cf47041"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "3f279444072c630dfa6f1b6f758e79dff252b9443f1c450bdf28c55dcf0515c7"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "3f279444072c630dfa6f1b6f758e79dff252b9443f1c450bdf28c55dcf0515c7"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "3f279444072c630dfa6f1b6f758e79dff252b9443f1c450bdf28c55dcf0515c7"
@@ -29,8 +30,9 @@ class Yutu < Formula
 
   def install
     mod = "github.com/eat-pray-ai/yutu/cmd"
+    target_os = OS.mac? ? "darwin" : "linux"
     ldflags = %W[
-      -X #{mod}.Os=#{OS.mac? ? "darwin" : "linux"}
+      -X #{mod}.Os=#{target_os}
       -X #{mod}.Arch=#{Hardware::CPU.arch}
       -X #{mod}.Version=v#{version}
       -X #{mod}.CommitDate=#{time.iso8601}

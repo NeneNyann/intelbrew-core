@@ -9,6 +9,7 @@ class Bcoin < Formula
 
   bottle do
     rebuild 3
+    manifest_sha256 "e0c046dcffae258aa9f0c5ebc611f8b97abec64bcd94b338deea0d6154669b84"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "677ea7a4a3d06f46cc6794494acb07e4f9de5babcb6838320e0a6d081d35e44f"
     sha256                               arm64_tahoe:       "22cb74e6bd2ddf842240be2209f1412af7423eb335056fdc7a58616d2a9dd4aa"
     sha256                               arm64_sequoia:     "bcd872395d69686c004555e77f78998ca1a01e4d1a0f0d4f6315e5cc0a112be2"
@@ -25,12 +26,6 @@ class Bcoin < Formula
   depends_on "node"
 
   uses_from_macos "python" => :build
-
-  def node
-    deps.reject(&:build?)
-        .map(&:to_formula)
-        .find { |f| f.name.match?(/^node(@\d+(\.\d+)*)?$/) }
-  end
 
   def install
     system "npm", "install", *std_npm_args
@@ -59,7 +54,7 @@ class Bcoin < Formula
         await node.ensure();
       })();
     JS
-    system "#{node.opt_bin}/node", testpath/"script.js"
+    system dep("node").opt_bin/"node", testpath/"script.js"
     assert File.directory?("#{testpath}/.bcoin")
   end
 end

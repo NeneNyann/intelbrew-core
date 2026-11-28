@@ -1,15 +1,18 @@
 class Ctx7 < Formula
   desc "Manage AI coding skills and documentation context"
   homepage "https://context7.com"
-  url "https://registry.npmjs.org/ctx7/-/ctx7-0.12.2.tgz"
-  sha256 "04c5cb6099d1406a80c1ecfb7ef1c56b8f984db442f498b24441e5e722b1f98a"
+  url "https://registry.npmjs.org/ctx7/-/ctx7-0.13.1.tgz"
+  sha256 "59fa5ea206df763b204dc67e98bf1458cd05f0f7d5b2ab15b1fb34a0d0d270c0"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "0e0fdbce97ccceba7aa1676347b1cf583cb0871c13e10f2ca5cddfd4ff6090da"
+    manifest_sha256 "39db18b5bbe9ca15a55b9e504df0c220aa65a55eb6bfef89dbe7106682a73a57"
+    sha256 cellar: :any_skip_relocation, all: "6c55eb4b10a35ac920e9d9ca184f3adb78d3d07d769547ff3f3cf5f9566fdfbd"
   end
 
   depends_on "node"
+
+  allow_network_access! [:build, :test]
 
   def install
     system "npm", "install", *std_npm_args

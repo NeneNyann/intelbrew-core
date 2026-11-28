@@ -13,6 +13,7 @@ class Sproxy < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "0c57680ad634714f790b09b8eda30e56f9708a4d089a55dc98fca3f39434dc62"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "6365f20dbe6308f241160aad69f8684c9ba74da050fc6b4816a21638a5e48c75"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "6365f20dbe6308f241160aad69f8684c9ba74da050fc6b4816a21638a5e48c75"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "6365f20dbe6308f241160aad69f8684c9ba74da050fc6b4816a21638a5e48c75"
@@ -108,7 +109,7 @@ class Sproxy < Formula
       ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
       ENV.prepend_create_path "PERL5LIB", lib/"sproxy"
       ENV["PERL_MM_USE_DEFAULT"] = "1"
-      ENV["OPENSSL_PREFIX"] = formula_opt_prefix("openssl@4")
+      ENV["OPENSSL_PREFIX"] = dep("openssl").opt_prefix
 
       resources.each do |r|
         r.stage do

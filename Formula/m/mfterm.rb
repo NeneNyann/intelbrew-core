@@ -8,6 +8,7 @@ class Mfterm < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "83ef988fffbcc1eed9b5621a3c46642b7c48251e92600079782cdebb210ecf85"
     sha256 cellar: :any, arm64_golden_gate: "e0f593b5e2b34ba00dd11867d7492b51988e9831a58232bf62dec2bbef789a13"
     sha256 cellar: :any, arm64_tahoe:       "60aeea82c7d8adad403b01a6ac6360429e5761b88d6d8f5c8f613c7da808d656"
     sha256 cellar: :any, arm64_sequoia:     "518dfba132ced0ec7b8f2fed7c11b9bbaec98fa31bac1a95814d369ab4344655"
@@ -34,11 +35,10 @@ class Mfterm < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
-    ENV.prepend "CPPFLAGS", "-I#{formula_opt_include(openssl)}"
-    ENV.prepend "LDFLAGS", "-L#{formula_opt_lib(openssl)}"
+    openssl = dep("openssl")
+    ENV.prepend "CPPFLAGS", "-I#{openssl.opt_include}"
+    ENV.prepend "LDFLAGS", "-L#{openssl.opt_lib}"
 
     if build.head?
       chmod 0755, "./autogen.sh"

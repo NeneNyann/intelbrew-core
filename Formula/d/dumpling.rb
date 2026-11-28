@@ -1,8 +1,8 @@
 class Dumpling < Formula
   desc "Creating SQL dump from a MySQL-compatible database"
   homepage "https://github.com/pingcap/tidb"
-  url "https://github.com/pingcap/tidb/archive/refs/tags/v26.3.23.tar.gz"
-  sha256 "ab20677a93df42ea1d0b5247037d93528b0d9acbf0330826c06d19162c2559e0"
+  url "https://github.com/pingcap/tidb/archive/refs/tags/v26.3.27.tar.gz"
+  sha256 "11153383bc78f050705d6a8300e03ab47139a0e5de82b4c79ea6637855356cf1"
   license "Apache-2.0"
   head "https://github.com/pingcap/tidb.git", branch: "master"
 
@@ -12,11 +12,12 @@ class Dumpling < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "effe5ef6c759e0a6b59dfcb4bf49cea5168591fdd593bed36c01d349288066e9"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "24a25bb0fc7de69eccf93cfdef5b91e4696b9d2a935ac9e59cf0b8a89cdc43fa"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "7ab41d814e7c862641d17bd217d4cb9e2331a70faf26606ede9551c78a478267"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "45103bcd1edb2e97bcd6b57c8ed39ada20c71b093ee3ffc9d72a0f2a94c7da38"
-    sha256 cellar: :any,                 x86_64_linux:      "c88c4d6b7ccea8440bba8f0e5a0a9cba33f6ea5d008575a1738bbce626b9c02b"
+    manifest_sha256 "a916ec6a71d9bceb00f0270b13598546aa623e4e265722a2468cc68e674395e0"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "1192341f57991527038da41e002231f4456d45760b0a7ceaa8242927f50928e4"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "8db08bf7f77ccb766d9134d3ce786f7e7422f39f4fb5edbb49f0eaa8fe5e3dfd"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "98737a757099191ac00396ee70db9e9aa73e41f2ae050d4951f8b6ace8b7f105"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "681a1df6935868ceb89a60bc0317295e5202d3a481fc5bb60a8ceb1ba348651d"
+    sha256 cellar: :any,                 x86_64_linux:      "2972b38e0d11139eeef1fb71bf38cde26e24ba2b90bfa9e748f528485d9aaaa3"
   end
 
   # TODO: unpin go@1.26 when dumpling supports go 1.27
@@ -25,7 +26,7 @@ class Dumpling < Formula
 
   deny_network_access!
 
-  def go = deps.find { |d| d.name.match?(/^go(@\d+(\.\d+)*)?$/) }.to_formula
+  def go = dep("go").to_formula
 
   def fetch
     system "go", "mod", "download"

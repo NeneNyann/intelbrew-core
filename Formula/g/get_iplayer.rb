@@ -8,6 +8,7 @@ class GetIplayer < Formula
   head "https://github.com/get-iplayer/get_iplayer.git", branch: "master"
 
   bottle do
+    manifest_sha256 "566f339ab444f1b5932f3e3242dae26f525a9a020c07694435c6a9ec50f07cac"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "82ce824f54caf6a105dbcf29a9aa7b6effb5e4d5dd06a248a6e921ff483ca95f"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "82ce824f54caf6a105dbcf29a9aa7b6effb5e4d5dd06a248a6e921ff483ca95f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "82ce824f54caf6a105dbcf29a9aa7b6effb5e4d5dd06a248a6e921ff483ca95f"
@@ -224,7 +225,7 @@ class GetIplayer < Formula
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
     ENV["NO_NETWORK_TESTING"] = "1"
     ENV["PERL_MM_USE_DEFAULT"] = "1"
-    ENV["OPENSSL_PREFIX"] = formula_opt_prefix("openssl@4") if OS.linux?
+    ENV["OPENSSL_PREFIX"] = dep("openssl").opt_prefix if OS.linux?
 
     resources.each do |r|
       r.stage do

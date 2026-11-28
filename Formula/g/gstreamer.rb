@@ -25,6 +25,7 @@ class Gstreamer < Formula
   end
 
   bottle do
+    manifest_sha256 "70821979d571ebc96a7a4d3433eca75893e0f32d6c4efd2263b5654763c7bcdc"
     sha256 arm64_golden_gate: "496d3bb3aaa971637f9fc5d541e1c595b8c25453537dc9f125f5fe3281b499e6"
     sha256 arm64_tahoe:       "a20f45ed31059eacd962fbbb1e5e28a195fe149a70115e51d3018fa58f197e79"
     sha256 arm64_sequoia:     "1b23e3d429d32411476efe6fb0e69be45201e2a661eac5a0a3d3370a1937b7ae"
@@ -228,7 +229,7 @@ class Gstreamer < Formula
     ENV.append_to_rustflags "--codegen link-args=-Wl,#{rpath_args.join(",")}"
 
     # Make sure the `openssl-sys` crate uses our OpenSSL.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     # Work around superenv breaking aws-lc-sys `-O0` needed to build CPU Jitter RNG
     ENV["AWS_LC_SYS_NO_JITTER_ENTROPY"] = "1"

@@ -5,18 +5,17 @@ class Manticoresearch < Formula
     "GPL-3.0-or-later",
     { any_of: ["Unlicense", "MIT"] }, # uni-algo (our formula is too new)
   ]
-  revision 5
   version_scheme 1
   head "https://github.com/manticoresoftware/manticoresearch.git", branch: "main"
 
   stable do
-    url "https://github.com/manticoresoftware/manticoresearch/archive/refs/tags/29.9.0.tar.gz"
-    sha256 "e1dc58dc671e74278a6ab5327c2fc666d75ae3ad6fbc59587f60376043f3cb4e"
+    url "https://github.com/manticoresoftware/manticoresearch/archive/refs/tags/32.1.3.tar.gz"
+    sha256 "3261be44aea2e8998a20602c2780dca96c1a00780b5115ca7a2535a9e9ed3e9f"
 
     resource "mcl" do
-      url "https://github.com/manticoresoftware/columnar/archive/cb282a2442d2d51349fbea67cda97c2dda37f0bd.tar.gz"
-      version "cb282a2442d2d51349fbea67cda97c2dda37f0bd"
-      sha256 "5d444222405c00ce21f3a360e5983b140247f43b18c7f01b85d4b564e87a8432"
+      url "https://github.com/manticoresoftware/columnar/archive/12f86b4299dcef1495972838b76931bf46e4426f.tar.gz"
+      version "12f86b4299dcef1495972838b76931bf46e4426f"
+      sha256 "54c4e48e283280eabbe664627bd6d1cb07306e6a8bf3fe9557dc366f1a9213f0"
 
       livecheck do
         url "https://api.github.com/repos/manticoresoftware/manticoresearch/contents/mcl?ref=#{LATEST_VERSION}"
@@ -36,33 +35,34 @@ class Manticoresearch < Formula
   end
 
   bottle do
-    sha256 arm64_golden_gate: "c7364aec1efdf78ef4cc7943dea60529ace63c9a5ca36542fdfc520fa26fab44"
-    sha256 arm64_tahoe:       "d04bcd57e1bd737648cd3824af73f66f89178f0ffd4cfff1a62c01351872d822"
-    sha256 arm64_sequoia:     "9f29087c5e886454f9462ca5f275b1422d600b956c4636333d8186e448fee51c"
-    sha256 arm64_linux:       "d8198c1c6d9abff8204f96b3d0c6d4870882bdb0b014eb1916f6c8105c80895f"
-    sha256 x86_64_linux:      "66b240962a4ecc6ff7d3c6d6af0358033c7f36f2b944b01afec93b4f4f8b9c32"
+    rebuild 1
+    manifest_sha256 "8f632e216b1182e5774d97a45a2d13917a304d69c4ed37437b0218736b890aff"
+    sha256 arm64_golden_gate: "ed6ebd45d8e46bf2ff2d553019b76f230e777feff8f182582dc6b90cad42c6ad"
+    sha256 arm64_tahoe:       "9af03c4f255de6af0f996efb40fa4015262397e619793af3d216b0c443ebdf2d"
+    sha256 arm64_sequoia:     "d71b79ef5fdf860e4a8ae7bf79e6baca4926f39fb91695ebea3e3d155f959aa5"
+    sha256 arm64_linux:       "f6a211268470a276a22b56ed66dde7fc141b1dc25e53850e73be69ca81881124"
+    sha256 x86_64_linux:      "204ed88e38f0209095b30e3dd6b3fc501c58bbf51cb119b065bdf96320f6bbfd"
   end
 
   depends_on "cmake" => :build
   depends_on "nlohmann-json" => :build
   depends_on "snowball" => :build # for libstemmer.a
 
-  # NOTE: `libpq`, `mariadb-connector-c`, `unixodbc` and `zstd` are dynamically loaded rather than linked
   depends_on "boost"
   depends_on "cctz"
   depends_on "croaring"
   depends_on "icu4c@79"
-  depends_on "libpq"
-  depends_on "mariadb-connector-c"
+  depends_on "libpq" => :no_linkage
+  depends_on "mariadb-connector-c" => :no_linkage
   depends_on "openssl@4"
   depends_on "re2"
-  depends_on "unixodbc"
+  depends_on "unixodbc" => :no_linkage
   depends_on "xxhash"
-  depends_on "zstd"
+  depends_on "zstd" => :no_linkage
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
-  uses_from_macos "expat"
+  uses_from_macos "expat" => :no_linkage
 
   on_linux do
     depends_on "zlib-ng-compat"
@@ -98,12 +98,12 @@ class Manticoresearch < Formula
       ENV.append_path "CMAKE_PREFIX_PATH", buildpath/"uni-algo"
     end
 
-    # Avoid statically linking to boost
+    # Avoid statically linking to boost and openssl
     inreplace "src/CMakeLists.txt", "set ( Boost_USE_STATIC_LIBS ON )", "set ( Boost_USE_STATIC_LIBS OFF )"
+    inreplace "CMakeLists.txt", "set ( OPENSSL_USE_STATIC_LIBS ON )", "set ( OPENSSL_USE_STATIC_LIBS OFF )"
 
-    ENV["ICU_ROOT"] = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-                          .to_formula.opt_prefix.to_s
-    ENV["OPENSSL_ROOT_DIR"] = formula_opt_prefix("openssl@4").to_s
+    ENV["ICU_ROOT"] = dep("icu4c").opt_prefix.to_s
+    ENV["OPENSSL_ROOT_DIR"] = dep("openssl").opt_prefix.to_s
     ENV["PostgreSQL_ROOT"] = formula_opt_prefix("libpq").to_s
 
     args = %W[
@@ -118,7 +118,7 @@ class Manticoresearch < Formula
       -DCMAKE_REQUIRE_FIND_PACKAGE_stemmer=ON
       -DCMAKE_REQUIRE_FIND_PACKAGE_xxHash=ON
       -DMYSQL_CONFIG_EXECUTABLE=#{formula_opt_bin("mariadb-connector-c")}/mariadb_config
-      -DRE2_LIBRARY=#{formula_opt_lib("re2")/shared_library("libre2")}
+      -DRE2_LIBRARY=#{formula_opt_lib("re2")}/#{shared_library("libre2")}
       -DWITH_GALERA=OFF
       -DWITH_JIEBA=OFF
       -DWITH_ICU_FORCE_STATIC=OFF

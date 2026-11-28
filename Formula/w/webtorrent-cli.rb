@@ -7,6 +7,7 @@ class WebtorrentCli < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "1202e4f8c996120e62b2b7560a18b717f6a43f44c3acfcdc784e88cf167a199e"
     sha256 arm64_golden_gate: "65795fe55d6fdc653ae0871b0248898bfbb6a59d33216247f4720f46d37576d6"
     sha256 arm64_tahoe:       "0931429f7e1c620ea713e95bcb801d93694c558c753f3399af44541d6d3edbdf"
     sha256 arm64_sequoia:     "509fa851b4b17d2a7cd6d23b28d9000865adfa517cdd8bcd90c6b6c7c77ce671"
@@ -22,6 +23,8 @@ class WebtorrentCli < Formula
   # Using Node 20 due to issue with N-API 10 https://github.com/murat-dogan/node-datachannel/issues/333
   # and unable to use newer node-datachannel https://github.com/ThaUnknown/webrtc-polyfill/issues/9
   depends_on "node@20"
+
+  allow_network_access!
 
   def install
     # Install locally as `npx only-allow pnpm` in `ip-set`'s preinstall script fails in global mode

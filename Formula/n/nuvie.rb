@@ -12,6 +12,7 @@ class Nuvie < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "7a19928604c21cc4c0751a32d26dd12ad7e0515e4b57072f17567aa2fa5b9670"
     sha256 cellar: :any,                 arm64_tahoe:   "fa2594d6ea248c288f64937010118a7b84c70264c24dae72c5e6059930c9a35d"
     sha256 cellar: :any,                 arm64_sequoia: "75819c942c2151264b9586aff141b43f0c52032fbaf8c0701cb0543dbb293edb"
     sha256 cellar: :any,                 arm64_sonoma:  "139b517e55da813691b4421a2c93bb3189596cd861de948332563717aca30403"
@@ -30,6 +31,8 @@ class Nuvie < Formula
   # https://github.com/nuvie/nuvie/commit/759cc0c33bb1a555d6935976c467e52007c3aea1
   deprecate! date: "2026-01-23", because: "has moved to the ScummVM project", replacement_formula: "scummvm"
   disable! date: "2026-01-23", because: "has moved to the ScummVM project", replacement_formula: "scummvm"
+
+  allow_network_access!
 
   def install
     # Work around GCC 11 / Clang 17 failure due to higher default C++ standard.
@@ -76,12 +79,10 @@ class Nuvie < Formula
   end
 
   test do
-    pid = spawn bin/"nuvie"
-    sleep 3
-    assert_path_exists bin/"nuvie"
-    assert_predicate bin/"nuvie", :executable?
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"nuvie") do
+      sleep 3
+      assert_path_exists bin/"nuvie"
+      assert_predicate bin/"nuvie", :executable?
+    end
   end
 end

@@ -1,8 +1,8 @@
 class Oxen < Formula
   desc "Data VCS for structured and unstructured machine learning datasets"
   homepage "https://www.oxen.ai/", browsed: "2026-10-12"
-  url "https://github.com/Oxen-AI/Oxen/archive/refs/tags/v0.67.2.tar.gz"
-  sha256 "89ba6af9498c7c58ef7755d0b12330bfea8078a097dc72aaaf24f28180124220"
+  url "https://github.com/Oxen-AI/Oxen/archive/refs/tags/v0.68.2.tar.gz"
+  sha256 "85cb3f51e8679dbdd98b53ab0f85160a18c7dd77a7f0e6ac375cf9b8b0551c06"
   license "Apache-2.0"
   head "https://github.com/Oxen-AI/Oxen.git", branch: "main"
 
@@ -17,11 +17,12 @@ class Oxen < Formula
   no_autobump! because: :bumped_by_upstream
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "a3a4ced7cf7f3b45718ef085aeffc35776d329fe53d4597f36cfd3a0fc2bd86a"
-    sha256 cellar: :any, arm64_tahoe:       "cb3a3c72ddf1c5d33f78ae33a9d6b6eed478ee88149fc8feb9a39ae97ca69317"
-    sha256 cellar: :any, arm64_sequoia:     "8cb98e6dc223abc90914d526bd205678bd9d0e8961d7f0791ff352e4e4d71784"
-    sha256 cellar: :any, arm64_linux:       "1405479e84e66ad921e6292f9202fc5c0795d03e85b3748c21a1ee33c1d8287e"
-    sha256 cellar: :any, x86_64_linux:      "6920eaea06d38cd38a5b8145a375677e9cb600d18a05ba155167f89eac37db1f"
+    manifest_sha256 "20e4639f79288ab7a970eb82e1833003edb81043bd172c610cdfdcc5d5804f58"
+    sha256 cellar: :any, arm64_golden_gate: "60b959eb30a14fc63edc20bc784a38b4a707772eb0341e367c2930920ef727c6"
+    sha256 cellar: :any, arm64_tahoe:       "16194b833afa1d3e3da6c4763dc77d241d56225aa9e8d1f896df2d47e0140418"
+    sha256 cellar: :any, arm64_sequoia:     "042d7ef809b768a234e0726db9f772e5daa6b975ae6b5fac61b9c09d9569561b"
+    sha256 cellar: :any, arm64_linux:       "6e2023cc053310efcec9a700024f33d9573ba68f255061f38f52e41a99056bc2"
+    sha256 cellar: :any, x86_64_linux:      "44c181bd54ed1ebb3eb14f381e5f085fe3678da7d4b53c6b132c152c5b7631d6"
   end
 
   depends_on "cmake" => :build # for libz-ng-sys

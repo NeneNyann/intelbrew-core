@@ -9,6 +9,7 @@ class Certbot < Formula
   head "https://github.com/certbot/certbot.git", branch: "main"
 
   bottle do
+    manifest_sha256 "022c7d13fb9994b4f9dddc70976044dabe3a99d646bfd9dcdc43380677992815"
     sha256 cellar: :any, arm64_golden_gate: "31f847afd66bf3f9e491a23f768d21d5c72f80bc4a6c238a7f6a570fb65e1f1c"
     sha256 cellar: :any, arm64_tahoe:       "0e4b3472d7aa0c3e19fd73ab5e6b00b5e849510a33101dfc42363a5a4f72d025"
     sha256 cellar: :any, arm64_sequoia:     "bab021a95242b7a2db3b9ef19c08e00ca01fa5cff4ae5cfcab696562dd7ef1fb"
@@ -142,6 +143,8 @@ class Certbot < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     if build.head?

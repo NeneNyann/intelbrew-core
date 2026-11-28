@@ -7,11 +7,14 @@ class Cask < Formula
   head "https://github.com/cask/cask.git", branch: "master"
 
   bottle do
+    manifest_sha256 "5bb8ad83f4a0acb33f2caf3d985a73fe3cf4621b8eba3537d7d008fe9eae5da1"
     sha256 cellar: :any_skip_relocation, all: "57e45b5a8f5624932427a20879ead2c11b3d007b2b2bfbf751995219c4b1e7fe"
   end
 
   depends_on "coreutils"
   depends_on "emacs"
+
+  allow_network_access! :test
 
   def install
     bin.install "bin/cask"

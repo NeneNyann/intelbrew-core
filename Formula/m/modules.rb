@@ -11,6 +11,7 @@ class Modules < Formula
   end
 
   bottle do
+    manifest_sha256 "e55b9a52e709452b8b137269f6c2da69d9d529e36a6a583cbc3dcea36e5a8473"
     sha256 cellar: :any, arm64_golden_gate: "f576e16b0001fe35da4b63000582a18a0120c91b7154d01397e58354aae40fc2"
     sha256 cellar: :any, arm64_tahoe:       "15d5c0388d4f43239ef034f5547902395b514c304e1fbd8fcc257287f66bd212"
     sha256 cellar: :any, arm64_sequoia:     "0aa6131d168592dfac4877a4ded5a1183692f5cad9f3adce13083c6ba99189e7"
@@ -24,14 +25,13 @@ class Modules < Formula
 
   deny_network_access!
 
-  def tcltk = deps.map(&:name).find { |d| d.match?(/^tcl-tk(@\d+(\.\d+)*)?$/) }
-
   def install
+    tcl_tk = dep("tcl-tk")
     args = %W[
       --prefix=#{prefix}
       --datarootdir=#{share}
-      --with-tcl=#{formula_opt_lib(tcltk)}
-      --with-tclsh=#{formula_opt_bin(tcltk)}/tclsh
+      --with-tcl=#{tcl_tk.opt_lib}
+      --with-tclsh=#{tcl_tk.opt_bin}/tclsh
       --without-x
     ]
     args << "--with-pager=#{formula_opt_bin("less")}/less" if OS.linux?

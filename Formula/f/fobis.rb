@@ -3,12 +3,13 @@ class Fobis < Formula
 
   desc "KISS build tool for automatically building modern Fortran projects"
   homepage "https://github.com/szaghi/FoBiS"
-  url "https://files.pythonhosted.org/packages/f9/d2/3d2d36da013437958f5bb74093904585e93804db95d70ff9764017580a8e/fobis_py-3.19.0.tar.gz"
-  sha256 "a3dbc7956a0eaa07933e62a4e5bfdddda47589733a28a4651a0e3b750bf2589b"
+  url "https://files.pythonhosted.org/packages/c4/eb/e41852d6af7d98c690c06313d89b56d220528b9ac17f7d3bc8a2f45e2bc6/fobis_py-3.19.2.tar.gz"
+  sha256 "92b4cfae1ac413a907722d85069f6a30a9253d4311cf6cd320194d2a12e7a00f"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "d319a551e398b5f1db69244f7399255d278ac3eccb4a0ea468da4a338a6f863b"
+    manifest_sha256 "a1e602c8b97f3ea2d16c3075eb2dea7a927a8b30ebabaf0f15a1769dc78d3d44"
+    sha256 cellar: :any_skip_relocation, all: "80812c317e32847df246dc767e6e13f0a06f2703233c21de3ec2e2da77315cc6"
   end
 
   depends_on "gcc" # for gfortran
@@ -19,8 +20,8 @@ class Fobis < Formula
   pypi_packages exclude_packages: "pydantic"
 
   resource "annotated-doc" do
-    url "https://files.pythonhosted.org/packages/0f/6e/a61e86e43bb6039b31a33a8f5fba76fe1cdacf3661e7b9756d4ff1b28cdc/annotated_doc-0.0.6.tar.gz"
-    sha256 "7969bb69912085b2285849c0dcac0b4b374fd180c13cf10a87f284ffcf347bbf"
+    url "https://files.pythonhosted.org/packages/0b/7d/bdbf3062e5dae31da8b3de1e3269110beb93d268df4a7f6d22b167c6cee0/annotated_doc-0.0.7.tar.gz"
+    sha256 "0a30ef8f5322a4173720ae6712dc9a5e58f5a19868f3f167b4b5778db066c2b5"
   end
 
   resource "markdown-it-py" do
@@ -49,8 +50,8 @@ class Fobis < Formula
   end
 
   resource "typer" do
-    url "https://files.pythonhosted.org/packages/6c/aa/0de7986aa1fa856adb961c67345189b97d13f6e250b34ba68884df865f07/typer-0.29.1.tar.gz"
-    sha256 "ab6eb3880bf67ce96147734717f9ec333c06f66e361f3ea947d0be43da39f242"
+    url "https://files.pythonhosted.org/packages/bf/21/37383ece7d0a4995fb8ea97729207c4292b3ff94085002f37b2387063cfb/typer-0.29.2.tar.gz"
+    sha256 "b1998dc5f2c3dedafa1517a9521fa944cc4dc1fadcea085d81a3b10ebcaeb075"
   end
 
   def install

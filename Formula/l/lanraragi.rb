@@ -7,6 +7,7 @@ class Lanraragi < Formula
   head "https://github.com/Difegue/LANraragi.git", branch: "dev"
 
   bottle do
+    manifest_sha256 "001e6a114ebb2605931953cf3ca076e261b3be124df233a98d7e3cc88f56d80d"
     sha256 cellar: :any, arm64_golden_gate: "ae5814f7682f09d56a959240ae2735020663e7d8150e78ade9de9e4856953ff0"
     sha256 cellar: :any, arm64_tahoe:       "2de337f8f1fee018220b00b9bb7ed893077e2a3c98072c54593d6f39ed82324d"
     sha256 cellar: :any, arm64_sequoia:     "c5ca26be8154bc0725b185e5327589c0c6b9106d81c47fb913721493d63a3ac9"
@@ -60,7 +61,7 @@ class Lanraragi < Formula
 
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
-    ENV["OPENSSL_PREFIX"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_PREFIX"] = dep("openssl").opt_prefix
     ENV["ARCHIVE_LIBARCHIVE_LIB_DLL"] = formula_opt_lib("libarchive")/shared_library("libarchive")
     ENV["ALIEN_INSTALL_TYPE"] = "system"
     ENV["PERL_MM_USE_DEFAULT"] = "1"

@@ -10,6 +10,7 @@ class Beancount < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "b9d1fd16c34c5898f9826fc1c322776dc96545fb4856ad14f95c3e4561c686cf"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2b0b3eb9f36172bb24d47c4cf5dab4e9c80fa0936bd0f0af8259c7cdc8f7d230"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "ec082b6f85cae519441872adcc0994f9edb34328983e2bd62ead3aacd230772f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "eaa20c160d875fdf69dca36a92ba1325baeb273e7bf25b6f32fa304313fad941"
@@ -50,6 +51,8 @@ class Beancount < Formula
     url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
     sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
+
+  allow_network_access! :build
 
   def install
     # Skip the PyPI flex/bison wrappers; we already provide system equivalents.

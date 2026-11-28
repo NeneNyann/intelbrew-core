@@ -8,6 +8,7 @@ class Qjson < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "42d24553db00ccdb365e6259c84b90eb94e88942947a76e5934355aa25d23cfb"
     sha256 cellar: :any,                 arm64_golden_gate: "28caf07e5c18fea680fd4a3cdfde12ac218223cb24f392223aceb9314371ba70"
     sha256 cellar: :any,                 arm64_tahoe:       "0e477768711d2b9e0aca6455293f497e860e54455b2eb4fbf7fbfec1ad3754ba"
     sha256 cellar: :any,                 arm64_sequoia:     "d2d3a43592241e2217ea2508fa0ac418058d95d774f5d9fac89cbfe6ec031af0"
@@ -48,17 +49,18 @@ class Qjson < Formula
         return 0;
       }
     CPP
-    flags = ["-I#{formula_opt_include("qt@5")}"]
+    qt = dep("qt")
+    flags = ["-I#{qt.opt_include}"]
     flags += if OS.mac?
       [
-        "-F#{formula_opt_lib("qt@5")}",
+        "-F#{qt.opt_lib}",
         "-framework", "QtCore"
       ]
     else
       [
         "-fPIC",
-        "-L#{formula_opt_lib("qt@5")}", "-lQt5Core",
-        "-Wl,-rpath,#{formula_opt_lib("qt@5")}",
+        "-L#{qt.opt_lib}", "-lQt5Core",
+        "-Wl,-rpath,#{qt.opt_lib}",
         "-Wl,-rpath,#{lib}"
       ]
     end

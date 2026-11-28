@@ -13,6 +13,7 @@ class Cassandra < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "d04fc0f6e7376bec38c17fe63a731c3ea36633205ee29151b876db1d92239b28"
     sha256 cellar: :any, arm64_golden_gate: "6b7840959d2d05f86d28ed4ab7599deb9acca6a39ad31d66099e55c714ec75fd"
     sha256 cellar: :any, arm64_tahoe:       "37de0df52ed2e121f2c8b8a835350ffc7b59fe6d85ad1633c5d4249acc54a29c"
     sha256 cellar: :any, arm64_sequoia:     "ee2e2beccc4ca2cb7323a1333bda7e081d1caf732503f2dc3c07a3fa35d6ae60"
@@ -60,6 +61,8 @@ class Cassandra < Formula
     sha256 "681a2d0eefd721998f90642762b8e75c2159ec531b20ad5e437245ea7b06a107"
   end
 
+  allow_network_access! :build
+
   def install
     (var/"log/cassandra").mkpath
 
@@ -87,8 +90,9 @@ class Cassandra < Formula
       s.gsub! "cassandra_storagedir=\"$CASSANDRA_HOME/data\"",
               "cassandra_storagedir=\"#{var}/lib/cassandra\""
 
+      java_home = Language::Java.overridable_java_home_env("17")[:JAVA_HOME]
       s.gsub! "#JAVA_HOME=/usr/local/jdk6",
-              "JAVA_HOME=#{Language::Java.overridable_java_home_env("17")[:JAVA_HOME]}"
+              "JAVA_HOME=#{java_home}"
     end
 
     rm Dir["bin/*.bat", "bin/*.ps1"]

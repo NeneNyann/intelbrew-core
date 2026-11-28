@@ -9,6 +9,7 @@ class Libkrunfw < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "336e313d45797079b5bc5f9acf33b796539e9a58975048394bda3159ea9ed472"
     sha256 cellar: :any, arm64_golden_gate: "4aff0cffbad00d7db8bfc8740884eac1c2cf04d219a108f4786919fa983d69f0"
     sha256 cellar: :any, arm64_tahoe:       "b35cbe5f251df243be82e1a32ebe7a2c563d2218c53582ddd292e319930903a3"
     sha256 cellar: :any, arm64_sequoia:     "d48135d2fe214387aedc924654c54dadd7278db5a495f67b5ceb0fc8b6b026f5"
@@ -64,14 +65,15 @@ class Libkrunfw < Formula
   allow_network_access! :build
 
   def install
-    kernel_sources = "linux-#{resource("kernel").version}"
+    kernel_version = resource("kernel").version
+    kernel_sources = "linux-#{kernel_version}"
     kernel_binary = if Hardware::CPU.arm64?
       "#{kernel_sources}/arch/arm64/boot/Image"
     else
       "#{kernel_sources}/vmlinux"
     end
     resource("kernel").stage buildpath/"tarballs"
-    mv buildpath/"tarballs/#{kernel_sources}.tar.gz", buildpath/"tarballs/v#{resource("kernel").version}.tar.gz"
+    mv buildpath/"tarballs/#{kernel_sources}.tar.gz", buildpath/"tarballs/v#{kernel_version}.tar.gz"
 
     make_args = []
     make_args << "MACOS_BUILDER=native" if OS.mac?

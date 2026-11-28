@@ -13,6 +13,7 @@ class OpensearchDashboards < Formula
   end
 
   bottle do
+    manifest_sha256 "8759cdee8e68a5fe8f78b4298803bb715c3b77e7e2dce942dbc7e9613e39de7b"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "24db4de0aa17ebf6d1253738c26cc81ec5363bc4623474a5e68db178d622616c"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "24db4de0aa17ebf6d1253738c26cc81ec5363bc4623474a5e68db178d622616c"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "24db4de0aa17ebf6d1253738c26cc81ec5363bc4623474a5e68db178d622616c"
@@ -36,9 +37,10 @@ class OpensearchDashboards < Formula
     os = OS.kernel_name.downcase
     arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
     cd "build/opensearch-dashboards-#{version}-#{os}-#{arch}" do
+      node_bin = dep("node").opt_bin
       inreplace "bin/use_node",
                 /NODE=".+"/,
-                "NODE=\"#{formula_opt_bin("node@22")}/node\""
+                "NODE=\"#{node_bin}/node\""
 
       inreplace "config/opensearch_dashboards.yml",
                 /#\s*pid\.file: .+$/,

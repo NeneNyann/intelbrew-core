@@ -20,6 +20,7 @@ class Crystal < Formula
   end
 
   bottle do
+    manifest_sha256 "c8082cb85d8b9d3dd04fd48de4af0a14d4df2d51db190276ea359935400d1623"
     sha256 cellar: :any, arm64_golden_gate: "2d2b742e54aa21abd3acb19669bdbc52a12cac4e7cee479a195cdb69960d1672"
     sha256 cellar: :any, arm64_tahoe:       "1d9aed5f46f637057e04026bf4331402b3a8406cd66198eedc0a736c247d857f"
     sha256 cellar: :any, arm64_sequoia:     "7cf4b191e1b38bf62c3d8ae1f93b6f4838dba329dc27cb0eb059e9882529e1d3"
@@ -88,14 +89,12 @@ class Crystal < Formula
   end
 
   def install
-    llvm = deps.find { |dep| dep.name.match?(/^llvm(@\d+)?$/) }
-               .to_formula
     non_keg_only_runtime_deps = deps.filter_map { |dep| dep.to_formula unless dep.build? }
                                     .reject(&:keg_only?)
 
     resource("boot").stage "boot"
     ENV.append_path "PATH", "boot/bin"
-    ENV["LLVM_CONFIG"] = llvm.opt_bin/"llvm-config"
+    ENV["LLVM_CONFIG"] = dep("llvm").opt_bin/"llvm-config"
     ENV["CRYSTAL_LIBRARY_PATH"] = ENV["HOMEBREW_LIBRARY_PATHS"]
     if OS.mac? && (sdk_path = MacOS.sdk_path)
       ENV.append_path "CRYSTAL_LIBRARY_PATH", sdk_path/"usr/lib"

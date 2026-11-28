@@ -13,6 +13,7 @@ class Libks < Formula
   head "https://github.com/signalwire/libks.git", branch: "master"
 
   bottle do
+    manifest_sha256 "f9969f6cd38b747c2a90596cd15795069393b85fe120e8c32b20141b613784c5"
     sha256 cellar: :any, arm64_golden_gate: "e6ec7fe5f3b2dadc28ce2a8a50046bc44b9b374dc2761e9381a85aaec2d17a19"
     sha256 cellar: :any, arm64_tahoe:       "d1c025f775f354fec28248f5914c60314aff5386fb5d17b0be33e76f6778f42a"
     sha256 cellar: :any, arm64_sequoia:     "ef945160828fb68f5f5f8ac60a7980d04ef94df56293d99521e8af01ff78b781"
@@ -30,7 +31,10 @@ class Libks < Formula
 
   def install
     args = ["-DWITH_PACKAGING=OFF"]
-    args << "-DUUID_ABS_LIB_PATH=#{MacOS.sdk_for_formula(self).path}/usr/lib/libSystem.tbd" if OS.mac?
+    if OS.mac?
+      sdk_path = MacOS.sdk_for_formula(self).path
+      args << "-DUUID_ABS_LIB_PATH=#{sdk_path}/usr/lib/libSystem.tbd"
+    end
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
@@ -57,9 +61,10 @@ class Libks < Formula
       }
     C
 
+    openssl = dep("openssl")
     system ENV.cc, "test.c", "-o", "test",
-           "-I#{include}/libks2", "-I#{formula_opt_include("openssl@4")}",
-           "-L#{lib}", "-L#{formula_opt_lib("openssl@4")}", "-lks2"
+           "-I#{include}/libks2", "-I#{openssl.opt_include}",
+           "-L#{lib}", "-L#{openssl.opt_lib}", "-lks2"
     system "./test"
   end
 end

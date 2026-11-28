@@ -3,16 +3,17 @@ class Copyparty < Formula
 
   desc "Portable file server"
   homepage "https://github.com/9001/copyparty"
-  url "https://files.pythonhosted.org/packages/5d/c7/135022ae843a8ad8b96212b4d0616826b07a3052edeee3533cebcee1d248/copyparty-1.20.26.tar.gz"
-  sha256 "6ecf20b612e1e59f2fce54ee31fb47278747769036504c21720e75b5d2799725"
+  url "https://files.pythonhosted.org/packages/c9/bb/941ba833b3907f32cca56ee2ccf253f664c353fe4a227f86eeea4226e817/copyparty-1.20.28.tar.gz"
+  sha256 "642c6c46ce3bc268fb188504cd8019946c34d0b06913d4be5316fb8aa857b448"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "6755778132e90472c274f14269a315baeb3ed6bb0b106769aedf85b7ed443ca0"
-    sha256 cellar: :any, arm64_tahoe:       "bc139eeb073f218ff6a75e91925f3b1acf682f19a5e3fa896b072db31762d774"
-    sha256 cellar: :any, arm64_sequoia:     "761eea76a89dc526a952c699da713eece96f352f02193ba9374722024c2565c3"
-    sha256 cellar: :any, arm64_linux:       "35ad8ae234871581893dc972a9eef850f3ccab97c3e16e9e9aadf06d1daf083e"
-    sha256 cellar: :any, x86_64_linux:      "868ff12964bb6ca6e68ea103eb5164ad8e99f874860d3ec06993b1f5ae8abd05"
+    manifest_sha256 "02fb12c96ba7f4d1a108caf32527d20820d38b265145aa3ed3d32a8737348e3b"
+    sha256 cellar: :any, arm64_golden_gate: "5be11ab53a1d5b824c1c92da1088cb2b98d7766ee7a9afac797c7531a763a0ad"
+    sha256 cellar: :any, arm64_tahoe:       "ba83a85f41d894d567ad60a0e8f0f72decc4050f50b02a49d5bf79d7ffb42aaa"
+    sha256 cellar: :any, arm64_sequoia:     "f05a711e7245891e62da93cef82385f4bf5bbb5628afe49f04bcefc2b429aebd"
+    sha256 cellar: :any, arm64_linux:       "e19792ec593d16733a05f3b744d2828fd11a21245630a0ca7b278bb5b7bb0fb0"
+    sha256 cellar: :any, x86_64_linux:      "5197d33ecd0446fc8bb06b0aff963fea194f2fdd498eb01dd9d5729c7ab49eed"
   end
 
   # `pkgconf` and `rust` are for bcrypt
@@ -41,8 +42,8 @@ class Copyparty < Formula
   end
 
   resource "argon2-cffi-bindings" do
-    url "https://files.pythonhosted.org/packages/0b/43/bb8b6e8708d49a5ab36781333af092d9f483b198a2710d01281204640055/argon2_cffi_bindings-26.1.0.tar.gz"
-    sha256 "63505c71542a44b68b1e38060450fb006404170da375feb31af153e7f9c6205d"
+    url "https://files.pythonhosted.org/packages/76/3b/f7bd1daac24c7017b6d09d05c56bb3f71aaae76b2ac4234ed2c00e0dd2d2/argon2_cffi_bindings-26.2.0.tar.gz"
+    sha256 "f21ab89bb9850f32b9ca038d9961424bb0d3669d579cbbbfed068cffa6fc0643"
   end
 
   resource "bcrypt" do
@@ -66,8 +67,8 @@ class Copyparty < Formula
   end
 
   resource "paramiko" do
-    url "https://files.pythonhosted.org/packages/62/93/dcc25d52f49022ae6175d15e6bd751f1acc99b98bc61fc55e5155a7be2e7/paramiko-5.0.0.tar.gz"
-    sha256 "36763b5b95c2a0dcfdf1abc48e48156ee425b21efe2f0e787c2dd5a95c0e5e79"
+    url "https://files.pythonhosted.org/packages/76/cb/b1fde76618d84b1acf54d3d03d2b833ba5878afd12b9899346cc080f209d/paramiko-5.1.0.tar.gz"
+    sha256 "239b5f9b2a53006cd54f83cf8495ee742083708ead947882c8dd2786de79f39b"
   end
 
   resource "partftpy" do
@@ -101,8 +102,8 @@ class Copyparty < Formula
   end
 
   resource "pyzmq" do
-    url "https://files.pythonhosted.org/packages/e7/8d/5b3d5631c2f4b4b8862f64cd0c9eb777b5710eeb5125b4be8dd0a200a4c0/pyzmq-27.2.0.tar.gz"
-    sha256 "54d4259d1bfae24ecdb5ca79f7acc2eac6c286a02d6a0ae617797cb45f0726d3"
+    url "https://files.pythonhosted.org/packages/e2/e1/ea46ab0d707219c098065a37d2add5b53d3b124241aa19429bcd0863e5b4/pyzmq-27.3.0.tar.gz"
+    sha256 "bbedb3d1d99babc625f1dd9d7438acefd442b36b75073fd6bc1ef7c0a4b96d56"
   end
 
   def install
@@ -124,14 +125,10 @@ class Copyparty < Formula
     (testpath/"testfile").write "homebrew"
     logfile = testpath/"log.txt"
     port = free_port
-    pid = spawn(bin/"copyparty", "-q", "-p", port.to_s, "-lo", logfile)
 
-    begin
+    with_test_process(bin/"copyparty", "-q", "-p", port.to_s, "-lo", logfile) do
       output = shell_output("curl --silent --retry 5 --retry-connrefused 'localhost:#{port}?ls=t'")
       assert_match " 8  testfile", output
-    ensure
-      Process.kill "TERM", pid
-      Process.wait pid
     end
 
     assert_path_exists logfile

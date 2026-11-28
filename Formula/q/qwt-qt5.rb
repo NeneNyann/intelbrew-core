@@ -10,6 +10,7 @@ class QwtQt5 < Formula
   end
 
   bottle do
+    manifest_sha256 "48100fc373b00e92c4bc3bca4342faa2e223f1fc3791ba557e14e30b16e8e2db"
     sha256 cellar: :any,                 arm64_golden_gate: "ffd1705a85f3abc9086b5d2b49699dc0e6de280cb4536644d51c2c130d52e4e4"
     sha256 cellar: :any,                 arm64_tahoe:       "50d8256a3eed2810739b8e3ef00d8290ec2b70c526578063864b73540e09b897"
     sha256 cellar: :any,                 arm64_sequoia:     "92b1dc9c4e182b760312b9b520cc45ae9a236566ec0183bc6eea6e92ab874651"
@@ -53,7 +54,7 @@ class QwtQt5 < Formula
     end
     args << spec
 
-    qt5 = formula_opt_prefix("qt@5")
+    qt5 = dep("qt").opt_prefix
     system "#{qt5}/bin/qmake", *args
     system "make"
     system "make", "install"
@@ -67,24 +68,25 @@ class QwtQt5 < Formula
         return (curve1 == NULL);
       }
     CPP
+    qt = dep("qt")
     if OS.mac?
       system ENV.cxx, "test.cpp", "-o", "out",
         "-std=c++11",
         "-framework", "qwt", "-framework", "QtCore",
-        "-F#{lib}", "-F#{formula_opt_lib("qt@5")}",
+        "-F#{lib}", "-F#{qt.opt_lib}",
         "-I#{lib}/qwt.framework/Headers",
-        "-I#{formula_opt_lib("qt@5")}/QtCore.framework/Versions/5/Headers",
-        "-I#{formula_opt_lib("qt@5")}/QtGui.framework/Versions/5/Headers"
+        "-I#{qt.opt_lib}/QtCore.framework/Versions/5/Headers",
+        "-I#{qt.opt_lib}/QtGui.framework/Versions/5/Headers"
     else
       system ENV.cxx,
-        "-I#{formula_opt_include("qt@5")}",
-        "-I#{formula_opt_include("qt@5")}/QtCore",
-        "-I#{formula_opt_include("qt@5")}/QtGui",
+        "-I#{qt.opt_include}",
+        "-I#{qt.opt_include}/QtCore",
+        "-I#{qt.opt_include}/QtGui",
         "test.cpp",
         "-lqwt", "-lQt5Core", "-lQt5Gui",
-        "-L#{formula_opt_lib("qt@5")}",
+        "-L#{qt.opt_lib}",
         "-L#{lib}",
-        "-Wl,-rpath=#{formula_opt_lib("qt@5")}",
+        "-Wl,-rpath=#{qt.opt_lib}",
         "-Wl,-rpath=#{lib}",
         "-o", "out", "-std=c++11", "-fPIC"
     end

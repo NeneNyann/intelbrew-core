@@ -11,6 +11,7 @@ class Unitycatalog < Formula
   end
 
   bottle do
+    manifest_sha256 "7f3cb13143d3927bcff97fd1ad225da2709b66aa1c3974377a28eeaf3d8d1f05"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "4f0655ffb8055a1f5c471d3fbf7a51103cf13f9ea559f86bc47acbff0847a9b7"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4f0655ffb8055a1f5c471d3fbf7a51103cf13f9ea559f86bc47acbff0847a9b7"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "4f0655ffb8055a1f5c471d3fbf7a51103cf13f9ea559f86bc47acbff0847a9b7"
@@ -65,15 +66,13 @@ class Unitycatalog < Formula
         next
       end
     end
-    pid = spawn formula_opt_bin("openjdk@21")/"java",
-                "-cp", (libexec/"jars/classpath").read.strip,
-                "io.unitycatalog.server.UnityCatalogServer", "--port", port.to_s
-    sleep 20
+    with_test_process(dep("openjdk").opt_bin/"java",
+                      "-cp", (libexec/"jars/classpath").read.strip,
+                      "io.unitycatalog.server.UnityCatalogServer", "--port", port.to_s) do
+      sleep 20
 
-    output = shell_output("#{bin}/uc catalog list --server http://localhost:#{port}")
-    assert_match "[]", output
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      output = shell_output("#{bin}/uc catalog list --server http://localhost:#{port}")
+      assert_match "[]", output
+    end
   end
 end

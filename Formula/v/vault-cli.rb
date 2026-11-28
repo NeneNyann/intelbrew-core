@@ -12,10 +12,13 @@ class VaultCli < Formula
   end
 
   bottle do
+    manifest_sha256 "9fa9d362237e5e3bb1fbd5d5e99b98947e7fcc061f2dc5914282cb1d658236c3"
     sha256 cellar: :any_skip_relocation, all: "855f9becbeb52457ab270afff1d9aa1628be6be0dc712ecac3042c3b97db1948"
   end
 
   depends_on "openjdk"
+
+  deny_network_access!
 
   def install
     # Remove windows files
@@ -23,7 +26,7 @@ class VaultCli < Formula
 
     libexec.install Dir["*"]
     bin.install libexec.glob("bin/*")
-    bin.env_script_all_files(libexec/"bin", JAVA_HOME: formula_opt_prefix("openjdk"))
+    bin.env_script_all_files(libexec/"bin", JAVA_HOME: dep("openjdk").opt_prefix)
   end
 
   test do

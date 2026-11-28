@@ -14,6 +14,7 @@ class Languagetool < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "072f5542aa4011a5452c7a35127506f76b9e9afb2899bd5fc6de381a0ea567b7"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "b4dd787dcc302d74d8401ba84ba6215be50efa0036eeb0661a607973f7755fd9"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "09bf7415e9ada06b02609681d2d8e1ac5a16cfddebaee979fd8a3eff45022cc5"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "68783053c71a4a16dfc6a7fc977340ad4feaedbdfb92e606830003548ff00249"
@@ -40,9 +41,10 @@ class Languagetool < Formula
 
     bin.write_jar_script(libexec/"languagetool-commandline.jar", "languagetool", java_version:)
     bin.write_jar_script(libexec/"languagetool.jar", "languagetool-gui", java_version:)
+    java_home = Language::Java.overridable_java_home_env(java_version)[:JAVA_HOME]
     (bin/"languagetool-server").write <<~BASH
       #!/bin/bash
-      export JAVA_HOME="#{Language::Java.overridable_java_home_env(java_version)[:JAVA_HOME]}"
+      export JAVA_HOME="#{java_home}"
       exec "${JAVA_HOME}/bin/java" -cp "#{libexec}/languagetool-server.jar" org.languagetool.server.HTTPServer "$@"
     BASH
 

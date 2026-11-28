@@ -7,10 +7,13 @@ class Eless < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "eda79796624cec1cb67346b4dc653f5013c0b7ab03cb61f4b5a13b7f0701ad3d"
     sha256 cellar: :any_skip_relocation, all: "562c9ae16a0fc87aa6752e240e261fa0634f908867f19d716846dceb43ecc72b"
   end
 
   depends_on "emacs"
+
+  deny_network_access!
 
   def install
     bin.install "eless"

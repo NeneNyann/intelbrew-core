@@ -10,6 +10,7 @@ class Arjun < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "1419763f87d8980104ae126f3932189ab60f9c076254903b97a08e0d466f3440"
     sha256 cellar: :any_skip_relocation, all: "56274ff0f58273d721180e2ac212e87dd55de677e191d004faa3afc78f562b0b"
   end
 
@@ -72,16 +73,12 @@ class Arjun < Formula
       HTTPServer(("localhost", #{port}), Handler).serve_forever()
     PYTHON
 
-    server_pid = spawn python3, testpath/"server.py"
-    sleep 10
+    with_test_process(python3, testpath/"server.py") do
+      sleep 10
 
-    begin
       dbfile = libexec/Language::Python.site_packages(python3)/"arjun/db/small.txt"
       output = shell_output("#{bin}/arjun -u http://localhost:#{port}/ -m GET -w #{dbfile}")
       assert_match "No parameters were discovered", output
-    ensure
-      Process.kill("TERM", server_pid)
-      Process.wait(server_pid)
     end
   end
 end

@@ -12,6 +12,7 @@ class MonitoringPlugins < Formula
   end
 
   bottle do
+    manifest_sha256 "ac4a46f5403988740251519d916514c388b2770c77fda5c3d65f35e84480d306"
     sha256 arm64_golden_gate: "a7c52cb5aa2883a94632674f9c1da385c3df61f876efb983714477792a9e0334"
     sha256 arm64_tahoe:       "c949d37e61b3d7f3ed660a6889dc83403db7371b23dbe56b5046e790ec9d8443"
     sha256 arm64_sequoia:     "e227db34ff6033f9985616bec73395e2f5ff397916e1e42ce91ce3f876d69d79"
@@ -50,15 +51,14 @@ class MonitoringPlugins < Formula
 
   allow_network_access! :test
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     # workaround for Xcode 14.3
     ENV.append "CFLAGS", "-Wno-implicit-function-declaration" if DevelopmentTools.clang_build_version >= 1403
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --libexecdir=#{libexec}/sbin
-      --with-openssl=#{formula_opt_prefix(openssl)}
+      --with-openssl=#{openssl_prefix}
       --with-netsnmpconfig-command=#{formula_opt_bin("net-snmp")}/net-snmp-config
     ]
 

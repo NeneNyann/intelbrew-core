@@ -11,6 +11,7 @@ class Borgbackup < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "3efd5bac19366b4af9894a20d40281a0518b53630a04db825a856655448702f4"
     sha256 cellar: :any, arm64_golden_gate: "05a9cc854e2bc6b0d8c3b538005183af2fe945089d8d48d140c5271ade7b71c4"
     sha256 cellar: :any, arm64_tahoe:       "19316a0d35fdf740fa189c58662e56d6fb77f1cbccc5a5a97f9e6b36893cd608"
     sha256 cellar: :any, arm64_sequoia:     "909a4356fd646a2646376586d73b698ddd3f834a93688022e9a4f5445d16a701"
@@ -40,12 +41,14 @@ class Borgbackup < Formula
     sha256 "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
   end
 
+  allow_network_access! :build
+
   def install
     ENV["BORG_LIBB2_PREFIX"] = formula_opt_prefix("libb2")
     ENV["BORG_LIBLZ4_PREFIX"] = formula_opt_prefix("lz4")
     ENV["BORG_LIBXXHASH_PREFIX"] = formula_opt_prefix("xxhash")
     ENV["BORG_LIBZSTD_PREFIX"] = formula_opt_prefix("zstd")
-    ENV["BORG_OPENSSL_PREFIX"] = formula_opt_prefix("openssl@4")
+    ENV["BORG_OPENSSL_PREFIX"] = dep("openssl").opt_prefix
 
     # Parallel cythonize needs POSIX semaphores, which the Linux build sandbox denies
     inreplace "setup.py", /^cpu_threads = .*/, "cpu_threads = None"

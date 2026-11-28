@@ -8,6 +8,7 @@ class PerconaServerAT80 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "8cbc0db66f0c14f2ec3c15b8a54128da13a21d369cd945e684bf058b3e392a79"
     sha256 arm64_golden_gate: "de0f269c7f5f087d904eb8004f45df3e5bc343bdfcb5414adfd6ee2728c3fb0c"
     sha256 arm64_tahoe:       "d7cc84f9508091a3b226ef4cd40065314a9c6eca67dc8babf6fbd6aafe8f74f3"
     sha256 arm64_sequoia:     "82d22a628cdfa7737d883e4d5cbfe0f356af0194e005fe53057f02d4200e054f"
@@ -88,9 +89,9 @@ class PerconaServerAT80 < Formula
     # Workaround for error: 'is_default_constructible' cannot be specialized
     ENV.append_to_cflags "-Wno-invalid-specialization" if OS.mac? && MacOS.version >= :tahoe
 
-    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-                .to_formula
     # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
+    openssl_prefix = dep("openssl").opt_prefix
+    icu4c_prefix = dep("icu4c").opt_prefix
     args = %W[
       -DCOMPILATION_COMMENT=Homebrew
       -DDEFAULT_CHARSET=utf8mb4
@@ -104,8 +105,8 @@ class PerconaServerAT80 < Formula
       -DMYSQL_DATADIR=#{var}/mysql
       -DSYSCONFDIR=#{etc}
       -DBISON_EXECUTABLE=#{formula_opt_bin("bison")}/bison
-      -DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@3")}
-      -DWITH_ICU=#{icu4c.opt_prefix}
+      -DOPENSSL_ROOT_DIR=#{openssl_prefix}
+      -DWITH_ICU=#{icu4c_prefix}
       -DWITH_SYSTEM_LIBS=ON
       -DWITH_BOOST=#{buildpath}/boost
       -DWITH_EDITLINE=system

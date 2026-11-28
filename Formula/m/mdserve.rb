@@ -7,6 +7,7 @@ class Mdserve < Formula
   head "https://github.com/jfernandez/mdserve.git", branch: "main"
 
   bottle do
+    manifest_sha256 "2339fb2bf8825b699a1d0795af07da06493ea022757a719f88330cb9c41cd5cc"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "f11a42d7d72fc4b853ef44c38bddf7771d34847c442ac43c26c9b8a072f28bbd"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "14ef5c7e6cd6c0fb3f941824f84ac34c3c8124d5f5bf9c78e89b16f96d4ca324"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "231269e5e95a19282c8372311bf248469f265f8bbccb4a55ea79ee5a5f4890f1"
@@ -15,6 +16,9 @@ class Mdserve < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "ac98a80cd18a7f550c030b932703c3983953c6c174804909376e6c0d21640f47"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "482b075537a6af00bf3856510cf13127987c1b7ee29722bc5f3c65207e106ebd"
   end
+
+  deprecate! date: "2026-11-19", because: :repo_archived
+  disable! date: "2027-05-19", because: :repo_archived
 
   depends_on "rust" => :build
 
@@ -35,16 +39,11 @@ class Mdserve < Formula
     (testpath/"test.md").write("# Test\n\nThis is a test markdown file.")
 
     port = free_port
-    pid = spawn bin/"mdserve", "--port", port.to_s, "test.md"
+    with_test_process(bin/"mdserve", "--port", port.to_s, "test.md") do
+      sleep 1
 
-    sleep 1
-
-    begin
       output = shell_output("curl -s http://localhost:#{port}")
       assert_match "This is a test markdown file", output
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

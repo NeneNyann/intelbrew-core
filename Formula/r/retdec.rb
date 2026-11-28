@@ -32,6 +32,7 @@ class Retdec < Formula
 
   bottle do
     rebuild 6
+    manifest_sha256 "c413dafdecea7d8c26fb78398c3e667aba9bbe1da5c79e2af95e37c7e57823e8"
     sha256 cellar: :any, arm64_golden_gate: "e2d2033c9881b746e559a0f55e9a0e329ce2f8fcd7bedbfb71227127a3718160"
     sha256 cellar: :any, arm64_tahoe:       "2400a33b1c689d213f33675c18155b99f601900aaadf372eb33bc8ba91b06188"
     sha256 cellar: :any, arm64_sequoia:     "5ef8b4f7b6e4bcfb059265b55f71c79005a09c9ea4cebb99c9acc4c09623bfbe"
@@ -70,7 +71,9 @@ class Retdec < Formula
     # Workaround for CMake 4 compatibility with multiple vendored deps
     ENV["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
 
-    system "cmake", "-S", ".", "-B", "build", "-DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}", *std_cmake_args
+    openssl_prefix = dep("openssl").opt_prefix
+    system "cmake", "-S", ".", "-B", "build",
+                    "-DOPENSSL_ROOT_DIR=#{openssl_prefix}", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end

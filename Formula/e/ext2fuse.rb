@@ -8,6 +8,7 @@ class Ext2fuse < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "19f2a3df43ecab50e1c18ff04120f133646b09efe02bfa2f1c66a9a6071375a0"
     sha256 cellar: :any_skip_relocation, x86_64_linux: "fe9d3ea0a65c95de091aecb536ee498015bdc07b7c12e4367617cf9e78c76941"
   end
 
@@ -31,7 +32,8 @@ class Ext2fuse < Formula
     ENV.append "CFLAGS", "-D__i386__"
     ENV.append "CFLAGS", "-DHAVE_TYPE_SSIZE_T"
     ENV.append "CFLAGS", "-DNO_INLINE_FUNCS"
-    ENV.append "CFLAGS", "-I#{formula_opt_include("libfuse@2")}/fuse"
+    libfuse_include = dep("libfuse").opt_include
+    ENV.append "CFLAGS", "-I#{libfuse_include}/fuse"
     system "./configure", *std_configure_args
     system "make", "install"
   end

@@ -9,6 +9,7 @@ class CheckJsonschema < Formula
   head "https://github.com/python-jsonschema/check-jsonschema.git", branch: "main"
 
   bottle do
+    manifest_sha256 "8520c91cee0591b0a64a4a3083c21e0de81adefe231a05a48c2df3f0e538ca90"
     sha256 cellar: :any, arm64_golden_gate: "16a70e0608e2a48eb99bdec6a1d0d2b923aaf7a9d1a494494ca749af863170c0"
     sha256 cellar: :any, arm64_tahoe:       "6dd0cc67e06595c11162a14713bbe11ef69cc7fcb7d8f2d53794f95b1e6d9eb2"
     sha256 cellar: :any, arm64_sequoia:     "54c2e3c49866902cebfced9b0f5533a5000629d9d4aa7e199b63cfe0582e97b1"
@@ -134,6 +135,8 @@ class CheckJsonschema < Formula
     url "https://files.pythonhosted.org/packages/1d/7a/eb316761ec35664ea5174709a68bbd3389de60d4a1ebab8808bfc264ed67/webcolors-25.10.0.tar.gz"
     sha256 "62abae86504f66d0f6364c2a8520de4a0c47b80c03fc3a5f1815fedbef7c19bf"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

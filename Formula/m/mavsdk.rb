@@ -2,8 +2,8 @@ class Mavsdk < Formula
   desc "API and library for MAVLink compatible systems written in C++17"
   homepage "https://mavsdk.mavlink.io/main/en/index.html"
   url "https://github.com/mavlink/MAVSDK.git",
-      tag:      "v4.2.1",
-      revision: "417d1ccd328cd21af27c424fa6d72611e9889ccf"
+      tag:      "v4.3.0",
+      revision: "76eda3559e20e879ff47d1123bfc716803b1a5dd"
   license "BSD-3-Clause"
 
   livecheck do
@@ -12,25 +12,23 @@ class Mavsdk < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "9e912d0dbd86f51aaaf2a5a04c928d0b5864301920988b9c8d7a16aad8ec6c93"
-    sha256 cellar: :any, arm64_tahoe:       "385f104c866dd64c54eed132d7580578c9e46d0bebe5ffdb3f246c3391ee329b"
-    sha256 cellar: :any, arm64_sequoia:     "8ef51110a1abfc2013249d5f6c14041109fda7c5983af80a4e1f6483a4743142"
-    sha256               arm64_linux:       "30d2808fd5ed9ae2b3b5358b438aaebc14799a635015e2899bd34dd78e6afb66"
-    sha256               x86_64_linux:      "4af8f46c013293e10396ab16584bdf1c404ba39bce0fa1229352320641a47baa"
+    manifest_sha256 "7f2e06a41c187c8d3ea0738e0bd19c20edb38486f8cfea77ade98be87d1705f9"
+    sha256 cellar: :any, arm64_golden_gate: "8f5207e7a3ceb66192e0a540a91bde7db816a371599dcc037c82d0d0cf4687d7"
+    sha256 cellar: :any, arm64_tahoe:       "60ba2d32dbb69dac31abcc242ef95569c1b4498e96de608280369a6e46d0e747"
+    sha256 cellar: :any, arm64_sequoia:     "1032f6f19c2ec52b3eeba6b3a6271dd0219efe95434c6fc23ca158bba7f5dc43"
+    sha256               arm64_linux:       "01c3303352f2b1f70f5a24d089913a3189de9f4aa8ce5f3669a08bb8a8f8b002"
+    sha256               x86_64_linux:      "2d966728fa5d818cfd96fff865e3c248b024aa9cc2c7ca4aae2ca5881f5b1303"
   end
 
   depends_on "asio" => :build
   depends_on "cmake" => :build
   depends_on "rust" => :build
   depends_on "abseil"
-  depends_on "c-ares"
   depends_on "curl"
   depends_on "fmt"
   depends_on "grpc"
   depends_on "nlohmann-json"
-  depends_on "openssl@4"
   depends_on "protobuf"
-  depends_on "re2"
   depends_on "tinyxml2"
   depends_on "xz"
 
@@ -39,10 +37,6 @@ class Mavsdk < Formula
   on_macos do
     # `cpp/tools/generate_from_protos.sh` uses `mapfile`, which needs Bash 4
     depends_on "bash" => :build
-  end
-
-  on_linux do
-    depends_on "zlib-ng-compat"
   end
 
   # Git is required to fetch submodules
@@ -111,6 +105,7 @@ class Mavsdk < Formula
       -DCMAKE_INSTALL_RPATH=#{rpath}
       -DDEPS_INSTALL_PATH=#{libexec}
     ]
+    args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-dead_strip_dylibs" if OS.mac?
 
     system "cmake", "-S", "cpp", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"

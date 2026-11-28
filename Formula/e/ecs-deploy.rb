@@ -10,6 +10,7 @@ class EcsDeploy < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "61ff0d8138a11bd81aefa76b06579ef7b0a76fd22981cf0b6f0df46314c14301"
     sha256 cellar: :any_skip_relocation, all: "a763ab2874616a81ac1f5d1169a340ae45911ca9b5135b25e9ddfbc380ded63a"
   end
 
@@ -82,6 +83,8 @@ class EcsDeploy < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! [:build, :test]
 
   def install
     virtualenv_install_with_resources

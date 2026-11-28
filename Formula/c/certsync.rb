@@ -9,6 +9,7 @@ class Certsync < Formula
   revision 13
 
   bottle do
+    manifest_sha256 "f5726beabacd33717fa8f7bb59e41c603e68318969a93265969c2899f8fd04f5"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "4d35428a0d3a980e05a06eb29a6af4c9027fbd49b3f4dd3bec1d80c62ca63031"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a7a84414d390d521dde8b9e4f8302b74d5ca4e07c56b1d50976a69f06a855260"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e8224b2da2399974b09528d59d26d8fa61ef0231382a7acdf3fd71515ab26ffb"
@@ -165,6 +166,8 @@ class Certsync < Formula
     url "https://files.pythonhosted.org/packages/a4/34/4dd12fc8bb7d61c91467ec3efe415ffa7d5456f799954b40c5bbaeae470e/werkzeug-3.1.9.tar.gz"
     sha256 "55ca7c70a75689be937aa27f8ff4b018f06ff4838fc73045560bf0f5a1291060"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

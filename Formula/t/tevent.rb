@@ -1,8 +1,8 @@
 class Tevent < Formula
   desc "Event system based on the talloc memory management library"
   homepage "https://tevent.samba.org"
-  url "https://www.samba.org/ftp/tevent/tevent-0.17.2.tar.gz"
-  sha256 "e53b1ac288d017d66dde0471cd429a806168ecf07179d7f019572d7a7e05f0d6"
+  url "https://www.samba.org/ftp/tevent/tevent-0.17.4.tar.gz"
+  sha256 "ffe5eff04c26fba4f710942635a4e520f9000c96cf1ad0c7cab16a516d93c852"
   license "LGPL-3.0-or-later"
   compatibility_version 1
 
@@ -12,13 +12,12 @@ class Tevent < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "4192b7320efccec98790b11550e2279f4d4ca2ba723ffbd04f4bd0b592153807"
-    sha256 cellar: :any, arm64_tahoe:       "61d735b0f3f2b5b6d4fdda58810b10dd286bd3a584f1fb3abde8285aed6b7a40"
-    sha256 cellar: :any, arm64_sequoia:     "cc86cdef215a345a3d4700060d47f3568f05794797fa20829cd94fc86098d9f2"
-    sha256 cellar: :any, arm64_sonoma:      "4a345f1514eec67d12eba97e6218ff0145dc2807212ea981e9fb955f6e84ea9d"
-    sha256 cellar: :any, sonoma:            "5e165686744d782c04bd3dc6737c02da676bdf70de10b3b6456bf74fcdd0459a"
-    sha256 cellar: :any, arm64_linux:       "487933783e91c33a535b8a46f0b6c0612068a062ccd62f1c103150d23f2356f5"
-    sha256 cellar: :any, x86_64_linux:      "7d46173c3b86ada8d64d36e36616de9e246204978cd726e93515db10b22ac2be"
+    manifest_sha256 "5e1ea5d63aba7eee06e21c6205f03630328708ef495034742d91925aef9f3b24"
+    sha256 cellar: :any, arm64_golden_gate: "539b9e5c2b7dce61575153fb563b436f23e8972d73225c61bd3ef450685488f2"
+    sha256 cellar: :any, arm64_tahoe:       "8d4391131337d1f4f35f27d45a34c5bca34f671898f8334a5708740ae84d274b"
+    sha256 cellar: :any, arm64_sequoia:     "90d30b87939a52d65bf537ca2bc21b93f3078b9afdab9eb0c8fc2ecff7b28b5a"
+    sha256 cellar: :any, arm64_linux:       "df7514f8a9e49222e043c149b4396a698cc3b4eb9e49f3dbe9c39be5268a4970"
+    sha256 cellar: :any, x86_64_linux:      "b089f6ce88081c17127ab173e02f42eb20ec7991139b54974c313918ea26d68d"
   end
 
   depends_on "cmocka" => :build

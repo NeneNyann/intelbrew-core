@@ -2,17 +2,18 @@ class Ejdb < Formula
   desc "Embeddable JSON Database engine C11 library"
   homepage "https://ejdb.org"
   url "https://github.com/Softmotions/ejdb.git",
-      tag:      "v2.100",
-      revision: "995c74a536bcc544c91123f18a21c8d4d96b2f51"
+      tag:      "v2.102",
+      revision: "5f261b70f6b7f96b4ff207d05f44c7f150d47876"
   license "MIT"
   head "https://github.com/Softmotions/ejdb.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "2fec081779acb69030d92eda768032b5d8dd8c4b214dec35937a929f7963d87a"
-    sha256 cellar: :any, arm64_tahoe:       "e2920717bf53a62d7e7a1df58a1e0abfca1df286e5d0bc4f03a6a9d1ec048c60"
-    sha256 cellar: :any, arm64_sequoia:     "381faabf5cbc029fecc0676980ca760e5eb7da0a5d6760b4d5f754d959ddf1d4"
-    sha256 cellar: :any, arm64_linux:       "e394d4f2e374220c2b88c56e20151af22e6088803c6ba3fe5987d580744eb577"
-    sha256 cellar: :any, x86_64_linux:      "d905c2700a8a2ac00fc9bec31ca9fd541554a012e31e2e444eb578a951005a38"
+    manifest_sha256 "9f5915b703e5ca9865f55219d4de3108016adf0e5af3a294e137ce7b413a9232"
+    sha256 cellar: :any, arm64_golden_gate: "8dec69882cd76d9f5331e8d54fbae4e470e9db3aaa8c61813ec4dcdf066da1bd"
+    sha256 cellar: :any, arm64_tahoe:       "3922cab1df8c5d888e1eea71848f659cf9707f7ec6eb2e5b8dae7d2a8d4d65ab"
+    sha256 cellar: :any, arm64_sequoia:     "5746a422b4ba40e91b102fcd952b01bcd3537f86d23e414a68a9f91f9f02e4ad"
+    sha256 cellar: :any, arm64_linux:       "917f4298a99a3af5a6fbeb6fa18713d406be8c2a5acd573deceaa40df8c59b19"
+    sha256 cellar: :any, x86_64_linux:      "bf4b4fd444b2ddbe6c67da4fdf313aaffc24b3fa52abfbae966cbde3eac41fdc"
   end
 
   depends_on "pkgconf" => :build
@@ -26,8 +27,8 @@ class Ejdb < Formula
   end
 
   resource "iwnet" do
-    url "https://github.com/Softmotions/iwnet/archive/refs/tags/v1.6.2.tar.gz"
-    sha256 "a374434039fb9ecb40dbcbdd6f09b0996894df5935837755fe09660604dd826a"
+    url "https://github.com/Softmotions/iwnet/archive/refs/tags/v1.8.0.tar.gz"
+    sha256 "f24d94a10542ef1a8cdf6780fca75c3376398321f041698d2a33b33627b2f4fc"
 
     livecheck do
       url "https://raw.githubusercontent.com/Softmotions/ejdb/refs/tags/v#{LATEST_VERSION}/Autark"

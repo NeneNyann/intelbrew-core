@@ -17,6 +17,7 @@ class Tsduck < Formula
   end
 
   bottle do
+    manifest_sha256 "2d06b9e6b9ce0a95f631fdc3f23c689cd2672b96c62b32a419d04870f93d2932"
     sha256 cellar: :any, arm64_golden_gate: "00e75b5b3b3b6a5d9a38764c543f6cada103841dbbf9b88c080f22103e754762"
     sha256 cellar: :any, arm64_tahoe:       "951ddc68d24c793772712c6847893e0c52f9683efd52625acf47ce7da2a1da30"
     sha256 cellar: :any, arm64_sequoia:     "35aea7a0a6fa99a069412ec76871eb6a704c870526e580c615d5a698974a20a6"
@@ -59,7 +60,8 @@ class Tsduck < Formula
       ENV["LINUXBREW"] = "true"
       ENV["VATEK_CFLAGS"] = "-I#{formula_opt_include("libvatek")}/vatek"
     else
-      ENV["LDFLAGS_EXTRA"] = "-Wl,-rpath,#{rpath(source: lib/"tsduck")}"
+      library_rpath = rpath(source: lib/"tsduck")
+      ENV["LDFLAGS_EXTRA"] = "-Wl,-rpath,#{library_rpath}"
     end
     system "gmake", "NOGITHUB=1", "NOTEST=1"
     ENV.deparallelize

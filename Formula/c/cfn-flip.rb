@@ -10,6 +10,7 @@ class CfnFlip < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "c15488a592a5c18449d1a511308336cf889b53cb739cbc2264423fe4f9279422"
     sha256 cellar: :any, arm64_golden_gate: "285b23f6575697d3337439c12f1374971ed984a6db8d5ac82db5e3d47472b3d0"
     sha256 cellar: :any, arm64_tahoe:       "9d6f560031fc7d9591e99237b9e1748e02838f2c445cfe883e9445f2f097accf"
     sha256 cellar: :any, arm64_sequoia:     "4230ca900cc6879b12da87ee796fa23d5805fb1eee5b67749e7391cde74d7209"
@@ -37,6 +38,8 @@ class CfnFlip < Formula
     url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
     sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

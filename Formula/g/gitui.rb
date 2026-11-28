@@ -10,6 +10,7 @@ class Gitui < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "b1ad868cd9f67a745e7f1d225e0be8e98bb6ec8b16b4ba16082982e95e575816"
     sha256 cellar: :any, arm64_golden_gate: "ff655d56ccaba70f91c1f39cb9d9f6079996a1a1662dca8e9c3a15001d23b301"
     sha256 cellar: :any, arm64_tahoe:       "03b806fe1fb1cdbcf4c4c48336c4c9ee42a2730c1704b4d301d14798d9f2d0f8"
     sha256 cellar: :any, arm64_sequoia:     "bd0885766dec6b2e63098b1792bd1a534a29e955f1c0305ee14cb72a164897f6"
@@ -45,7 +46,7 @@ class Gitui < Formula
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
     # Ensure that the `openssl` crate picks up the intended library.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", *std_cargo_args
   end
@@ -91,7 +92,7 @@ class Gitui < Formula
     linked_libraries = [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libssl"),
     ]
     linked_libraries.each do |library|
       assert Utils.binary_linked_to_library?(bin/"gitui", library),

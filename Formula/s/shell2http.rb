@@ -7,6 +7,7 @@ class Shell2http < Formula
   head "https://github.com/msoap/shell2http.git", branch: "master"
 
   bottle do
+    manifest_sha256 "9e6af92869f005d8e09432c57daf9bb505b08430443a2181e8f89182311ddbd1"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c7893bccd6eb781ae8bfc8cfa4b91b3783293dc42d21f8f2d144c810ef1e2d10"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "c7893bccd6eb781ae8bfc8cfa4b91b3783293dc42d21f8f2d144c810ef1e2d10"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c7893bccd6eb781ae8bfc8cfa4b91b3783293dc42d21f8f2d144c810ef1e2d10"
@@ -30,15 +31,13 @@ class Shell2http < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"shell2http", "-port", port.to_s, "/echo", "echo brewtest"
-    sleep 1
-    output = shell_output("curl -s http://localhost:#{port}")
-    assert_match "Served by shell2http/#{version}", output
+    with_test_process(bin/"shell2http", "-port", port.to_s, "/echo", "echo brewtest") do
+      sleep 1
+      output = shell_output("curl -s http://localhost:#{port}")
+      assert_match "Served by shell2http/#{version}", output
 
-    output = shell_output("curl -s http://localhost:#{port}/echo")
-    assert_match "brewtest", output
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      output = shell_output("curl -s http://localhost:#{port}/echo")
+      assert_match "brewtest", output
+    end
   end
 end

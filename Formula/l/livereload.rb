@@ -9,6 +9,7 @@ class Livereload < Formula
   revision 6
 
   bottle do
+    manifest_sha256 "8bcaa8da10bb36bc6f99054f7d49a9330d7fc92eb1ecf9cca1d4e0abb258e87d"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c43fed11713b63b6b1623afa3c37966887c350fd407a92a973de08915d1675fd"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "6815a9ba63b9fb99bf14ad6a384136bd52f85bdc7db43e7ab26b4a4049d165aa"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "8aee6a8be384a7968701ef910c17dbcfef2013a3643c9bb5ede9995fb65eb3b0"
@@ -33,15 +34,10 @@ class Livereload < Formula
     HTML
 
     port = free_port
-    pid = spawn bin/"livereload", testpath, "--port=#{port}"
-
-    begin
+    with_test_process(bin/"livereload", testpath, "--port=#{port}") do
       sleep 5
       output = shell_output("curl --retry 5 --retry-connrefused -s http://localhost:#{port}/index.html")
       assert_match "<h1>Hello, world!</h1>", output
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

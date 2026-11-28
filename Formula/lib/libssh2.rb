@@ -15,8 +15,12 @@ class Libssh2 < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libssh2-1.11.1_7-b54982463a8e4c4ab35c9014e"
-    sha256 cellar: :any, sequoia: "3f463923349a9b34f033876336213b290bf1e05db3ba079589d2d160043a10bf"
+    manifest_sha256 "b62fc0d19544b7e4fcfc536184d4c3bdc361fb5daf08275392d08f5c791a7c47"
+    sha256 cellar: :any, arm64_golden_gate: "5556a728575577915ed43171a3881c8aeed3d0d62c24d1eb13798f8a6a03834d"
+    sha256 cellar: :any, arm64_tahoe:       "d51f26fef662c9f562f8d6bee348c9e9fdd2a917cc96bb1b26aa53116b9e7481"
+    sha256 cellar: :any, arm64_sequoia:     "e0cd7666188510728b2e133ddfab7357437f4df5c347dfbe12cc89d8c06bd2ee"
+    sha256 cellar: :any, arm64_linux:       "d429e38ea1d9345a3590d16e1ef79b2d10b9689ac1b02f175c3725ded666d76e"
+    sha256 cellar: :any, x86_64_linux:      "67939513d8a056ee430572396dcae0446e75f7a6963cc34771971fc9eb2dfefb"
   end
 
   head do
@@ -139,15 +143,14 @@ class Libssh2 < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --disable-silent-rules
       --disable-examples-build
       --with-openssl
       --with-libz
-      --with-libssl-prefix=#{formula_opt_prefix(openssl)}
+      --with-libssl-prefix=#{openssl_prefix}
     ]
 
     system "./buildconf" if build.head?

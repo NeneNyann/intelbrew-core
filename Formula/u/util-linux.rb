@@ -25,6 +25,7 @@ class UtilLinux < Formula
   end
 
   bottle do
+    manifest_sha256 "c67fe84512cde32b76af029e8455097795fd258b4be99267ed1f37bfb7800cbb"
     sha256 arm64_golden_gate: "fbc4e7669248f29d3ec91b3724b4a1fc0383c624d4f6e09ae643703e879f8e0a"
     sha256 arm64_tahoe:       "aba531ed615bc666cee842fbda966f2aa513e9801c73974f758e4a1b15aea602"
     sha256 arm64_sequoia:     "46746bd46db509001b062ffe3d13b3428e7bf274884afbadd25e44bb400b4025"
@@ -128,7 +129,8 @@ class UtilLinux < Formula
 
     flags = ["x", "w", "r"] * 3
     perms = flags.each_with_index.reduce("") do |sum, (flag, index)|
-      sum.insert 0, (stat.mode.nobits?(2 ** index) ? "-" : flag)
+      unset = stat.mode.nobits?(2 ** index)
+      sum.insert 0, (unset ? "-" : flag)
     end
 
     out = shell_output("#{bin}/namei -lx /usr").split("\n").last.split

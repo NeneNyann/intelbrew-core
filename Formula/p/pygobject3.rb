@@ -8,6 +8,7 @@ class Pygobject3 < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "d99869d7ce537dfb15752f2cbf018e13609f0e5128e1ae4a38d3f5530bc74efa"
     sha256 cellar: :any, arm64_golden_gate: "cca83b04f8a52af9170b2760a68fb79451e91575fa282cbcc411f1a76b062be5"
     sha256 cellar: :any, arm64_tahoe:       "5cbf0e81e7a640d252750b4ec68d88576b4db40d68b43f670cdf55ea083a5991"
     sha256 cellar: :any, arm64_sequoia:     "439f8bf0ac8846dcd7732f01329f6ec579065c83a7c8ac4e121b64593acff586"
@@ -30,14 +31,8 @@ class Pygobject3 < Formula
 
   deny_network_access!
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.match?(/^python@\d\.\d+$/) }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def install
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       xy = Language::Python.major_minor_version(python)
       builddir = "buildpy#{xy}".delete(".")
       site_packages = prefix/Language::Python.site_packages(python)
@@ -62,7 +57,7 @@ class Pygobject3 < Formula
       assert(31 == GLib.Date.get_days_in_month(GLib.DateMonth.JANUARY, 2000))
     PYTHON
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       system python, "test.py"
     end
   end

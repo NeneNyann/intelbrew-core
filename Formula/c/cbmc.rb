@@ -7,6 +7,7 @@ class Cbmc < Formula
   license "BSD-4-Clause"
 
   bottle do
+    manifest_sha256 "b200aab66041e64d30402d29b0a7b44eb0a757c8424520d79bcf5e8310b9e68e"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "31704258ba763a6450388869283a9b4efbc518bbea07979be2031b983f248804"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "3fb094c69d4a877d89c3471c0c0adff0526220261e593f7ffb6f13d4224129f8"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d5e988a02557886e4e11dee46c3726a2f3d4ba709a58cbf363cca5ee700d5afd"
@@ -28,7 +29,7 @@ class Cbmc < Formula
     # Fixes: *** No rule to make target 'bin/goto-gcc',
     # needed by '/tmp/cbmc-20240525-215493-ru4krx/regression/goto-gcc/archives/libour_archive.a'.  Stop.
     ENV.deparallelize
-    ENV["JAVA_HOME"] = formula_opt_prefix("openjdk@21")
+    ENV["JAVA_HOME"] = dep("openjdk").opt_prefix
 
     system "cmake", "-S", ".", "-B", "build", "-Dsat_impl=minisat2;cadical", *std_cmake_args
     system "cmake", "--build", "build"

@@ -9,6 +9,7 @@ class Aws2Wrap < Formula
 
   bottle do
     rebuild 3
+    manifest_sha256 "5c6c668d21192f69464ee6f573d63cd7ed3377693b4b708385f3f057ce6366f7"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "efded003129ace4660ae9ca1597872a08003e574d449e8665a0a540311d807ac"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "3268822bfc1e7e701d18bdc33ab3e1da2dbade82654349196575813f596fa2ef"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "4273b2ffc121cdec548f58a6fe95ee8b48ec81302d2aeaffc7988d480c74b487"
@@ -27,6 +28,8 @@ class Aws2Wrap < Formula
     url "https://files.pythonhosted.org/packages/b3/31/4723d756b59344b643542936e37a31d1d3204bcdc42a7daa8ee9eb06fb50/psutil-7.1.0.tar.gz"
     sha256 "655708b3c069387c8b77b072fc429a57d0e214221d01c0a772df7dfedcb3bcd2"
   end
+
+  allow_network_access!
 
   def install
     virtualenv_install_with_resources

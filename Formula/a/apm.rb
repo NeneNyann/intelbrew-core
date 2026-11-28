@@ -3,17 +3,18 @@ class Apm < Formula
 
   desc "Dependency manager for AI agent configuration"
   homepage "https://microsoft.github.io/apm/"
-  url "https://files.pythonhosted.org/packages/3e/a9/600199ef488e856739525c92bfe210e94b40a57f9ad43b984dc232e0bacb/apm_cli-0.36.0.tar.gz"
-  sha256 "8227a0512b87b59b9237ed97f3adb1d2b8bcf4b6e0e8a8c638897431f96d68b6"
+  url "https://files.pythonhosted.org/packages/fb/60/3121ddecf7c5c5a74799bad82c670c1dcb23fae528fe94ae86209b1ca43a/apm_cli-0.39.1.tar.gz"
+  sha256 "b569fea62e19504a8d5fd4983f765241eacebd4d7f64465c105b755450b67b96"
   license "Apache-2.0"
   head "https://github.com/microsoft/apm.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "77f978acb4f7c1998df115b6cdafb5602460b0c3e4621d2b6c2ba6bd36fe54e2"
-    sha256 cellar: :any, arm64_tahoe:       "ed2ba2762d7c55eef61b7e2e49c5baac94e2c628b2db830d0469f365783b7087"
-    sha256 cellar: :any, arm64_sequoia:     "7a9ac3bedeb35cf6551325bbf7d68a76a9423867d61572d113fdf858ffde5778"
-    sha256 cellar: :any, arm64_linux:       "0d6165f53c2f9e9c34c9a7322330f139c95380e9ba1aac2aacaad257c3fe4bd8"
-    sha256 cellar: :any, x86_64_linux:      "ae620f867e25976badb6fffd819f24d39b7f96b69856d2ee050a13db72cc8920"
+    manifest_sha256 "daeec43c92d7166bedaf108076ad6e9ebadfa1d0590875c3f3b6eeaa5ec83b96"
+    sha256 cellar: :any, arm64_golden_gate: "cbdc725529d9ce10920a5c14ab24db98805ad7f5de21f225c66071e4f55b3330"
+    sha256 cellar: :any, arm64_tahoe:       "9b41aa821599b750daa298da8e127ed3c49f2d88b653b446222b3df62de8b824"
+    sha256 cellar: :any, arm64_sequoia:     "b42fb7870624557bc74cf080ec8571609c9d7d81997a429762e61323d056342e"
+    sha256 cellar: :any, arm64_linux:       "e8127fa6e96506c3eb3f203d909105bb95fb78c75b5fced4c38817fe01aa7c4d"
+    sha256 cellar: :any, x86_64_linux:      "4d225fd41fbb94f369b33580bd3da836828d0e4a748908cf63befd650371885f"
   end
 
   depends_on "rust" => :build # for jiter
@@ -60,8 +61,8 @@ class Apm < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz"
-    sha256 "39de2a259fc954455c57274dc94c79d5842774e1247a016aff30bc0efed0f4ef"
+    url "https://files.pythonhosted.org/packages/c2/c3/cae6d3bdefd96a941ffc247c714ac4babc488a69012e11c058f6c17c6c47/charset_normalizer-3.5.3.tar.gz"
+    sha256 "a250888753faa289e2997962fbb17c4960cbdb58575533ca6fceee68c224bdff"
   end
 
   resource "click" do
@@ -85,8 +86,8 @@ class Apm < Formula
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/bf/9d/7ec738e68764703d07eb4da4b43aabf0ae6f969f34cb3792a88af400abc5/filelock-4.2.11.tar.gz"
-    sha256 "0cb84119fb8dce17898e1f69c974d5019daa59c4d7656be390a5fa59ccced912"
+    url "https://files.pythonhosted.org/packages/e6/86/a5b9ec254b90efb180e390e31a4fa50a93b714d6e4174fa9a4ee25607159/filelock-4.3.1.tar.gz"
+    sha256 "4c5ee627c401f1863ac6a0de9a14a28d3bb5f8c730b45e2fd6e5dbc79cf34b9e"
   end
 
   resource "frozenlist" do
@@ -160,8 +161,8 @@ class Apm < Formula
   end
 
   resource "openai" do
-    url "https://files.pythonhosted.org/packages/6a/43/f2e44205e33d648482eac6696951e2e34b2566e8f958d0926a5a9458ab2e/openai-3.53.0.tar.gz"
-    sha256 "ade02e38795eec9a8aae5336d38bce30a68aea5095a4d92b7c285ed0ceb1d4c6"
+    url "https://files.pythonhosted.org/packages/3d/25/e8930142b7d668fac78b1d7bd278f7142ea32c233ef762f9aebef0c07ea6/openai-3.60.0.tar.gz"
+    sha256 "077657587f7d2d55b943a135c3e183f87cf7dc66644caa3c0bbc2bde1fe65de9"
   end
 
   resource "pluggy" do
@@ -200,8 +201,8 @@ class Apm < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-6.0.3.tar.gz"
-    sha256 "d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"
+    url "https://files.pythonhosted.org/packages/76/b8/c0b780928e2fb1c87e9e375818c6f121da2398b071012d1747be300b83f4/pyyaml-6.0.4.tar.gz"
+    sha256 "e24bf71af8a432d7808fabff134d38dfe16d3cbb41f2873bb4b1e42422de0a1a"
   end
 
   resource "requests" do
@@ -260,8 +261,8 @@ class Apm < Formula
   end
 
   resource "tomlkit" do
-    url "https://files.pythonhosted.org/packages/08/72/fc01563df95c189a9f65850096bdc205bc2fe37da6c740cd64afaf18d07e/tomlkit-0.15.2.tar.gz"
-    sha256 "83e32755ba1d20d9340bd069ee97e9f6232ba2346b63ffcba425de01f7e327a6"
+    url "https://files.pythonhosted.org/packages/c9/85/4a7c68111c057a6498f5bc721ef93b388b420bb31d7020759f18a5f0c2ec/tomlkit-0.15.3.tar.gz"
+    sha256 "b3c3020ec1a4bd469d12e31fb4da938e7f6ba758cdbec3fd9047db63120eaf81"
   end
 
   resource "truststore" do
@@ -280,8 +281,8 @@ class Apm < Formula
   end
 
   resource "watchdog" do
-    url "https://files.pythonhosted.org/packages/e2/55/087e45c2a3ed8223bc9f30d6b65f051de35513cfc30c989c2b1a14bf862e/watchdog-7.1.0.tar.gz"
-    sha256 "d3861e255416f49a1384474cb2efa097de165fb330d4c5432ce6708b509ed922"
+    url "https://files.pythonhosted.org/packages/33/d3/38e18c9559b96fca53df98979e72cafcd498aba41b57f0830fc31008ffc2/watchdog-7.1.1.tar.gz"
+    sha256 "d7dc3bf0c3417c002ee976e958479c54d8ca18cbb3532fadbe69511fa389da15"
   end
 
   resource "websockets" do

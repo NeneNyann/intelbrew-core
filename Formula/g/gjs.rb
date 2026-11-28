@@ -1,12 +1,11 @@
 class Gjs < Formula
   desc "JavaScript Bindings for GNOME"
   homepage "https://gitlab.gnome.org/GNOME/gjs/wikis/Home"
-  url "https://download.gnome.org/sources/gjs/1.90/gjs-1.90.1.tar.xz"
-  sha256 "05ceaa80f48e3782e5c44938572fad863e02b8c4a6c55657a99aa81db8ce9efa"
+  url "https://download.gnome.org/sources/gjs/1.90/gjs-1.90.2.tar.xz"
+  sha256 "f52c8e3d4185a6436dde44f9f2311684c9afa7eb68a5b2a98e3355343ba6f261"
   license all_of: ["LGPL-2.0-or-later", "MIT"]
   # TODO: Move to latest `spidermonkey` once gjs supports mozjs-153.
   # Also set deprecation date on `spidermonkey@140`.
-  revision 2
   compatibility_version 1
   head "https://gitlab.gnome.org/GNOME/gjs.git", branch: "master"
 
@@ -19,11 +18,12 @@ class Gjs < Formula
   end
 
   bottle do
-    sha256 arm64_golden_gate: "dac6814353d5aa4867f37e007a2efb5906eafefe7b9f43bf66592c97e76fd0f5"
-    sha256 arm64_tahoe:       "067f6d6975f0c99543a333890d39e26810e587d9d7fa819e1783bfe1afcdf834"
-    sha256 arm64_sequoia:     "fd873f01f7508ecea864049ef226f0123926055d6e19f6058b5a97fd44c5548a"
-    sha256 arm64_linux:       "02327fa4f9a3a8c5c07c63c962b613464d16b6e76748352fefae7bc93cca21ff"
-    sha256 x86_64_linux:      "0dc866c495788a3dd7f67db35bf19c425e262b716f47bac636f8cb869d6aecba"
+    manifest_sha256 "4be364b7e9f087a6ce1a1ffc93569f48879b38df25514de555443c9dea6568dd"
+    sha256 arm64_golden_gate: "7d18102d51a2d1ecfe24bda60f92b6697c7c69847148cb933d7a5cdd95f2b270"
+    sha256 arm64_tahoe:       "d2e6167902aaaa5f76043f2b2852b22eb4f4d2302d490df0bd7ba4ac6eb4ac87"
+    sha256 arm64_sequoia:     "585b58a6feaccea2921e71468e71f49f1e01063358bbd9a8ac0b77b35d8b5023"
+    sha256 arm64_linux:       "e903ab014d730dfd95bd566a11129d961a40f84c0668c0617b9941d565c512fe"
+    sha256 x86_64_linux:      "7de67e24c33aaf0a614398e24d49fe97526f591f7dfbb8dcc6e5496eb0fc0a4c"
   end
 
   depends_on "gobject-introspection" => :build # for generate_gir
@@ -50,7 +50,7 @@ class Gjs < Formula
     ENV["DESTDIR"] = "/"
 
     # allow GJS to find and load shared libraries
-    ENV.append "LDFLAGS", "-Wl,-rpath,#{HOMEBREW_PREFIX}/lib" if OS.mac?
+    ENV.append "LDFLAGS", "-Wl,-rpath,#{rpath(target: HOMEBREW_PREFIX/"lib")}" if OS.mac?
 
     args = %w[
       -Dprofiler=disabled

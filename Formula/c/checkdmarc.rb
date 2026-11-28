@@ -10,6 +10,7 @@ class Checkdmarc < Formula
   head "https://github.com/domainaware/checkdmarc.git", branch: "main"
 
   bottle do
+    manifest_sha256 "acebfe0c1e0a5f364ab614f93497e82fc5081608b5d3c5b11e2e6876064671a7"
     sha256 cellar: :any_skip_relocation, all: "c6d7e500a71398e1664512c5185edfe806732b98b61cd864ee02ab84b8d48280"
   end
 
@@ -124,6 +125,8 @@ class Checkdmarc < Formula
     url "https://files.pythonhosted.org/packages/19/70/80f3b7c10d2630aa66414bf23d210386700aa390547278c789afa994fd7e/xmltodict-1.0.4.tar.gz"
     sha256 "6d94c9f834dd9e44514162799d344d815a3a4faec913717a9ecbfa5be1bb8e61"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

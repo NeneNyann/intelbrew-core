@@ -12,6 +12,7 @@ class Babeld < Formula
   end
 
   bottle do
+    manifest_sha256 "32b6ed9604f4e6374874d261a8a9c5600e630ed953685749512faa715d8d7619"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "b3a23e4827281d38fa1669155f427fd1b80779babedb3414d22db5191c60f3aa"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "8df1000e25e05a3dbbb5216051fab8b7dd8a340a307924faf4537c4b8e2e58f4"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e46f543ffdff4ba057e8f007200fe9973c9a3b227e8034e140c570da9f8db8e9"
@@ -20,6 +21,8 @@ class Babeld < Formula
     sha256 cellar: :any,                 arm64_linux:       "bfd5b5f5d460c9df85796fe9e9d521077e7a2842706a47551daadc10b13fc024"
     sha256 cellar: :any,                 x86_64_linux:      "066c81b6f7cf20af8094d4425e090d322788a98591444d3902a802c5fda52e05"
   end
+
+  deny_network_access!
 
   def install
     if OS.mac?

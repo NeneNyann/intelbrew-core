@@ -8,6 +8,7 @@ class Nu < Formula
   head "https://github.com/programming-nu/nu.git", branch: "main"
 
   bottle do
+    manifest_sha256 "817476b8d953c956b3b93d745869b68fce26638cb937df37a3c1b429a97b9a34"
     sha256 cellar: :any, arm64_golden_gate: "71d467a959e88b7836490684e9657ee7b2eb77315cedebf297aa759e97c1931a"
     sha256 cellar: :any, arm64_tahoe:       "b58a4f88db0117eae2d986cfb083129c6247b160f4a79f45d8af94b32a557ec1"
     sha256 cellar: :any, arm64_sequoia:     "d3bb01d2370d369f17fc335866e16b316332705eb82ac79c9ec5572abefc3dba"
@@ -65,6 +66,8 @@ class Nu < Formula
     resolves "https://github.com/programming-nu/nu/pull/103"
   end
 
+  allow_network_access!
+
   def install
     ENV["PREFIX"] = prefix
     # Don't hard code path to clang.
@@ -106,7 +109,11 @@ class Nu < Formula
     rm_r(buildpath/"libffi")
 
     # Remove unused prefix from ffi.h to match directory structure of libffi formula
-    include_path = (OS.mac? && Hardware::CPU.arm?) ? "ffi" : "x86_64-linux-gnu"
+    include_path = if OS.mac? && Hardware::CPU.arm?
+      "ffi"
+    else
+      "x86_64-linux-gnu"
+    end
     inreplace ["objc/NuBridge.h", "objc/NuBridge.m", "objc/Nu.m"], "<#{include_path}/", "<"
 
     system "make", "CC=#{ENV.cc}"

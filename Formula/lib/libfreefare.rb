@@ -8,6 +8,7 @@ class Libfreefare < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "c059acd113d10284b50391e52ff7f9ca2fe5ad833e89fefbc06dbdb8ccd3feb1"
     sha256 cellar: :any, arm64_golden_gate: "48352143ce917eaff9a274b3cee3fc577c979499ffb33cb84bc38cbe9c09c65a"
     sha256 cellar: :any, arm64_tahoe:       "31739c64def98786772cde5e4beb73baec881f6728e43de69be29e1f69473a5f"
     sha256 cellar: :any, arm64_sequoia:     "96edea38dd2aed66c6a60e72e31ac575ca66363d765cca646cfbbffd77787cc0"
@@ -39,11 +40,10 @@ class Libfreefare < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
-    ENV.append_to_cflags "-I#{formula_opt_include(openssl)}"
-    ENV.append "LDFLAGS", "-L#{formula_opt_lib(openssl)}"
+    openssl = dep("openssl")
+    ENV.append_to_cflags "-I#{openssl.opt_include}"
+    ENV.append "LDFLAGS", "-L#{openssl.opt_lib}"
 
     system "./configure", "--disable-silent-rules", *std_configure_args
     system "make", "install"

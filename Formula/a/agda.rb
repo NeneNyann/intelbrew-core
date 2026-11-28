@@ -67,6 +67,7 @@ class Agda < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "538d56feb338a6b032d2ada970a0e0e765d8e5f790652345f0f97bb0c3ef3c2e"
     sha256 arm64_golden_gate: "431d52e45f2a28a93d8bcbe0cdbda69f672da86d51a62489cbea3a6c404f831c"
     sha256 arm64_tahoe:       "fd94a785f1177731b324c1df0075aa8beb5d58077a4ade1709aea53102e8d622"
     sha256 arm64_sequoia:     "c09872cbc1abc5eb2229fd44a0cee222f2b258fd67c2fd46f4b93ef4e140802e"
@@ -121,29 +122,14 @@ class Agda < Formula
     depends_on "zlib-ng-compat"
   end
 
-  def install
+  deny_network_access!
+
+  def fetch
     agda2hs_build = buildpath/"agda2hs"
     als = buildpath/"agda-language-server"
-    # use pkgshare for write permissions needed to re-generate .agdai when using different options
-    agdaprim = pkgshare/"prim"
-    stdlib = pkgshare/"stdlib"
-    classeslib = pkgshare/"stdlib-classes"
-    metalib = pkgshare/"stdlib-meta"
-    cubicallib = pkgshare/"cubical"
-    categorieslib = pkgshare/"categories"
-    agda2hs_lib = pkgshare/"agda2hs"
 
     resource("agda2hs").stage agda2hs_build
     resource("agda-language-server").stage als
-    resource("stdlib").stage stdlib
-    resource("stdlib-classes").stage classeslib
-    resource("stdlib-meta").stage metalib
-    resource("cubical").stage cubicallib
-    resource("categories").stage categorieslib
-
-    # Set up the primitive library and data file directory ahead of time
-    mkdir_p agdaprim
-    ENV["Agda_datadir"] = agdaprim.to_s
 
     # Make the language server build tolerate point releases
     inreplace als/"package.yaml", "Agda == 2.8.0", "Agda >= 2.8.0 && < 2.9.0"
@@ -170,6 +156,33 @@ class Agda < Formula
         flags: +Agda-2-8-0
     HASKELL
 
+    system "cabal", "v2-update"
+    system "cabal", "fetch", "ieee754"
+    system "cabal", "v2-install", ".", agda2hs_build, als, "--only-download", *std_cabal_v2_args
+  end
+
+  def install
+    agda2hs_build = buildpath/"agda2hs"
+    als = buildpath/"agda-language-server"
+    # use pkgshare for write permissions needed to re-generate .agdai when using different options
+    agdaprim = pkgshare/"prim"
+    stdlib = pkgshare/"stdlib"
+    classeslib = pkgshare/"stdlib-classes"
+    metalib = pkgshare/"stdlib-meta"
+    cubicallib = pkgshare/"cubical"
+    categorieslib = pkgshare/"categories"
+    agda2hs_lib = pkgshare/"agda2hs"
+
+    resource("stdlib").stage stdlib
+    resource("stdlib-classes").stage classeslib
+    resource("stdlib-meta").stage metalib
+    resource("cubical").stage cubicallib
+    resource("categories").stage categorieslib
+
+    # Set up the primitive library and data file directory ahead of time
+    mkdir_p agdaprim
+    ENV["Agda_datadir"] = agdaprim.to_s
+
     cabal_args = std_cabal_v2_args.map { |s| s.sub "=copy", "=symlink" }
     # Reduce install size by dynamically linking to shared libraries in store-dir
     # TODO: Linux support, related issue https://github.com/haskell/cabal/issues/9784
@@ -178,7 +191,6 @@ class Agda < Formula
     # Expose certain packages for building and testing
     exposed_packages = %w[base ieee754 text directory containers]
 
-    system "cabal", "v2-update"
     system "cabal", "--store-dir=#{libexec}", "v2-install", *exposed_packages, "--lib", *cabal_args
     system "cabal", "--store-dir=#{libexec}", "v2-install", ".", agda2hs_build, als, *cabal_args
 
@@ -436,7 +448,8 @@ class Agda < Formula
     system bin/"agda2hs", "--out-dir=#{testpath}", agda2hstest
     assert_equal agda2hsexpect, agda2hsout.read
 
-    assert_equal "Agda v#{version.major_minor_patch} Language Server v#{resource("agda-language-server").version}",
+    agda_language_server_version = resource("agda-language-server").version
+    assert_equal "Agda v#{version.major_minor_patch} Language Server v#{agda_language_server_version}",
                  shell_output("#{bin}/als -V").strip
   end
 end

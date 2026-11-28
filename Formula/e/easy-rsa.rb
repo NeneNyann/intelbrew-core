@@ -7,10 +7,13 @@ class EasyRsa < Formula
   head "https://github.com/OpenVPN/easy-rsa.git", branch: "master"
 
   bottle do
+    manifest_sha256 "29368b23e4e6dbc3f4c48b52073b69e93d0c9582e3535dbb92bb2b8dba918e01"
     sha256 cellar: :any_skip_relocation, all: "1f970441b6e3dfb27cd73ab08569a034667ef71f927e03993db19907fcf3206a"
   end
 
   depends_on "openssl@4"
+
+  deny_network_access!
 
   def install
     inreplace "easyrsa" do |s|
@@ -21,7 +24,7 @@ class EasyRsa < Formula
     libexec.install "easyrsa"
     (bin/"easyrsa").write_env_script libexec/"easyrsa",
       EASYRSA:         pkgetc,
-      EASYRSA_OPENSSL: formula_opt_bin("openssl@4")/"openssl",
+      EASYRSA_OPENSSL: dep("openssl").opt_bin/"openssl",
       EASYRSA_PKI:     "${EASYRSA_PKI:-#{etc}/easy-rsa/pki}"
 
     pkgetc.install %w[

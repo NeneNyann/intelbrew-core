@@ -10,6 +10,7 @@ class Odin < Formula
   head "https://github.com/odin-lang/Odin.git", branch: "master"
 
   bottle do
+    manifest_sha256 "f539cd67b1a880fd041b9803f6cee3ac626b5d2227f9358223204f7abc7b2d02"
     sha256               arm64_golden_gate: "e6a2baf4427bfb5faeadc560bd2a087874f2dd6d1693fa502ff74bcfe871bca1"
     sha256               arm64_tahoe:       "0463e3a3fee6de64e6aaef9111513a67b7e6368ab42f69ff1336790daaa43a13"
     sha256               arm64_sequoia:     "4f58ae245018abd88abdadaddc7db4c09b86194301e91a5c54876b9e9a85707b"
@@ -38,7 +39,7 @@ class Odin < Formula
   end
 
   def install
-    llvm = deps.map(&:to_formula).find { |f| f.name.match?(/^llvm(@\d+(\.\d+)*)?$/) }
+    llvm = dep("llvm")
     ENV["LLVM_CONFIG"] = (llvm.opt_bin/"llvm-config").to_s
     ENV.append "LDFLAGS", "-Wl,-rpath,#{llvm.opt_lib}" if OS.linux?
 
@@ -80,7 +81,11 @@ class Odin < Formula
     ln_s raylib.lib/shared_library("libraylib"), vendor/raylib_dir/shared_library("libraylib", "620")
 
     raygui_dir = vendor/(OS.mac? ? "macos" : "linux")
-    raygui_name = (OS.mac? && Hardware::CPU.arm?) ? "libraygui-arm64" : "libraygui"
+    raygui_name = if OS.mac? && Hardware::CPU.arm?
+      "libraygui-arm64"
+    else
+      "libraygui"
+    end
 
     resource("raygui").stage do
       cp "src/raygui.h", "src/raygui.c"

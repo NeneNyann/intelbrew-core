@@ -1,7 +1,7 @@
 class Dotslash < Formula
   desc "Simplified executable deployment"
   homepage "https://dotslash-cli.com"
-  url "https://github.com/facebook/dotslash/archive/refs/tags/v0.5.9.tar.gz"
+  url "https://github.com/meta/dotslash/archive/refs/tags/v0.5.9.tar.gz"
   sha256 "28cc3b27598d3a776d3c54c2132a8d533a130d80db9deff3c1883b63224dcd41"
   license "Apache-2.0"
 
@@ -11,6 +11,7 @@ class Dotslash < Formula
   end
 
   bottle do
+    manifest_sha256 "20175dbe3b1faa01b9871633b37af2d059318fad495d4f1ceb5045f295e4850a"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "922b39cd7f2ebb17955b6d09f147103c206e8a5a7769a43e9cb61eed67c40976"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "be6210c4f1c4480fd8467d1fb0289f15b5378d53711af6b680ef8befe315df7b"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "f4e6f136b3909e6ef3152da3322ee09f4f7a6fdff9a7b8b83df267cfc4726e3f"

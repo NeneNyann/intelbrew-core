@@ -13,6 +13,7 @@ class AwscliAT1 < Formula
   end
 
   bottle do
+    manifest_sha256 "ad645f198b2e0dbc6a0d4ee165d2df623efff3f562341da6c85e7e920123cd4a"
     sha256 cellar: :any, arm64_golden_gate: "b1c68c8be5e24710be727aca6aa62eea054bc774807916417d119c84809b0414"
     sha256 cellar: :any, arm64_tahoe:       "b8e674857ac716ed070569e86dcb91e6d52124a437bdde08a3769fa3afa53d2f"
     sha256 cellar: :any, arm64_sequoia:     "2470b912305c96c9a5286465a4761110dcffa97173b6dd40997a55ee27f6bf60"
@@ -75,6 +76,8 @@ class AwscliAT1 < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

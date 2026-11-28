@@ -12,6 +12,7 @@ class Powershell < Formula
   end
 
   bottle do
+    manifest_sha256 "d87fc90901dd3e74c7916ef46bf55f7c344c88e02a6bcc4518f094e83ad97fc1"
     sha256 cellar: :any, arm64_golden_gate: "ce2df10df0a1cd31d271f4237e9020a0bb1150b5759fa66c50712ff99a11e6a3"
     sha256 cellar: :any, arm64_tahoe:       "b8ebaf8a76f974ffb39ee3644ebcfe7b0e22af724b48d693e7b604ca3821c282"
     sha256 cellar: :any, arm64_sequoia:     "2cbcfd2ccc2fbeaa328cac4e36d19b8242052b570d0343cfa759a265b27aba8c"
@@ -22,7 +23,7 @@ class Powershell < Formula
   depends_on "dotnet"
 
   def install
-    dotnet = deps.find { |d| d.name.match?(/dotnet(@\d+(\.\d+)*)?$/i) }.to_formula
+    dotnet = dep("dotnet").to_formula
     ENV["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
     ENV["DOTNET_CLI_HOME"] = buildpath
     ENV["XDG_RUNTIME_DIR"] = buildpath
@@ -107,8 +108,8 @@ class Powershell < Formula
     module_copy_script = buildpath/"homebrew-copy-psgallery-modules.ps1"
     module_copy_script.write <<~PS1
       $ErrorActionPreference = 'Stop'
-      Import-Module '#{buildpath/"build.psm1"}' -Force
-      Copy-PSGalleryModules -CsProjPath '#{buildpath/"src/Modules/PSGalleryModules.csproj"}' -Destination '#{publish_path/"Modules"}' -Force
+      Import-Module '#{buildpath}/build.psm1' -Force
+      Copy-PSGalleryModules -CsProjPath '#{buildpath}/src/Modules/PSGalleryModules.csproj' -Destination '#{publish_path}/Modules' -Force
     PS1
 
     # Hardcode the environment object as we dont have brew command. See https://github.com/PowerShell/PowerShell/blob/v7.5.4/build.psm1#L124-L224

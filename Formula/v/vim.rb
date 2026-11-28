@@ -2,8 +2,8 @@ class Vim < Formula
   desc "Vi 'workalike' with many additional features"
   homepage "https://www.vim.org/"
   # vim should only be updated once a day
-  url "https://github.com/vim/vim/archive/refs/tags/v9.2.1360.tar.gz"
-  sha256 "89bef0c138d3858eb1bcccc0e13ec5d3fd5efb07ccf47bfedc3ab8dbd9fecb0a"
+  url "https://github.com/vim/vim/archive/refs/tags/v9.2.1417.tar.gz"
+  sha256 "01ca38dbe63f5e2235949c08779f80ba3c1073cbb1fa51f1789d6e7eb0e94e77"
   license "Vim"
   compatibility_version 1
   head "https://github.com/vim/vim.git", branch: "master"
@@ -21,11 +21,12 @@ class Vim < Formula
   end
 
   bottle do
-    sha256 arm64_golden_gate: "b4e8d5291b0f0fdfe6d8d293bcc05d1aefbf18223a54d55e50dcc1d846c80785"
-    sha256 arm64_tahoe:       "9dcaa23984f36ae1bd0e48dc10339ade7707f3939f94172af891d8ad922a4951"
-    sha256 arm64_sequoia:     "bc6847903461d9fabb3eaf73752e4b918abb953fd38bfaf425e4480b121892bd"
-    sha256 arm64_linux:       "9a012657af317247cfbaa2a6639650eca7e9bf09fb0cdf7dccd72c7842614f74"
-    sha256 x86_64_linux:      "67d07d94f469b2ab282d396b96e52a26b4e4b3cedaad4cb144dc4d31dc1c5680"
+    manifest_sha256 "6b9aa5178a48c1d06234899f2adb6dbc6abb80c557a5307b928fc1b9f0f4bf76"
+    sha256 arm64_golden_gate: "b3b02ac9097b663e7c74a91f5c5a434e8262217dbc0a8498473acf8635b2d911"
+    sha256 arm64_tahoe:       "7f9a7ff4873c83843be3ef1b34d4d403224814a8c8bc2a69749a451115ee9fde"
+    sha256 arm64_sequoia:     "680ac2ee46195ebb1b5d0f6ba7bec1a21bc25130dfb98075f5cab751af558ae1"
+    sha256 arm64_linux:       "7df298bb5364053d0961924ee79c01ebf0336b2e6f7cec1347346ab92888f749"
+    sha256 x86_64_linux:      "98f78f40697360b1eab3214a942af0052f65a5a65e30b190f2257b7610d03d5e"
   end
 
   depends_on "gettext" => :build
@@ -49,7 +50,7 @@ class Vim < Formula
   conflicts_with "macvim", because: "vim and macvim both install vi* binaries"
   conflicts_with "vim-classic", because: "vim and vim-classic both install vi* binaries"
 
-  def extra_deps = deps.select { |dep| dep.build? && dep.test? }
+  def extra_deps = deps.build.select(&:test?)
 
   deny_network_access!
 
@@ -58,7 +59,7 @@ class Vim < Formula
 
     # Allow dynamically loading formulae libraries when not linked
     extra_deps.each do |dep|
-      extra_rpath = dep.to_formula.opt_lib
+      extra_rpath = dep.opt_lib
       extra_rpath = rpath(target: extra_rpath) if OS.mac? # cannot use $ORIGIN
       ENV.append "LDFLAGS", "-Wl,-rpath,#{extra_rpath}"
     end
@@ -67,6 +68,7 @@ class Vim < Formula
     # the right place (HOMEBREW_PREFIX/share/vim/{vimrc,vimfiles}) for
     # system vimscript files. We specify the normal installation prefix
     # when calling "make install".
+    perl_linkage = "=dynamic" unless OS.mac?
     system "./configure", "--prefix=#{HOMEBREW_PREFIX}",
                           "--mandir=#{man}",
                           "--enable-multibyte",
@@ -74,7 +76,7 @@ class Vim < Formula
                           "--with-compiledby=Homebrew",
                           "--enable-cscope",
                           "--enable-terminal",
-                          "--enable-perlinterp#{"=dynamic" unless OS.mac?}",
+                          "--enable-perlinterp#{perl_linkage}",
                           "--enable-python3interp=dynamic",
                           "--enable-rubyinterp=dynamic",
                           "--disable-gui",
@@ -90,7 +92,8 @@ class Vim < Formula
   end
 
   def caveats
-    "Additional features can be enabled by installing: #{extra_deps.map(&:name).join(", ")}"
+    dependency_names = extra_deps.map(&:name).join(", ")
+    "Additional features can be enabled by installing: #{dependency_names}"
   end
 
   test do

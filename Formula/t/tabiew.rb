@@ -7,6 +7,7 @@ class Tabiew < Formula
   head "https://github.com/shshemi/tabiew.git", branch: "main"
 
   bottle do
+    manifest_sha256 "e001c94d2fcda2abbada612f15fe7b4e01258cbe879ec29332b86c40e5051248"
     sha256 cellar: :any, arm64_golden_gate: "b59474a2591256ae50667a83c3d447b629b1eec31643cf761e2cb4b2df44044f"
     sha256 cellar: :any, arm64_tahoe:       "c02c30f78ceb8f751645ec8dfa778f3ae8b533a268ecf3eaf6ba3a7a2762894d"
     sha256 cellar: :any, arm64_sequoia:     "4a3f135a4f55fac03083770d7ebc184157792ca1d8f562b5bf9878dcc5f392c7"
@@ -22,14 +23,12 @@ class Tabiew < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def fetch
     system "cargo", "fetch", *std_cargo_fetch_args
   end
 
   def install
-    ENV["OPENSSL_DIR"] = formula_opt_prefix(openssl)
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
     system "cargo", "install", *std_cargo_args
 
     man1.install "target/manual/tabiew.1" => "tw.1"

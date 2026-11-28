@@ -10,6 +10,7 @@ class GorillaCli < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "377edf01648fc2722a8643d55e8cf17055257f40fb365944942658263b189df3"
     sha256 cellar: :any_skip_relocation, all: "90ce1cb08fa3609ce611dcfbfb001512cd5a5c4f1bfa19de9b7be1d5994eb799"
   end
 
@@ -81,6 +82,8 @@ class GorillaCli < Formula
     url "https://files.pythonhosted.org/packages/24/30/6b0809f4510673dc723187aeaf24c7f5459922d01e2f794277a3dfb90345/wcwidth-0.2.14.tar.gz"
     sha256 "4d478375d31bc5395a3c55c40ccdf3354688364cd61c4f6adacaa9215d0b3605"
   end
+
+  allow_network_access!
 
   def install
     virtualenv_install_with_resources

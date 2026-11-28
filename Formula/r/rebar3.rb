@@ -12,6 +12,7 @@ class Rebar3 < Formula
   end
 
   bottle do
+    manifest_sha256 "b4d911673a0065f1e47e1de223881541c6b05284cf4e195e7078e0a84632ac76"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "92f7de0659bba61ca985f9c004793c8a85fc4c4839cfa678004bfe7fd7363cd2"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "0d74270a6f9bfd5f1248b7eddf5d35334a9b205dd1970437010b8131fa4581ed"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "ea808c2254b3b487093f8c3427ac11f25d566d69e79ece86334054d3a86b68f3"
@@ -23,7 +24,7 @@ class Rebar3 < Formula
   depends_on "erlang" => :test
 
   def install
-    erlang_build_dep = deps.find { |dep| dep.build? && dep.name.match?(/^erlang@\d+$/) }&.to_formula
+    erlang_build_dep = deps("erlang").build.first&.to_formula
     odie "Could not find build-time erlang!" if erlang_build_dep.blank?
 
     # To guarantee compatibility with various erlang versions, build with an older erlang.
@@ -45,14 +46,10 @@ class Rebar3 < Formula
   end
 
   test do
-    deps.each do |dep|
-      next unless dep.name.match?(/^erlang(@\d+)?$/)
-
+    deps("erlang").each do |dep|
       erlang = dep.to_formula
-      erlang_bin = erlang.opt_bin
-      erlang_version = erlang.version.major
-      with_env(PATH: "#{erlang_bin}:#{ENV["PATH"]}") do
-        assert_match "OTP #{erlang_version}", shell_output("#{bin}/rebar3 --version")
+      with_env(PATH: "#{erlang.opt_bin}:#{ENV["PATH"]}") do
+        assert_match "OTP #{erlang.version.major}", shell_output("#{bin}/rebar3 --version")
       end
     end
   end

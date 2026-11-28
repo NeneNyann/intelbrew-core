@@ -8,6 +8,7 @@ class GitSeries < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "e3181dfd57f558222069409af785ff0554942e329c50224b4d97830333fd7a5f"
     sha256 cellar: :any,                 arm64_golden_gate: "3165b12def1a4b91feb29b5f8212eed680fc387685c28a7550985133a2f7a299"
     sha256 cellar: :any,                 arm64_tahoe:       "6c0d251705744036205ea82afac6a4851e9a4cd1cc02023283a87c69aa776d6a"
     sha256 cellar: :any,                 arm64_sequoia:     "cd487be11dce61dae6298686b051d08ed7ac9310ba31d7d4e746d0dbadc619a6"
@@ -31,10 +32,12 @@ class GitSeries < Formula
   # Commit ref: https://github.com/git-series/git-series/commit/daf949d8b5b1c9299c49a5cfd30b6da9534ccb87
   patch :DATA
 
+  allow_network_access!
+
   def install
     # Ensure that the `openssl` crate picks up the intended library.
     # https://crates.io/crates/openssl#manual-configuration
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@3")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     ENV["LIBGIT2_SYS_USE_PKG_CONFIG"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
@@ -62,9 +65,9 @@ class GitSeries < Formula
     linked_libraries = [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@3")/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libssl"),
     ]
-    linked_libraries << (formula_opt_lib("openssl@3")/shared_library("libcrypto")) if OS.mac?
+    linked_libraries << (dep("openssl").opt_lib/shared_library("libcrypto")) if OS.mac?
 
     linked_libraries.each do |library|
       assert Utils.binary_linked_to_library?(bin/"git-series", library),

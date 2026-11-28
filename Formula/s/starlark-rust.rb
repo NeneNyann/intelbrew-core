@@ -1,13 +1,14 @@
 class StarlarkRust < Formula
   desc "Rust implementation of the Starlark language"
-  homepage "https://github.com/facebook/starlark-rust"
+  homepage "https://github.com/meta/starlark-rust"
   url "https://static.crates.io/crates/starlark_bin/starlark_bin-0.14.0.crate"
   sha256 "0c33c0ca1ebd9da2f735029e3815a49a593273567315a0e5b22dff4d2899f196"
   license "Apache-2.0"
-  head "https://github.com/facebook/starlark-rust.git", branch: "main"
+  head "https://github.com/meta/starlark-rust.git", branch: "main"
 
   bottle do
     rebuild 1
+    manifest_sha256 "10f9274711835806bceeafbce13c231f7ab7c232f182a27c8850f728e1b438fb"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "450b0a8c5459c48edfbf882f6cde9a829b775787503486f20e75fefe43a38122"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "00e5c0d465eaef8c5d2d392077961684fdaf7f5b9fe1844ca0e5042d6e2f7e26"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "0cb4a08924c38a31e71e7d74e4fd63c9eede1c908ccc39f7410c0a9ee3195ffb"

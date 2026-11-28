@@ -9,6 +9,7 @@ class Badkeys < Formula
   head "https://github.com/badkeys/badkeys.git", branch: "main"
 
   bottle do
+    manifest_sha256 "458b93a4253201dbe835c5ff8dffc2164a25b607aa836064c0194088586a557a"
     sha256 cellar: :any, arm64_golden_gate: "57222ae23f419feb7615f04ebccb0d0d3366cab46e1064746a901ca098065b95"
     sha256 cellar: :any, arm64_tahoe:       "d1fab523955b353013e746a207924c01bfd07fccd806589275d59dcee2b376ea"
     sha256 cellar: :any, arm64_sequoia:     "d45ca9eca953a54e91c64a99f13ec3eaa308b0b8974fa294ba85e7fb01169cae"
@@ -33,6 +34,8 @@ class Badkeys < Formula
     url "https://files.pythonhosted.org/packages/3f/e8/7325d258199b159eb2c03fe32107533e2832e70e63f4fb88a6aa00023201/pyopenssl-26.4.0.tar.gz"
     sha256 "28dfcce0162b9211413e26dfbfdf1d24317fbeba18fc93c12400a1856b2a0bc7"
   end
+
+  allow_network_access! [:build, :test]
 
   def install
     virtualenv_install_with_resources

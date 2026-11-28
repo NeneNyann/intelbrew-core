@@ -12,6 +12,7 @@ class Zeek < Formula
   end
 
   bottle do
+    manifest_sha256 "c96bc073e80019b8fb1aceb408cb9ac053eba44e1c3cce0184b9889cb56522f5"
     sha256 arm64_golden_gate: "cc662bcfc658d14a0dd9675f10f597ad97f29803af0454031629d83aebdbc355"
     sha256 arm64_tahoe:       "cdd1fc59cc98264b8ec62d7522b0f3d83d76e06c097f1a51074a9077d3696566"
     sha256 arm64_sequoia:     "78c0c98cf7f0c3fd35b0070a99f433f8b1a402a773361153a2167947f6372dc6"
@@ -51,15 +52,16 @@ class Zeek < Formula
     # Avoid references to the Homebrew shims directory
     inreplace "auxil/spicy/hilti/toolchain/src/config.cc.in", "${CMAKE_CXX_COMPILER}", ENV.cxx
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       -DBROKER_DISABLE_TESTS=on
       -DINSTALL_AUX_TOOLS=on
       -DINSTALL_ZEEKCTL=on
       -DUSE_GEOIP=on
       -DCARES_ROOT_DIR=#{formula_opt_prefix("c-ares")}
-      -DCARES_LIBRARIES=#{formula_opt_lib("c-ares")/shared_library("libcares")}
-      -DLibMMDB_LIBRARY=#{formula_opt_lib("libmaxminddb")/shared_library("libmaxminddb")}
-      -DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}
+      -DCARES_LIBRARIES=#{formula_opt_lib("c-ares")}/#{shared_library("libcares")}
+      -DLibMMDB_LIBRARY=#{formula_opt_lib("libmaxminddb")}/#{shared_library("libmaxminddb")}
+      -DOPENSSL_ROOT_DIR=#{openssl_prefix}
       -DPYTHON_EXECUTABLE=#{python3}
       -DZEEK_ETC_INSTALL_DIR=#{etc}
       -DZEEK_LOCAL_STATE_DIR=#{var}

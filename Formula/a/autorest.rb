@@ -6,6 +6,7 @@ class Autorest < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "5c9d93f4a5185cb9e0c9cb26b9ba23fc21ef465d637213b880485cda9ee89d34"
     sha256 cellar: :any_skip_relocation, all: "b9e9e79e98255f252a645acc787169370311c4822e30d35639cc491e8d67910f"
   end
 
@@ -18,6 +19,8 @@ class Autorest < Formula
     url "https://raw.githubusercontent.com/Azure/autorest/5c170a02c009d032e10aa9f5ab7841e637b3d53b/Samples/1b-code-generation-multilang/petstore.yaml"
     sha256 "e981f21115bc9deba47c74e5c533d92a94cf5dbe880c4304357650083283ce13"
   end
+
+  allow_network_access! :test
 
   def install
     system "npm", "install", *std_npm_args

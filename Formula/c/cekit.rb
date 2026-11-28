@@ -10,6 +10,7 @@ class Cekit < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "d6f19146dd95cf79ebe8445531fc468b66aa2d69e48038c906072c4e0d10b5b5"
     sha256 cellar: :any, arm64_golden_gate: "9f412aa02a6b19a017219935680c16f0f19e9d8d10157e37c7faf70f62fa3733"
     sha256 cellar: :any, arm64_tahoe:       "26a04179b69e9a591d1d7ec82eca6aef1b7575db8c41cdfdad9d98733cd9e8cb"
     sha256 cellar: :any, arm64_sequoia:     "acc266993159621861f82f2e73baaf7cb7df1e20b803cc406e02e35b592b9f0a"
@@ -74,6 +75,8 @@ class Cekit < Formula
     url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
     sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

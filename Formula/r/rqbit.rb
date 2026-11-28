@@ -7,6 +7,7 @@ class Rqbit < Formula
   head "https://github.com/ikatson/rqbit.git", branch: "main"
 
   bottle do
+    manifest_sha256 "60812c16939fa64a6af9bc13222db66778e148c2b84567040fa2f6725ecca6f6"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "5424d8dcaa06035c2ef8c61741a4cf5cfbb152c70322bae916cb812b7ccb599f"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "cfc65b9a5980ce607c476dc6171f4207097d5b74f46420afec2d242ba9cd95a8"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a86b8a4944c47bc763a08be24610270f83a1d8c450b2845efd096c4143b37dea"
@@ -49,8 +50,8 @@ class Rqbit < Formula
     if OS.linux?
       require "utils/linkage"
       [
-        formula_opt_lib("openssl@4")/shared_library("libssl"),
-        formula_opt_lib("openssl@4")/shared_library("libcrypto"),
+        dep("openssl").opt_lib/shared_library("libssl"),
+        dep("openssl").opt_lib/shared_library("libcrypto"),
       ].each do |library|
         assert Utils.binary_linked_to_library?(bin/"rqbit", library),
                "No linkage with #{library.basename}! Cargo is likely using a vendored version."

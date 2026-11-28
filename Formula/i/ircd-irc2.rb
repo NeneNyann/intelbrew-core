@@ -16,6 +16,7 @@ class IrcdIrc2 < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "eb504d71c0da026c748244819bd45dc53f7354cb45518b4e985b423892d6797f"
     sha256 arm64_tahoe:    "e60037ded349a9107379774d16764e0cd9506b7c24134f8f22f0f9d30b8214c1"
     sha256 arm64_sequoia:  "11a1e704e3078514219037593b14351817074e38045f95a056d048ced644fed1"
     sha256 arm64_sonoma:   "c45a5b7682ca7ac5d07f883a2aa981c835ef3ecf2b25602099eb8c27331e4398"
@@ -47,6 +48,8 @@ class IrcdIrc2 < Formula
   # Ref: https://gitlab.com/fedora/legal/fedora-license-data/-/issues/53
   patch :DATA
 
+  allow_network_access!
+
   def install
     # Remove header with incompatible IBM license and add linker flags to use system library instead
     rm("ircd/nameser_def.h")
@@ -54,8 +57,9 @@ class IrcdIrc2 < Formula
 
     if OS.linux? && Hardware::CPU.arm?
       # Workaround for ancient config files not recognizing aarch64 macos.
+      automake = Formula["automake"]
       %w[config.guess config.sub].each do |fn|
-        cp Formula["automake"].share/"automake-#{Formula["automake"].version.major_minor}"/fn, "support/#{fn}"
+        cp automake.share/"automake-#{automake.version.major_minor}"/fn, "support/#{fn}"
       end
     end
 

@@ -12,11 +12,15 @@ class Vilistextum < Formula
       # Omit version with old scheme that is incorrectly treated as newest
       # NOTE: This `strategy` block can be removed in the future if/when the
       # download page only contains versions with three parts like 2.3.0.
-      page.scan(regex).map { |match| ((version = match.first) == "2.22") ? nil : version }
+      page.scan(regex).map do |match|
+        version = match.first
+        version if version != "2.22"
+      end
     end
   end
 
   bottle do
+    manifest_sha256 "c98fbdf22f720c727f9333cf558a610c51bbc67306a2697e7ef4c0854df20aad"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "8cd9c298457367b830a5a59d35eaeabeea16a03e985a2f86948108e7d6a3f4be"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "49595a548ac3b8e7818c1467db59e825ee7d0ca03d38311b3494451bc40687e8"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "518d8afa3e88d75bb45459300aa06568ebdb4b712495fac4d0edbe3dcfa17fb5"

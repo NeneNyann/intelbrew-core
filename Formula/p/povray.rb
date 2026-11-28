@@ -31,6 +31,7 @@ class Povray < Formula
   end
 
   bottle do
+    manifest_sha256 "818ccfc9f3142ab7cf6fdf95473005b3a7d9eafef67deeff04eab42ea18e4eea"
     sha256 arm64_golden_gate: "4c13b09ae94c57eea35c4701e14cfa20a13b32ef7166bf6802baeca3488ef3d7"
     sha256 arm64_tahoe:       "102f3c00d65ef6e00504bf3908a5e3b97b27115d81603604cca63cacffd5c378"
     sha256 arm64_sequoia:     "09518f6266b1e616c411f4bdee1955a5b9847a09a51ae11f8d0f41a1222030ff"
@@ -67,7 +68,8 @@ class Povray < Formula
     end
 
     # Workaround for Xcode 16.3+, issue ref: https://github.com/POV-Ray/povray/issues/479
-    inreplace "source/#{build.stable? ? "backend" : "core"}/shape/truetype.cpp",
+    source_dir = build.stable? ? "backend" : "core"
+    inreplace "source/#{source_dir}/shape/truetype.cpp",
               "#if !defined(TARGET_OS_MAC)",
               "#if !defined(__MACTYPES__)"
 
@@ -77,8 +79,9 @@ class Povray < Formula
     # Disable optimizations similar to Debian/Fedora. This mainly removes `-ffast-math`
     # as `povray` has open bugs like https://github.com/POV-Ray/povray/issues/460.
     # Other optimizations like `-O3` and `-march=native` were always removed by brew.
+    build_user = tap&.user || "Homebrew"
     args = %W[
-      COMPILED_BY=#{tap&.user || "Homebrew"}
+      COMPILED_BY=#{build_user}
       --disable-optimiz
       --mandir=#{man}
       --with-boost=#{formula_opt_prefix("boost")}

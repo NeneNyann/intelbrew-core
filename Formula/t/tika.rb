@@ -7,6 +7,7 @@ class Tika < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "6b866ed7bc3f25167cf13227fb18c29f1aceaef389a5a194c2c41e3c4daee366"
     sha256 cellar: :any_skip_relocation, all: "cc2780dea7bdf3384f6ffcf17319b2412b0c3bec0a1344986c0a7c29501294d7"
   end
 
@@ -43,13 +44,10 @@ class Tika < Formula
     assert_equal "application/pdf\n", shell_output("#{bin}/tika --detect #{pdf}")
 
     port = free_port
-    pid = spawn bin/"tika-rest-server", "--port=#{port}"
-
-    sleep 10
-    response = shell_output("curl -s -i http://localhost:#{port}")
-    assert_match "HTTP/1.1 200 OK", response
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"tika-rest-server", "--port=#{port}") do
+      sleep 10
+      response = shell_output("curl -s -i http://localhost:#{port}")
+      assert_match "HTTP/1.1 200 OK", response
+    end
   end
 end

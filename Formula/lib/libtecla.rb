@@ -11,6 +11,7 @@ class Libtecla < Formula
   end
 
   bottle do
+    manifest_sha256 "3a9a29ee734d67e372229807e771c9e4ab73378a11959a19514236c59a76eb28"
     sha256 cellar: :any,                 arm64_golden_gate: "fc773eeb4987b7db09ff6da05fe38095da576e86e5edcf72b2be0d0f5b3724d8"
     sha256 cellar: :any,                 arm64_tahoe:       "3883edbec56c880a52d9805b5fa4688136ccdb26fe9fe8b4c8b302b3f3c79de4"
     sha256 cellar: :any,                 arm64_sequoia:     "389b4e8a32591e201b3c174ce301bfaeb27a38dd8398992eff9171678d1b4bfc"
@@ -41,7 +42,8 @@ class Libtecla < Formula
     ENV.deparallelize
 
     %w[config.guess config.sub].each do |fn|
-      cp "#{formula_opt_prefix("automake")}/share/automake-#{Formula["automake"].version.major_minor}/#{fn}", fn
+      automake_version = Formula["automake"].version.major_minor
+      cp "#{formula_opt_prefix("automake")}/share/automake-#{automake_version}/#{fn}", fn
     end
 
     # Fix hard coded flat namespace usage in configure.

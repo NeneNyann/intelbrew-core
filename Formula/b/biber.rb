@@ -7,6 +7,7 @@ class Biber < Formula
   revision 1
 
   bottle do
+    manifest_sha256 "453d6844f6829c0f993e2ba5ff7fad53c3813c898849f99aaa1cc1219939d751"
     sha256 cellar: :any, arm64_golden_gate: "fe83fcf2b2966d87e30ff12ed6a11ee38225598ff3103d185e69df34279bbbdb"
     sha256 cellar: :any, arm64_tahoe:       "a89d5a44f32f29dd167b8abdfddc5656aceeae49f39618143a25ef4087a76b6f"
     sha256 cellar: :any, arm64_sequoia:     "4534d8a7164307634cbbea6c68eaa61a3c33e76301f6c39a19e6777022f07720"
@@ -628,9 +629,11 @@ class Biber < Formula
     sha256 "cd98c8104b70d7672bfa26b4513b78adf2b4b9220e586aa8beb1a508500365a6"
   end
 
+  deny_network_access!
+
   def install
     ENV["ALIEN_INSTALL_TYPE"] = "system"
-    ENV["OPENSSL_PREFIX"] = formula_opt_prefix("openssl@4") if OS.linux?
+    ENV["OPENSSL_PREFIX"] = dep("openssl").opt_prefix if OS.linux?
     ENV["PERL_MM_USE_DEFAULT"] = "1"
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
     ENV.prepend_path "PERL5LIB", libexec/"lib"

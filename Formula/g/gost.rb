@@ -12,6 +12,7 @@ class Gost < Formula
   end
 
   bottle do
+    manifest_sha256 "8b939c0788100841bd13b562b80faa698e6034025e2af09337d005bd8c16f027"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "adb13bfc76e0932f92b344d81f0fd9f18fb6a82be3b379ec0e0d25010e7af6c6"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "8a3c880db2b207ada8a3a51e779a8a0e6e65c9d8d84da87882cf1fd131e40446"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "8cfbc2edcf33ba62ec935dbca0d208a7b45c8f3032f59c2f2308ca9d7e584b6f"
@@ -59,17 +60,15 @@ class Gost < Formula
           listener:
             type: tcp
     YAML
-    pid = spawn bin/"gost", "-C", testpath/"gost.yml"
-    sleep 2
-    output = shell_output("curl --max-time 10 -I -x #{bind_address} https://github.com")
-    assert_match %r{HTTP/\d+(?:\.\d+)? 200}, output
-    assert_match(/Server: GitHub.com/i, output)
+    with_test_process(bin/"gost", "-C", testpath/"gost.yml") do
+      sleep 2
+      output = shell_output("curl --max-time 10 -I -x #{bind_address} https://github.com")
+      assert_match %r{HTTP/\d+(?:\.\d+)? 200}, output
+      assert_match(/Server: GitHub.com/i, output)
 
-    output = shell_output("curl --max-time 10 -I --socks5-hostname #{bind_address} https://github.com")
-    assert_match %r{HTTP/\d+(?:\.\d+)? 200}, output
-    assert_match(/Server: GitHub.com/i, output)
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      output = shell_output("curl --max-time 10 -I --socks5-hostname #{bind_address} https://github.com")
+      assert_match %r{HTTP/\d+(?:\.\d+)? 200}, output
+      assert_match(/Server: GitHub.com/i, output)
+    end
   end
 end

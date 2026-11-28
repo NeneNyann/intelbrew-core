@@ -1,6 +1,6 @@
 class Liquibase < Formula
   desc "Library for database change tracking"
-  homepage "https://www.liquibase.org/"
+  homepage "https://www.liquibase.com/community"
   # NOTE: Do not bump to v5.0.0+ as license changed to FSL-1.1-ALv2
   url "https://github.com/liquibase/liquibase/releases/download/v4.33.0/liquibase-4.33.0.tar.gz"
   sha256 "689acfcdc97bad0d4c150d1efab9c851e251b398cb3d6326f75e8aafe40ed578"
@@ -15,6 +15,7 @@ class Liquibase < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "8e0c48c5beb9d332cac2fdc6695f3580bdfc229c250a07a95c1de6961b22e5bd"
     sha256 cellar: :any_skip_relocation, all: "222519225b5374762241360ed0c6720d11f31a6b996c2df9268fe321bf7917aa"
   end
 

@@ -11,6 +11,7 @@ class Empty < Formula
   end
 
   bottle do
+    manifest_sha256 "9c79084a46b2572b638ea97ff006099164f6bdf2c980b8a6f0410987794fbc09"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "666c23ab15b88a3e108d89b0455083b3166000d38f346f44f4a4b694bb23337b"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "9e5c98a10342c451a8b3132ed20b2f4ea156dd075fa553d9af40798fd5f47af7"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "5528963e58f7075c3d661672120c3af66b0c63b4f8ff744171659e866af291ee"
@@ -21,6 +22,8 @@ class Empty < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "79d9126210c74a702eaa3c6d5a375053b218bdcee19b6a3bb491c6042af16552"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "a0a948757c10df171941b8b0bcd8546a9fdc1ab13b66817e80a21829e632c003"
   end
+
+  deny_network_access!
 
   def install
     # Fix incorrect link order in Linux

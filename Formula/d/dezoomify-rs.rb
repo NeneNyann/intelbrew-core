@@ -16,12 +16,16 @@ class DezoomifyRs < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "552e12135ccb8ef2ebb6fdaecfa91886d8ce56d49eaaed0fa1a77888f9a454f8"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "179f2ed66371b6ff9cb9ce85d486da8fea363df71a27d579d423f2bec5923667"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "12d4c54639a279ddecce1ee261cf5332a6ab5502c05732d18e8de29d28ca7be6"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "b5440984a1efd75c6d8055918470d46ebc4974c6263ca661fd1ccf7fab66662d"
     sha256 cellar: :any,                 arm64_linux:       "af7f8fa647d4f69dda36180b8f61c55f87127b8f32549c711a4d22a09781f5ed"
     sha256 cellar: :any,                 x86_64_linux:      "a8944cd48ae08c98eed6b573046448fca162138eb57178726ba6755b844d19c3"
   end
+
+  deprecate! date: "2026-11-22", because: :repo_archived, replacement_formula: "dezoomify-cli"
+  disable! date: "2027-11-22", because: :repo_archived, replacement_formula: "dezoomify-cli"
 
   depends_on "pkgconf" => :build
   depends_on "rust" => :build

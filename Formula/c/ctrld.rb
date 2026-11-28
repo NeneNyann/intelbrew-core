@@ -6,6 +6,7 @@ class Ctrld < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "73e9fc4670ea0e74881e3ecfd4854838da24456e12ccc23fcee2d096ff068950"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "6767b9ef0c299fa0499d017032f477216a5d1600a69c86c792832882b21dc1e3"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "6767b9ef0c299fa0499d017032f477216a5d1600a69c86c792832882b21dc1e3"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "6767b9ef0c299fa0499d017032f477216a5d1600a69c86c792832882b21dc1e3"
@@ -34,11 +35,9 @@ class Ctrld < Formula
     assert_match version.to_s, shell_output("#{bin}/ctrld --version")
 
     output_log = testpath/"output.log"
-    pid = spawn bin/"ctrld", "start", [:out, :err] => output_log.to_s
-    sleep 3
-    assert_match "Please relaunch process with admin/root privilege.", output_log.read
-  ensure
-    Process.kill "TERM", pid
-    Process.wait pid
+    with_test_process(bin/"ctrld", "start", [:out, :err] => output_log.to_s) do
+      sleep 3
+      assert_match "Please relaunch process with admin/root privilege.", output_log.read
+    end
   end
 end

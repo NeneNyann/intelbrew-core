@@ -8,6 +8,7 @@ class ApachePulsar < Formula
   head "https://github.com/apache/pulsar.git", branch: "master"
 
   bottle do
+    manifest_sha256 "b0930a7059a8c09d459f822351c676f9dbaa315649b8eaf1e681f9554b1406b5"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "055caa7795442f432aa9fc10a06d4165659c5fe05a78dfb41dfbc9490a89fecc"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "055caa7795442f432aa9fc10a06d4165659c5fe05a78dfb41dfbc9490a89fecc"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "055caa7795442f432aa9fc10a06d4165659c5fe05a78dfb41dfbc9490a89fecc"
@@ -55,17 +56,17 @@ class ApachePulsar < Formula
     ENV["PULSAR_LOG_DIR"] = testpath
     ENV["PULSAR_STANDALONE_USE_ZOOKEEPER"] = "1"
 
-    pid = spawn bin/"pulsar", "standalone", "--zookeeper-dir", testpath/"zk", "--bookkeeper-dir", testpath/"bk"
-    # The daemon takes some time to start; pulsar-client will retry until it gets a connection, but emit confusing
-    # errors until that happens, so sleep to reduce log spam.
-    sleep 30
+    with_test_process(bin/"pulsar", "standalone", "--zookeeper-dir", testpath/"zk",
+                      "--bookkeeper-dir", testpath/"bk") do
+      # The daemon takes some time to start; pulsar-client will retry until it gets a connection, but emit confusing
+      # errors until that happens, so sleep to reduce log spam.
+      sleep 30
 
-    output = shell_output("#{bin}/pulsar-client produce my-topic --messages 'hello-pulsar'")
-    assert_match "1 messages successfully produced", output
-    output = shell_output("#{bin}/pulsar initialize-cluster-metadata -c a -cs localhost -uw localhost -zk localhost")
-    assert_match "Cluster metadata setup correctly {cluster=a}", output
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      output = shell_output("#{bin}/pulsar-client produce my-topic --messages 'hello-pulsar'")
+      assert_match "1 messages successfully produced", output
+      output = shell_output("#{bin}/pulsar initialize-cluster-metadata -c a -cs localhost " \
+                            "-uw localhost -zk localhost")
+      assert_match "Cluster metadata setup correctly {cluster=a}", output
+    end
   end
 end

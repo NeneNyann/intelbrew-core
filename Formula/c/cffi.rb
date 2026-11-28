@@ -8,6 +8,7 @@ class Cffi < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "0e1a438099d7686d2f490407f5d95faa4669b9c13608084410897a15e1f56b9d"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "d7c98c069644a0a61555205409542723624b98fd473b0fdae3df49d9e7b78812"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "d2ccf2a7ad2dbb4ec3aa9339f53e8463991ce0aea93aec9cebb8ad9c9489a7d0"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "76737cff191bced920ad297428f4658c13a0217f8791d552fce896f6e6ed300f"
@@ -15,6 +16,7 @@ class Cffi < Formula
     sha256                               x86_64_linux:      "2e5107965cdd00ef524d9ddebfaefb3346ff0fdd944f879da6080bb414ac3246"
   end
 
+  depends_on "python-setuptools" => :build
   depends_on "python@3.14" => [:build, :test]
   depends_on "python@3.15" => [:build, :test]
   depends_on "pycparser"
@@ -23,15 +25,11 @@ class Cffi < Formula
 
   pypi_packages exclude_packages: "pycparser"
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.start_with?("python@") }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
+  deny_network_access!
 
   def install
-    pythons.each do |python|
-      system python, "-m", "pip", "install", *std_pip_args(build_isolation: true), "."
+    python3_interpreters.each do |python|
+      system python, "-m", "pip", "install", *std_pip_args, "."
     end
   end
 
@@ -57,7 +55,7 @@ class Cffi < Formula
       print(lib.sum(1, 2))
     PYTHON
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       assert_equal 3, shell_output("#{python} sum.py").to_i
     end
   end

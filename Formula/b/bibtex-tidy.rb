@@ -6,10 +6,13 @@ class BibtexTidy < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "fa915681be4dd764245f3b5d3ac1b42a523dcaf03f4eddf25ec1c98868b2be28"
     sha256 cellar: :any_skip_relocation, all: "0fac33a0a8b25b4b467f1d89346a199da86adca5d0988283fdc7080dca540b8d"
   end
 
   depends_on "node"
+
+  deny_network_access!
 
   def install
     system "npm", "install", *std_npm_args

@@ -12,6 +12,7 @@ class Visp < Formula
   end
 
   bottle do
+    manifest_sha256 "25e1c9eb5c2504a0f56dc43b0fb25f302da43186631a7a6e9af999635105ec1b"
     sha256 cellar: :any, arm64_golden_gate: "c74f019c376df94c4ddf5f8d78c678fbfc8534283a3b81c4e0359396e7ea9eca"
     sha256 cellar: :any, arm64_tahoe:       "689c8caaa07945e2c155cba794915143941d65a1c2d2327af69c8264ae7ff602"
     sha256 cellar: :any, arm64_sequoia:     "c1759f5cf0e780adb55ccef2dc4c8d7a6d34270824d99e8b367ac45e714baf05"
@@ -67,6 +68,8 @@ class Visp < Formula
     resolves "https://github.com/lagadic/visp/pull/1962"
   end
 
+  deny_network_access!
+
   def install
     ENV.cxx11
 
@@ -108,17 +111,17 @@ class Visp < Formula
                          "-DBUILD_TUTORIALS=OFF",
                          "-DUSE_DC1394=ON",
                          "-DDC1394_INCLUDE_DIR=#{formula_opt_include("libdc1394")}",
-                         "-DDC1394_LIBRARY=#{formula_opt_lib("libdc1394")/shared_library("libdc1394")}",
+                         "-DDC1394_LIBRARY=#{formula_opt_lib("libdc1394")}/#{shared_library("libdc1394")}",
                          "-DUSE_EIGEN3=ON",
                          "-DEigen3_DIR=#{Formula["eigen"].opt_share}/eigen3/cmake",
                          "-DEIGEN3_INCLUDE_DIR=#{formula_opt_include("eigen")}/eigen3",
                          "-DUSE_GSL=ON",
                          "-DGSL_INCLUDE_DIR=#{formula_opt_include("gsl")}",
-                         "-DGSL_cblas_LIBRARY=#{formula_opt_lib("gsl")/shared_library("libgslcblas")}",
-                         "-DGSL_gsl_LIBRARY=#{formula_opt_lib("gsl")/shared_library("libgsl")}",
+                         "-DGSL_cblas_LIBRARY=#{formula_opt_lib("gsl")}/#{shared_library("libgslcblas")}",
+                         "-DGSL_gsl_LIBRARY=#{formula_opt_lib("gsl")}/#{shared_library("libgsl")}",
                          "-DUSE_JPEG=ON",
                          "-DJPEG_INCLUDE_DIR=#{formula_opt_include("jpeg-turbo")}",
-                         "-DJPEG_LIBRARY=#{formula_opt_lib("jpeg-turbo")/shared_library("libjpeg")}",
+                         "-DJPEG_LIBRARY=#{formula_opt_lib("jpeg-turbo")}/#{shared_library("libjpeg")}",
                          "-DUSE_LAPACK=ON",
                          "-DUSE_LIBUSB_1=OFF",
                          "-DUSE_OPENCV=ON",
@@ -126,7 +129,7 @@ class Visp < Formula
                          "-DUSE_PCL=ON",
                          "-DUSE_PNG=ON",
                          "-DPNG_PNG_INCLUDE_DIR=#{formula_opt_include("libpng")}",
-                         "-DPNG_LIBRARY_RELEASE=#{formula_opt_lib("libpng")/shared_library("libpng")}",
+                         "-DPNG_LIBRARY_RELEASE=#{formula_opt_lib("libpng")}/#{shared_library("libpng")}",
                          "-DUSE_PTHREAD=ON",
                          "-DUSE_PYLON=OFF",
                          "-DUSE_REALSENSE=OFF",
@@ -135,7 +138,7 @@ class Visp < Formula
                          "-DUSE_XML2=ON",
                          "-DUSE_ZBAR=ON",
                          "-DZBAR_INCLUDE_DIRS=#{formula_opt_include("zbar")}",
-                         "-DZBAR_LIBRARIES=#{formula_opt_lib("zbar")/shared_library("libzbar")}",
+                         "-DZBAR_LIBRARIES=#{formula_opt_lib("zbar")}/#{shared_library("libzbar")}",
                          "-DUSE_ZLIB=ON",
                          "-DUSE_MAVSDK=OFF",
                          *std_cmake_args

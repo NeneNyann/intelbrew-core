@@ -6,12 +6,15 @@ class Vpcs < Formula
   license "BSD-2-Clause"
 
   bottle do
+    manifest_sha256 "a313693470d129ee7eb6006d7914dda2e7cd601dc5bed5b069a7e49429d6c1a0"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "b119202d1c5c35a7af45713e6f4daeb4f63050d032fbb19065f2801defe64351"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "328d5ad0176e1eb5e709f3ddc330afde3f80fc7643bb90957e8c1009f695507a"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "52976360dd75517c622ee05444b8a6aac2fc6b6d70188a9b3652aa8f9ee7574f"
     sha256 cellar: :any,                 arm64_linux:       "ca137413ac618185cae30b4d4b356dc6c53900dbe8577aacbbc0aaa2378cf747"
     sha256 cellar: :any,                 x86_64_linux:      "ebc21324e28853068b091234f119e29fd7aa011ee6cd4b555cbae84fc62b27c7"
   end
+
+  deny_network_access!
 
   def install
     os = OS.mac? ? "osx" : OS.kernel_name.downcase

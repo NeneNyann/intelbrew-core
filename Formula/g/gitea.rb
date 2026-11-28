@@ -13,6 +13,7 @@ class Gitea < Formula
   end
 
   bottle do
+    manifest_sha256 "914a77ce3c896184f6bfe286fb6a6f4f538994241d6952064b1609b3fd56210e"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c77d836b07f0ef212737da6e8647a2a863b1dc3f304c605c694f3e1f3ff26805"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "82352dfc5a4e67dc180f48588c2a16b26231694a21e71a4408cbdd6337c32f27"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "03e0bed5292292371875d1a81566fdb507331e7b0377f66479720047bdab5777"
@@ -53,17 +54,14 @@ class Gitea < Formula
     ENV["GITEA_WORK_DIR"] = testpath
     port = free_port
 
-    pid = spawn bin/"gitea", "web", "--port", port.to_s, "--install-port", port.to_s
+    with_test_process(bin/"gitea", "web", "--port", port.to_s, "--install-port", port.to_s) do
+      output = shell_output("curl --silent --retry 5 --retry-connrefused http://localhost:#{port}/api/settings/api")
+      assert_match "Go to default page", output
 
-    output = shell_output("curl --silent --retry 5 --retry-connrefused http://localhost:#{port}/api/settings/api")
-    assert_match "Go to default page", output
+      output = shell_output("curl -s http://localhost:#{port}/")
+      assert_match "Installation - Gitea: Git with a cup of tea", output
 
-    output = shell_output("curl -s http://localhost:#{port}/")
-    assert_match "Installation - Gitea: Git with a cup of tea", output
-
-    assert_match version.to_s, shell_output("#{bin}/gitea -v")
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      assert_match version.to_s, shell_output("#{bin}/gitea -v")
+    end
   end
 end

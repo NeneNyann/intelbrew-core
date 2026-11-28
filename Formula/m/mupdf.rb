@@ -13,6 +13,7 @@ class Mupdf < Formula
   end
 
   bottle do
+    manifest_sha256 "66020aad43fd5abb8188fbab34aaca2c3647bef1b23ead04f37c2a24c7ae70c3"
     sha256 cellar: :any, arm64_golden_gate: "20cfe1b07f88ede830eb6ce3f61ba871f7ad25e20ba7d7f536fae7fafd6aa0a8"
     sha256 cellar: :any, arm64_tahoe:       "27671ae135295355150e1e4ad690b0cfc77ddb5b0bff7a8a191cee9dbd61999e"
     sha256 cellar: :any, arm64_sequoia:     "c643e703aeeecf961b3d0346d6ea471ee7e2af49610f27f6965cb7f8b11a84b0"
@@ -91,7 +92,7 @@ class Mupdf < Formula
 
     # For python bindings needed by `pymupdf`: https://pymupdf.readthedocs.io/en/latest/packaging.html
     site_packages = Language::Python.site_packages(python3)
-    ENV.prepend_path "PYTHONPATH", formula_opt_prefix("llvm@21")/site_packages
+    ENV.prepend_path "PYTHONPATH", dep("llvm").opt_prefix/site_packages
 
     (buildpath/"pipcl").install resource("pipcl")
     ENV.prepend_path "PYTHONPATH", buildpath/"pipcl/src"
@@ -104,7 +105,7 @@ class Mupdf < Formula
       tesseract=yes
       verbose=yes
       prefix=#{prefix}
-      pydir=#{prefix/site_packages}
+      pydir=#{prefix}/#{site_packages}
       CC=#{ENV.cc}
       USE_SYSTEM_LIBS=yes
       USE_SYSTEM_MUJS=no
@@ -122,8 +123,10 @@ class Mupdf < Formula
         ["OPENJPEG", "libopenjp2"],
         ["TESSERACT", "tesseract"],
       ].each do |argname, libname|
-        args << "SYS_#{argname}_CFLAGS=#{Utils.safe_popen_read("pkgconf", "--cflags", libname).strip}"
-        args << "SYS_#{argname}_LIBS=#{Utils.safe_popen_read("pkgconf", "--libs", libname).strip}"
+        cflags = Utils.safe_popen_read("pkgconf", "--cflags", libname).strip
+        args << "SYS_#{argname}_CFLAGS=#{cflags}"
+        libs = Utils.safe_popen_read("pkgconf", "--libs", libname).strip
+        args << "SYS_#{argname}_LIBS=#{libs}"
         args << "HAVE_SYS_#{argname}=yes"
       end
 

@@ -6,6 +6,7 @@ class Pgslice < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "3b17e5cde401c2f619843336c69a07769f4eff2f1bfe29dce46e9254c2007b11"
     sha256 cellar: :any,                 arm64_golden_gate: "94d04e1bf056a172dd0386bdc0cd13d2abce8079fbc7b01a56aa5dec0f5c6796"
     sha256 cellar: :any,                 arm64_tahoe:       "11819b8c5a090be57c1d7122e5fc3462159fb7190e1ca5610f7e7eb637f7bebe"
     sha256 cellar: :any,                 arm64_sequoia:     "8f8dba8973d4a01f2fe35dec6df26d676f87078d7ca8ea3d709a3c2166eedcf2"
@@ -15,7 +16,7 @@ class Pgslice < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "8416b778ccc3f5aa00631ddfc2f76957efd54b39fc22273edadf9c461a9892c5"
   end
 
-  depends_on "postgresql@18" => :test
+  depends_on "postgresql@19" => :test
   depends_on "libpq"
   depends_on "ruby"
 
@@ -55,23 +56,19 @@ class Pgslice < Formula
 
   test do
     ENV["LC_ALL"] = "C"
+    ENV["PGDATA"] = testpath/"test"
 
-    postgresql = Formula["postgresql@18"]
-    pg_ctl = postgresql.opt_bin/"pg_ctl"
+    pg_ctl = formula_opt_bin("postgresql@19")/"pg_ctl"
     port = free_port
 
-    system pg_ctl, "initdb", "-D", testpath/"test"
-    (testpath/"test/postgresql.conf").write <<~CONF, mode: "a+"
-      port = #{port}
-    CONF
-    system pg_ctl, "start", "-D", testpath/"test", "-l", testpath/"log"
+    system pg_ctl, "initdb", "--options=-c port=#{port}"
+    system pg_ctl, "start", "--log=#{testpath}/log"
 
-    begin
-      ENV["PGSLICE_URL"] = "postgres://localhost:#{port}/postgres"
+    with_env(PGSLICE_URL: "postgres://localhost:#{port}/postgres") do
       output = shell_output("#{bin}/pgslice prep users created_at day 2>&1", 1)
       assert_match "Table not found", output
     ensure
-      system pg_ctl, "stop", "-D", testpath/"test"
+      system pg_ctl, "stop"
     end
   end
 end

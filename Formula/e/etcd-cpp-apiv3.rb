@@ -7,6 +7,7 @@ class EtcdCppApiv3 < Formula
   revision 55
 
   bottle do
+    manifest_sha256 "5c0027c07fc2aa98b97d5fa1f458da967c62d4fe88411b7c3f89d74ed877843b"
     sha256 cellar: :any, arm64_golden_gate: "fbebdf92a432ad2c5d226acefc64dbd1c5282b98510ff287200194d22dd306ee"
     sha256 cellar: :any, arm64_tahoe:       "c1da23cf81505fd4a967ad1fb59940b25f1bf01699289b155a39ae9700b631b8"
     sha256 cellar: :any, arm64_sequoia:     "8c390af212e54cb28aad7f3f02d0dfb39b6e281abf1d1826636e0da82f822e77"
@@ -68,12 +69,13 @@ class EtcdCppApiv3 < Formula
   allow_network_access! :test
 
   def install
+    openssl_prefix = dep("openssl").opt_prefix
     system "cmake", "-S", ".", "-B", "build",
                     "-DCMAKE_CXX_STANDARD=17",
                     "-DCMAKE_CXX_STANDARD_REQUIRED=TRUE",
                     "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                     "-DBUILD_ETCD_TESTS=OFF",
-                    "-DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}",
+                    "-DOPENSSL_ROOT_DIR=#{openssl_prefix}",
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
@@ -115,20 +117,15 @@ class EtcdCppApiv3 < Formula
     system "cmake", "--build", "build"
 
     # prepare etcd
-    etcd_pid = spawn(
+    with_test_process(
       formula_opt_bin("etcd")/"etcd",
       "--force-new-cluster",
       "--data-dir=#{testpath}",
       "--listen-client-urls=http://127.0.0.1:#{port}",
       "--advertise-client-urls=http://127.0.0.1:#{port}",
-    )
-
-    # sleep to let etcd get its wits about it
-    sleep 10
-
-    assert_equal("bar\n", shell_output("./build/test_etcd_cpp_apiv3"))
-  ensure
-    # clean up the etcd process before we leave
-    Process.kill("HUP", etcd_pid)
+    ) do
+      sleep 10 # sleep to let etcd get its wits about it
+      assert_equal("bar\n", shell_output("./build/test_etcd_cpp_apiv3"))
+    end
   end
 end

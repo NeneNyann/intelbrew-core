@@ -10,6 +10,7 @@ class Beets < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "37ab50dd89d8a209ab824a383f74b32f56e446f4cda07e0198abb28d7cff2a38"
     sha256 cellar: :any, arm64_golden_gate: "a4cc5e3c46f4e3543baa14023dadee80beb67d1e097a81de17f7c5f5921a158a"
     sha256 cellar: :any, arm64_tahoe:       "3c1713c9bf78c79d738adad1d4518e38783775143022d9b2cd86c7fcb20e11d2"
     sha256 cellar: :any, arm64_sequoia:     "1d9ebce6310a960ca48ac9543a3b1d219d70c2fb91b6747523cc04a566499bed"
@@ -111,6 +112,8 @@ class Beets < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     # TODO: Remove when jellfish supports python 3.15:  https://codeberg.org/jpt/jellyfish/issues/237

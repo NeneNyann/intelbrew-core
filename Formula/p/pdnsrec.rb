@@ -11,6 +11,7 @@ class Pdnsrec < Formula
   end
 
   bottle do
+    manifest_sha256 "0d19c3328e7e168c44a445f436053360ac55e59310e373cad5ef9f78934b2162"
     sha256 arm64_golden_gate: "7a0dfd23a7eb10fa4d8f952381752c580063ef2acacc2877e104c89e8630683b"
     sha256 arm64_tahoe:       "269a84f69b6af7ab3198e3f358ea987e14330177a6cb64b33e48644ee9b97dfc"
     sha256 arm64_sequoia:     "e31f4e9ecaa98b11b5b55ef255d208e4ee844b1b1aef0dd2764609e7139aa25c"
@@ -29,8 +30,6 @@ class Pdnsrec < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def fetch
     cd "rec-rust-lib/rust" do
       system "cargo", "fetch", *std_cargo_fetch_args
@@ -38,11 +37,12 @@ class Pdnsrec < Formula
   end
 
   def install
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --sysconfdir=#{etc}/powerdns
       --disable-silent-rules
       --with-boost=#{formula_opt_prefix("boost")}
-      --with-libcrypto=#{formula_opt_prefix(openssl)}
+      --with-libcrypto=#{openssl_prefix}
       --with-lua
       --without-net-snmp
     ]

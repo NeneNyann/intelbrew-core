@@ -11,6 +11,7 @@ class Le < Formula
   end
 
   bottle do
+    manifest_sha256 "1336166390d2f17871cc1f8b4ed3bd0259e3513101431992126655132f681348"
     sha256 arm64_golden_gate: "68cf034c1be14a7af1b2105ce5d731d5c25c2a9ed2d4c7cc39e12f42a4098698"
     sha256 arm64_tahoe:       "536dab79fee1b51a836e94ae60923a4db7860c58512052249875a8012e816802"
     sha256 arm64_sequoia:     "4c5be48a3e8a62904eae2419ba95fa1146897cdc9946c8d388b7d610fa888f0b"
@@ -43,7 +44,11 @@ class Le < Formula
     # Configure script makes bad assumptions about curses locations.
     # Future versions allow this to be manually specified:
     # https://github.com/lavv17/le/commit/d921a3cdb3e1a0b50624d17e5efeb5a76d64f29d
-    ncurses = OS.mac? ? MacOS.sdk_path/"usr/include" : formula_opt_include("ncurses")
+    ncurses = if OS.mac?
+      MacOS.sdk_path/"usr/include"
+    else
+      formula_opt_include("ncurses")
+    end
     inreplace "configure", "/usr/local/include/ncurses", ncurses
 
     ENV.deparallelize

@@ -9,6 +9,7 @@ class AnsibleAT10 < Formula
   revision 6
 
   bottle do
+    manifest_sha256 "5d7866c14aa132417f2bf048ff8cb7e2f3c3e64cd5647c61523856e7b3e88a79"
     sha256 cellar: :any,                 arm64_tahoe:   "f9d73aae386e968bb5bc720aabf62f83fcee6ee1e1b460fd2c95ef8b6c467190"
     sha256 cellar: :any,                 arm64_sequoia: "f8e04a12807cbf214cfe13cd8a8cb5654951a6936d4cfd6b7423b2dd79c240bc"
     sha256 cellar: :any,                 arm64_sonoma:  "2cd30eb6e7c308922a01742bcef68703e6e2c09ad9ce984bf999263da3e9385c"
@@ -611,6 +612,8 @@ class AnsibleAT10 < Formula
     sha256 "627ad26769b6831130239182afcb195f64fbf494626bc9eb4b2ac8170de5b775"
   end
 
+  allow_network_access!
+
   def install
     ENV["SODIUM_INSTALL"] = "system"
     venv = virtualenv_install_with_resources without: "ansible-core"
@@ -627,7 +630,8 @@ class AnsibleAT10 < Formula
         - name: ping
           ping:
     YAML
-    python3 = "python#{Language::Python.major_minor_version libexec/"bin/python"}"
+    python_version = Language::Python.major_minor_version libexec/"bin/python"
+    python3 = "python#{python_version}"
     (testpath/"hosts.ini").write [
       "localhost ansible_connection=local",
       " ansible_python_interpreter=#{which(python3)}",

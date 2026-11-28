@@ -16,6 +16,7 @@ class Tectonic < Formula
   end
 
   bottle do
+    manifest_sha256 "c46e87c398d13cb1172fa37ed77f786b0981073ce8416ccecd75c6e022935ad5"
     sha256 cellar: :any, arm64_golden_gate: "33c055a3a94b0b37f747dca29d57df64874fa874541c77ae889fdbde6ae37df6"
     sha256 cellar: :any, arm64_tahoe:       "306cae677bbe62d270d3a774dc0311726619c08765782493755e61f32f9a1804"
     sha256 cellar: :any, arm64_sequoia:     "b12e7b8260d56a20e726e7a17bd1b9d0df1497e08b4e389fd09c41d00ecd1cc7"
@@ -49,7 +50,7 @@ class Tectonic < Formula
 
     # Ensure that the `openssl` crate picks up the intended library.
     # https://crates.io/crates/openssl#manual-configuration
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4") if OS.linux?
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix if OS.linux?
 
     system "cargo", "install", *std_cargo_args(features: "external-harfbuzz")
     bin.install_symlink bin/"tectonic" => "nextonic"

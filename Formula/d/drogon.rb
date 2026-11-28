@@ -9,6 +9,7 @@ class Drogon < Formula
   head "https://github.com/drogonframework/drogon.git", branch: "master"
 
   bottle do
+    manifest_sha256 "4101051f265fbc921feaa8620d6d93505c2ba87ca4476758c5990025d7a189e9"
     sha256 cellar: :any, arm64_golden_gate: "9a87aa794ec1b8fcefa96a03b41aafb03211f4271cbca7a784fcd2add0b7f15d"
     sha256 cellar: :any, arm64_tahoe:       "dda5b31078f592a8856318c8c526961effd0e1e9e41dc04a7ad617ac59120b2c"
     sha256 cellar: :any, arm64_sequoia:     "a682a4681c8999f5404f7d0086a4ac303df23fc53e91e66fc4b1e496622da836"
@@ -46,17 +47,14 @@ class Drogon < Formula
       port = free_port
       inreplace "main.cc", "5555", port.to_s
 
-      system "cmake", "-S", ".", "-B", "build", "-DCMAKE_PREFIX_PATH=#{formula_opt_prefix("openssl@4")}"
+      openssl_prefix = dep("openssl").opt_prefix
+      system "cmake", "-S", ".", "-B", "build", "-DCMAKE_PREFIX_PATH=#{openssl_prefix}"
       system "cmake", "--build", "build"
 
-      begin
-        pid = spawn("build/hello")
+      with_test_process("build/hello") do
         sleep 1
         result = shell_output("curl -s 127.0.0.1:#{port}")
         assert_match "<hr><center>drogon", result
-      ensure
-        Process.kill("SIGINT", pid)
-        Process.wait(pid)
       end
     end
   end

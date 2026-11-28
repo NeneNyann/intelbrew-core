@@ -1,17 +1,18 @@
 class Carapace < Formula
   desc "Multi-shell multi-command argument completer"
   homepage "https://carapace.sh"
-  url "https://github.com/carapace-sh/carapace-bin/archive/refs/tags/v1.8.2.tar.gz"
-  sha256 "56b934e1c94cb4e10d912c0158a74f8b727e430e6d9c8aff5bfb99e124fa3ace"
+  url "https://github.com/carapace-sh/carapace-bin/archive/refs/tags/v1.8.5.tar.gz"
+  sha256 "e301baf4c1921d22da98e01813dadb7c1c6db435120c3e9db5b4e209e307d5dd"
   license "MIT"
   head "https://github.com/carapace-sh/carapace-bin.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "97e3977accb34dc635eaea539d4167b996b41a603730b63180b2af961f860685"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "97e3977accb34dc635eaea539d4167b996b41a603730b63180b2af961f860685"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "97e3977accb34dc635eaea539d4167b996b41a603730b63180b2af961f860685"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "16efbc0feb4996bb70adfd4aa1a42c6fa165735da4effad8dcbe72eec2f55e9a"
-    sha256 cellar: :any,                 x86_64_linux:      "0da6f764130e41254ab244f7910019bbf693e217a318c8b1a68c40707331a2d7"
+    manifest_sha256 "5dd66a1b42ab4fc6750e080d975a88a066b8028ace9f171dfabe63ebf82a8ad5"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "021e6609521711aebbee7851cdb4aefdaf7b67b6d591cfe2d8133d36f75bf9cc"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "021e6609521711aebbee7851cdb4aefdaf7b67b6d591cfe2d8133d36f75bf9cc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "021e6609521711aebbee7851cdb4aefdaf7b67b6d591cfe2d8133d36f75bf9cc"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "2fec7feb65da44f729a699b22b8ba222a9cbe5b938491cb29fcd23353bc21934"
+    sha256 cellar: :any,                 x86_64_linux:      "d5dd15bf3c562f48d97fe7fbe04a6208153a93b9ca3d6421b6ce6cf0d785800d"
   end
 
   depends_on "go" => :build

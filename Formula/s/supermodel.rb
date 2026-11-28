@@ -1,18 +1,19 @@
 class Supermodel < Formula
   desc "Sega Model 3 arcade emulator"
   homepage "https://github.com/trzy/Supermodel"
-  url "https://github.com/trzy/Supermodel/archive/refs/tags/v0.4-20261116-git-e9e07c1.tar.gz"
-  version "0.4-20261116-git-e9e07c1"
-  sha256 "6fbbc549a705d8707b3b4ba7b3be4b2f37e417f70e014eaa2bbdb676508a027c"
+  url "https://github.com/trzy/Supermodel/archive/refs/tags/v0.4-20261127-git-85dd58e.tar.gz"
+  version "0.4-20261127-git-85dd58e"
+  sha256 "46bff6c6997513a7c3a019402476f02f15d9faff1c4c5fcc83f8db3c056696c9"
   license "GPL-3.0-or-later"
   head "https://github.com/trzy/Supermodel.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "e247a14dd74a7ce9d27ccf7c5d0088e11be8300cfc7811f7b1a3dc60311a7fc0"
-    sha256 cellar: :any, arm64_tahoe:       "1e7d55d63fec7998cedf4198d094ae5414c232e48c07ffd6d9c9a84e7cc3b7ac"
-    sha256 cellar: :any, arm64_sequoia:     "3076de0912cd3fb85f62d2dc989f558609a0ebc9d2cc762963e32084b1b3275c"
-    sha256 cellar: :any, arm64_linux:       "f430becd43cbc8c0b4c7150516b7ba0e5162d37b0dfc4995dcf2ee053cc27bb5"
-    sha256 cellar: :any, x86_64_linux:      "04c9bce37ecc875e25b2e795f3367ba253fa3ebb50bff1655e7e70520216c460"
+    manifest_sha256 "a089429f006e76bd06bda23f02af9a59af34a3950d61f58d3b0fc3ed1f3c4f29"
+    sha256 cellar: :any, arm64_golden_gate: "dd4a3a9ce8d9ed7b06e558ebc215aed738028ad318d4cbfce57b3c8c634e11f8"
+    sha256 cellar: :any, arm64_tahoe:       "a4d7984103ef1c22def36f9d1cb301496ddc45c07b279bade1e380c95c1f405a"
+    sha256 cellar: :any, arm64_sequoia:     "bbf901b5e6ee04cac4f0c7990d34b52ab9c4f1287c8c0dcf80bca6a6748dbea2"
+    sha256 cellar: :any, arm64_linux:       "c8dbb172193f9c8b4dde0a17f0fe781bdf278d3e55ceeff97e52a51813fdcc55"
+    sha256 cellar: :any, x86_64_linux:      "dca26a26b501a4e2ca8754e58556b0791a31704849525014e4bdb6d97afb8414"
   end
 
   depends_on "sdl2-compat"

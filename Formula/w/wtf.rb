@@ -12,8 +12,11 @@ class Wtf < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "80344db3beee08196ce84f3fb381c402233d3647db5127f5ace6946125c6ed8e"
     sha256 cellar: :any_skip_relocation, all: "bc34952388539647f56ffd984f795b2fdea730d0ba466a6bd6ec9aedea6a74cf"
   end
+
+  deny_network_access!
 
   def install
     inreplace %w[wtf wtf.6], "/usr/share", share

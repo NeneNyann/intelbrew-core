@@ -12,6 +12,7 @@ class Asymptote < Formula
   end
 
   bottle do
+    manifest_sha256 "c30045c564ed199f041b34e008927bae21bb7c2ed9467434fefe749543b3f5b7"
     sha256 arm64_golden_gate: "15f2e324377f4f3c8cf2ccdf645a2fc1df4e4ae836c21a01592e242b25f83760"
     sha256 arm64_tahoe:       "cc599f37c6eedeee835f0ac1778faae4483f7b755e2c1eaf5668f8e374877372"
     sha256 arm64_sequoia:     "b7d28ddb24746f7a1733f09a1fbb6d27f3bb4f75deac0cf6f95a39ced47de009"
@@ -72,7 +73,7 @@ class Asymptote < Formula
     # Also workaround to override bundled bdw-gc. Upstream is not willing to add configure option.
     # Ref: https://github.com/vectorgraphics/asymptote/issues/521#issuecomment-2644549764
     touch "doc/asy-latex.pdf"
-    system "make", "install-asy", "GCLIB=#{formula_opt_lib("bdw-gc")/shared_library("libgc")}"
+    system "make", "install-asy", "GCLIB=#{formula_opt_lib("bdw-gc")}/#{shared_library("libgc")}"
 
     doc.install resource("manual")
     elisp.install_symlink pkgshare.glob("*.el")

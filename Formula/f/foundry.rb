@@ -4,8 +4,8 @@ class Foundry < Formula
   # `build.rs` in `common` crate requires `.git` repository
   # https://github.com/foundry-rs/foundry/blob/4072e48705af9d93e3c0f6e29e93b5e9a40caed8/crates/common/build.rs#L9-L12
   url "https://github.com/foundry-rs/foundry.git",
-      tag:      "v1.9.0",
-      revision: "6056c5845d34205a83cf7108042adb137325c9df"
+      tag:      "v1.10.1",
+      revision: "7c15a1dd0ca75f2b4d6d7961ac55aacbe5cf6378"
   license any_of: ["MIT", "Apache-2.0"]
   head "https://github.com/foundry-rs/foundry.git", branch: "master"
 
@@ -15,11 +15,12 @@ class Foundry < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "23262a3b3938abbf2c47789232148372e756bfe07f445a24cd8ce97451c969ee"
-    sha256 cellar: :any, arm64_tahoe:       "b54926e7ae51c6d05f257fa6e6d7ce54ff059803c26cdb0739f1b5cb730d8d01"
-    sha256 cellar: :any, arm64_sequoia:     "ac3158b9559e02040f547dda40b2c4cc656c1770a7504463cf46791236b7da99"
-    sha256 cellar: :any, arm64_linux:       "966bfbaaa83d26c8541a90fa40a34f10f33569e10246d4d826c97ff3b89c8068"
-    sha256 cellar: :any, x86_64_linux:      "95c3ceb234dacfbede5295767aa1809608748538bff391b43797c72f68662e5c"
+    manifest_sha256 "18d94d1259ae88217cd937a9b03ab49dfb20225820d62bef46f2b819fdd02a94"
+    sha256 cellar: :any, arm64_golden_gate: "cc34b617ea2474849d87b1f742489b15f98aeaad6bf754cb80ca068c66577f6e"
+    sha256 cellar: :any, arm64_tahoe:       "7a6041cc0546a7c416e4ede1810d0f7cd2675c10218231881f8ec23d72164467"
+    sha256 cellar: :any, arm64_sequoia:     "a8c2710de2fec57dfe62b377162f2e2e6c380e98af4d7d4c9d8eb160446a353b"
+    sha256 cellar: :any, arm64_linux:       "1a0f218adc55edb3dff6feb24f33fc8bd248a74805e6b38a0fba3a8ebf0c884c"
+    sha256 cellar: :any, x86_64_linux:      "1f8254e2311a6909f776778d633bceb632f45b15f6ef26b8afde796b6fd7c3fa"
   end
 
   depends_on "help2man" => :build
@@ -73,13 +74,9 @@ class Foundry < Formula
     assert_match "Decimal: 2\n", pipe_output("#{bin}/chisel", "1+1")
 
     anvil_port = free_port
-    anvil = spawn bin/"anvil", "--port", anvil_port.to_s
-    sleep 2
-    assert_equal "31337", shell_output("#{bin}/cast cid -r 127.0.0.1:#{anvil_port}").chomp
-  ensure
-    if anvil
-      Process.kill("TERM", anvil)
-      Process.wait anvil
+    with_test_process(bin/"anvil", "--port", anvil_port.to_s) do
+      sleep 2
+      assert_equal "31337", shell_output("#{bin}/cast cid -r 127.0.0.1:#{anvil_port}").chomp
     end
   end
 end

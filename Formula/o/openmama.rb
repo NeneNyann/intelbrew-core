@@ -11,6 +11,7 @@ class Openmama < Formula
   end
 
   bottle do
+    manifest_sha256 "8f445b3bcfabbab468aec6fe2c72556055f403ff440a09055a216e1c004fb7f7"
     sha256 cellar: :any,                 arm64_golden_gate: "cb70e6a5d81c608f9ab3d58946261ddf62c521c3f7f273b53e3820ce1d65eb5e"
     sha256 cellar: :any,                 arm64_tahoe:       "5702a64103b3c429d8d1499aedd50c032b572b3ba6c748f185cf2566a3fdf390"
     sha256 cellar: :any,                 arm64_sequoia:     "786b187f472ddd357f105cffc281cf4f8382b46ae31c5b428a5f1d8038c812ae"
@@ -52,7 +53,10 @@ class Openmama < Formula
       -DWITH_TESTTOOLS=OFF
       -DOPENMAMA_VERSION=#{version}
     ]
-    args += %W[-DUUID_INCLUDE_DIRS=#{MacOS.sdk_for_formula(self).path}/usr/include -DUUID_LIBRARIES=c] if OS.mac?
+    if OS.mac?
+      sdk_path = MacOS.sdk_for_formula(self).path
+      args += %W[-DUUID_INCLUDE_DIRS=#{sdk_path}/usr/include -DUUID_LIBRARIES=c]
+    end
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"

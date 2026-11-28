@@ -8,6 +8,7 @@ class Dcd < Formula
   head "https://github.com/dlang-community/dcd.git", branch: "master"
 
   bottle do
+    manifest_sha256 "1a2949e264e42614c1f15604c703a2fc93f759037d0543f617eade289305d97f"
     sha256               arm64_golden_gate: "c4c91f43d9f6eb322155777b0a6f12ead207a4f557e668d32edd034ca710b494"
     sha256               arm64_tahoe:       "f5786b92c21a959f0ed743470e305d576ab850cdcdaa32c965fe754fdad8c5e6"
     sha256               arm64_sequoia:     "189d61bc888b3b46aa3e46cbe200303c5bcc28c940e87cfa124988381761d846"
@@ -27,13 +28,11 @@ class Dcd < Formula
 
     # spawn a server, using a non-default port to avoid
     # clashes with pre-existing dcd-server instances
-    server = spawn bin/"dcd-server", "-p", port.to_s
-    # Give it generous time to load
-    sleep 0.5
-    # query the server from a client
-    system bin/"dcd-client", "-q", "-p", port.to_s
-  ensure
-    Process.kill "TERM", server
-    Process.wait server
+    with_test_process(bin/"dcd-server", "-p", port.to_s) do
+      # Give it generous time to load
+      sleep 0.5
+      # query the server from a client
+      system bin/"dcd-client", "-q", "-p", port.to_s
+    end
   end
 end

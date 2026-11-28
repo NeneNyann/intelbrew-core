@@ -1,17 +1,18 @@
 class CargoDeny < Formula
   desc "Cargo plugin for linting your dependencies"
   homepage "https://github.com/EmbarkStudios/cargo-deny"
-  url "https://github.com/EmbarkStudios/cargo-deny/archive/refs/tags/0.21.0.tar.gz"
-  sha256 "bcfa93ae07a8dbe4f643c65536266ae0dd8bc26ab4e0f813072a0e898a45591f"
+  url "https://github.com/EmbarkStudios/cargo-deny/archive/refs/tags/0.22.2.tar.gz"
+  sha256 "ac56e12dfab673dcbf4f219a1f49ea8ed2165a98db6e7227a8bda9f221a755e6"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/EmbarkStudios/cargo-deny.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e08036343c95ebf8c198893017f1fa3a92bf729c307ea4b0fe733b6a3c17450d"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "df5e7c6211c6110e041424ca28b3764d7099e4da2e8d70c434317c880c877ea6"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d76adbb8aeaaad4bd559b1b9158c937acc36a7c8449d5196662471dba0200b48"
-    sha256 cellar: :any,                 arm64_linux:       "6669badebd01b552db5760dda9e87275c79d51efb28dba2e43b42e22a3f495d3"
-    sha256 cellar: :any,                 x86_64_linux:      "9e7ae98bceeadfdfaad389f806bb54a690f25059d7dc0a7ae82f2913d5a7044e"
+    manifest_sha256 "46d74a01f9171ec075569242611e600d2f7af269ba0858cb78915929c7716faf"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "53ec72e28ddf36aaceec1c0735d446e39e709f36582bd6d007021abb700d1fdc"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "64deb26d084270226a8d3e0bc0e730f2660284623c4b28a3192ed5d3e0bdae4b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "8bbdd3549342d586acb14e0cd8fcba5ed645ed655bd247b38de65cebe1fc3b36"
+    sha256 cellar: :any,                 arm64_linux:       "54cf7ed08ae327f716326d5beb9abae710299479b96918c66a596bd4b015fdf6"
+    sha256 cellar: :any,                 x86_64_linux:      "42209ff7a987b094ccd7a6437ef466210d7f614764320ac927020c891b42c129"
   end
 
   depends_on "pkgconf" => :build

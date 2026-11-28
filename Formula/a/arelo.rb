@@ -7,6 +7,7 @@ class Arelo < Formula
   head "https://github.com/makiuchi-d/arelo.git", branch: "master"
 
   bottle do
+    manifest_sha256 "0390af62db6981f9e2b60f5d8133153902a419d771715d63ef21e4c9ffc5c9c1"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c8669c54da8949643adb7cc6b7d7d2440db69b86d39868280c62ca9815472b39"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "ef8b5e963b9357f36274cc3215e3c4bef786c2ca7f81d844ed7161426725d9a6"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "ef8b5e963b9357f36274cc3215e3c4bef786c2ca7f81d844ed7161426725d9a6"
@@ -38,16 +39,13 @@ class Arelo < Formula
     chmod 0755, testpath/"test.sh"
 
     logfile = testpath/"arelo.log"
-    arelo_pid = spawn bin/"arelo", "--pattern", "test.sh", "--", "./test.sh", out: logfile.to_s
+    with_test_process(bin/"arelo", "--pattern", "test.sh", "--", "./test.sh", out: logfile.to_s) do
+      sleep 1
+      touch testpath/"test.sh"
+      sleep 1
 
-    sleep 1
-    touch testpath/"test.sh"
-    sleep 1
-
-    assert_path_exists testpath/"test.sh"
-    assert_match "Hello, world!", logfile.read
-  ensure
-    Process.kill("TERM", arelo_pid)
-    Process.wait(arelo_pid)
+      assert_path_exists testpath/"test.sh"
+      assert_match "Hello, world!", logfile.read
+    end
   end
 end

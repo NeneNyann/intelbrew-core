@@ -23,6 +23,7 @@ class Libgccjit < Formula
   end
 
   bottle do
+    manifest_sha256 "8db81b83aa346eb3aed7acf84cb42854df545e8a64e0874460780878981b869b"
     sha256 arm64_golden_gate: "2b095d6457628bf70521ff418fd9f1d3f92d7cc763c5dad7d44ec242a5fabca0"
     sha256 arm64_tahoe:       "92e3a44e340eec005d2c8b369bde2a70e38db3e6faca802531045f951002a1ee"
     sha256 arm64_sequoia:     "ebc0baa7092cbac69594436379007335a8228c813fb99224d69aba72787f088b"
@@ -98,7 +99,8 @@ class Libgccjit < Formula
 
       # Fix linkage with `libgcc_s.1.1`. See: https://github.com/orgs/Homebrew/discussions/5364
       if Hardware::CPU.intel?
-        ldflags << "-Wl,-rpath,#{rpath(source: lib/"gcc/current", target: formula_opt_lib("gcc")/"gcc/current")}"
+        gcc_rpath = rpath(source: lib/"gcc/current", target: formula_opt_lib("gcc")/"gcc/current")
+        ldflags << "-Wl,-rpath,#{gcc_rpath}"
       end
 
       make_args = %W[BOOT_LDFLAGS=#{ldflags.join(" ")}]

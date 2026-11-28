@@ -4,11 +4,14 @@ class Pcl < Formula
   license "BSD-3-Clause"
   revision 8
   compatibility_version 1
-  head "https://github.com/PointCloudLibrary/pcl.git", branch: "master"
 
   stable do
     url "https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.15.1.tar.gz"
     sha256 "e1d862c7b6bd27a45884a825a2e509bfcbd4561307d5bfe17ce5c8a3d94a6c29"
+
+    # TODO: try switching to nanoflann in future release as FLANN is unmaintained
+    # See https://github.com/PointCloudLibrary/pcl/pull/6468
+    depends_on "flann"
 
     # Backport support for eigen 5.0.0
     patch do
@@ -33,9 +36,18 @@ class Pcl < Formula
       type :backport
       resolves "https://github.com/PointCloudLibrary/pcl/pull/6394"
     end
+
+    # vtk 9.6+ is optional to x11, it doesn't link transitively and so here we need to add it as a dependency
+    patch do
+      url "https://github.com/PointCloudLibrary/pcl/commit/490996e66d36829394e01c19089385f23fdf3c9c.patch?full_index=1"
+      sha256 "f71b64ce5e8e606a5f57b3c011d961b625ace6c0c8956a7a25db1d4db8446664"
+      type :backport
+      resolves "https://github.com/PointCloudLibrary/pcl/pull/6435"
+    end
   end
 
   bottle do
+    manifest_sha256 "18f2736fc612ae1ae16aa8a738383493a81ca36e4980e46bfead60c2eca4e368"
     sha256 cellar: :any, arm64_golden_gate: "fb80ee80a2696ee30cf78f3a895db772db8e4e98cf3f595f3d031c8fb561398f"
     sha256 cellar: :any, arm64_tahoe:       "96e7ff3c0b608fb8f47fcb84fcf91cc735f4abca956829f9394ce88dc194a78c"
     sha256 cellar: :any, arm64_sequoia:     "bafd5a622108d37dd359b1c50c39d9a63c1416e797bbfbe5f7d9a8b2a58bf9f1"
@@ -45,12 +57,17 @@ class Pcl < Formula
     sha256 cellar: :any, x86_64_linux:      "2de32c8abdc01f93a0574e6f7e923ee166a96b789dc0b3397663638786d91b9b"
   end
 
+  head do
+    url "https://github.com/PointCloudLibrary/pcl.git", branch: "master"
+
+    depends_on "nanoflann" => :no_linkage
+  end
+
   depends_on "cmake" => [:build, :test]
   depends_on "pkgconf" => [:build, :test]
   depends_on "boost"
   depends_on "cjson"
-  depends_on "eigen"
-  depends_on "flann"
+  depends_on "eigen" => :no_linkage
   depends_on "glew"
   depends_on "libpcap"
   depends_on "libpng"
@@ -70,14 +87,6 @@ class Pcl < Formula
     depends_on "libx11"
     depends_on "mesa"
     depends_on "mesa-glu"
-  end
-
-  # vtk 9.6+ is optional to x11, it doesn't link transitively and so here we need to add it as a dependency
-  patch do
-    url "https://github.com/PointCloudLibrary/pcl/commit/490996e66d36829394e01c19089385f23fdf3c9c.patch?full_index=1"
-    sha256 "f71b64ce5e8e606a5f57b3c011d961b625ace6c0c8956a7a25db1d4db8446664"
-    type :backport
-    resolves "https://github.com/PointCloudLibrary/pcl/pull/6435"
   end
 
   def install

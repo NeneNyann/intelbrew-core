@@ -1,17 +1,18 @@
 class Gat < Formula
   desc "Cat alternative written in Go"
   homepage "https://github.com/koki-develop/gat"
-  url "https://github.com/koki-develop/gat/archive/refs/tags/v0.31.0.tar.gz"
-  sha256 "424ad788c91081fe5db432f99d108802bb96ef5688b0ccb263cc4ca673efb155"
+  url "https://github.com/koki-develop/gat/archive/refs/tags/v0.32.0.tar.gz"
+  sha256 "be95ce5d07d23b036b48a600467aa4d1f67894bcbde414fb720daae749609f46"
   license "MIT"
   head "https://github.com/koki-develop/gat.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "10d8bac08f836a29c56de07a5028fe9a9e2b44da111b7b290ee22699e8f3ab18"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "10d8bac08f836a29c56de07a5028fe9a9e2b44da111b7b290ee22699e8f3ab18"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "10d8bac08f836a29c56de07a5028fe9a9e2b44da111b7b290ee22699e8f3ab18"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "a9e38e691aaea720f6ef43ab0b648b5f07dd463fea03704a82070fdacf58d513"
-    sha256 cellar: :any,                 x86_64_linux:      "52c8726fd21488129ece31f50a4cd8d1cd91001b452ce95e6dfdd0e5ff426063"
+    manifest_sha256 "c9cc9857eafbf1296f58d864bdc0b36ecddf7ba3b2e8d7675ce4ee7e7009bdc1"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "35cee61de2f8f587cc0971726089bb91b1c8f55b687e9bc7c4312ee5257b6467"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "35cee61de2f8f587cc0971726089bb91b1c8f55b687e9bc7c4312ee5257b6467"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "35cee61de2f8f587cc0971726089bb91b1c8f55b687e9bc7c4312ee5257b6467"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "f6c8dc787871731f6f0e91fe4c6e052f624aeea0617e21ab196c8492833872ad"
+    sha256 cellar: :any,                 x86_64_linux:      "948eb5c56b7412fc909c8572dcd2afd037f2afae33b7133b52e4335e342a437f"
   end
 
   depends_on "go" => :build
@@ -24,6 +25,7 @@ class Gat < Formula
 
   def install
     system "go", "build", *std_go_args(ldflags: "-X github.com/koki-develop/gat/cmd.version=v#{version}")
+    generate_completions_from_executable(bin/"gat", shell_parameter_format: :cobra)
   end
 
   test do

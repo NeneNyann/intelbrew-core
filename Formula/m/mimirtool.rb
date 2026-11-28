@@ -17,6 +17,7 @@ class Mimirtool < Formula
   end
 
   bottle do
+    manifest_sha256 "662398925daaafc66f5153308aa67690f42a7006d88fcfd569dc7e8d1d56e8e1"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "8474b35f2b429d64764413383511b15610a285a4037f4513c1191e45e501c6cb"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "5b5e8e50919379124d8160bb529701c5ce7e8e9bfc5b0b42ca039937223765a2"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "9e1fd33a499c2afd439e00eacea7a401b0f38365e9767c599093aea0c2839e74"
@@ -50,7 +51,7 @@ class Mimirtool < Formula
 
     (testpath/"rule.yaml").write(test_rule)
 
-    output = shell_output("#{bin}/mimirtool rules check #{testpath / "rule.yaml"} 2>&1", 1)
+    output = shell_output("#{bin}/mimirtool rules check #{testpath}/rule.yaml 2>&1", 1)
     expected = "recording rule name does not match level:metric:operation format, must contain at least one colon"
     assert_match expected, output
   end

@@ -20,6 +20,7 @@ class MingwW64 < Formula
   end
 
   bottle do
+    manifest_sha256 "b009d7a598a0beceb43714d70e593f8c7a17817c19e5e6978506fbd1056cfd26"
     sha256 arm64_golden_gate: "de39e7069ae35357ab142a1b004c2e4060100ab50d25d9ed500f0ab24b87ee8f"
     sha256 arm64_tahoe:       "0d68ab737a8bbc8c63ac6ac7acc0695e2887c1169df9a4423f1180090079b1d5"
     sha256 arm64_sequoia:     "aed828e844d196fc550ca8b2491906d99f279af99663cd5b2d43603a111a4ea0"
@@ -232,7 +233,11 @@ class MingwW64 < Formula
     ENV.remove_macosxsdk if OS.mac?
     target_archs.each do |arch|
       target = "#{arch}-w64-mingw32"
-      outarch = (arch == "i686") ? "i386" : "x86-64"
+      outarch = if arch == "i686"
+        "i386"
+      else
+        "x86-64"
+      end
 
       system bin/"#{target}-gcc", "-o", "test.exe", "hello.c"
       assert_match "file format pei-#{outarch}", shell_output("#{bin}/#{target}-objdump -a test.exe")

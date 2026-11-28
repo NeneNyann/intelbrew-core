@@ -2,8 +2,8 @@ class Wasmtime < Formula
   desc "Standalone JIT-style runtime for WebAssembly, using Cranelift"
   homepage "https://wasmtime.dev/"
   url "https://github.com/bytecodealliance/wasmtime.git",
-      tag:      "v50.0.2",
-      revision: "f9a93b049a23bef9a33cfa3888f32af33a178749"
+      tag:      "v51.0.0",
+      revision: "32656dc4873fcec5c8662aa937bd01acda3b2e85"
   license "Apache-2.0" => { with: "LLVM-exception" }
   compatibility_version 1
   head "https://github.com/bytecodealliance/wasmtime.git", branch: "main"
@@ -17,11 +17,12 @@ class Wasmtime < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "f0647cea94d61d07035bb95bcec2de2747d69cac54442d8713a08116e8f86b44"
-    sha256 cellar: :any, arm64_tahoe:       "b2b992f00e125e891717d391c55a94a8a5cc418bd46ee3b3ef08e14c2e64998c"
-    sha256 cellar: :any, arm64_sequoia:     "a214f294cdabb7c85ad3d861c8c24c3e807704cadd7f08a09e30fd8ca844f136"
-    sha256 cellar: :any, arm64_linux:       "aadfb8553d98af243e6770041c8ca978ba995d85c786c23b3d95300a29507d38"
-    sha256 cellar: :any, x86_64_linux:      "4a6b94af52f2f3ade7ee88cb0a487f1ba6e2862c346d3f2aa3d94d5310343494"
+    manifest_sha256 "55a693dafdd8e75e62cf806f2622e9e950e8c546b410d2fde0da0ea2df959fb3"
+    sha256 cellar: :any, arm64_golden_gate: "30e337b6d9f2fcfe551b11889dd4bb7b5a082d0dbc9dce9e2d498033658613e4"
+    sha256 cellar: :any, arm64_tahoe:       "a7860aa8133edfb139053b23e4c3d650840b4dd219cb3df4090976a957121aaf"
+    sha256 cellar: :any, arm64_sequoia:     "35a603f6a49bc1fb1fb960437698da8eda6e596811701462f0693244805568db"
+    sha256 cellar: :any, arm64_linux:       "73408ac7cde06eb80c546f35b02f5f42985177a2e8cddd490f0881bfa8f2ac91"
+    sha256 cellar: :any, x86_64_linux:      "946fe503c1e78aa14de0215f98ef5850a37d64eb76617053439a236feb9a1d8c"
   end
 
   depends_on "cmake" => :build
@@ -47,7 +48,7 @@ class Wasmtime < Formula
     wasm = ["0061736d0100000001070160027f7f017f030201000707010373756d00000a09010700200020016a0b"].pack("H*")
     (testpath/"sum.wasm").write(wasm)
     assert_equal "3\n",
-      shell_output("#{bin}/wasmtime --invoke sum #{testpath/"sum.wasm"} 1 2")
+      shell_output("#{bin}/wasmtime --invoke sum #{testpath}/sum.wasm 1 2")
 
     (testpath/"hello.wat").write <<~WASM
       (module

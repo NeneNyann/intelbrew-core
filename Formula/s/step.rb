@@ -6,6 +6,7 @@ class Step < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "d116780e5811893523182c320c6f37908cbb6911422c0a6aeb0e9ff684c786e6"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a4d097e34ef3ec9bbac57af27566a201890679ac154c56555d7af217586bed4a"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "0ca195ed5744fb6faa55922309bb903beb84e72b4d244e580f5236042828b0e0"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "3ed351d8139def7b42040b036068c48e6ced501ef714add5b46b238be882b190"
@@ -91,8 +92,7 @@ class Step < Formula
            "--provisioner-password-file", testpath/"password.txt", "--name",
            "homebrew-smallstep-test", "--provisioner", "brew"
 
-    pid = spawn bin/"step-ca", "--password-file", testpath/"password.txt", "#{steppath}/config/ca.json"
-    begin
+    with_test_process(bin/"step-ca", "--password-file", testpath/"password.txt", "#{steppath}/config/ca.json") do
       sleep 6
       assert_match(/^ok$/, shell_output("#{bin}/step ca health"))
 
@@ -110,9 +110,6 @@ class Step < Formula
       brew_crt_json = JSON.parse(shell_output("#{bin}/step certificate inspect --format json brew.crt"))
       assert_equal "CN=homebrew-smallstep-leaf", brew_crt_json["subject_dn"]
       assert_equal "O=homebrew-smallstep-test, CN=homebrew-smallstep-test Intermediate CA", brew_crt_json["issuer_dn"]
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

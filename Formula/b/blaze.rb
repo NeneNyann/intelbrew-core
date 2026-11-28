@@ -11,6 +11,7 @@ class Blaze < Formula
   end
 
   bottle do
+    manifest_sha256 "064bf205985e501c989791405ce423ea323377141bdea8009172a16b4c99786b"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "07f1ca4591284c3a6c28eb578eae3ca6a2580d1fcb37dca76f7d3fb0f94d2548"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "1f564399ba9c93c4246e3cf3679b5b49661edb3ad9077afab40f94c220e6d49c"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a80081c26f45e68615e6ef2dcde4f354ee8dc05cf2744d20d75efee48f7e7864"
@@ -29,8 +30,14 @@ class Blaze < Formula
   depends_on "cmake" => :build
   depends_on "openblas"
 
+  deny_network_access!
+
   def install
-    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    # When bottling, align with upstream's BLAZE_CACHE_SIZE_DEFAULT (3072 Ki)
+    # rather than using the build machine's L2/L3 cache size.
+    args = %w[-DBLAZE_CACHE_SIZE=3145728 -DBLAZE_CACHE_SIZE_AUTO=OFF] if build.bottle?
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end

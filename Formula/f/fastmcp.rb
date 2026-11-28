@@ -3,17 +3,18 @@ class Fastmcp < Formula
 
   desc "Fast, Pythonic way to build MCP servers and clients"
   homepage "https://gofastmcp.com/getting-started/welcome"
-  url "https://files.pythonhosted.org/packages/48/28/5ac4bd298ca1d40a28df657a33e0dbce17dc61253512267ddbfc033232ba/fastmcp-4.2.1.tar.gz"
-  sha256 "06458edbb093e4d4ec42c99be5b65237df41648e6a2b7b3f54c5b45d561a7009"
+  url "https://files.pythonhosted.org/packages/85/1d/9f024f5eef8be87e0a57dec143fdabd087adbbc27e9b3f52b1409be86e60/fastmcp-4.2.6.tar.gz"
+  sha256 "df629f183202124342a2cad58b069b4058d8bb53696a015694e41b128bf21651"
   license "Apache-2.0"
   head "https://github.com/jlowin/fastmcp.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "786f72d296edada3ad3132a28db60ff12094aecff3bdbb39a3c115611ac3e6da"
-    sha256 cellar: :any, arm64_tahoe:       "3b08ebcf5b6641610869f355779f1e40937f662dbef9f0187793ff0c1a41dd92"
-    sha256 cellar: :any, arm64_sequoia:     "d68141aa54be3af6d6233d177ed0edfe801120a8a28ba20b220d1b4daae4da47"
-    sha256 cellar: :any, arm64_linux:       "a4b9baf590a8bd492219d1e5feec4d22d504b847ee5f546c722b79fb56f47dad"
-    sha256 cellar: :any, x86_64_linux:      "eb8fdde04efd5ddbc3e9f03ef35d1ba14fd7180faadfe4917da2829a5a61d0d2"
+    manifest_sha256 "8ecdeda238ee4596cbabeb66b3ce658a406383bec225a8d9f7fb72720e6eb63f"
+    sha256 cellar: :any, arm64_golden_gate: "269598103072540dce937d8a92899e35c6e4e14a3d220b9673d48e3ae30d024c"
+    sha256 cellar: :any, arm64_tahoe:       "a1c4d1617284cdcea22319170755a545e24ac1a368e9409c001ad6df1a66dbd3"
+    sha256 cellar: :any, arm64_sequoia:     "f0bf6e3d4d962e98afe0fec5b0b92da0f8ead63fd191276519a3bd7f455c6542"
+    sha256 cellar: :any, arm64_linux:       "ac372c565ce49d40e23150951973839525b72938feb0b5f15d7e7dbee40cc92f"
+    sha256 cellar: :any, x86_64_linux:      "a25e1eee89e07c521e1ede666eb2e64d0176db4942a7bb426f52c99aea6bca4b"
   end
 
   depends_on "rust" => :build # for py_key_value_aio
@@ -43,19 +44,14 @@ class Fastmcp < Formula
     sha256 "d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32"
   end
 
-  resource "authlib" do
-    url "https://files.pythonhosted.org/packages/7e/9d/4260bc37e6b859f654394c4815a75c92f3505b42b53135a4603bba60d52d/authlib-1.9.8.tar.gz"
-    sha256 "879735216a0b805a4dfedb4fdd19e7d75ebb8debd70cc7566da9d813db34458d"
-  end
-
   resource "beartype" do
     url "https://files.pythonhosted.org/packages/79/34/c0cfdaee9c796c8381439fed0fcab62810753b8b0adb1ec88fa7f41eaa5d/beartype-0.23.1.tar.gz"
     sha256 "8b805f246b32931c74f2b321ea0939fe5bb2ff43c12a3eff19cc4c854b832e1d"
   end
 
   resource "cachetools" do
-    url "https://files.pythonhosted.org/packages/e6/60/ac2d44dbfcca28a35151af27ad9c6236d913a67768b5bb88af90a8c02943/cachetools-8.0.0.tar.gz"
-    sha256 "5ed01bd676800d51f0025605e4fd8ad0891550513e7b0a4c3da478463764e5c3"
+    url "https://files.pythonhosted.org/packages/75/28/eb1ac766e4c0c439506a654186de8e2cfcd99035218a9393986103a0fdf0/cachetools-8.0.2.tar.gz"
+    sha256 "30ac523adfc118b51d2b2e7bad8a0ddb31370dfe2700c7f10ca224f36ccf81e0"
   end
 
   resource "caio" do
@@ -69,8 +65,8 @@ class Fastmcp < Formula
   end
 
   resource "cyclopts" do
-    url "https://files.pythonhosted.org/packages/49/5d/cee0096dd8c5ad13ce516599c4823637d0107643666a03ddc43a9580391f/cyclopts-5.5.2.tar.gz"
-    sha256 "c0339b7ddd7b1c886f13bb8b68a6a65aa7144d3027f1d0e290be514b8fe1589b"
+    url "https://files.pythonhosted.org/packages/ca/08/3cac2b682eb7cf561fe886d8322b3b65025193ed8753877ad3d9616aca45/cyclopts-5.5.3.tar.gz"
+    sha256 "784ddcc8847f69f96e6ff1b4222c8939ba8f47cea516b8eafb8f56c4a4fa5900"
   end
 
   resource "dnspython" do
@@ -89,13 +85,13 @@ class Fastmcp < Formula
   end
 
   resource "exceptiongroup" do
-    url "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz"
-    sha256 "8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219"
+    url "https://files.pythonhosted.org/packages/85/ac/f882fe3234606340c8729372da0fb98c634b97a560c9d375d9afea21496b/exceptiongroup-1.3.2.tar.gz"
+    sha256 "ca82e69f0cb535fbde934885744b67669a3efddd50fe7bc00d3398839fcaddec"
   end
 
   resource "fastmcp-slim" do
-    url "https://files.pythonhosted.org/packages/99/82/b215810ee1fac03983a7e098b9b63e77e36abf39828e4705ff4f83a25f1a/fastmcp_slim-4.2.1.tar.gz"
-    sha256 "bcbe48b0eeb8bb32b616d7b329832f5d03d16db02807a58457f5e2e44d1d0def"
+    url "https://files.pythonhosted.org/packages/b6/2e/1dd46ee862200b104f57833c88db89f5203bef50090b4e74812b8326f372/fastmcp_slim-4.2.6.tar.gz"
+    sha256 "15467ae9bb3fc80897dec7b37eab5310b47b75066b56720e286a3c08fd469577"
   end
 
   resource "griffelib" do
@@ -184,8 +180,8 @@ class Fastmcp < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
-    sha256 "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+    url "https://files.pythonhosted.org/packages/c3/75/ffb1dc0ed12352139fb4ca0e3fde4325a23e3d0f3f40efe89717bc4f557b/packaging-26.4.tar.gz"
+    sha256 "c4b671c41ddb9bf26e543c37723610d28fb6bf7affc4da17cf048d419d2c062a"
   end
 
   resource "pathable" do
@@ -194,8 +190,8 @@ class Fastmcp < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/03/a9/8bd4abc337acc2f84729beb1061db06df6112bbf5c8ed16cfcd5cddcf9c2/platformdirs-4.14.6.tar.gz"
-    sha256 "2fabae4441a016e262d87ef88f677c0d76c1999227e068eba2e8a81cf6fb4b30"
+    url "https://files.pythonhosted.org/packages/71/18/0b0d99f5bf164f04a7a9534c3dbdbe4d5fd2b382667685ad40c192c4d3d1/platformdirs-4.14.8.tar.gz"
+    sha256 "96893d686e84e9e6f358a9ea41a8de544df66dbf2ba6cda250e7dc73acf85b9b"
   end
 
   resource "py-key-value-aio" do
@@ -234,8 +230,8 @@ class Fastmcp < Formula
   end
 
   resource "pyyaml" do
-    url "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-6.0.3.tar.gz"
-    sha256 "d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"
+    url "https://files.pythonhosted.org/packages/76/b8/c0b780928e2fb1c87e9e375818c6f121da2398b071012d1747be300b83f4/pyyaml-6.0.4.tar.gz"
+    sha256 "e24bf71af8a432d7808fabff134d38dfe16d3cbb41f2873bb4b1e42422de0a1a"
   end
 
   resource "referencing" do
@@ -259,8 +255,8 @@ class Fastmcp < Formula
   end
 
   resource "sse-starlette" do
-    url "https://files.pythonhosted.org/packages/41/43/a232e3cd804293bd4f6d01e8895bc0f6f83ea148d712baf9d783c7d93d23/sse_starlette-3.7.0.tar.gz"
-    sha256 "326416da2ab52e9a41b3f409d3ff897eda45aa68c9f3b7b17d0913aab8d219c3"
+    url "https://files.pythonhosted.org/packages/12/c0/eb8c9eec5c0e29ce2a1c4d4654ddfb06c77b52b4db63ab40226198456be6/sse_starlette-3.7.1.tar.gz"
+    sha256 "9a8256e3e80a0fdc8d1dec14f2bb0b3f304c99f23a6d4d26c61ff50145761597"
   end
 
   resource "starlette" do
@@ -274,8 +270,8 @@ class Fastmcp < Formula
   end
 
   resource "uncalled-for" do
-    url "https://files.pythonhosted.org/packages/9c/e9/056b74ca4559f93cd38080c110696ae9a8f6d1976b162eb3638895f829e7/uncalled_for-0.6.1.tar.gz"
-    sha256 "49d9a55a806529dbb844f64a2e3adc8f44ad0b0802f5d91381a09c088c44e144"
+    url "https://files.pythonhosted.org/packages/a3/60/993a9757dc4a41727351828dc784e66fd467ed81d46cbec25d44cae69657/uncalled_for-0.6.2.tar.gz"
+    sha256 "58835db667a85408c7b6d6ad8dfdd74d7713d3be669b46396ba3d2c6a889242d"
   end
 
   resource "uvicorn" do
@@ -315,9 +311,7 @@ class Fastmcp < Formula
 
     port = free_port
     ENV["FASTMCP_STATELESS_HTTP"] = "1"
-    pid = spawn bin/"fastmcp", "run", "server.py:mcp", "--transport=http", "--port=#{port}", "--no-banner"
-
-    begin
+    with_test_process(bin/"fastmcp", "run", "server.py:mcp", "--transport=http", "--port=#{port}", "--no-banner") do
       data = <<~JSON
         {
           "jsonrpc": "2.0",
@@ -340,9 +334,6 @@ class Fastmcp < Formula
                      "--data", data,
                      "http://127.0.0.1:#{port}/mcp"
       assert_match '{"result":3}', (testpath/"response.txt").read
-    ensure
-      Process.kill "TERM", pid
-      Process.wait pid
     end
   end
 end

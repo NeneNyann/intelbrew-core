@@ -15,6 +15,7 @@ class VulkanProfiles < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "e485c04d0a6397e5ce4d17a328c943e40958729aa496d7ccfda9d012c8f79206"
     sha256 cellar: :any, arm64_golden_gate: "7476e238f9e4b2f270d6cec730d5f46d788a2268a8b9a54a07c8fd61256cc7a8"
     sha256 cellar: :any, arm64_tahoe:       "767ec83c78e4e1b5f213a2f3b1de54ab3c32d5b98766b733c76162523879e2f5"
     sha256 cellar: :any, arm64_sequoia:     "a8843f2bac528d1ac39460b94f05496624e828807de4090f9985933f5208037b"
@@ -140,7 +141,7 @@ class VulkanProfiles < Formula
     # https://github.com/KhronosGroup/Vulkan-Profiles/issues/1008
     venv = virtualenv_create(buildpath/"build/python-venv", python3)
     site_packages = Language::Python.site_packages(python3)
-    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("pyinstaller")/site_packages}')\n"
+    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("pyinstaller")}/#{site_packages}')\n"
     (venv.site_packages/"homebrew-pyinstaller.pth").write pth_contents
     build_backends = %w[flit-core poetry-core calver vcs-versioning setuptools-scm pathspec pluggy
                         tomlkit trove-classifiers hatchling hatch-vcs hatch-fancy-pypi-readme]

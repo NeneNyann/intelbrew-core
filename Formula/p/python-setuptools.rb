@@ -7,6 +7,7 @@ class PythonSetuptools < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "1838556a89ced619d8bdcc42251baee5f149619a65484de49030a575709d485a"
     sha256 cellar: :any_skip_relocation, all: "03d8def7b70dd1cdb65ed9d87562e83c7e43044c299d3e3d9c0b99462f10017b"
   end
 
@@ -21,7 +22,8 @@ class PythonSetuptools < Formula
     # Add symlinks to use on all externally-managed pythons
     extra_pythons = Keg.for(python3).to_formula.versioned_formulae.select { |f| f.version >= "3.12" }
     extra_site_packages_list = extra_pythons.map { |f| lib/"python#{f.version.major_minor}/site-packages" }
-    extra_site_packages_list << (lib/"python#{Formula["python-freethreading"].version.major_minor}t/site-packages")
+    python_version = Formula["python-freethreading"].version.major_minor
+    extra_site_packages_list << (lib/"python#{python_version}t/site-packages")
     site_packages = prefix/Language::Python.site_packages(python3)
     site_packages.find.select(&:file?).each do |path|
       extra_site_packages_list.each do |extra_site_packages|

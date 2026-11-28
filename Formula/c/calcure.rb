@@ -8,6 +8,7 @@ class Calcure < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "7b89b5ab04227d24f19261eb28f86800ce601882cedef17d32e6f4212619c343"
     sha256 cellar: :any_skip_relocation, all: "4ca5b71978d27bf939451a8deb88b7356a0621a629eb49ca86164dbde90a4e5f"
   end
 
@@ -37,6 +38,8 @@ class Calcure < Formula
     url "https://files.pythonhosted.org/packages/7a/29/6a1391d31cd00ff9e927215a224a880e1e84e826b64ba80a499e51c074d8/tzdata-2026.6.tar.gz"
     sha256 "85d2cd9c09f81f0bb29db27759fc83af4f1e620efb814f8c5bf8b4cc4feece6d"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

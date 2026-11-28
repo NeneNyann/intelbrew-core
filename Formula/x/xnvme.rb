@@ -1,8 +1,8 @@
 class Xnvme < Formula
   desc "Cross-platform libraries and tools for efficient I/O and low-level control"
   homepage "https://xnvme.io/"
-  url "https://github.com/xnvme/xnvme/releases/download/v0.7.5/xnvme-fat-0.7.5.tar.gz"
-  sha256 "67e1e55966f150c68cbe386112202cb3d1af8831b7202a251986b7e63cf34f3a"
+  url "https://github.com/xnvme/xnvme/releases/download/v0.8.1/xnvme-fat-0.8.1.tar.gz"
+  sha256 "3718417f4637949091815a77a3d4bf4512c9adedb5d0ca0886496e36a32fe8f8"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,15 +11,12 @@ class Xnvme < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_golden_gate: "95d133a9550ff4c242509ab7b8628b8dc1379c64ce9eb558eac2c580dc8bf30e"
-    sha256 cellar: :any,                 arm64_tahoe:       "f5a3ced6f2d26e622f6a619c2f8606916aafb9c6704cb58a52a7b976f9f00fdc"
-    sha256 cellar: :any,                 arm64_sequoia:     "669d2c6ac4f5091f07ec36cd8376e6dde81e8c38d20154efa1b038e7b1d2b391"
-    sha256 cellar: :any,                 arm64_sonoma:      "387a8c914b0348bda2aa34f3d15292f649f768ff8a4a4baa329659200b903681"
-    sha256 cellar: :any,                 arm64_ventura:     "98be4270d703ba24e95af9714302b41bf45346a3ecc69220889a889381210c9d"
-    sha256 cellar: :any,                 sonoma:            "ab2c11503d96c5d333b599ce0c2a18a4f25712bb8c7c53c681b34de481d8c6b4"
-    sha256 cellar: :any,                 ventura:           "f91938361da2f149e42e493be2702bafbc55221854f92c40cc5a7b3ffef7639b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "e9d905badf1945c4991a143fb6d817d510998578f76afe30130894b1eae8a07e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "1f6f44f9a1deeec057afbff777aa156acf353fbf02f6c85ecb858a4d741baf69"
+    manifest_sha256 "e0ab19cfc66d3d55b2b148979d7c84342a061da1da15c18dae8276e0900537ce"
+    sha256 arm64_golden_gate: "46d270a82735bac8d4ca107cbb464382b1293f4978d8926e599a6dc78fda0893"
+    sha256 arm64_tahoe:       "fe79b0a39804dcf7f1c258989e6649756e0cb06bdb311fc52b44212b4de05938"
+    sha256 arm64_sequoia:     "1b786a2f878d6680518800812b059f0ca026a47803a8f46ef873c1281356900c"
+    sha256 arm64_linux:       "e59f3480ad4fba4cb298fe56b6302f1c3b3a0f1e5cc2d8d1d45ba8018e973185"
+    sha256 x86_64_linux:      "fa28bfa322c2a9e07efd380d06b4af4cef8c138980160358200cc8720b4e5141"
   end
 
   depends_on "meson" => :build
@@ -44,9 +41,6 @@ class Xnvme < Formula
 
   test do
     # Verify cli usage using a "ramdisk" of 1GB
-    output = shell_output("#{bin}/xnvme library-info")
-    assert_match "XNVME_BE_RAMDISK_ENABLED", output
-
     output = shell_output("#{bin}/xnvme info 1GB --be ramdisk")
     assert_match "uri: '1GB'", output
     assert_match "type: XNVME_GEO_CONVENTIONAL", output

@@ -4,13 +4,14 @@ class Redex < Formula
 
   desc "Bytecode optimizer for Android apps"
   homepage "https://fbredex.com/"
-  url "https://github.com/facebook/redex/archive/refs/tags/v2026.09.09.tar.gz"
+  url "https://github.com/meta/redex/archive/refs/tags/v2026.09.09.tar.gz"
   sha256 "9bea5953cd1e06f6c32ec913c79c11893624caf621a62f3b4d065a6c77e0988e"
   license "MIT"
   revision 1
-  head "https://github.com/facebook/redex.git", branch: "main"
+  head "https://github.com/meta/redex.git", branch: "main"
 
   bottle do
+    manifest_sha256 "a10912b0375c5e259dead05c4f98329162a10a4f704ede853f3a6696905c1e0e"
     sha256 cellar: :any, arm64_golden_gate: "20a063c4644e2531248458e23c1b6a3001de8fef0e2873f2ee3699210bad3dd1"
     sha256 cellar: :any, arm64_tahoe:       "35d57c0731d2e992dcf7239194a2cdebc2ebf72bb071bd694ad0086593a7633b"
     sha256 cellar: :any, arm64_sequoia:     "12cb20a278dea9becf6315273bf333ddb0f671513db1752d4b1424c19cd54c2a"

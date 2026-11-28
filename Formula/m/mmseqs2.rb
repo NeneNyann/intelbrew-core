@@ -1,23 +1,23 @@
 class Mmseqs2 < Formula
   desc "Software suite for very fast sequence search and clustering"
   homepage "https://mmseqs.com/"
-  url "https://github.com/soedinglab/MMseqs2/archive/refs/tags/18-8cc5c.tar.gz"
-  version "18-8cc5c"
-  sha256 "3541b67322aee357fd9ca529750d36cb1426aa9bcd1efb2dc916e35219e1a41c"
+  url "https://github.com/soedinglab/MMseqs2/archive/refs/tags/20-ae60e.tar.gz"
+  version "20-ae60e"
+  sha256 "0245e45b705bbcd14e46291d82c977aff0a3600200f36c4d04dceb57d211dabc"
   license "MIT"
   head "https://github.com/soedinglab/MMseqs2.git", branch: "master"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any, arm64_golden_gate: "e4736d89e25b826e72cd9d0674e36c18ff48118e614718ecd3bd21c25f2a1f09"
-    sha256 cellar: :any, arm64_tahoe:       "cde948e5fd9bd5fc4712ca3da68732f40f07d67904b1368b388c58adf57db676"
-    sha256 cellar: :any, arm64_sequoia:     "61f15901cee4c6e69ef77101ca8b4f519f603d80e5e05ffb8c647a06fc7ffd53"
-    sha256 cellar: :any, arm64_sonoma:      "35e3e29a68022cd9aba6c865a67deeeac57ef771fee8f11282a49a677258e3c1"
-    sha256 cellar: :any, arm64_linux:       "ecd13dca0300d49a7f1be7272cea1217a7f2782a2bc8e7c89c4f40ee41469f03"
-    sha256 cellar: :any, x86_64_linux:      "bcad178647ca4c1639e7714f3a776743b472446e7b9bd744c7abbe0792c6469e"
+    manifest_sha256 "769dfbbe4e837405c778432819d2d90cf5a6c49ca3aea51bc84c8dc94ac12e50"
+    sha256 cellar: :any, arm64_golden_gate: "0a24675d526cd2c32b1308f7872c56aee60ab046128fb82da873afd76142c741"
+    sha256 cellar: :any, arm64_tahoe:       "e33fb37c717acc84d9e87afce3706f62c09a3003b320ace871ca2802895f8e23"
+    sha256 cellar: :any, arm64_sequoia:     "72e6dec3ff417b83bed14c0b2a395d0ff3b0105e8364bc279d87e00f4f13cfae"
+    sha256 cellar: :any, arm64_linux:       "2377220c3964c52375a2c7be8dee24c8da3bed63326927a1c7772a3893d049da"
+    sha256 cellar: :any, x86_64_linux:      "b312c5feb28653f8b851302add8d7d20ad504897fa07f79d1ff6e909f3a47637"
   end
 
   depends_on "cmake" => [:build, :test]
+  depends_on "rust" => :build
   depends_on "wget"
 
   uses_from_macos "bzip2"

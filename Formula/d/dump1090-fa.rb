@@ -11,6 +11,7 @@ class Dump1090Fa < Formula
   end
 
   bottle do
+    manifest_sha256 "9bc8f7ba56fbd228ea0c84c408a64dfae44df6ccd01092d05b1830256242e51a"
     sha256 cellar: :any, arm64_golden_gate: "cd83e16ac3ec96a9ad640e72266a7939960082c68f460d7b47383c16149419b0"
     sha256 cellar: :any, arm64_tahoe:       "573beeff957511395d526e3723a40b1e234c89ab146e19e6382905f56f7fa4ba"
     sha256 cellar: :any, arm64_sequoia:     "d526e8f838272ec56798dd124ce3f0227f97eae5de2ef00f3cb9a8eede93e457"
@@ -36,15 +37,12 @@ class Dump1090Fa < Formula
   test do
     output_log = testpath/"output.log"
     port = free_port
-    pid = spawn bin/"dump1090", "--device-type", "none", "--net-ri-port", port.to_s, [:out, :err] => output_log.to_s
-    begin
+    with_test_process(bin/"dump1090", "--device-type", "none", "--net-ri-port", port.to_s,
+                      [:out, :err] => output_log.to_s) do
       sleep 5
       TCPSocket.open("localhost", port) { |sock| sock.puts "*8D3C5EE69901BD9540078D37335F;" }
       sleep 5
       assert_match "Groundspeed:   475.1 kt", output_log.read
-    ensure
-      Process.kill "TERM", pid
-      Process.wait pid
     end
   end
 end

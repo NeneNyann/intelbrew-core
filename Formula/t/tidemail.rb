@@ -1,16 +1,17 @@
 class Tidemail < Formula
   desc "TUI email client, supports IMAP, Gmail & Outlook OAuth"
   homepage "https://github.com/allisonhere/tidemail"
-  url "https://github.com/allisonhere/tidemail/archive/refs/tags/v1.9.1.tar.gz"
-  sha256 "f2862c8457e8d309c66420a172882d53cff332a444cdf4d5caa7f31aaa6b9986"
+  url "https://github.com/allisonhere/tidemail/archive/refs/tags/v1.10.2.tar.gz"
+  sha256 "6bf0d6172b2b200e73b5b318f18d1098db4071661a33bc5317402eef81888dcc"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c21ad01de603a3db7efe4ac8147bf2a0168e4cec2778d163d8a2b0d370368e1d"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "c21ad01de603a3db7efe4ac8147bf2a0168e4cec2778d163d8a2b0d370368e1d"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c21ad01de603a3db7efe4ac8147bf2a0168e4cec2778d163d8a2b0d370368e1d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "dceb00be68d49ff84112fca1375c04be01fa7ba29701584664c6d2366d5dcf6a"
-    sha256 cellar: :any,                 x86_64_linux:      "ace1fb1e588337e1352a33f49c89e0b2843a876c84c0134d91d5d968981e05f4"
+    manifest_sha256 "c91dc6945312e96a9bda3d62a8564e053ad208a6526b7d53746f15a63ce3567d"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "0cfb0ebc4e94810992bfb70c010b8342664c2fcae5a99b078fb0b2718298dd97"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "0cfb0ebc4e94810992bfb70c010b8342664c2fcae5a99b078fb0b2718298dd97"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "0cfb0ebc4e94810992bfb70c010b8342664c2fcae5a99b078fb0b2718298dd97"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "a39bf9033e9a0949520436af0d8adaae018a9ed264245501de1a35c937efd477"
+    sha256 cellar: :any,                 x86_64_linux:      "8a8ba49afb3f5cda5d4c9624ed258d870e3b45c06cc73aa6e4e7f4acd5dc741c"
   end
 
   depends_on "go" => :build

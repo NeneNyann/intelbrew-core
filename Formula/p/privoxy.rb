@@ -11,6 +11,7 @@ class Privoxy < Formula
   end
 
   bottle do
+    manifest_sha256 "da9500453a0b652f65fcd0ffe8650af6f3d16212cd762d77e67394389117a287"
     sha256 cellar: :any, arm64_golden_gate: "891179a9a7a813a1729d33af1363c151fe9d2a17085790ae27faedef37403214"
     sha256 cellar: :any, arm64_tahoe:       "6e5513f208bd8a7fe5f898b67df312f8802bbea004d7b9bd294f44f88a47d1e5"
     sha256 cellar: :any, arm64_sequoia:     "0324d517534b62d310ab88724683b84fc708054ef5b8717331c9edf5b12d3130"
@@ -50,14 +51,10 @@ class Privoxy < Formula
   test do
     bind_address = "127.0.0.1:#{free_port}"
     (testpath/"config").write("listen-address #{bind_address}\n")
-    pid = spawn sbin/"privoxy", "--no-daemon", testpath/"config"
-    begin
+    with_test_process(sbin/"privoxy", "--no-daemon", testpath/"config", signal: "INT") do
       sleep 5
       output = shell_output("curl --head --proxy #{bind_address} https://github.com")
       assert_match "HTTP/1.1 200 Connection established", output
-    ensure
-      Process.kill("SIGINT", pid)
-      Process.wait(pid)
     end
   end
 end

@@ -11,6 +11,7 @@ class Libabw < Formula
   end
 
   bottle do
+    manifest_sha256 "88832c9aa62107df60555ce14d8a3d7e5633dd988ecf2716c384d09f88c20875"
     sha256 cellar: :any,                 arm64_golden_gate: "9ed9553645353afc7c0eb5d953ef0054a9286ab21c8875e3ad54cc2ff5e6af4b"
     sha256 cellar: :any,                 arm64_tahoe:       "bfcad8f4a2996c41ca06abc385ebd8e66b095c21d68201b318e21100893cb8d8"
     sha256 cellar: :any,                 arm64_sequoia:     "7a0bcfd97859385bb0715aac6a71ddb2d34e646e876deea0d6dd88da6241f708"
@@ -113,7 +114,7 @@ class Libabw < Formula
     assert_equal "This word is bold.\n", shell_output("#{bin}/abw2text test.abw")
 
     args = %W[
-      -I#{include/"libabw-0.1"} -I#{formula_opt_include("librevenge")/"librevenge-0.0"}
+      -I#{include}/libabw-0.1 -I#{formula_opt_include("librevenge")}/librevenge-0.0
       -L#{lib} -L#{formula_opt_lib("librevenge")}
       -labw-0.1 -lrevenge-stream-0.0 -lrevenge-generators-0.0 -lrevenge-0.0
     ]

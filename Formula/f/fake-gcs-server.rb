@@ -7,6 +7,7 @@ class FakeGcsServer < Formula
   head "https://github.com/fsouza/fake-gcs-server.git", branch: "main"
 
   bottle do
+    manifest_sha256 "0925c515b8d9a41ac479021ab559a5e26b3fceef82b21d61a636dbf41079f058"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "6438584a3eb20fd8f652294e7e6a2426155c1b449885390f82d443c8491a0386"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "09cc9a797930a9cd579a0db109fb0687920a20b98b1902a325f1ec9828977bd0"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "09cc9a797930a9cd579a0db109fb0687920a20b98b1902a325f1ec9828977bd0"
@@ -32,11 +33,10 @@ class FakeGcsServer < Formula
   test do
     port = free_port
 
-    pid = spawn bin/"fake-gcs-server", "-host", "127.0.0.1", "-port", port.to_s,
-                    "-backend", "memory", "-log-level", "warn"
-    sleep 2
+    with_test_process(bin/"fake-gcs-server", "-host", "127.0.0.1", "-port", port.to_s,
+                      "-backend", "memory", "-log-level", "warn") do
+      sleep 2
 
-    begin
       output = shell_output("curl -k -s 'https://127.0.0.1:#{port}/storage/v1/b?project=test'")
       assert_equal "{\"kind\":\"storage#buckets\"}", output.strip
 
@@ -47,9 +47,6 @@ class FakeGcsServer < Formula
       # Verify bucket exists
       output = shell_output("curl -k -s 'https://127.0.0.1:#{port}/storage/v1/b?project=test'")
       assert_equal "test-bucket", JSON.parse(output)["items"][0]["id"]
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

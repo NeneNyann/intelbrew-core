@@ -1,17 +1,18 @@
 class Autobrr < Formula
   desc "Modern, easy to use download automation for torrents and usenet"
   homepage "https://autobrr.com/"
-  url "https://github.com/autobrr/autobrr/archive/refs/tags/v1.90.0.tar.gz"
-  sha256 "188462dcc05dd3781cd906f79708ffbbba5e058053cc24e27c0cec1059d23c02"
+  url "https://github.com/autobrr/autobrr/archive/refs/tags/v1.91.1.tar.gz"
+  sha256 "336a300b521ec59869047680032d0af5f3c42d56264fa82a3670e1bf3cb3c3d3"
   license "GPL-2.0-or-later"
   head "https://github.com/autobrr/autobrr.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a01d7c9cbeb7690fdee4b4e5d8ddb15864bedde3f55ca9856fe8ce07e49f518d"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "9fbad8f39d7643559bb5311b492f84e876ffd4f1eb6b327ff85b36b201d3300b"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "bd4beef31025a145b2c184593879faed1950f1febcd90037ba511a561436a8cc"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "380c1ab1ec9d6fde041fdfd78c3c98bb3f82337c840df2fce01c98832f7e10c3"
-    sha256 cellar: :any,                 x86_64_linux:      "338221eb4053853a930a13d8b9491c8261e5fa49d17988ae38dc65fc8dea4652"
+    manifest_sha256 "1abe28456c87ba85d5c468e886c1e1491234721a69632cc9133c5138b8734160"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "be341d9a763ebc92541708af7382c7e51d64512ba09544698f2e6381c800fcdc"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "c401068c2647c8e922f6d4d4c0fada9eee1e304803d59369fa775da26ff71b9c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "1381280dab46b36d9381c887052108cc304c2b4075765ace4d082e503253dbeb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "345271b210f0a22d0a9e8adb14171fac1a055ab91c50c6cdefeaaf44546e6498"
+    sha256 cellar: :any,                 x86_64_linux:      "7e85c9877d94d0373da0ff4021a59a11adae22ab23fa332005f9e9bdbde2dd06"
   end
 
   depends_on "go" => :build
@@ -54,13 +55,9 @@ class Autobrr < Formula
       sessionSecret = "secret-session-key"
     TOML
 
-    pid = spawn bin/"autobrr", "--config", testpath/""
-    begin
+    with_test_process(bin/"autobrr", "--config", testpath/"") do
       sleep 4
       system "curl", "-s", "--fail", "http://127.0.0.1:#{port}/api/healthz/liveness"
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

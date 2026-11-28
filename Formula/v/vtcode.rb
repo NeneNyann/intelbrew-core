@@ -1,8 +1,8 @@
 class Vtcode < Formula
   desc "CLI Semantic Coding Agent"
   homepage "https://vinhnx.github.io"
-  url "https://static.crates.io/crates/vtcode/vtcode-0.182.7.crate"
-  sha256 "ff0dc7c4aa5a326bd3b0e1a7def7a655ec4d96ff00bcc0264b472ec51323ba43"
+  url "https://static.crates.io/crates/vtcode/vtcode-0.185.2.crate"
+  sha256 "34ffdfde47186576b8dffe76d64a3c940c6575b2e0c8c939ee4533655d0c8fd7"
   license any_of: ["MIT", "Apache-2.0"]
   head "https://github.com/vinhnx/vtcode.git", branch: "main"
 
@@ -11,11 +11,12 @@ class Vtcode < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "3a7aa905038bace754f0b57f3fe1be45e4042ac4e72fd677b33129edfb107a75"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "5c6f5ea275ca11f24302c6a26e8c7eadcef541a9ff3ca5e63a169de94d9512b0"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d0f806b94aa3502fc4f2335d64e5321d779cf299a15f33ae239a18f0e6bdac2e"
-    sha256 cellar: :any,                 arm64_linux:       "5586ee5b959ba3c8600881818ce3df3ec8df15e41fd4e7326c88d528e61e29f1"
-    sha256 cellar: :any,                 x86_64_linux:      "df292d96460e21b7ab456d0e87d98bd5154ac553268c93988d4175d7e3d55bf9"
+    manifest_sha256 "e3acc3308bd43ffd2fc1e9e6f841c57ad9bef9c7111eb8dff30d5042243ec4dc"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "c707e9e15535eb33373e1f54000f10bc2eb7bb55f15ef80548c8c9860e9cd142"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "0e348c129c434c2f650ae80e3458e4f35ed5862386ee74dbacc668e8e9c7ce79"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "174b5afbcf217e2b3831800bfc044744feeb6daf4a319f66e4cbe4e723cbd838"
+    sha256 cellar: :any,                 arm64_linux:       "ef6a912002e13f79254fe960deff7095305febea39b6df79eafb146cd375674d"
+    sha256 cellar: :any,                 x86_64_linux:      "1de8716d4dcb326fde91ad78ccdeed8ef70ed02e370e12121eb81c4f405e8025"
   end
 
   depends_on "pkgconf" => :build
@@ -33,7 +34,7 @@ class Vtcode < Formula
   end
 
   def install
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4") if OS.linux?
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix if OS.linux?
     system "cargo", "install", *std_cargo_args
   end
 

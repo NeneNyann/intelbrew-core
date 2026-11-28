@@ -30,6 +30,7 @@ class Ncrack < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "86f7ebf02bff26258de8d2211eab60542c8361a0bf088c33ab7e5641f00d8715"
     sha256 arm64_golden_gate: "65094a52b2c9793ea270cef78fb031aa8791512ba07081f6622b42fa2a2f7bb2"
     sha256 arm64_tahoe:       "85017d5ac2d1fd2dc639b61f71c86369b39bb32bde557388bd664cbb54db0161"
     sha256 arm64_sequoia:     "0861dda9a4b22f65928d52d2ef0f3b5c62d3581915cd01047bebde9fa8be4066"
@@ -54,7 +55,8 @@ class Ncrack < Formula
   deny_network_access!
 
   def install
-    system "./configure", "--with-openssl=#{formula_opt_prefix("openssl@4")}", *std_configure_args
+    openssl_prefix = dep("openssl").opt_prefix
+    system "./configure", "--with-openssl=#{openssl_prefix}", *std_configure_args
     system "make"
     system "make", "install"
   end

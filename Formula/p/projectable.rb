@@ -8,6 +8,7 @@ class Projectable < Formula
   head "https://github.com/dzfrias/projectable.git", branch: "main"
 
   bottle do
+    manifest_sha256 "99a768c4adff24c08a756fb2decd8765d3ce3beefef807e8fab1ad418debbce9"
     sha256 cellar: :any, arm64_golden_gate: "aaf45d45edce5efdc573b17493aae3943ab8e8a959c081e27b21c847a42110de"
     sha256 cellar: :any, arm64_tahoe:       "1fc0fd148e1805b5db5e69d6cf9757665e78b7578ee06683e3ab6386a4bfef03"
     sha256 cellar: :any, arm64_sequoia:     "f211a3a7a50e3ffcb895616a213093f1855dcaa14fc7f42ce2ebc3fa055bd0cf"
@@ -31,8 +32,6 @@ class Projectable < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def fetch
     system "cargo", "fetch", *std_cargo_fetch_args
   end
@@ -41,7 +40,7 @@ class Projectable < Formula
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
     # Ensure that the `openssl` crate picks up the intended library.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix(openssl)
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", *std_cargo_args
   end
@@ -66,11 +65,12 @@ class Projectable < Formula
       Process.wait(pid)
     end
 
+    openssl_lib = dep("openssl").opt_lib
     [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib(openssl)/shared_library("libcrypto"),
-      formula_opt_lib(openssl)/shared_library("libssl"),
+      openssl_lib/shared_library("libcrypto"),
+      openssl_lib/shared_library("libssl"),
     ].each do |library|
       assert Utils.binary_linked_to_library?(bin/"prj", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."

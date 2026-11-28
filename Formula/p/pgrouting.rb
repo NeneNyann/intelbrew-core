@@ -1,8 +1,8 @@
 class Pgrouting < Formula
   desc "Provides geospatial routing for PostGIS/PostgreSQL database"
   homepage "https://pgrouting.org/"
-  url "https://github.com/pgRouting/pgrouting/releases/download/v4.0.2/pgrouting-4.0.2.tar.gz"
-  sha256 "2faf31b178db969637c1f392ba3ba18fba8d5aed15bdc73fbb4a53a72c5d0f71"
+  url "https://github.com/pgRouting/pgrouting/releases/download/v4.0.3/pgrouting-4.0.3.tar.gz"
+  sha256 "1cbf127cc3d73a7244ccc6ce1c47afb464e14628495ae3da1f9326f957351317"
   license "GPL-2.0-or-later"
   compatibility_version 1
   head "https://github.com/pgRouting/pgrouting.git", branch: "develop"
@@ -13,24 +13,24 @@ class Pgrouting < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "8ca2ae996df50a27c951c28046ac7f7cdcc36ad01f3eeed8fb38d0e29a2a3d4d"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "7d12704c19442d61afd50187f824851a993de4bbea906d1919d9bb0a08550814"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "2fffe88543ddb114f2e6badd7e7c3b524d724352f5fa167e4e8280321880c291"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:      "8dd496e843059d14a5def241ee3d36775f2aeb4c2f669864c09e4e87d7ddd259"
-    sha256 cellar: :any,                 arm64_linux:       "3019079276e1168da19080bae2a4d9fffff9a9ef9f052277ae41dd4eb01ebdc5"
-    sha256 cellar: :any,                 x86_64_linux:      "2545dd36e3b9d2e2aab25e0233986568f2075ec2be2e4b410e709d91f01381c2"
+    manifest_sha256 "306cf6e684867f97ac6574709b19a78d9c3703f70fc03790d8d8da9e5251727b"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "64ccbeaa43ef1a508503504c435bcd40a6e1dc1771caa3d7a6029fbc3dc145c6"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "43d54eb8008dfb8a990ec697c7b824f0782ae6e52ced2396f1d0b99b88197cf1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "185551421bc2bdcda2e816b90820fac668f2396d66a23fc1de746b600d8d3e2c"
+    sha256 cellar: :any,                 arm64_linux:       "b06ea750f3a41629be2ca62f66954e0cfc77cf2f3387bc2cb168111e26beccfc"
+    sha256 cellar: :any,                 x86_64_linux:      "2795256ba4e1798e25a5d2ed54adf0dae2082e154c19dbc3f1d8e262f73a6345"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
-  depends_on "postgresql@17" => [:build, :test]
   depends_on "postgresql@18" => [:build, :test]
+  depends_on "postgresql@19" => [:build, :test]
   depends_on "postgis"
 
   allow_network_access! :test
 
   def postgresqls
-    deps.map(&:to_formula).sort_by(&:version).filter { |f| f.name.start_with?("postgresql@") }
+    deps(/\Apostgresql@/).map(&:to_formula).sort_by(&:version)
   end
 
   def install

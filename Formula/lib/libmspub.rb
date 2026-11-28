@@ -1,8 +1,8 @@
 class Libmspub < Formula
   desc "Interpret and import Microsoft Publisher content"
   homepage "https://wiki.documentfoundation.org/DLP/Libraries/libmspub"
-  url "https://dev-www.libreoffice.org/src/libmspub/libmspub-0.1.5.tar.xz"
-  sha256 "3671095f5a10bee8a755052a30576952c5b16d8b0f2ba9f2fb998338c18cb119"
+  url "https://dev-www.libreoffice.org/src/libmspub/libmspub-0.1.6.tar.xz"
+  sha256 "408eb742b172a0ccbd128a0ff6402eee495839cd905198ce2b3f2607bba617f4"
   license "MPL-2.0"
 
   livecheck do
@@ -11,12 +11,12 @@ class Libmspub < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, arm64_golden_gate: "2d2d887b00c5dc3eeefeae2e46d77bf8fe040965b702bc2d5defdbb0a7fb4999"
-    sha256 cellar: :any, arm64_tahoe:       "9edbd5a611b9ed669cda39d9842df08944f786ccccba4155042850a024508df1"
-    sha256 cellar: :any, arm64_sequoia:     "2c27502c0e1bbcceceddf64ed75d918c5478f8455ebb5fc77a1fe3e36c96df15"
-    sha256 cellar: :any, arm64_linux:       "f781d3ab7663805e0040a89735dae80b07ab28f9bee7e92ebb6db9c626872820"
-    sha256 cellar: :any, x86_64_linux:      "a45a555d1b3164fa73178bc062ff9a2e970936d47d363a554e61a92991911327"
+    manifest_sha256 "c57160bf9a45efcd4e5f47a521f80588d9b4daaa77956292c25758e5f01338a0"
+    sha256 cellar: :any, arm64_golden_gate: "c3174720121f8245c480cbf4080dbe920d193475c782a2a4d39b3a739113e0b5"
+    sha256 cellar: :any, arm64_tahoe:       "47dde38d071be4b4b72042259950a961724c6a40222d0d5785b23e67a3e7e15e"
+    sha256 cellar: :any, arm64_sequoia:     "07afd3addc982da7d55bd3de982171df04c128397ef4bbd8d7b0917ac924af0b"
+    sha256 cellar: :any, arm64_linux:       "f65052a5b96b8c5435a119596f36b00049c8c8701a9acf843d7802c42d5e9bed"
+    sha256 cellar: :any, x86_64_linux:      "b4c87e6f83025c6da81b0556b454e4039391de29e0520f8b1093ba083797d09b"
   end
 
   depends_on "boost" => :build
@@ -39,9 +39,8 @@ class Libmspub < Formula
   def install
     # icu4c 75+ needs C++17 and icu4c 76+ needs icu-uc
     # TODO: Fix upstream
-    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-                .to_formula
-    ENV["ICU_LIBS"] = "-L#{icu4c.opt_lib} -licui18n -licuuc"
+    icu4c_lib = dep("icu4c").opt_lib
+    ENV["ICU_LIBS"] = "-L#{icu4c_lib} -licui18n -licuuc"
     ENV.append "CXXFLAGS", "-std=gnu++17"
 
     system "./configure", "--disable-silent-rules",

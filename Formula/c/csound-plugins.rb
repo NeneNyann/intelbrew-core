@@ -6,6 +6,7 @@ class CsoundPlugins < Formula
   license "LGPL-2.1-or-later"
 
   bottle do
+    manifest_sha256 "1f5a53cf016ffbc5bafd9e2d87168f50f929dee7128b17129c835728fbe9557f"
     sha256 arm64_golden_gate: "a5d7fb7c2700679a0407972da0607d7540bac9cc5fcbd8a0fad48279d9fa4dc4"
     sha256 arm64_tahoe:       "b00abf374beaf23b853c36b37984c8234ff470ade121aff86c77ec9f1ada60e7"
     sha256 arm64_sequoia:     "076029ed4d523b26b5e5502b181ff8830cc91128aa61f8120e2d498fde314048"
@@ -35,7 +36,8 @@ class CsoundPlugins < Formula
 
   def install
     # Must match the plugin search path compiled into `csound`
-    install_dir = lib/"csound/plugins64-#{Formula["csound"].version.major_minor}"
+    csound_version = Formula["csound"].version.major_minor
+    install_dir = lib/"csound/plugins64-#{csound_version}"
 
     args = %W[
       -DBUILD_CHUA_OPCODES=OFF
@@ -101,14 +103,16 @@ class CsoundPlugins < Formula
 
     system csound.opt_bin/"csound", "test.orc", "test.sco"
 
-    assert_path_exists testpath/"test.#{OS.mac? ? "aif" : "wav"}"
+    audio_format = OS.mac? ? "aif" : "wav"
+    assert_path_exists testpath/"test.#{audio_format}"
     assert_path_exists testpath/"test.h5"
 
+    plugin_name = "p5gconnect" if OS.mac?
     (testpath/"opcode-existence.orc").write <<~ORC
       instr 1
           i_ websocket 8888, 0
           i_ wiiconnect 1, 1
-          #{"p5gconnect" if OS.mac?}
+          #{plugin_name}
       endin
     ORC
     system csound.opt_bin/"csound", "--orc", "--syntax-check-only", "opcode-existence.orc"

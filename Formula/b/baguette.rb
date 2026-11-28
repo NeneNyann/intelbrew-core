@@ -1,14 +1,15 @@
 class Baguette < Formula
   desc "Headless iOS Simulator manager and host-side input injection for iOS 26"
   homepage "https://tddworks.github.io/baguette/"
-  url "https://github.com/tddworks/baguette/archive/refs/tags/v0.2.15.tar.gz"
-  sha256 "60df98fa49ca298fff00eb146c09fc65c261930eaea29e8eed34d373e3312200"
+  url "https://github.com/tddworks/baguette/archive/refs/tags/v0.5.2.tar.gz"
+  sha256 "727a58fc311256f82ff7b3945ad19cf04ccff2c8fe156c69ceefbfd676f93fd2"
   license "Apache-2.0"
   head "https://github.com/tddworks/baguette.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "cdbd2f8e5b28cf948901918c566d186ad4654d6ef65dfdf8b5ccd6d505ffa748"
-    sha256 cellar: :any, arm64_tahoe:       "356011c64c3b57d4783a43baa7dc8179c02d2b4436c589db47384d1373a626f7"
+    manifest_sha256 "1684e013ea5d9a0c721aae856c3905a31ebf844df65d147c2c7081c6c7e83286"
+    sha256 cellar: :any, arm64_golden_gate: "083b8be1ee266a1eb9ef1532a85659f25e001b80ba8d9e961f0990dc0266d358"
+    sha256 cellar: :any, arm64_tahoe:       "3e1c39472a6027fa097067e55a8dbe1f6d8f51079398bee97e39768633b2932d"
   end
 
   depends_on xcode: ["26.0", :build]
@@ -16,13 +17,19 @@ class Baguette < Formula
   depends_on macos: :tahoe
 
   # `swift build` fetches packages
-  allow_network_access! :build
+  deny_network_access!
+
+  def fetch
+    # SwiftPM tries to apply its own sandbox, which cannot nest inside the
+    # build sandbox; Homebrew's sandbox still confines the whole process.
+    system "swift", "package", "resolve", "--disable-sandbox"
+  end
 
   def install
     # replace version like upstreams release process
-    inreplace "Sources/Baguette/App/Version.swift",
-              "let baguetteVersion = \"0.1.61\"",
-              %Q(let baguetteVersion = "#{version}")
+    inreplace "Sources/Commands/Version.swift",
+              'let baguetteVersion = "0.1.61"',
+              "let baguetteVersion = \"#{version}\""
 
     # Rebuild the iOS-Simulator injection dylibs from source: upstream ships them prebuilt and universal,
     # which `brew audit` rejects. Mirrors each Injected/*/build.sh, for this arch only.

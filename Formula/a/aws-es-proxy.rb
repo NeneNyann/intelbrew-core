@@ -7,6 +7,7 @@ class AwsEsProxy < Formula
   head "https://github.com/abutaha/aws-es-proxy.git", branch: "master"
 
   bottle do
+    manifest_sha256 "51d85ec1ada36f75b5e45b642d863da9895b51bf22d1da67f925ff2aa9f12ae1"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "3d66d88b73ef5bb7823ceb74517411c45ba6ab70660092b476c6eb31ddc61d15"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "ae88a4d6f9708c3dfdebe1473f65c6b1063b79e526f99fd7cb0cfef999dbf431"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c0415a87ec2804d034902df0cd3ada2a5085706236e2b73f68c45dbf99fdd1e6"
@@ -54,14 +55,10 @@ class AwsEsProxy < Formula
     address = "127.0.0.1:#{free_port}"
     endpoint = "https://dummy-host.eu-west-1.es.amazonaws.com"
 
-    pid = spawn bin/"aws-es-proxy", "-listen=#{address}", "-endpoint=#{endpoint}"
-    begin
+    with_test_process(bin/"aws-es-proxy", "-listen=#{address}", "-endpoint=#{endpoint}") do
       sleep 2
       output = shell_output("curl --silent #{address}")
       assert_match "Failed to sign", output
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

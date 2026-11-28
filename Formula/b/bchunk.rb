@@ -12,6 +12,7 @@ class Bchunk < Formula
   end
 
   bottle do
+    manifest_sha256 "b36ac5706434d211a68bd37b98b78edfbf5a88aea6c68a6be8003c706434e3b8"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e9c8ba1c8d2e6fa12b3972de4f82f8eb9ed6d625718ae61edc2dcc3e572af58f"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "3277369df1cbf1eee5bff5521a3c471311ac476f7bbc9deb3aebebe0d2f1ed06"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "22c3f5e3b6a740a91ac5ddd9b384efc9fd9d399a9356f2bb5e0eabad6df25b97"
@@ -26,6 +27,8 @@ class Bchunk < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "cb5ff1ac028a138667c1d1dae887d33348e009b44f4a9a042d7d10c7387b5d37"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "97b11f40a695dccaf6033a9911a9377984ffa7d3ed59bc1272fce7b3a0958edf"
   end
+
+  deny_network_access!
 
   def install
     system "make"

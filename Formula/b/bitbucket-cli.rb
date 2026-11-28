@@ -1,17 +1,18 @@
 class BitbucketCli < Formula
   desc "CLI for Bitbucket Cloud and Data Center"
   homepage "https://github.com/avivsinai/bitbucket-cli"
-  url "https://github.com/avivsinai/bitbucket-cli/archive/refs/tags/v0.40.2.tar.gz"
-  sha256 "2a46bd417ea5362c0a118f083147beaad4a6e05e4fa6101e94997f47a27b20c5"
+  url "https://github.com/avivsinai/bitbucket-cli/archive/refs/tags/v0.41.1.tar.gz"
+  sha256 "4e080843a60d11685b0856984f8ffb8f1095b3a17bba5c7a5d3fd232d7d76017"
   license "MIT"
   head "https://github.com/avivsinai/bitbucket-cli.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "15eac371cdbb64eef34bbe8a525bb06bc1ada66274cd5dfd9ed73b92d67c8be7"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "1f903ea503be28c7e13fc31711deba6f09354314b4c495e18c72520071072eae"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e2f7a16ca94eda7b25520244cae171a44d0251acb34e397d33be781935d743a0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "c482a031e7160a3fe1f4d012966222d8b71c2315e7debf139b8b0f1dd3b87f77"
-    sha256 cellar: :any,                 x86_64_linux:      "c2c0e166302d1e63139ad0deba08be964a94b42c0e1595bf513dd082e0016ef6"
+    manifest_sha256 "f0cc41bf032a512dcfe26a4346f0f940acceb3b3bcda17264101404250d26856"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "ae387a2781a6c42999527c4482a879ad0e256842ac7e7a7b9c4e96e221a81058"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "2516c217935e21431bc15cfb0f3e1567f00b25991f32ef99a8d903bc4f559090"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "d97fbaad58c6e10a328f3e6ea50b2c168f7b3ffdcc960fa25d35bf744c6ec73b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "470e933ae745df722bbbfb6e824cc92c7737d817679b1f7a3a251572d087160c"
+    sha256 cellar: :any,                 x86_64_linux:      "284189c714067878cee6283c733c2f6bc452cd73d4dd07b526520ca82959f2e1"
   end
 
   depends_on "go" => :build

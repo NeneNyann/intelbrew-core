@@ -9,6 +9,7 @@ class Black < Formula
   head "https://github.com/psf/black.git", branch: "main"
 
   bottle do
+    manifest_sha256 "1264d599520d32b655dab026dd706d11f23741292318a4c4d36d7a84b332417c"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "b389df385ac8a95cf64da540360440cbb0fe7c5343bfaf8a866dcaf1f4d125ff"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "95cf0e42ea32e15238d7de7ab14774da6db374984f7f1f806628ce32035d23cb"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "049cac47655fbde1c946e9f1ef097b5aead749e0354b67f35b3f4e8d8e37df77"
@@ -95,6 +96,8 @@ class Black < Formula
     url "https://files.pythonhosted.org/packages/75/16/e8be8e2fb175bbf41a0680381a319f1199fae256588241a2ac8677eafb49/yarl-1.25.1.tar.gz"
     sha256 "03dd38de09bc213e9a8b29761eec33ee1d5318dac0e49d8af36e4d27830e23a7"
   end
+
+  allow_network_access! [:build, :test]
 
   def install
     ENV["HATCH_BUILD_HOOK_ENABLE_MYPYC"] = "1"

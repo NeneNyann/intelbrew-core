@@ -16,6 +16,7 @@ class Unbound < Formula
   end
 
   bottle do
+    manifest_sha256 "67e6b99a330bb920baf1caff21d69054d9661693d8ced491e0a1b9b00d007f53"
     sha256 arm64_golden_gate: "e45285e85ad19dcd50a8477b2fc32077c3e1fabec3c434dfff44c9d8b415fc1a"
     sha256 arm64_tahoe:       "1ab3daeafae3e6dffa51583b8878e125c0aac2f68cfeddbfd2985a13b8c6cc85"
     sha256 arm64_sequoia:     "37bed88914f3c5c272129ffc1f2dea45580955cc115ac9237d599121c57d6661"
@@ -32,7 +33,13 @@ class Unbound < Formula
   deny_network_access!
 
   def install
-    expat_prefix = OS.mac? ? "#{MacOS.sdk_for_formula(self).path}/usr" : formula_opt_prefix("expat")
+    expat_prefix = if OS.mac?
+      sdk_path = MacOS.sdk_for_formula(self).path
+      "#{sdk_path}/usr"
+    else
+      formula_opt_prefix("expat")
+    end
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --prefix=#{prefix}
       --sysconfdir=#{etc}
@@ -42,7 +49,7 @@ class Unbound < Formula
       --with-libevent=#{formula_opt_prefix("libevent")}
       --with-libexpat=#{expat_prefix}
       --with-libnghttp2=#{formula_opt_prefix("libnghttp2")}
-      --with-ssl=#{formula_opt_prefix("openssl@4")}
+      --with-ssl=#{openssl_prefix}
     ]
 
     system "./configure", *args

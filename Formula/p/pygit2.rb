@@ -8,6 +8,7 @@ class Pygit2 < Formula
   head "https://github.com/libgit2/pygit2.git", branch: "master"
 
   bottle do
+    manifest_sha256 "55bb9052c553c950b787d97e2e718265a8112ece7d92ab9690908ee98dae3a49"
     sha256 cellar: :any, arm64_golden_gate: "c31b03e9d2c538dbe9279bbd27d21ed5f024795ccb4e5340f5182b83aee03403"
     sha256 cellar: :any, arm64_tahoe:       "a292fa3115fd38d6fc7cba43bba9aa0064b10416edfc0515ef72ad5d61c189e9"
     sha256 cellar: :any, arm64_sequoia:     "e8ce4ca7836816dcb1e08615c577101253b2785b4bf715242bbd87c2c3ac6238"
@@ -22,14 +23,8 @@ class Pygit2 < Formula
 
   pypi_packages exclude_packages: %w[cffi pycparser]
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.start_with?("python@") }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def install
-    pythons.each do |python3|
+    python3_interpreters.each do |python3|
       system python3, "-m", "pip", "install", *std_pip_args(build_isolation: true), "."
     end
   end
@@ -37,14 +32,14 @@ class Pygit2 < Formula
   test do
     assert_empty resources, "This formula should not have any resources!"
 
-    pythons.each do |python3|
+    python3_interpreters.each do |python3|
       pyversion = Language::Python.major_minor_version(python3).to_s
 
       (testpath/pyversion/"hello.txt").write "Hello, pygit2."
       mkdir pyversion do
         system python3, "-c", <<~PYTHON
           import pygit2
-          repo = pygit2.init_repository('#{testpath/pyversion}', False) # git init
+          repo = pygit2.init_repository('#{testpath}/#{pyversion}', False) # git init
 
           index = repo.index
           index.add('hello.txt')

@@ -7,6 +7,7 @@ class DiffPdf < Formula
   revision 1
 
   bottle do
+    manifest_sha256 "d9385b019246f16de9802251b40f16ae3831b6ee210281a1740379e5c0a2e26f"
     sha256 cellar: :any, arm64_golden_gate: "b0f369e96595e1c71c820869b8c9e64878911d6a3d55b8e50dfee3e19b70cdbd"
     sha256 cellar: :any, arm64_tahoe:       "fc79a1e968f7019d2e632ae2c03055907ed3240412c052aa51c411523ae62a2c"
     sha256 cellar: :any, arm64_sequoia:     "94800b9fe7649ca7ba806692ca49cb749e8054653849f44ddd81baa9448e6f17"
@@ -31,7 +32,7 @@ class DiffPdf < Formula
   deny_network_access!
 
   def install
-    wxwidgets = deps.find { |dep| dep.name.match?(/^wxwidgets(@\d+(\.\d+)*)?$/) }.to_formula
+    wxwidgets = dep("wxwidgets").to_formula
     wx_config = wxwidgets.opt_bin/"wx-config-#{wxwidgets.version.major_minor}"
     system "./configure", "--disable-silent-rules", "--with-wx-config=#{wx_config}", *std_configure_args
     system "make", "install"

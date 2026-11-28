@@ -84,8 +84,12 @@ class Rust < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/rust-1.100.0-be2e7c12558fda3a645fc30ea"
-    sha256 cellar: :any, sequoia: "f49ec28a1b12be4c249b4c1befd4f53c0ba1e519cc676c937ab6742175726c17"
+    manifest_sha256 "3f4eb684e9ef5da517d2c6082202da23277bb85e98d06588174f2637092170ce"
+    sha256 cellar: :any, arm64_golden_gate: "e525b3182b179bfb2792bbbd6644766598f3b185c8ab7058e12557e855243629"
+    sha256 cellar: :any, arm64_tahoe:       "60fbbefcaf2809073d8f24eebdb5e2d48b76bcc74aec22ccb6b648a3211b5ce4"
+    sha256 cellar: :any, arm64_sequoia:     "a65ac97028ed89aa3dcfbe1a955558a3132831db28334687c487fc566080adb1"
+    sha256 cellar: :any, arm64_linux:       "57c148e9205d594d2d3c0591f1ca4757beb34927a43a5a1b1a8b47b0040e4fa0"
+    sha256 cellar: :any, x86_64_linux:      "05c02ab708592053b0b7a108299c385da9bed2be60cefb20b9a46b0f36637371"
   end
 
   depends_on "libgit2"
@@ -105,14 +109,10 @@ class Rust < Formula
   # These used to belong in `rustfmt`.
   link_overwrite "bin/cargo-fmt", "bin/git-rustfmt", "bin/rustfmt", "bin/rustfmt-*"
 
-  def llvm = deps.map(&:name).find { |dep| dep.match?(/^llvm(@\d+)?$/) }
-
-  def openssl = deps.map(&:name).find { |dep| dep.start_with?("openssl@") }
-
   def install
     # Ensure that the `openssl` crate picks up the intended library.
     # https://docs.rs/openssl/latest/openssl/#manual
-    ENV["OPENSSL_DIR"] = formula_opt_prefix(openssl)
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSQLITE3_SYS_USE_PKG_CONFIG"] = "1"
@@ -161,18 +161,20 @@ class Rust < Formula
       rust-demangler
       src
     ]
+    release_channel = build.head? ? "nightly" : "stable"
+    llvm_prefix = dep("llvm").opt_prefix
     args = %W[
       --prefix=#{prefix}
       --sysconfdir=#{etc}
       --tools=#{tools.join(",")}
-      --llvm-root=#{formula_opt_prefix(llvm)}
+      --llvm-root=#{llvm_prefix}
       --enable-llvm-link-shared
       --enable-profiler
       --enable-vendor
       --disable-cargo-native-static
       --disable-docs
       --disable-lld
-      --release-channel=#{build.head? ? "nightly" : "stable"}
+      --release-channel=#{release_channel}
       --release-description=#{tap.user}
       --set=build.allocator=jemalloc
     ]
@@ -202,7 +204,7 @@ class Rust < Formula
     # Replace the renamed llvm-objcopy with a symlink to make sure it can find libLLVM
     arch = Hardware::CPU.arm? ? :aarch64 : Hardware::CPU.arch
     rust_objcopy = lib/"rustlib/#{arch}-apple-darwin/bin/rust-objcopy"
-    llvm_objcopy = formula_opt_bin(llvm)/"llvm-objcopy"
+    llvm_objcopy = dep("llvm").opt_bin/"llvm-objcopy"
     rm(rust_objcopy)
     ln_sf llvm_objcopy.relative_path_from(rust_objcopy.dirname), rust_objcopy
   end
@@ -243,11 +245,11 @@ class Rust < Formula
       bin/"cargo" => [
         formula_opt_lib("libgit2")/shared_library("libgit2"),
         formula_opt_lib("libssh2")/shared_library("libssh2"),
-        formula_opt_lib(openssl)/shared_library("libssl"),
+        dep("openssl").opt_lib/shared_library("libssl"),
       ],
     }
     expected_linkage[bin/"cargo"] << if OS.mac?
-      formula_opt_lib(openssl)/shared_library("libcrypto")
+      dep("openssl").opt_lib/shared_library("libcrypto")
     else
       formula_opt_lib("curl")/shared_library("libcurl")
     end

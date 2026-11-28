@@ -12,8 +12,13 @@ class StanfordNer < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "5aa9a3270eb2c4ce5e265368a6e2eb63686c0bdba5f03fbf27a430f477c03790"
     sha256 cellar: :any_skip_relocation, all: "caf1491537a74417f2d4070335d5c281ce60387d984726f77458b329b0fbe9c8"
   end
+
+  # Homepage and source pages are gone
+  deprecate! date: "2026-11-22", because: :repo_removed, replacement_formula: "stanford-corenlp"
+  disable! date: "2027-11-22", because: :repo_removed, replacement_formula: "stanford-corenlp"
 
   depends_on "openjdk"
 

@@ -8,6 +8,7 @@ class Httpd < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "7843aa71fabfefeae626531d5cd8280a9db559a39b354e1a41d537972bcf7237"
     sha256 arm64_golden_gate: "1960622bcc500aa4c7e8cc10d1ad12b3c9092aa1ae9a742b2a971fa60c513ed0"
     sha256 arm64_tahoe:       "25332dee39649e12296e23467ab7c1397e5b967e32afe41e367ebbb9e482f395"
     sha256 arm64_sequoia:     "70473f73fa318bc75e30fe319306b8790ee31404f844fd4947a0dbd9bb2d6e13"
@@ -31,8 +32,6 @@ class Httpd < Formula
 
   allow_network_access! :test
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     # fixup prefix references in favour of opt_prefix references
     inreplace "Makefile.in",
@@ -55,13 +54,15 @@ class Httpd < Formula
     end
 
     if OS.mac?
-      libxml2 = "#{MacOS.sdk_for_formula(self).path}/usr"
-      zlib = "#{MacOS.sdk_for_formula(self).path}/usr"
+      sdk_usr = MacOS.sdk_for_formula(self).path/"usr"
+      libxml2 = sdk_usr
+      zlib = sdk_usr
     else
       libxml2 = formula_opt_prefix("libxml2")
       zlib = formula_opt_prefix("zlib-ng-compat")
     end
 
+    openssl_prefix = dep("openssl").opt_prefix
     system "./configure", "--enable-layout=Slackware-FHS",
                           "--prefix=#{prefix}",
                           "--sbindir=#{bin}",
@@ -85,7 +86,7 @@ class Httpd < Formula
                           "--with-libxml2=#{libxml2}",
                           "--with-mpm=prefork",
                           "--with-nghttp2=#{formula_opt_prefix("libnghttp2")}",
-                          "--with-ssl=#{formula_opt_prefix(openssl)}",
+                          "--with-ssl=#{openssl_prefix}",
                           "--with-pcre=#{formula_opt_prefix("pcre2")}/bin/pcre2-config",
                           "--with-z=#{zlib}",
                           "--disable-lua",

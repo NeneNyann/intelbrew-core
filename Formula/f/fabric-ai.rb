@@ -1,17 +1,18 @@
 class FabricAi < Formula
   desc "Open-source framework for augmenting humans using AI"
   homepage "https://github.com/danielmiessler/fabric"
-  url "https://github.com/danielmiessler/fabric/archive/refs/tags/v1.4.578.tar.gz"
-  sha256 "31116695b48df0ccfa9ef7fb44c08879bac5703ddf20c2cff145f76289c2fc51"
+  url "https://github.com/danielmiessler/fabric/archive/refs/tags/v1.4.584.tar.gz"
+  sha256 "49ffd4dfa3e141592193112352a64832e385db585f1c8b6ea053324becf50afd"
   license "MIT"
   head "https://github.com/danielmiessler/fabric.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "9cdfbfd4158307755723545c340e169a9ebf2cc0618928aea2d042e57f5a0c35"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "9cdfbfd4158307755723545c340e169a9ebf2cc0618928aea2d042e57f5a0c35"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "9cdfbfd4158307755723545c340e169a9ebf2cc0618928aea2d042e57f5a0c35"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "d44b92601f53884266ec57d0b26b5b95f574835f151612b3efd240f2cbf9c195"
-    sha256 cellar: :any,                 x86_64_linux:      "7df03d67f9bdb6ad9c61298bcd6b5bb4d81a9f72b8beaa9bc74fbcfe93cffb4c"
+    manifest_sha256 "f569424d1d43cd97166cd34d388d79d8374678a715e7456e69ee2923e821be53"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "473b2f6a3258de472e8fddf916ee7d222ed5a00308cdb57e88eb3faace49c463"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "473b2f6a3258de472e8fddf916ee7d222ed5a00308cdb57e88eb3faace49c463"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "473b2f6a3258de472e8fddf916ee7d222ed5a00308cdb57e88eb3faace49c463"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "3670dab6b27a7a11289472751e1adde5a1b3ca8d7243700c83dc0b0b0dd8614f"
+    sha256 cellar: :any,                 x86_64_linux:      "9a663fbca351750ef20c89b1de5615ff345fb23a17473cc7e380b6939fc9026f"
   end
 
   depends_on "go" => :build

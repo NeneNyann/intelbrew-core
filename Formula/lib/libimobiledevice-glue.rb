@@ -8,8 +8,12 @@ class LibimobiledeviceGlue < Formula
   head "https://github.com/libimobiledevice/libimobiledevice-glue.git", branch: "master"
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libimobiledevice-glue-1.3.3-ba2185767640670f2f0ba6806"
-    sha256 cellar: :any, sequoia: "42449f47aab0d54e969f405a17f332d00f9c9916c88db716bbd030e0067a5d78"
+    manifest_sha256 "ee3b4b333f621116b6b541923c5c2bee008eddfb373d1720527a795d0792a328"
+    sha256 cellar: :any, arm64_golden_gate: "dc5369924a2c6a2a72fa0272ad2e555368d9202b5d277128ec9015ce118a4d38"
+    sha256 cellar: :any, arm64_tahoe:       "771ea125dd999af5879f39529abd5faa2cb1bff83a52f87c95e842d4c0cba942"
+    sha256 cellar: :any, arm64_sequoia:     "8b529b79effd76fac07f8a85e1596a3e7b6b0c18f06f07c1579b5b5c45b0110e"
+    sha256 cellar: :any, arm64_linux:       "09c546bf5ba30af4019a0e43d5bdc2a4e0a8b5f027d51407be7f430c7f380819"
+    sha256 cellar: :any, x86_64_linux:      "4ef415035d620334870921e36e0f6d4dd973af3507c9d20d464b3648647f008a"
   end
 
   depends_on "autoconf" => :build

@@ -7,6 +7,7 @@ class Sile < Formula
   revision 2
 
   bottle do
+    manifest_sha256 "5bd841754b7c101f5ba5000d3747a2e480b7ea1de747c6c372a9d869db409558"
     sha256 cellar: :any, arm64_golden_gate: "6baa65b3fcb48d8828020ae75be7734b163b1f0963d042b8cc09d71bb9c58cc0"
     sha256 cellar: :any, arm64_tahoe:       "4e0c9f6178705ed8f01a737897b6636ef16f8a8394c5664bf3fe51ffee476665"
     sha256 cellar: :any, arm64_sequoia:     "f9ac136a135208e8efdaef97e73dfafd181358aeeeb492895014e49a3e38e4bd"
@@ -147,8 +148,6 @@ class Sile < Formula
   # `luarocks unpack` needs network access
   allow_network_access! :build
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     lua = "luajit"
     luaversion = "5.1"
@@ -173,10 +172,11 @@ class Sile < Formula
       expat_dir = formula_opt_prefix("expat")
     end
 
+    openssl_prefix = dep("openssl").opt_prefix
     luarocks_args = %W[
       ZLIB_DIR=#{zlib_dir}
       EXPAT_DIR=#{expat_dir}
-      OPENSSL_DIR=#{formula_opt_prefix(openssl)}
+      OPENSSL_DIR=#{openssl_prefix}
       --tree=#{luapath}
       --lua-dir=#{formula_opt_prefix(lua)}
     ]

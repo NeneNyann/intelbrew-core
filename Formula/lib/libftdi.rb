@@ -13,6 +13,7 @@ class Libftdi < Formula
   end
 
   bottle do
+    manifest_sha256 "19e6ef8f052d8dafa11cf7a130962808cac7926416d6ff8a3fe9e07e99f4b368"
     sha256 cellar: :any,                 arm64_golden_gate: "8b970f98b682ae979364a12f48cd097f8f3042b73e7b726c956d0942877a5172"
     sha256 cellar: :any,                 arm64_tahoe:       "09132f1d347fe01a17da39c406e4311ad5af9609c5306afdfe912132df89f74f"
     sha256 cellar: :any,                 arm64_sequoia:     "c53870c2c84cf0918cbf27dfa0f62b3dc331072846980ef86243f506e1752f7a"
@@ -43,10 +44,11 @@ class Libftdi < Formula
   end
 
   def install
+    examples_rpath = rpath(source: pkgshare/"examples/bin")
     system "cmake", "-S", ".", "-B", "build",
                     "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON",
                     "-DCMAKE_CXX_STANDARD=11",
-                    "-DCMAKE_INSTALL_RPATH=#{rpath};#{rpath(source: pkgshare/"examples/bin")}",
+                    "-DCMAKE_INSTALL_RPATH=#{rpath};#{examples_rpath}",
                     "-DFTDIPP=ON",
                     "-DPYTHON_BINDINGS=OFF",
                     *std_cmake_args

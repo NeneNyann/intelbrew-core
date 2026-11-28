@@ -1,6 +1,6 @@
 class Aptos < Formula
   desc "Layer 1 blockchain built to support fair access to decentralized assets for all"
-  homepage "https://aptosfoundation.org/", browsed: "2026-09-05"
+  homepage "https://aptosnetwork.com/", browsed: "2026-11-22"
   url "https://github.com/aptos-labs/aptos-core/archive/refs/tags/aptos-cli-v9.6.0.tar.gz"
   sha256 "c3386da89449ca7f453b0f92572730d1f08dedc49fd02a5059ddd934321651ef"
   license "Apache-2.0"
@@ -15,6 +15,7 @@ class Aptos < Formula
   no_autobump! because: :bumped_by_upstream
 
   bottle do
+    manifest_sha256 "349832f2b9e4f81ab57603bb32909d8f8d368fb4de28eb31f16b5812554a2e32"
     sha256 cellar: :any, arm64_golden_gate: "349d3a216821ff2894d803ccacf5e62ebe485caa22c4c463734c583ec5061404"
     sha256 cellar: :any, arm64_tahoe:       "b78885ba252eb11cb6b63f2e1aee6182f210dfb2e081cfa2df47b1fc9d18ec27"
     sha256 cellar: :any, arm64_sequoia:     "700c2a780c5e9b3639bc8885682655e903023efbecca4e087b0b576d95c20e48"

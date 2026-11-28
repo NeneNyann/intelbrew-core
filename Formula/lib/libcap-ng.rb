@@ -9,6 +9,7 @@ class LibcapNg < Formula
   head "https://github.com/stevegrubb/libcap-ng.git", branch: "master"
 
   bottle do
+    manifest_sha256 "792ea5c17d68c75f67cc0268201aabc345354580839a3b5fdef9b2eff740a154"
     sha256 cellar: :any, arm64_linux:  "2046c58d9207c9007021a76c4f5f494bad73d7178eb7e3ea8fa7659848645157"
     sha256 cellar: :any, x86_64_linux: "b390648b787ce65412ab3529aca321ba19da67d75fd727f79790a6b029976dc0"
   end
@@ -28,7 +29,7 @@ class LibcapNg < Formula
     system "./configure", "--disable-silent-rules",
                           "--with-python3",
                           *std_configure_args
-    system "make", "install", "py3execdir=#{prefix/Language::Python.site_packages(python3)}"
+    system "make", "install", "py3execdir=#{prefix}/#{Language::Python.site_packages(python3)}"
   end
 
   test do

@@ -14,6 +14,7 @@ class Torchvision < Formula
   end
 
   bottle do
+    manifest_sha256 "cc5290a35cc7358268d5e06e79335b93babbac8b8b05acbdd0433d35bfcf6dca"
     sha256 cellar: :any, arm64_golden_gate: "10c15095557a303c6f6cde6a83c16c312d58dc62c2f237de949c93d58bc2840b"
     sha256 cellar: :any, arm64_tahoe:       "5dce5499367aa2e0985ad7af8362049e6af6fb96eb3c8265e0a78bc024d5782b"
     sha256 cellar: :any, arm64_sequoia:     "6f113ea6ec64a534270a350fee315de61f0545389ab6aff3ccb8e319237fec27"
@@ -53,7 +54,7 @@ class Torchvision < Formula
     # This needs to happen _before_ we try to install torchvision.
     # NOTE: This is an exception to our usual policy as building `pytorch` is complicated
     site_packages = Language::Python.site_packages(venv.root/"bin/python3")
-    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("pytorch")/site_packages}')\n"
+    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("pytorch")}/#{site_packages}')\n"
     (venv.site_packages/"homebrew-pytorch.pth").write pth_contents
 
     venv.pip_install_and_link(buildpath, build_isolation: false)

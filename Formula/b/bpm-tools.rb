@@ -13,6 +13,7 @@ class BpmTools < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "15559302c45868eed357e5ef7c7e924db44894619dd8991496222b578bc350c9"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "4b2522c286f27aa41ccfa49e6c59a73c31b3b28d162d4f8dc762909160049ddb"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "634c02b83f4eed1869654538098c52c10571bde389661e7624c7a3a4ba14ebc2"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "8b1d300cf51e9fa05e8eb82ca8b2bfec3203c2c8cc12f0bf9813545a668a11fc"
@@ -27,6 +28,8 @@ class BpmTools < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "46138982bb7ffca2a4f763f1fde359ac3b0cddadb65e8f2e7dbadeede5274143"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "e78a1d3a9c96635e57bf0ce8c329a88b8b3406a0e0ba4a19cb97e4b42727f6a0"
   end
+
+  deny_network_access!
 
   def install
     system "make"

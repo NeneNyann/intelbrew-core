@@ -6,20 +6,23 @@ class ApibuilderCli < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "6d133a195d5ae8d568279f98bd9fa093057c9f8005363e6251e41a756e275d15"
     sha256 cellar: :any_skip_relocation, all: "37089a9067afbb17f49925411efa1abfb9c00773976eeabe881562bb9b249084"
   end
 
-  uses_from_macos "ruby"
+  depends_on "ruby"
+
+  deny_network_access!
 
   def install
     system "./install.sh", prefix
   end
 
   test do
-    (testpath/"config").write <<~EOS
+    (testpath/"config").write <<~INI
       [default]
       token = abcd1234
-    EOS
+    INI
 
     assert_match "Profile default:",
                  shell_output("#{bin}/read-config --path config")

@@ -6,6 +6,7 @@ class Bundletool < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "d72bfecedc8c841ec496ce65f362ae86bbc802337e908e8819ea5844de585c64"
     sha256 cellar: :any_skip_relocation, all: "12d47cf60e022e6fd1130a87d77ceaae4c36220051f116c9d0b5392392ea56d6"
   end
 
@@ -15,6 +16,8 @@ class Bundletool < Formula
     url "https://github.com/thuongleit/crashlytics-sample/raw/master/app/release/app.aab"
     sha256 "f7ea5a75ce10e394a547d0c46115b62a2f03380a18b1fc222e98928d1448775f"
   end
+
+  deny_network_access!
 
   def install
     libexec.install "bundletool-all-#{version}.jar" => "bundletool-all.jar"

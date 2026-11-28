@@ -11,6 +11,7 @@ class Chrony < Formula
   end
 
   bottle do
+    manifest_sha256 "9c4886584117f1de6317f1b836415d22b0a362b5819072a89d47d35495a88557"
     sha256 cellar: :any, arm64_golden_gate: "56089ce68a07826e7b4c4fb52b15b1dac275b771001e45d02437186d52dde80f"
     sha256 cellar: :any, arm64_tahoe:       "a1df029e9d933dd0dcce82a8b260475751ff01eeb68767b8362735a7c88c923d"
     sha256 cellar: :any, arm64_sequoia:     "5e74476cc6557b1240bea6d5aefe3aecede3148be44375fc1120de2dc03122cb"
@@ -25,14 +26,29 @@ class Chrony < Formula
 
   uses_from_macos "libedit"
 
+  allow_network_access! :test
+
   def install
     system "./configure", "--localstatedir=#{var}", *std_configure_args
     system "make", "install"
   end
 
   test do
-    (testpath/"test.conf").write "pool pool.ntp.org iburst\n"
-    output = shell_output("#{sbin}/chronyd -Q -f #{testpath}/test.conf 2>&1")
-    assert_match(/System clock wrong by -?\d+\.\d+ seconds \(ignored\)/, output)
+    port = free_port
+    (testpath/"server.conf").write <<~EOS
+      port #{port}
+      bindaddress 127.0.0.1
+      allow 127.0.0.1
+      local stratum 10
+      cmdport 0
+      bindcmdaddress /
+      pidfile #{testpath}/server.pid
+    EOS
+    (testpath/"client.conf").write "server 127.0.0.1 port #{port} iburst\n"
+
+    with_test_process(sbin/"chronyd", "-U", "-x", "-d", "-f", testpath/"server.conf", [:out, :err] => File::NULL) do
+      output = shell_output("#{sbin}/chronyd -Q -f #{testpath}/client.conf 2>&1")
+      assert_match(/System clock wrong by -?\d+\.\d+ seconds \(ignored\)/, output)
+    end
   end
 end

@@ -8,6 +8,7 @@ class Blockhash < Formula
   head "https://github.com/commonsmachinery/blockhash.git", branch: "master"
 
   bottle do
+    manifest_sha256 "9a043fab96749de2377eee8f24dca11888bd97d4b1aaa9e9cc6f4815e4b9f011"
     sha256 cellar: :any, arm64_golden_gate: "a6d1874a279f707ee9fa76919be14eda644ce432bd612a4999685454d6c2e8ac"
     sha256 cellar: :any, arm64_tahoe:       "8ab073cb0baf9057d1c34d28ac02c1fcbc53e551829f9d2c8ad390f26995cb74"
     sha256 cellar: :any, arm64_sequoia:     "51e0e4440abd34bacd01a78a962ded10e9e24659f6146d16b56cfce076a32bf4"
@@ -26,6 +27,8 @@ class Blockhash < Formula
     url "https://raw.githubusercontent.com/commonsmachinery/blockhash/ce08b465b658c4e886d49ec33361cee767f86db6/testdata/clipper_ship.jpg"
     sha256 "a9f6858876adadc83c8551b664632a9cf669c2aea4fec0c09d81171cc3b8a97f"
   end
+
+  deny_network_access!
 
   def install
     system "python3", "./waf", "configure", "--prefix=#{prefix}"

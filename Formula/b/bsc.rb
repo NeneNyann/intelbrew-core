@@ -25,6 +25,7 @@ class Bsc < Formula
   end
 
   bottle do
+    manifest_sha256 "bbb53419230d1cf71ed647e099f4f8548db7e930157cdbe443a0052f9646835d"
     sha256 cellar: :any, arm64_golden_gate: "323b3ea0ac72592a6c37f079d8ea0435c7c01a3077df20b2e92c41ef3e424205"
     sha256 cellar: :any, arm64_tahoe:       "b049841441cbce5e98752172f20f402eab30a1f5eba5f0f0492d8c7e13499492"
     sha256 cellar: :any, arm64_sequoia:     "7a1f6e535570500088d040698d2ed54ee6e37bf8cb56734a6d791cd07cef6c9b"
@@ -54,13 +55,21 @@ class Bsc < Formula
   # https://github.com/B-Lang-org/bsc/issues/504#issuecomment-1286287406
   patch :DATA
 
+  deny_network_access!
+
+  def fetch
+    # Using index-state to reproducibly fetch packages without needing resources
+    haskell_libs = %w[old-time regex-compat split syb strict-concurrency]
+    system "cabal", "v2-update", "hackage.haskell.org,#{time.iso8601}"
+    system "cabal", "fetch", *haskell_libs
+  end
+
   def install
     # Directly running tar to unpack subdirectories into buildpath
     resource("yices").stage { system "tar", "-xzf", Dir["*.tar.gz"].first, "-C", buildpath } if build.stable?
 
     store_dir = buildpath/"store"
     haskell_libs = %w[old-time regex-compat split syb strict-concurrency]
-    system "cabal", "v2-update"
     system "cabal", "--store-dir=#{store_dir}", "v2-install", "--lib", *haskell_libs
 
     package_db = store_dir.glob("ghc-*/package.db").first

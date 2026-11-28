@@ -12,6 +12,7 @@ class Llgo < Formula
   end
 
   bottle do
+    manifest_sha256 "5bd082eb89c38d58e3677246e9c61e46f9f3927ce0bc8b530a0e4457e6854916"
     sha256 cellar: :any, arm64_golden_gate: "9fb2dfeeb8c94e73ecffbd60b4e017d3d3a6b8efc1e0185d1ed1114a4c345823"
     sha256 cellar: :any, arm64_tahoe:       "63cd9cda2c301532c050f3ccaefd37b9d4208782bfaca320366de1e39578250b"
     sha256 cellar: :any, arm64_sequoia:     "29d94237fb351b3591120ab02959216d44fbff9057af02368b6223ba9268b419"
@@ -40,21 +41,17 @@ class Llgo < Formula
     system "go", "mod", "download"
   end
 
-  def find_dep(name)
-    deps.find { |f| f.name.match?(/^#{name}(@\d+(\.\d+)*)?$/) }.name
-  end
-
   def install
-    llvm = find_dep("llvm")
+    llvm = dep("llvm")
     module_path = "github.com/xgo-dev/llgo"
     ldflags = %W[
       -X #{module_path}/internal/env.buildVersion=v#{version}
       -X #{module_path}/internal/env.buildTime=#{time.iso8601}
-      -X #{module_path}/xtool/env/llvm.ldLLVMConfigBin=#{formula_opt_bin(llvm)}/llvm-config
+      -X #{module_path}/xtool/env/llvm.ldLLVMConfigBin=#{llvm.opt_bin}/llvm-config
     ]
     tags = []
-    path_deps = %w[lld llvm go pkgconf].map { |name| formula_opt_bin(find_dep(name)) }
-    script_env = { PATH: "#{path_deps.join(":")}:${PATH}" }
+    dependency_bins = %w[lld llvm go pkgconf].map { |name| dep(name).opt_bin }.join(":")
+    script_env = { PATH: "#{dependency_bins}:${PATH}" }
 
     if OS.linux?
       # Workaround to avoid patchelf corruption when cgo is required
@@ -65,17 +62,17 @@ class Llgo < Formula
       end
 
       ENV.prepend "CGO_CPPFLAGS",
-        "-I#{formula_opt_include(llvm)} " \
+        "-I#{llvm.opt_include} " \
         "-D_GNU_SOURCE " \
         "-D__STDC_CONSTANT_MACROS " \
         "-D__STDC_FORMAT_MACROS " \
         "-D__STDC_LIMIT_MACROS"
-      ENV.prepend "CGO_LDFLAGS", "-L#{formula_opt_lib(llvm)} -lLLVM"
+      ENV.prepend "CGO_LDFLAGS", "-L#{llvm.opt_lib} -lLLVM"
 
       tags << "byollvm"
-      libunwind = find_dep("libunwind")
-      script_env[:CFLAGS] = "-I#{formula_opt_include(libunwind)} ${CFLAGS}"
-      script_env[:LDFLAGS] = "-L#{formula_opt_lib(libunwind)} -Wl,-rpath,#{formula_opt_lib(libunwind)} ${LDFLAGS}"
+      libunwind = dep("libunwind")
+      script_env[:CFLAGS] = "-I#{libunwind.opt_include} ${CFLAGS}"
+      script_env[:LDFLAGS] = "-L#{libunwind.opt_lib} -Wl,-rpath,#{libunwind.opt_lib} ${LDFLAGS}"
     end
 
     system "go", "build", *std_go_args(ldflags:, tags:), "./cmd/llgo"
@@ -87,15 +84,15 @@ class Llgo < Formula
     # Let LLGo select an installed SDK supported by LLVM 22.
     ENV.delete "SDKROOT" if OS.mac?
 
-    go = find_dep("go")
-    goos = shell_output("#{formula_opt_bin(go)}/go env GOOS").chomp
-    goarch = shell_output("#{formula_opt_bin(go)}/go env GOARCH").chomp
+    go = dep("go")
+    goos = shell_output("#{go.opt_bin}/go env GOOS").chomp
+    goarch = shell_output("#{go.opt_bin}/go env GOARCH").chomp
     assert_equal "llgo v#{version} #{goos}/#{goarch}", shell_output("#{bin}/llgo version").chomp
 
     # Add bdw-gc library path to LD_LIBRARY_PATH, this is a workaround for the libgc.so not found issue
     # Will be fixed in the next release
-    bdwgc = find_dep("bdw-gc")
-    ENV.prepend_path "LD_LIBRARY_PATH", formula_opt_lib(bdwgc)
+    bdwgc = dep("bdw-gc")
+    ENV.prepend_path "LD_LIBRARY_PATH", bdwgc.opt_lib
 
     (testpath/"hello.go").write <<~'GO'
       package main
@@ -133,7 +130,7 @@ class Llgo < Formula
     GOMOD
 
     expected = "Hello LLGo by fmt.Println\nHello LLGo by c.Printf\n"
-    system formula_opt_bin(go)/"go", "get", "github.com/goplus/lib"
+    system go.opt_bin/"go", "get", "github.com/goplus/lib"
     # Test llgo run
     assert_equal expected, shell_output("#{bin}/llgo run .")
     # Test llgo build

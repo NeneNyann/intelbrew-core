@@ -13,6 +13,7 @@ class HttpServerRs < Formula
   end
 
   bottle do
+    manifest_sha256 "d7bb515e89e851e159e1382f36a1d11def5c59fed3a27d92886f06f0a8ada8d6"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e1b947e6de39253aff333cce3625ca615024338043c8333bce86fc276daa63a0"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "0a809086a7ca4186c1f20e8ae46b1f5aae4af25494c69a4c3bdaf5463d94fdda"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "fe010697a6d9851c061d2939929b4e6f9750ad2612ba486b35610175da62c604"
@@ -44,12 +45,10 @@ class HttpServerRs < Formula
   test do
     touch testpath/"foobar"
     port = free_port
-    pid = spawn bin/"http-server", "-q", "-p", port.to_s
-    sleep 3
-    output = shell_output("curl -s http://localhost:#{port}")
-    assert_match "foobar", output
-  ensure
-    Process.kill("SIGINT", pid)
-    Process.wait(pid)
+    with_test_process(bin/"http-server", "-q", "-p", port.to_s, signal: "INT") do
+      sleep 3
+      output = shell_output("curl -s http://localhost:#{port}")
+      assert_match "foobar", output
+    end
   end
 end

@@ -7,6 +7,7 @@ class Fplll < Formula
   compatibility_version 1
 
   bottle do
+    manifest_sha256 "03bc6af98849ae86cd22c945154a1033adac0e62e5881f785f13f6f3a34b480c"
     sha256                               arm64_golden_gate: "ee484c59a301b6b0cf65d3e136a09a94f113dc2de40b644f4d73eed3b0d94379"
     sha256                               arm64_tahoe:       "695205a1c567c9f190fa106bba08341983123bf5581b4ca39d6f4c57b536e2a6"
     sha256                               arm64_sequoia:     "a25629aa8d961b12af85b7c04935f1133c8a18dee209ff4a593692e11543dc3b"
@@ -32,10 +33,10 @@ class Fplll < Formula
 
   test do
     (testpath/"m1.fplll").write("[[10 11][11 12]]")
-    assert_equal "[[0 1 ]\n[1 0 ]\n]\n", `#{bin/"fplll"} m1.fplll`
+    assert_equal "[[0 1 ]\n[1 0 ]\n]\n", `#{bin}/fplll m1.fplll`
 
     (testpath/"m2.fplll").write("[[17 42 4][50 75 108][11 47 33]][100 101 102]")
-    assert_equal "[107 88 96]\n", `#{bin/"fplll"} -a cvp m2.fplll`
+    assert_equal "[107 88 96]\n", `#{bin}/fplll -a cvp m2.fplll`
 
     (testpath/"test.cpp").write <<~CPP
       #include <fplll.h>

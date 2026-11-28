@@ -6,6 +6,7 @@ class Bashly < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "e2d41340ca4907b79205e5811852502b435ea05039aae04a76e1ff0a01108f3a"
     sha256 cellar: :any, arm64_golden_gate: "05e59758ed36f5e127e1d43ff80d417f16ff9db6543a8e6912f95e8919b4cc24"
     sha256 cellar: :any, arm64_tahoe:       "5a474247920f82e0ad014cd4658bebdf6b0d10da3efe3c64428d6a0f9d01adb1"
     sha256 cellar: :any, arm64_sequoia:     "137c334c11161df0ea0298628fe29868aca7fb284b038d92821972cf8f5bb460"
@@ -120,6 +121,8 @@ class Bashly < Formula
     url "https://rubygems.org/downloads/watchly-0.2.0.gem"
     sha256 "eb9dd449bc8a703325162f293308b5bd5403741f8c91e7ca14802b0eaaa8d067"
   end
+
+  deny_network_access!
 
   def install
     ENV["GEM_HOME"] = libexec

@@ -1,24 +1,27 @@
 class Svlang < Formula
   desc "SystemVerilog compiler and language services"
   homepage "https://sv-lang.com/"
-  url "https://github.com/MikePopoloski/slang/archive/refs/tags/v12.1.tar.gz"
-  sha256 "e7454393956ef0f3e9bbcac27f7de473e11e1fd7be125c3009f1f2bfeddf0358"
+  url "https://github.com/MikePopoloski/slang/archive/refs/tags/v12.2.tar.gz"
+  sha256 "29c8dee801e489e10f84ebc8a65b641bbcee18614fd183223b35e85c2461b6ab"
   license "MIT"
+  revision 1
   head "https://github.com/MikePopoloski/slang.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "3d455629527667ce6c980eaba175abc82da079ff321cff8b5cc26e3fab33128d"
-    sha256 cellar: :any, arm64_tahoe:       "29f7213b37e2075e7252dba70c28b568b691edec95f5c4e965ee1f4bc75fb050"
-    sha256 cellar: :any, arm64_sequoia:     "b7697e40b8823d17d0ca95aa567a84505a4a606127d15e587d9ca310cefe9292"
-    sha256 cellar: :any, arm64_linux:       "d14b5b2ec2455521b163b84cc1f0599c7536f412f42ed592ca7779e73eb60dde"
-    sha256 cellar: :any, x86_64_linux:      "58b38149cbee7fc72cfbead49cf8feeaf937274cdeef5d8eace1de25cb278039"
+    rebuild 1
+    manifest_sha256 "aa5480c164b4506947e5c55f9ea4b70cab85f8c80220abc6ac3eb46b306c0b1b"
+    sha256 cellar: :any, arm64_golden_gate: "9d0849c6f22e6f2f2f24676d123fe50e004ffe7592723dd6e6e82153063a42e8"
+    sha256 cellar: :any, arm64_tahoe:       "19530b3e481a6e6f4d7b751072729002d34b077b9c9254531f52334284905a52"
+    sha256 cellar: :any, arm64_sequoia:     "4267fb30cf46d0854e2b6204ed94b247dc386f93eb66cec7f0f1122f688550b6"
+    sha256 cellar: :any, arm64_linux:       "b8b64fe35535174a6662e29a4655e19cae86f600d04b713b808a08f399b77e80"
+    sha256 cellar: :any, x86_64_linux:      "f5f5a9634355b50d7e8c2c6b562912a05983c0efda62d2abc2fd1bc171d6e6af"
   end
 
+  depends_on "boost" => :build
   depends_on "cmake" => :build
-  depends_on "boost"
+  depends_on "tomlplusplus" => :build
   depends_on "fmt"
   depends_on "mimalloc"
-  depends_on "tomlplusplus"
 
   uses_from_macos "python" => :build
 
@@ -36,6 +39,7 @@ class Svlang < Formula
 
   def install
     args = %w[
+      -DBUILD_SHARED_LIBS=ON
       -DHOMEBREW_ALLOW_FETCHCONTENT=ON
       -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       -DFETCHCONTENT_TRY_FIND_PACKAGE_MODE=ALWAYS

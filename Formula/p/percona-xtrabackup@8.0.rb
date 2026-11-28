@@ -7,6 +7,7 @@ class PerconaXtrabackupAT80 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "b3413a0ab7ba90ed3b4f25637706b92f685f8a063102c46ffa2482eec9e87e6d"
     sha256 arm64_golden_gate: "f9853d6bfdd79bd0699790e088fcec09c7d89f1f0e68fb20c50946613603ac5a"
     sha256 arm64_tahoe:       "9fba7963229bfaac880b0e2119044271b5d4c26ffe36690a3c8eebd548386009"
     sha256 arm64_sequoia:     "17006c18a74027359cbfd1ea4ef52fe00348e386c4d93dc942f6b7d9a1bbd697"
@@ -157,9 +158,10 @@ class PerconaXtrabackupAT80 < Formula
     # Make sure Perl from `perl-dbd-mysql` is used at runtime. Otherwise may have incompatible modules
     inreplace "storage/innobase/xtrabackup/src/backup_copy.cc", 'popen("perl",', "popen(\"#{perl}\","
 
-    icu4c = deps.map(&:to_formula).find { |f| f.name.match?(/^icu4c@\d+$/) }
     # -DWITH_FIDO=system isn't set as feature isn't enabled and bundled copy was removed.
     # Formula paths are set to avoid HOMEBREW_HOME logic in CMake scripts
+    openssl_prefix = dep("openssl").opt_prefix
+    icu4c_prefix = dep("icu4c").opt_prefix
     cmake_args = %W[
       -DBUILD_CONFIG=xtrabackup_release
       -DCOMPILATION_COMMENT=Homebrew
@@ -168,8 +170,8 @@ class PerconaXtrabackupAT80 < Formula
       -DWITH_MAN_PAGES=ON
       -DINSTALL_MYSQLTESTDIR=
       -DBISON_EXECUTABLE=#{formula_opt_bin("bison")}/bison
-      -DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@3")}
-      -DWITH_ICU=#{icu4c.opt_prefix}
+      -DOPENSSL_ROOT_DIR=#{openssl_prefix}
+      -DWITH_ICU=#{icu4c_prefix}
       -DWITH_SYSTEM_LIBS=ON
       -DWITH_BOOST=#{buildpath}/boost
       -DWITH_EDITLINE=system

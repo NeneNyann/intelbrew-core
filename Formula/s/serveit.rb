@@ -9,6 +9,7 @@ class Serveit < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "d1fc79a22324d0374e4cd45c260de4cb26f5ac591a247afccc2e87d9409a2ad2"
     sha256 cellar: :any_skip_relocation, all: "3cd9f9b37e4a1bfff7bd9e9731af43ea6c6b9a07698eecc1f53d1725a6d2f9ef"
   end
 
@@ -33,11 +34,9 @@ class Serveit < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"serveit", "-p", port.to_s
-    sleep 2
-    assert_match(/Listing for/, shell_output("curl localhost:#{port}"))
-  ensure
-    Process.kill("SIGINT", pid)
-    Process.wait(pid)
+    with_test_process(bin/"serveit", "-p", port.to_s, signal: "INT") do
+      sleep 2
+      assert_match(/Listing for/, shell_output("curl localhost:#{port}"))
+    end
   end
 end

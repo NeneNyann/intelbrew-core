@@ -13,6 +13,7 @@ class Bigloo < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "e2984e5b69e76dd662f628f67f9d622ff4c77908ebb866cc23a6b5c2ffc4865e"
     sha256 arm64_golden_gate: "d4a98348d2651cdb124603b9032418875b906dfc443f206abbe38dd8c9a40f7e"
     sha256 arm64_tahoe:       "a75e58d36fd68cac86fc79db90752199ba7cb5726c033441b0242a0635d7e135"
     sha256 arm64_sequoia:     "b9d60b1a1aafabfc1ade5ff39f9a2a87b6fc1aff1809ad331d92a9938ec9dbf5"
@@ -57,8 +58,9 @@ class Bigloo < Formula
       pcre2
     ])
 
-    ENV.append_to_cflags "-I#{formula_opt_include("openssl@4")}"
-    ENV.append "LDFLAGS", "-L#{formula_opt_lib("openssl@4")}"
+    openssl = dep("openssl")
+    ENV.append_to_cflags "-I#{openssl.opt_include}"
+    ENV.append "LDFLAGS", "-L#{openssl.opt_lib}"
 
     # These need to be passed after --prefix
     install_args = %W[
@@ -77,7 +79,8 @@ class Bigloo < Formula
       --jvm=yes
     ]
     # Record the keg-only JDK so the JVM backend does not depend on `PATH`
-    args << "--javaprefix=#{formula_opt_bin("openjdk@25")}"
+    openjdk_bin = dep("openjdk").opt_bin
+    args << "--javaprefix=#{openjdk_bin}"
 
     if OS.mac?
       args << "--os-macosx"

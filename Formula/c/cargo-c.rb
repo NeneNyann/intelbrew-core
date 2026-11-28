@@ -1,9 +1,8 @@
 class CargoC < Formula
   desc "Helper program to build and install c-like libraries"
   homepage "https://github.com/lu-zero/cargo-c"
-  url "https://static.crates.io/crates/cargo-c/cargo-c-0.10.26+cargo-0.100.0.crate"
-  version "0.10.26"
-  sha256 "5ff6e05531e58286d3c02ec0adb7f254e5d532a8d4b667f30b9942d802e1db25"
+  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.28.tar.gz"
+  sha256 "1069764333ff3ef36b8822be6a058d5241b4d12884ac003e7d66695a8a1238e9"
   license "MIT"
   compatibility_version 1
 
@@ -13,11 +12,12 @@ class CargoC < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "d4147427eef427595fe053c750508bc7f9e580cf946b2d374648319b25e20592"
-    sha256 cellar: :any, arm64_tahoe:       "3dbc1cc9570dcb085be641c3de1dd7cd38dc0ae03f011eadc6ebe413a6f65451"
-    sha256 cellar: :any, arm64_sequoia:     "5c0c3d446d1067668275333b63c24c348ce4732768368f808d12af907672d547"
-    sha256 cellar: :any, arm64_linux:       "8bdb4d595ea1a80873b37805379b3b5d8d3a338bd4faa70f52aa93df4a81624a"
-    sha256 cellar: :any, x86_64_linux:      "0ce0e3ed42df0a0d74eea5e66f726683d44cd65587039166c21e4b6cda43fb1a"
+    manifest_sha256 "24f84ceb9134fb49da2811c54c2bbc3e582fe87d424ac79b29fa230592c6e543"
+    sha256 cellar: :any, arm64_golden_gate: "491d993ce0acda5c585b78106ca3629bfd0b931b7469eefc796bf6935b38c8db"
+    sha256 cellar: :any, arm64_tahoe:       "afddb667cf33c86a8c91c9fc8136fd1e13ae1dd09e1cce41b0c665f940c8d4e8"
+    sha256 cellar: :any, arm64_sequoia:     "d924c51f87e7003b36aa2cd9e24f10e914573812be4e92672a614cd7201d64a6"
+    sha256 cellar: :any, arm64_linux:       "10457d2a28a85a3f7cbd3144fdd145780c173bbf1c569de05d42a68f2cfaba85"
+    sha256 cellar: :any, x86_64_linux:      "3fb445101cafbe27c7a8a04cf48c76c82cecac709aa5ed78226eb8c34c73ef1d"
   end
 
   depends_on "pkgconf" => :build
@@ -38,6 +38,8 @@ class CargoC < Formula
   deny_network_access!
 
   def fetch
+    # Tarball lacks `Cargo.lock` file
+    system "cargo", "generate-lockfile"
     system "cargo", "fetch", *std_cargo_fetch_args
   end
 
@@ -45,7 +47,7 @@ class CargoC < Formula
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
     # Ensure the correct `openssl` will be picked up.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", *std_cargo_args
   end
@@ -60,8 +62,8 @@ class CargoC < Formula
     [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
-      formula_opt_lib("openssl@4")/shared_library("libcrypto"),
+      dep("openssl").opt_lib/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libcrypto"),
     ].each do |library|
       assert Utils.binary_linked_to_library?(bin/"cargo-cbuild", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."

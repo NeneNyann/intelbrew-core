@@ -9,6 +9,7 @@ class Borgmatic < Formula
   head "https://projects.torsion.org/borgmatic-collective/borgmatic.git", branch: "main"
 
   bottle do
+    manifest_sha256 "8b76d4fd8e8548377bb12a8675d8f841a46f98d543774a89561cc2962244113b"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "4570aaeb28a864c2735b371841f3771a5903a39422739dca39952b6bb57dba5a"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "e3afadaa9b150686bbc7e8a782a4dc8a4bdcea708a16c466106081866b18efd7"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "29fca534f765567c710a998e6704577167ee2a3db4beca7b1cd9088c4892eae1"
@@ -76,6 +77,8 @@ class Borgmatic < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

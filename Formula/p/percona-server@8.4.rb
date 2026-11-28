@@ -21,6 +21,7 @@ class PerconaServerAT84 < Formula
   end
 
   bottle do
+    manifest_sha256 "8df2dfa3ff4a52d0ee0701c0551b1223d744ba41e6f8618ef7242f7af7294ed7"
     sha256 arm64_golden_gate: "add2efddb3585b052628be4e86939d88ad10bf66002fe9a4b63fe5636b4337f5"
     sha256 arm64_tahoe:       "030dcc84c143d228b416ce00541e904ec7954d4021f44e4fa28ed99fc305fd36"
     sha256 arm64_sequoia:     "41da6ecac6730a14b9e9f36dd46b0df6a76c09f05a8cec01e6995c1dea0e8c20"
@@ -93,9 +94,8 @@ class PerconaServerAT84 < Formula
     # Disable ABI checking
     inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0" if OS.linux?
 
-    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-                .to_formula
     # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
+    icu4c_prefix = dep("icu4c").opt_prefix
     args = %W[
       -DCOMPILATION_COMMENT=Homebrew
       -DDEFAULT_CHARSET=utf8mb4
@@ -109,7 +109,7 @@ class PerconaServerAT84 < Formula
       -DMYSQL_DATADIR=#{var}/mysql
       -DSYSCONFDIR=#{etc}
       -DBISON_EXECUTABLE=#{formula_opt_bin("bison")}/bison
-      -DWITH_ICU=#{icu4c.opt_prefix}
+      -DWITH_ICU=#{icu4c_prefix}
       -DWITH_SYSTEM_LIBS=ON
       -DWITH_EDITLINE=system
       -DWITH_FIDO=system

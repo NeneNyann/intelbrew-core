@@ -16,6 +16,7 @@ class Curl < Formula
   end
 
   bottle do
+    manifest_sha256 "6f480ec01e2532a4753c81d5b06c8eddbf46caf23f6e118b59c22a80d3836efe"
     sha256 cellar: :any, arm64_golden_gate: "16b951fa8ecede2c254441c26e34814fed37c1e97382dad3016012aa2cbf20ac"
     sha256 cellar: :any, arm64_tahoe:       "44771918de230a1767855f3e6623b280c4e1b238a431e997bec8fc53b8bd8f74"
     sha256 cellar: :any, arm64_sequoia:     "d0245613b94f81fbb069090f4310a6a0c71830a3bf6b3f14ebef30c6ae49b957"
@@ -58,7 +59,8 @@ class Curl < Formula
   allow_network_access! :test
 
   def install
-    tag_name = "curl-#{version.to_s.tr(".", "_")}"
+    archive_version = version.to_s.tr(".", "_")
+    tag_name = "curl-#{archive_version}"
     if build.stable? && stable.mirrors.grep(%r{\Ahttps?://(www\.)?github\.com/}).first.exclude?(tag_name)
       odie "Tag name #{tag_name} is not found in the GitHub mirror URL! " \
            "Please make sure the URL is correct."
@@ -69,9 +71,10 @@ class Curl < Formula
 
     system "autoreconf", "--force", "--install", "--verbose" if build.head?
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --disable-silent-rules
-      --with-ssl=#{formula_opt_prefix("openssl@4")}
+      --with-ssl=#{openssl_prefix}
       --without-ca-bundle
       --without-ca-path
       --with-ca-fallback

@@ -7,8 +7,12 @@ class Llhttp < Formula
   compatibility_version 2
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/llhttp-9.4.4-b4abced662438981b148e051f"
-    sha256 cellar: :any, sequoia: "7efd8543a60f68b62570170b0c5bcd1e8e163f25f5f8bea84950e1ff6cb45222"
+    manifest_sha256 "1020f34c3ac9062ae4b5b80e29a82b755f8be6396c18c932534b33f7450a404f"
+    sha256 cellar: :any, arm64_golden_gate: "f4e39eb8013d06a5c1024ed858e1078fb50cc7d3d1ad7ea5d98c997116887056"
+    sha256 cellar: :any, arm64_tahoe:       "f10729546842aeb4a2a3103e59ee508759f4a6f05229c31c8361ec0e18adfe14"
+    sha256 cellar: :any, arm64_sequoia:     "e26231647b5093b77bc7d0a92328643efe1f58808971a7ee0a1ca3bddf0dbc57"
+    sha256 cellar: :any, arm64_linux:       "06b057764c15b1d13b22b58d14b0d5913422463f66d89376a0900b30a55dc58c"
+    sha256 cellar: :any, x86_64_linux:      "b87291b165dd4c2d66a6d4381acbb4dd6021a1e4df5f3188874b4cfdc6d2968d"
   end
 
   depends_on "cmake" => :build

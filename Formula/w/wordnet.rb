@@ -9,6 +9,7 @@ class Wordnet < Formula
   revision 2
 
   bottle do
+    manifest_sha256 "1fd5c92e4740511c8b33051721190676140e4fc2c11bacaeb8e1d077edfc95a1"
     sha256                               arm64_golden_gate: "6757e4300df24c3411c394995096793fbc4e3c5603be77277dfb18f5a4da8f69"
     sha256                               arm64_tahoe:       "c76614f1a228d94b2470a7b931ae833377ae13d1214cff36d6a93b5fb7da4ae5"
     sha256                               arm64_sequoia:     "13c3f71489c21a26e9ccab1c57d9021c705fe548ac756787e2641b90a1eadfb9"
@@ -43,7 +44,7 @@ class Wordnet < Formula
     # Disable calling deprecated fields within the Tcl_Interp during compilation.
     # https://bugzilla.redhat.com/show_bug.cgi?id=902561
     ENV.append_to_cflags "-DUSE_INTERP_RESULT"
-    tcltk_lib = formula_opt_lib("tcl-tk@8")
+    tcltk_lib = dep("tcl-tk").opt_lib
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
                           "--mandir=#{man}",

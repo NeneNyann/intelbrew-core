@@ -7,6 +7,7 @@ class PythonAT39 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "1e7b075bac6a8d1c1efd5d0a5fdee893cba75e3c6bc9ef4959dd722a82aa38a9"
     sha256 arm64_golden_gate: "0e13914f9a25f392b03a7ee0397937b283a617c74a9daff2661dd0e847b19928"
     sha256 arm64_tahoe:       "5dacd6c96b01ab87a5ea6112b9d90185ebaea6057d8fce7b8f4abc435a767830"
     sha256 arm64_sequoia:     "86e3f3b3e6661968121763e16e65af98631914c9fed3b6776313baae75910623"
@@ -94,6 +95,8 @@ class PythonAT39 < Formula
     bin/"python#{version.major_minor}"
   end
 
+  allow_network_access!
+
   def install
     # Unset these so that installing pip and setuptools puts them where we want
     # and not into some other Python the user has installed.
@@ -110,6 +113,7 @@ class PythonAT39 < Formula
     # these flags because they want one build that will work across many macOS
     # releases. Homebrew is not so constrained because the bottling
     # infrastructure specializes for each macOS major release.
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --prefix=#{prefix}
       --enable-ipv6
@@ -117,7 +121,7 @@ class PythonAT39 < Formula
       --datadir=#{share}
       --without-ensurepip
       --enable-loadable-sqlite-extensions
-      --with-openssl=#{formula_opt_prefix("openssl@3")}
+      --with-openssl=#{openssl_prefix}
       --with-dbmliborder=gdbm:ndbm
       --enable-optimizations
       --with-lto
@@ -159,7 +163,7 @@ class PythonAT39 < Formula
     # superenv makes cc always find includes/libs!
     inreplace "setup.py",
       "do_readline = self.compiler.find_library_file(self.lib_dirs, 'readline')",
-      "do_readline = '#{formula_opt_lib("readline")/shared_library("libhistory")}'"
+      "do_readline = '#{formula_opt_lib("readline")}/#{shared_library("libhistory")}'"
 
     inreplace "setup.py" do |s|
       s.gsub! "sqlite_setup_debug = False", "sqlite_setup_debug = True"
@@ -181,8 +185,9 @@ class PythonAT39 < Formula
     # even if homebrew is not a /usr/local/lib. Try this with:
     # `brew install enchant && pip install pyenchant`
     inreplace "./Lib/ctypes/macholib/dyld.py" do |f|
+      openssl_lib = dep("openssl").opt_lib
       f.gsub! "DEFAULT_LIBRARY_FALLBACK = [",
-              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{formula_opt_lib("openssl@3")}',"
+              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{openssl_lib}',"
       f.gsub! "DEFAULT_FRAMEWORK_FALLBACK = [", "DEFAULT_FRAMEWORK_FALLBACK = [ '#{HOMEBREW_PREFIX}/Frameworks',"
     end
 
@@ -289,8 +294,10 @@ class PythonAT39 < Formula
 
     # Patch ensurepip to bootstrap our updated versions of setuptools/pip
     inreplace lib_cellar/"ensurepip/__init__.py" do |s|
-      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{resource("setuptools").version}\"")
-      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{resource("pip").version}\"")
+      setuptools_version = resource("setuptools").version
+      s.gsub!(/_SETUPTOOLS_VERSION = .*/, "_SETUPTOOLS_VERSION = \"#{setuptools_version}\"")
+      pip_version = resource("pip").version
+      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{pip_version}\"")
     end
 
     # Write out sitecustomize.py

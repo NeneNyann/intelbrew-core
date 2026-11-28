@@ -13,8 +13,12 @@ class Libevent < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/libevent-2.1.13_1-bedbb57b7b4f41a60c03c2aa7"
-    sha256 cellar: :any, sequoia: "71ff4c7576e66e57dc44e9ca1e6a031e0438ecbf43be687fa5479d9075262b53"
+    manifest_sha256 "94f22101d16b710f264f35a715eb0ffe1c82937658883abbb1e06d31480da89e"
+    sha256 cellar: :any, arm64_golden_gate: "45b525d77c2ecc4cf0172587e929a2bc872b1e01aabcd3679b0f60f4d76ceef7"
+    sha256 cellar: :any, arm64_tahoe:       "a718c5bf998957d5c75e242ad4a0e42d86730d3321facbea282cc37cca74ff45"
+    sha256 cellar: :any, arm64_sequoia:     "55344e687f9be992ae9dca23aad5bf6f3bbaa9e63031915cd2738da11787500b"
+    sha256 cellar: :any, arm64_linux:       "592c7c42f355287124631461d7e51c034603526a0a6710987da73031c4604be9"
+    sha256 cellar: :any, x86_64_linux:      "de71a3d6a6caa93383dc132e91dcc86c7c5a8c3e406b1485e28a8be257835818"
   end
 
   depends_on "pkgconf" => :build

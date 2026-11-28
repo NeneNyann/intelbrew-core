@@ -9,6 +9,7 @@ class Nanobind < Formula
   head "https://github.com/wjakob/nanobind.git", branch: "master"
 
   bottle do
+    manifest_sha256 "d5317aedbcd6f325a2bf64c56d7a4ca620251539a1954aa2b5a122cf26cf3225"
     sha256 cellar: :any_skip_relocation, all: "41268df3f484c7c677093cd884e87f126837552113b74ae14b209dd860c2bfce"
   end
 
@@ -72,7 +73,7 @@ class Nanobind < Formula
     end
 
     ENV.delete("CMAKE_PREFIX_PATH")
-    prefix_path_dirs = deps.filter_map { |dep| dep.to_formula.opt_prefix if !dep.build? || dep.test? }
+    prefix_path_dirs = deps.filter_map { |dep| dep.opt_prefix if !dep.build? || dep.test? }
     cmake_find_args = %W[
       -DCMAKE_MAKE_PROGRAM=make
       -DCMAKE_C_COMPILER=#{ENV.cc}

@@ -7,6 +7,7 @@ class BashSnippets < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "330a02aced97f82c7331b6df246556de29a0e8f974082e77dbfd7ee651daf520"
     sha256 cellar: :any_skip_relocation, all: "d22507e71365355dc20eba3747a10f575f80ff3dc86103d1a2f9be08a08932d9"
   end
 
@@ -14,6 +15,8 @@ class BashSnippets < Formula
   conflicts_with "expect", because: "both install `weather` binaries"
   conflicts_with "pwned", because: "both install `pwned` binaries"
   conflicts_with "todoman", because: "both install `todo` binaries"
+
+  allow_network_access! :test
 
   def install
     system "./install.sh", "--prefix=#{prefix}", "all"

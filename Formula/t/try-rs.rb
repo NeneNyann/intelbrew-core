@@ -1,17 +1,18 @@
 class TryRs < Formula
   desc "Temporary workspace manager for fast experimentation in the terminal"
   homepage "https://try-rs.org/"
-  url "https://github.com/tassiovirginio/try-rs/archive/refs/tags/v1.7.14.tar.gz"
-  sha256 "76bd9b029445daf2a58242f37d0ee19ebb72684aed17c2c3daf6ff6c7beceb02"
+  url "https://github.com/tassiovirginio/try-rs/archive/refs/tags/v1.7.17.tar.gz"
+  sha256 "67574410ebbb1f6dd8a2cc7426c387d45df35da1df9670873ce999dc6f71315d"
   license "MIT"
   head "https://github.com/tassiovirginio/try-rs.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "34740c89abf335441af5cee302b7acfff2635963c1c1e2c5b2175b08c8c3d655"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "2d0b704eaccb419e0b3f9e9a21249e062a0a5a54edd013bff69de3a6a7410401"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "9677d0af5c9761076b33568fa3536961a009a1bd6ade9cb58cff4da783c06706"
-    sha256 cellar: :any,                 arm64_linux:       "1eea8adf8226d2c18e4b740aa44e7ba72c046cc5291dc2e2020859682dd8360b"
-    sha256 cellar: :any,                 x86_64_linux:      "c251f16998e0a57393a9f11f64d4de03c039a08931b1c3b961763a95da41ae7f"
+    manifest_sha256 "b638eb51b077dd1a942d16fe977f627e8a060799fa6bcd0b3c253bef68b204a4"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2a8c5028ba10d362346c850e852c9e91743faafabd7b686b1fcc5955f1003461"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "10ed064e3e890c1d4b1b2d390ced3fca55dc91108f0bf232487269c0d728937f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "fb99258ed3bea096fadcb2f028094483f5acdf621e60d9b319150a53f507260d"
+    sha256 cellar: :any,                 arm64_linux:       "a66f52ca356dd725676cb3996840eba0dfbe517fb13a57f8a3cb72414f920c20"
+    sha256 cellar: :any,                 x86_64_linux:      "24c5ea626d9e0a274cffb598deb190bbbdb204cdadd521bbb6c2b1e5a065b12a"
   end
 
   depends_on "rust" => :build

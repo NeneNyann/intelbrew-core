@@ -73,6 +73,7 @@ class GlibcAT213 < Formula
   end
 
   bottle do
+    manifest_sha256 "8c6e73ca856125b9993dd24b03a4bbcee09a390ab21d4a4720a3743555ad5bbe"
     sha256 x86_64_linux: "fcfd8511ae57b126f377789db1294e74bd48c2be941badd8e33a378dbdef9e16"
   end
 
@@ -125,13 +126,14 @@ class GlibcAT213 < Formula
     inreplace "elf/rtld.c", '= "/etc/ld.so.preload";', "= \"#{prefix}/etc/ld.so.preload\";"
 
     mkdir "build" do
+      linux_headers_include = dep("linux-headers").opt_include
       args = [
         "--disable-debug",
         "--disable-dependency-tracking",
         "--disable-silent-rules",
         "--prefix=#{prefix}",
         "--without-selinux",
-        "--with-headers=#{formula_opt_include("linux-headers@4.4")}",
+        "--with-headers=#{linux_headers_include}",
       ]
       system "../configure", *args
       system "make", "all"

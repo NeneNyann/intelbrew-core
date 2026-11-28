@@ -1,10 +1,9 @@
 class Esbmc < Formula
   desc "Efficient SMT-based context-bounded model checker for C, C++, and Python"
   homepage "https://esbmc.github.io/"
-  url "https://github.com/esbmc/esbmc/archive/refs/tags/v8.6.tar.gz"
-  sha256 "a691bbf63a51da753a24b59027dd603c91bc2e90fcdd1abc042e241453164f5a"
+  url "https://github.com/esbmc/esbmc/archive/refs/tags/v8.8.tar.gz"
+  sha256 "c1b2b89f5c5701a551cfe41a953dec00ba35cc5e1f916f4049cfeab79a2ba7d1"
   license "Apache-2.0"
-  revision 3
   head "https://github.com/esbmc/esbmc.git", branch: "master"
 
   livecheck do
@@ -13,11 +12,12 @@ class Esbmc < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "3526fd81893921f517847e9121cc057615a0313060bd39d8c33290e13fddf21c"
-    sha256 cellar: :any, arm64_tahoe:       "d0e051e0c6136ccfeb96a2da9de563c93836d30f2502be8f4c1dde8d03a1ff00"
-    sha256 cellar: :any, arm64_sequoia:     "fdcb199965f8c2c78cd3cf5d85bf8a50330babe95d1d184fef28551c5d3cfdda"
-    sha256 cellar: :any, arm64_linux:       "1eb1735bbcd187377d15590f9ea29760ddb36d51d5ff9793fc13dbad00fbe317"
-    sha256 cellar: :any, x86_64_linux:      "f13eac51b0c54c73f4542e0f6899763a9bcdd3226bedee59bfd12f185d74a4d6"
+    manifest_sha256 "f0e558d25fa93737ec9058cbca7365d0b6dade374395f10fec40bc088f6f24c2"
+    sha256 cellar: :any, arm64_golden_gate: "6aa7e58196362b78af5acc1c86d0ff0829fbfb48c48a437ad0b8782ffd206a96"
+    sha256 cellar: :any, arm64_tahoe:       "da79455d4a2c7d06bea19a903caa14bf8f2519307e0e5bb68faa834c340ce44f"
+    sha256 cellar: :any, arm64_sequoia:     "fbbbb2923beb978d4761e013387c14169815fbf1021150fe317099d526937405"
+    sha256 cellar: :any, arm64_linux:       "3e5aea12e892dede22718456c2e251d62b31a0d4e9e28fd776410ea6d3694a7b"
+    sha256 cellar: :any, x86_64_linux:      "29c997dc70c50f886412c63ab7a43236eb4b3cbb067ba76bf69dd613b7da16af"
   end
 
   depends_on "bison" => :build # macOS ships 2.3; esbmc requires >= 2.6.1
@@ -39,14 +39,11 @@ class Esbmc < Formula
   # Avoid std::atomic<double> arithmetic, which needs libc++ 18 or newer.
   patch :DATA
 
-  def python = deps.map(&:name).find { |d| d.match?(/^python(@\d+(\.\d+)*)?$/) }
-
-  def llvm = deps.map(&:name).find { |d| d.match?(/^llvm(@\d+(\.\d+)*)?$/) }
-
   def install
+    llvm_lib = dep("llvm").opt_lib
     args = %W[
-      -DLLVM_DIR=#{formula_opt_lib(llvm)}/cmake/llvm
-      -DClang_DIR=#{formula_opt_lib(llvm)}/cmake/clang
+      -DLLVM_DIR=#{llvm_lib}/cmake/llvm
+      -DClang_DIR=#{llvm_lib}/cmake/clang
       -DPython3_EXECUTABLE=#{python3}
       -DBitwuzla_DIR=#{formula_opt_prefix("bitwuzla")}
       -DENABLE_PYTHON_FRONTEND=ON
@@ -63,7 +60,8 @@ class Esbmc < Formula
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
-    bin.env_script_all_files libexec/"bin", PATH: "#{formula_opt_libexec(python)}/bin:$PATH"
+    python_libexec = dep("python").opt_libexec
+    bin.env_script_all_files libexec/"bin", PATH: "#{python_libexec}/bin:$PATH"
   end
 
   test do

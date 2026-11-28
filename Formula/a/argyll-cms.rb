@@ -12,6 +12,7 @@ class ArgyllCms < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "5e0771754debf567c8f86e60ba36b89b5eb0c4ab0fab94382651e0d991e58fd5"
     sha256 cellar: :any, arm64_golden_gate: "585de1b56d00de6d7ab345d8d590cd415d70e3c5f5a847ab37196f074b1b5c22"
     sha256 cellar: :any, arm64_tahoe:       "3f2bd767813d16e34fcb2eef9c377a21788cb67a0bd293f505cbfbb7b6be01c1"
     sha256 cellar: :any, arm64_sequoia:     "85b0ae0e0e6d6591900bf6085241b854b4d8c55d28685cc4be783d42c413633b"
@@ -75,7 +76,8 @@ class ArgyllCms < Formula
     inreplace "Jamtop" do |s|
       openssl = "openssl@4"
       libname = shared_library("lib$(lcase)")
-      usr = "#{MacOS.sdk_path if OS.mac?}/usr"
+      sdk_root = MacOS.sdk_path if OS.mac?
+      usr = "#{sdk_root}/usr"
 
       # These two inreplaces make sure all Homebrew and SDK libraries can be found by the Jamfile
       s.gsub! "[ GLOB /usr/include$(subd) : $(lcase).h $(lcase)lib.h ]",

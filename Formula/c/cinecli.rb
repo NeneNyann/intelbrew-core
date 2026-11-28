@@ -11,6 +11,7 @@ class Cinecli < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "05024f12a5f99ccc0c73cb8baf3365e06bd8ecba172a61920d1d19c724dcbec4"
     sha256 cellar: :any_skip_relocation, all: "4dbe5e2ec10f3a9cad733ae9a8b8684eda5c1849bd9f2317e7efeb4220ce96e0"
   end
 
@@ -76,6 +77,8 @@ class Cinecli < Formula
 
   # TODO: Remove when a release includes https://github.com/eyeblech/cinecli/pull/7.
   patch :DATA
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

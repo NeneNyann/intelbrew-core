@@ -8,6 +8,7 @@ class Urweb < Formula
 
   bottle do
     rebuild 3
+    manifest_sha256 "b12f28963594a251eb25a78a701e2328aab246851627421517f3a07ae9f901f9"
     sha256 arm64_golden_gate: "85fe75f9c21273edbc5bfb1f496d229826dd87b2d97e9d63d7897ce2980ed1fc"
     sha256 arm64_tahoe:       "79dfe35abdcaf3f9be1986272952f8c09e02ebf0c0a1caa632592666259aa71c"
     sha256 arm64_sequoia:     "84d7b02b05ddcae5bfeb4c0c48cf973aebbf58e43ef62ba8fbec8a199ae3969b"
@@ -37,17 +38,15 @@ class Urweb < Formula
 
   deny_network_access!
 
-  def icu4c = deps.map(&:name).find { |d| d.match?(/^icu4c(@\d+)?$/) }
-
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
+    openssl_prefix = dep("openssl").opt_prefix
+    icu4c = dep("icu4c")
     system "./configure", *std_configure_args,
                           "--disable-silent-rules",
-                          "--with-openssl=#{formula_opt_prefix(openssl)}",
+                          "--with-openssl=#{openssl_prefix}",
                           "SITELISP=$prefix/share/emacs/site-lisp/urweb",
-                          "ICU_INCLUDES=-I#{formula_opt_include(icu4c)}",
-                          "ICU_LIBS=-L#{formula_opt_lib(icu4c)}"
+                          "ICU_INCLUDES=-I#{icu4c.opt_include}",
+                          "ICU_LIBS=-L#{icu4c.opt_lib}"
     system "make", "install"
   end
 

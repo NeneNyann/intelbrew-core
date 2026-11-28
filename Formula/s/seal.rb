@@ -6,6 +6,7 @@ class Seal < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "ea5fdf3d9a58eb40238a750562f9783d655516baa63161763f4f76cd7f53043a"
     sha256 cellar: :any, arm64_golden_gate: "cd53ef294623173cccf726cb646ca3d2d7c18d7884919543e759d4ee306ff368"
     sha256 cellar: :any, arm64_tahoe:       "1ac79b1e4970f1cb5cb8cef52100b47911e9e7f09e24a618895bf96ffb68a244"
     sha256 cellar: :any, arm64_sequoia:     "8d43b5b72be40fb5bb96d8fd7bf23d7f60eb87a83e621bfdf4488408daf3dbdd"
@@ -47,11 +48,13 @@ class Seal < Formula
       ENV.append "LDFLAGS", "-L#{lib}"
     end
 
+    build_headers = OS.mac? ? "ON" : "OFF"
+    use_hexl = Hardware::CPU.intel? ? "ON" : "OFF"
     args = %W[
       -DBUILD_SHARED_LIBS=ON
       -DSEAL_BUILD_DEPS=OFF
-      -DSEAL_USE_ALIGNED_ALLOC=#{OS.mac? ? "ON" : "OFF"}
-      -DSEAL_USE_INTEL_HEXL=#{Hardware::CPU.intel? ? "ON" : "OFF"}
+      -DSEAL_USE_ALIGNED_ALLOC=#{build_headers}
+      -DSEAL_USE_INTEL_HEXL=#{use_hexl}
       -DCMAKE_CXX_FLAGS=-I#{include}
     ]
 

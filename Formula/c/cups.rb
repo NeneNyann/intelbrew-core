@@ -16,6 +16,7 @@ class Cups < Formula
   end
 
   bottle do
+    manifest_sha256 "32f649a8032e94f01aab1a32232b6df85a27f1c3826fa42255632147afe7645b"
     sha256 arm64_golden_gate: "5a727441c523de179b6277404be515908bb4f778a1f967493502e9554411ffef"
     sha256 arm64_tahoe:       "45c907c232389a65d84a2178f8f84e8c0a3d831066593a44da3324843759cdf3"
     sha256 arm64_sequoia:     "0e9d882e26f6282def22c4a4dfc716c7f222b069ea98f7b1ee74dad0dfc2bf3e"
@@ -51,14 +52,9 @@ class Cups < Formula
 
   test do
     port = free_port.to_s
-    pid = spawn "#{bin}/ippeveprinter", "-p", port, "Homebrew Test Printer"
-
-    begin
+    with_test_process("#{bin}/ippeveprinter", "-p", port, "Homebrew Test Printer") do
       sleep 2
       assert_match("Homebrew Test Printer", shell_output("curl localhost:#{port}"))
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

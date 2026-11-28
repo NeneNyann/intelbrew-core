@@ -22,6 +22,7 @@ class Cwb3 < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "a3c31c3f1fede0cf8761fbc0c80b82ae98f6f68bae1559f2b0cfb628219cd55c"
     sha256 cellar: :any, arm64_golden_gate: "3cfe5338c6cd97224f66aa5cb5f3f0808f8728cfad8c9e45d0cc8101a54011cd"
     sha256 cellar: :any, arm64_tahoe:       "83bb0c489a53d017c4ed20aac40dc6b02eef4315211bc391fa0be982ca7e0575"
     sha256 cellar: :any, arm64_sequoia:     "1f2794123aaf9ba47ae274a2e1f15c8d026cf36c73b6db8a9f38cdd20278fdb7"
@@ -48,6 +49,8 @@ class Cwb3 < Formula
     url "https://cwb.sourceforge.io/files/encoding_tutorial_data.zip"
     sha256 "bbd37514fdbdfd25133808afec6a11037fb28253e63446a9e548fb437cbdc6f0"
   end
+
+  deny_network_access!
 
   def install
     args = %W[

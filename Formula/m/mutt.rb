@@ -22,6 +22,7 @@ class Mutt < Formula
   end
 
   bottle do
+    manifest_sha256 "d017f19503ee031f9fcb46f638bff266835bb4c317b610733a0eb68b07d0b62b"
     sha256 arm64_golden_gate: "919e6e5ba8d967a2b36270c11a19b2b1f77e6713c4a276342a0f148b7b9a5443"
     sha256 arm64_tahoe:       "3eb26fc7b2b55bbb084c710489952b428070d952829243538f742b4f916268bf"
     sha256 arm64_sequoia:     "b0627a57334416c3a042c4a622958099d908dfa472aeafa49eb1f309371e0bf3"
@@ -64,8 +65,6 @@ class Mutt < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     user_in_mail_group = Etc.getgrnam("mail").mem.include?(ENV["USER"])
     effective_group = Etc.getgrgid(Process.egid).name
@@ -74,6 +73,7 @@ class Mutt < Formula
     # * Kyoto Cabinet, Tokyo Cabinet, QDBM and Berkeley DB may be unmaintained or low maintenance
     # * Remaining options are GDBM and LMDB. NeoMutt (fork) now recommends LMDB. Gentoo also
     #   recommends LMDB as fastest for Mutt, https://wiki.gentoo.org/wiki/Mutt#Header_cache_backends
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --disable-warnings
       --enable-gpgme
@@ -86,7 +86,7 @@ class Mutt < Formula
       --with-idn2
       --with-lmdb
       --with-sasl
-      --with-ssl=#{formula_opt_prefix(openssl)}
+      --with-ssl=#{openssl_prefix}
     ]
 
     configure = build.head? ? "./prepare" : "./configure"

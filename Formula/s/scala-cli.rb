@@ -13,6 +13,7 @@ class ScalaCli < Formula
   end
 
   bottle do
+    manifest_sha256 "d16704c948719b2a33b4836b21264f7d46b5ae3f195e107b5d80671b60a5c9a8"
     sha256               arm64_golden_gate: "46b3a4f6aa560615579b6ae7b2b65c39b834e3ab47ccdc2bd67eabed0cc9a67c"
     sha256               arm64_tahoe:       "72f6130bbfa4938b50a1c900d2153d4f726ec25e717df832024a55a4ed2b4198"
     sha256               arm64_sequoia:     "45edffa1b57cbb607c5372008416cdff2d925f4fd498832b1666eb5124510f82"
@@ -27,7 +28,7 @@ class ScalaCli < Formula
   end
 
   def install
-    ENV["JAVA_HOME"] = formula_opt_prefix("openjdk@17")
+    ENV["JAVA_HOME"] = dep("openjdk").opt_prefix
     ENV["COURSIER_CACHE"] = "#{HOMEBREW_CACHE}/coursier/v1"
     ENV["COURSIER_ARCHIVE_CACHE"] = "#{HOMEBREW_CACHE}/coursier/arc"
     ENV["COURSIER_JVM_CACHE"] = "#{HOMEBREW_CACHE}/coursier/jvm"
@@ -52,8 +53,9 @@ class ScalaCli < Formula
       extra << "-H:CLibraryPath=#{zlib_lib}"
       extra << "-H:NativeLinkerOption=-Wl,-rpath,#{zlib_lib}"
     end
+    extra_flags = extra.map { |f| "'#{f}'" }.join(" ")
     inreplace "generate-native-image.sh", "'--no-fallback'",
-              "'--no-fallback' #{extra.map { |f| "'#{f}'" }.join(" ")}"
+              "'--no-fallback' #{extra_flags}"
     system "bash", "./generate-native-image.sh"
 
     bin.install Dir["out/cli/*/base-image/nativeImage.dest/scala-cli"].first
@@ -63,7 +65,7 @@ class ScalaCli < Formula
     ENV["SCALA_CLI_HOME"] = testpath
     ENV["COURSIER_CACHE"] = ENV["COURSIER_ARCHIVE_CACHE"] = testpath/".coursier_cache"
     ENV["COURSIER_JVM_CACHE"] = testpath/".coursier_jvm_cache"
-    ENV["JAVA_HOME"] = formula_opt_prefix("openjdk@17")
+    ENV["JAVA_HOME"] = dep("openjdk").opt_prefix
 
     (testpath/"Hello.scala").write <<~SCALA
       @main def hello() = println("Hello from Scala CLI")

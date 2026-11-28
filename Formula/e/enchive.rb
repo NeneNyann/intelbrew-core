@@ -7,6 +7,7 @@ class Enchive < Formula
   head "https://github.com/skeeto/enchive.git", branch: "master"
 
   bottle do
+    manifest_sha256 "cfcfe4b7107ce4b7fabf5ed8bce56a86207dcf392517dcd42b8dcdeb0700ffc5"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "f889a04e6757c41de1313b247acf6ca2cbf7011bd6360ba62c32dff49dfe75f9"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a0c663f95e9a509534933df146b2ca6792ce0388907cc07b8eaffb3025ed139f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e5167a67337419271ca6275a8ee178da5c3b417dd29721ed7c954c2cecaa8dfa"
@@ -21,6 +22,8 @@ class Enchive < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "9f0cbe65f702629660b17db25d09bb215a4383d569b781251cabb82acb5de040"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "116e7fa59dc5c555ef911ca1668175cb71fce934dcc3f475433e84ce6d2f4d14"
   end
+
+  deny_network_access!
 
   def install
     system "make", "install", "PREFIX=#{prefix}"

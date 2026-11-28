@@ -13,6 +13,7 @@ class Zenith < Formula
   end
 
   bottle do
+    manifest_sha256 "73a654151ba94b3507e78e6282bf46a3d357dd83220ccfea56625524544acb2d"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "02d20fc572b64bf6c4b295ec3d19ed8738a271c013ced10fa3b8cd72f8179b91"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "448ce4fc97b127ff83fb720d14138cbd8cdf08a7b8b7a8442921ee0812ad2be9"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "90fd0ebd769a609dcef73a6b33dbec3db75021e635031de00f46d57a0c504cc5"
@@ -46,7 +47,11 @@ class Zenith < Formula
     r.winsize = [80, 43]
     sleep 1
     w.write "q"
-    output = OS.mac? ? r.read : (testpath/"out.log").read
+    output = if OS.mac?
+      r.read
+    else
+      (testpath/"out.log").read
+    end
     assert_match "PID", output
     assert_match "CPU", output
     assert_match "MEM", output

@@ -6,10 +6,13 @@ class Basedpyright < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "adb1472c07def876f8139f022d3838a50f73ca14c89cab066a02f8feed7bc841"
     sha256 cellar: :any_skip_relocation, all: "0bdc6e8daa8f3f14a2e91be79d7ab415fb13a4907be3b04a9418a6fd0ffc8702"
   end
 
   depends_on "node"
+
+  allow_network_access! :build
 
   def install
     system "npm", "install", *std_npm_args

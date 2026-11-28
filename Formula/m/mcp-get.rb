@@ -6,6 +6,7 @@ class McpGet < Formula
   license "MIT"
 
   bottle do
+    manifest_sha256 "5549c05d65b3d69c26a46605f6947f77c56d7837257dce5747cf6e85bdf75d28"
     sha256 cellar: :any_skip_relocation, all: "437f1d04f354dfd572a891eb46ee55475be918ac4173e32634cb0017e69213cd"
   end
 
@@ -13,6 +14,8 @@ class McpGet < Formula
   disable! date: "2026-07-08", because: :repo_archived, replacement_formula: "smithery-cli"
 
   depends_on "node"
+
+  allow_network_access!
 
   def install
     system "npm", "install", *std_npm_args

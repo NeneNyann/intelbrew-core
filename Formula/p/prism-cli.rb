@@ -6,6 +6,7 @@ class PrismCli < Formula
   license "Apache-2.0"
 
   bottle do
+    manifest_sha256 "3f122390a7fd58dea9c5f5e7502c212d2281c4eb1f5b8d989ba84aa6427e0ae0"
     sha256 cellar: :any_skip_relocation, all: "babed443a850d3e503927c4a436c1532e9ba5cfbd18bde500bb1f233ae8f1883"
   end
 
@@ -18,15 +19,15 @@ class PrismCli < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"prism", "mock", "--port", port.to_s, "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/refs/tags/3.1.1/examples/v3.0/petstore.yaml"
+    with_test_process(
+      bin/"prism", "mock", "--port", port.to_s,
+      "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/refs/tags/3.1.1/examples/v3.0/petstore.yaml"
+    ) do
+      sleep 10
 
-    sleep 10
+      system "curl", "http://127.0.0.1:#{port}/pets"
 
-    system "curl", "http://127.0.0.1:#{port}/pets"
-
-    assert_match version.to_s, shell_output("#{bin}/prism --version")
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+      assert_match version.to_s, shell_output("#{bin}/prism --version")
+    end
   end
 end

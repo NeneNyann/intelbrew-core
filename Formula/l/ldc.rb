@@ -14,6 +14,7 @@ class Ldc < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "b72156632ad8f35d325a6185fb88094d033c7bfc4c2a00f905193716d563af31"
     sha256               arm64_golden_gate: "6f0db0e8746ee72a56154895c8288f7db17e42038b1663b793c9169480f8d021"
     sha256               arm64_tahoe:       "9627b92b0980704d1b46c0417297a8d09cb9fa37c81a24586350c4110366b930"
     sha256               arm64_sequoia:     "ee5fda073ef5e128f7094188fdbf7414cfc068dda94add93154f3cec30fdea0a"
@@ -49,15 +50,10 @@ class Ldc < Formula
     end
   end
 
-  def llvm
-    deps.reject { |d| d.build? || d.test? }
-        .map(&:to_formula)
-        .find { |f| f.name.match?(/^llvm(@\d+)?$/) }
-  end
-
   def install
     (buildpath/"ldc-bootstrap").install resource("ldc-bootstrap")
 
+    llvm = dep("llvm")
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
       -DD_COMPILER=#{buildpath}/ldc-bootstrap/bin/ldmd2
@@ -80,8 +76,8 @@ class Ldc < Formula
     D
     system bin/"ldc2", "test.d"
     assert_match "Hello, world!", shell_output("./test")
-    lld = deps.map(&:to_formula).find { |f| f.name.match?(/^lld(@\d+(\.\d+)*)?$/) }
-    with_env(PATH: "#{lld.opt_bin}:#{ENV["PATH"]}") do
+    lld_bin = dep("lld").opt_bin
+    with_env(PATH: "#{lld_bin}:#{ENV["PATH"]}") do
       system bin/"ldc2", "-flto=thin", "--linker=lld", "test.d"
       assert_match "Hello, world!", shell_output("./test")
       system bin/"ldc2", "-flto=full", "--linker=lld", "test.d"

@@ -23,8 +23,12 @@ class Llvm < Formula
   end
 
   bottle do
-    root_url "https://github.com/NeneNyann/intelbrew-core/releases/download/llvm-23.1.6-bf924d12306fafd858857a904"
-    sha256 cellar: :any, sequoia: "fa1c18921a3bf223166da21ed78cdb022eedf7184cd8a072c262c12f2b574d21"
+    manifest_sha256 "047ad0827dfae7478a4df5ae7dbf0cfa83fabbcff489fb0aedf2b88d545fbc0c"
+    sha256               arm64_golden_gate: "a649443f745f103eeb1b3c59255bf9dcefd7287ec91ce45afcadc2976ca8541e"
+    sha256               arm64_tahoe:       "e8479b14cf92f2c1092ef31531a89b8c9b88e97207e3b80e330f2037e594963b"
+    sha256               arm64_sequoia:     "8a7215262526c9d76c252136eeb4b972ffd93fa6aa1820a5cd16d21cf1362ad8"
+    sha256 cellar: :any, arm64_linux:       "d13a82f06252670a45de41805399465a21491ed2707a8433968cc4d344d2a0f0"
+    sha256 cellar: :any, x86_64_linux:      "27fe7d5572c25de115a8c90c54a5664a8d59fc58db8412b30c5ccabcf15999b7"
   end
 
   keg_only :provided_by_macos
@@ -90,6 +94,7 @@ class Llvm < Formula
     # can almost be treated as an entirely different build from llvm.
     ENV.permit_arch_flags
 
+    z3_solver = enable_z3 ? "ON" : "OFF"
     args = %W[
       -DLLVM_ENABLE_PROJECTS=#{projects.join(";")}
       -DLLVM_ENABLE_RUNTIMES=#{runtimes.join(";")}
@@ -99,7 +104,7 @@ class Llvm < Formula
       -DLLVM_ENABLE_EH=OFF
       -DLLVM_ENABLE_FFI=ON
       -DLLVM_ENABLE_RTTI=ON
-      -DLLVM_ENABLE_Z3_SOLVER=#{enable_z3 ? "ON" : "OFF"}
+      -DLLVM_ENABLE_Z3_SOLVER=#{z3_solver}
       -DLLVM_INCLUDE_BENCHMARKS=OFF
       -DLLVM_INCLUDE_DOCS=OFF
       -DLLVM_INCLUDE_TESTS=OFF
@@ -211,8 +216,9 @@ class Llvm < Formula
 
       # We build the basic parts of a toolchain to profile.
       # The extra targets on macOS are part of a default Compiler-RT build.
+      extra_targets = ";AArch64;ARM;X86" if OS.mac?
       extra_args = %W[
-        -DLLVM_TARGETS_TO_BUILD=Native#{";AArch64;ARM;X86" if OS.mac?}
+        -DLLVM_TARGETS_TO_BUILD=Native#{extra_targets}
         -DLLVM_ENABLE_PROJECTS=clang;lld
         -DLLVM_ENABLE_RUNTIMES=compiler-rt
       ]
@@ -265,7 +271,7 @@ class Llvm < Formula
         ]
         linux_linker_flags = linux_library_paths.map { |path| "-L#{path} -Wl,-rpath,#{path}" }
         # Add opt_libs for dependencies to RPATH.
-        linux_linker_flags += deps.map(&:to_formula).map { |dep| "-Wl,-rpath,#{dep.opt_lib}" }
+        linux_linker_flags += deps.map { |dep| "-Wl,-rpath,#{dep.opt_lib}" }
 
         [args, extra_args].each do |arg_array|
           # Add the linker paths to the arguments passed to the temporary compilers and installed toolchain.
@@ -582,7 +588,8 @@ class Llvm < Formula
       # Testing Command Line Tools
       if OS.mac? && MacOS::CLT.installed?
         toolchain_path = "/Library/Developer/CommandLineTools"
-        cpp_base = (MacOS.version >= :big_sur) ? MacOS::CLT.sdk_path : toolchain_path
+        cpp_base = toolchain_path
+        cpp_base = MacOS::CLT.sdk_path if MacOS.version >= :big_sur
         system bin/"clang++", "-v",
                "--no-default-config",
                "-isysroot", MacOS::CLT.sdk_path,
@@ -620,7 +627,11 @@ class Llvm < Formula
 
       # Testing Xcode
       if OS.mac? && MacOS::Xcode.installed?
-        cpp_base = (MacOS::Xcode.version >= "12.5") ? MacOS::Xcode.sdk_path : MacOS::Xcode.toolchain_path
+        cpp_base = if MacOS::Xcode.version >= "12.5"
+          MacOS::Xcode.sdk_path
+        else
+          MacOS::Xcode.toolchain_path
+        end
         system bin/"clang++", "-v",
                "--no-default-config",
                "-isysroot", MacOS::Xcode.sdk_path,
@@ -638,7 +649,8 @@ class Llvm < Formula
 
       # link against installed libc++
       # related to https://github.com/Homebrew/legacy-homebrew/issues/47149
-      cxx_libdir = OS.mac? ? opt_lib/"c++" : opt_lib
+      cxx_libdir = opt_lib
+      cxx_libdir /= "c++" if OS.mac?
       system bin/"clang++", "-v",
              "-isystem", "#{opt_include}/c++/v1",
              "-std=c++11", "-stdlib=libc++", "test.cpp", "-o", "testlibc++",

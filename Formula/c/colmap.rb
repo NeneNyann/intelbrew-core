@@ -7,6 +7,7 @@ class Colmap < Formula
   revision 5
 
   bottle do
+    manifest_sha256 "cb00aa908f3d0c2aa892fef791b3f63e29d506f744bb1337a9e909b91695e1d7"
     sha256 cellar: :any, arm64_golden_gate: "9073f9fd6a2a9808de2b6544a1c644b8dd06b7d949cef4fd936063984d2e0771"
     sha256 cellar: :any, arm64_tahoe:       "64d5f36cebbb44196ea40f6bdb0e747f0377314d4cfda4a7e8ff570694880df1"
     sha256 cellar: :any, arm64_sequoia:     "4edefcc0345487619cc91a1e033751dca113f00e7c94887a9e1ecaee6df9928b"
@@ -14,34 +15,30 @@ class Colmap < Formula
     sha256 cellar: :any, x86_64_linux:      "84264bbea6389eb057dc663abdb050dfdd88f3ac21dbd19833224239744e6ac1"
   end
 
+  depends_on "cgal" => :build
   depends_on "cmake" => :build
   depends_on "boost"
   depends_on "ceres-solver"
-  depends_on "cgal"
   depends_on "eigen" => :no_linkage
   depends_on "faiss"
-  depends_on "flann"
-  depends_on "gflags"
   depends_on "glew"
   depends_on "glog"
   depends_on "gmp"
-  depends_on "lz4"
   depends_on "metis"
   depends_on "mpfr"
-  depends_on "onnx"
   depends_on "onnxruntime"
   depends_on "openimageio"
   depends_on "openssl@4"
   depends_on "qtbase"
   depends_on "qtsvg"
+  depends_on "sqlite"
   depends_on "suite-sparse"
 
   uses_from_macos "curl"
-  uses_from_macos "sqlite"
 
   on_macos do
+    depends_on "gflags"
     depends_on "libomp"
-    depends_on "sqlite"
   end
 
   on_linux do
@@ -86,7 +83,8 @@ class Colmap < Formula
     # Fix library install directory and rpath
     inreplace "CMakeLists.txt", "LIBRARY DESTINATION thirdparty/", "LIBRARY DESTINATION lib/"
     args << "-DCMAKE_INSTALL_RPATH=#{loader_path};#{loader_path}/../libexec/poselib/lib"
-    args << "-DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}"
+    openssl_prefix = dep("openssl").opt_prefix
+    args << "-DOPENSSL_ROOT_DIR=#{openssl_prefix}"
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"

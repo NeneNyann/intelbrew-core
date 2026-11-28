@@ -15,6 +15,7 @@ class Openimageio < Formula
   end
 
   bottle do
+    manifest_sha256 "c8986f5aa2565fb603824852e9deef96e9e1be92e3753d33b48a1247047458ea"
     sha256 cellar: :any, arm64_golden_gate: "39a93aff673496178878499900c4b864e03764b56fc1c19b55b0a7250fe97bf6"
     sha256 cellar: :any, arm64_tahoe:       "238db57652eb3b2d4d492d8ab8fc9372179af22a62e5c9e4197393952a645acb"
     sha256 cellar: :any, arm64_sequoia:     "5763b5ab567eddd7e6264eefd0478ef0b43593b83657422b20fca731fa5c2414"
@@ -57,8 +58,9 @@ class Openimageio < Formula
     py3ver = Language::Python.major_minor_version python3
     ENV["PYTHONPATH"] = site_packages = prefix/Language::Python.site_packages(python3)
 
+    module_rpath = rpath(source: site_packages/"OpenImageIO")
     args = %W[
-      -DCMAKE_INSTALL_RPATH=#{rpath};#{rpath(source: site_packages/"OpenImageIO")}
+      -DCMAKE_INSTALL_RPATH=#{rpath};#{module_rpath}
       -DPython3_EXECUTABLE=#{python3}
       -DPYTHON_VERSION=#{py3ver}
       -DCCACHE_FOUND=

@@ -13,6 +13,7 @@ class DotnetAT8 < Formula
   end
 
   bottle do
+    manifest_sha256 "5312704fb0d5bfa6d7fdfe3d7b83add1f7dd315afe522bc40d1b3b4dd82cdb46"
     sha256 cellar: :any, arm64_golden_gate: "eafe7b4ecd0f185126c02050154f75128bd5b899c259c007855feb9fd5ce4bb2"
     sha256 cellar: :any, arm64_tahoe:       "4dc185daf6825c66bc20ff95c0a118ccb0cadbffe8e4b4e28235ebd96cfb1fb5"
     sha256 cellar: :any, arm64_sequoia:     "87b3757fcb76592bd0af6ed5cd4bdbeaa9773661a30328acef9c10a1a67d05ad"
@@ -107,8 +108,7 @@ class DotnetAT8 < Formula
                 "<CrossgenOutput Condition=\" '$(TargetArchitecture)' == 's390x'",
                 "<CrossgenOutput Condition=\" '$(TargetOsName)' == 'osx'"
     else
-      icu4c_dep = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-      ENV.append_path "LD_LIBRARY_PATH", icu4c_dep.to_formula.opt_lib
+      ENV.append_path "LD_LIBRARY_PATH", dep("icu4c").opt_lib
 
       # Use our libunwind rather than the bundled one.
       inreplace "src/runtime/eng/SourceBuild.props",

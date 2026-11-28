@@ -9,6 +9,7 @@ class AnsibleAT9 < Formula
   revision 4
 
   bottle do
+    manifest_sha256 "df0de6538342ae264c300f7d3c67e7b8fc37ee710b2c0dafe822f5d21288cc5a"
     sha256 cellar: :any,                 arm64_tahoe:   "86d6dd9f15817bb34dd5fc693b90fe5d8386bb26247f96af423441a54b05570c"
     sha256 cellar: :any,                 arm64_sequoia: "b8dbba2fa6358fc8136ebfad446abc6a50a3355ddccfe718131c2c1d6189402d"
     sha256 cellar: :any,                 arm64_sonoma:  "a28b751ae6f6edd53e70963036645e0376aa72ecdb20fc238fdddd994eed9faf"
@@ -611,6 +612,8 @@ class AnsibleAT9 < Formula
     sha256 "627ad26769b6831130239182afcb195f64fbf494626bc9eb4b2ac8170de5b775"
   end
 
+  allow_network_access!
+
   def install
     venv = virtualenv_install_with_resources without: "ansible-core"
     venv.pip_install_and_link resource("ansible-core")
@@ -626,7 +629,8 @@ class AnsibleAT9 < Formula
         - name: ping
           ping:
     YAML
-    python3 = "python#{Language::Python.major_minor_version libexec/"bin/python"}"
+    python_version = Language::Python.major_minor_version libexec/"bin/python"
+    python3 = "python#{python_version}"
     (testpath/"hosts.ini").write [
       "localhost ansible_connection=local",
       " ansible_python_interpreter=#{which(python3)}",

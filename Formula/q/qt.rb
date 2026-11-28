@@ -19,6 +19,7 @@ class Qt < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "ef78569af2d08f165a4291a1a5e07f760d0d798d223bac2a70b2388a41e931df"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "0ab95b3a2a95bdc8ff6f6a5ed125d9e40c02604475a51bacf9a991b00c106dee"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "0ab95b3a2a95bdc8ff6f6a5ed125d9e40c02604475a51bacf9a991b00c106dee"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "0ab95b3a2a95bdc8ff6f6a5ed125d9e40c02604475a51bacf9a991b00c106dee"
@@ -150,8 +151,9 @@ class Qt < Formula
       target_link_libraries(test PRIVATE Qt6::#{modules.join(" Qt6::")})
     CMAKE
 
+    qt_modules = modules.join(" ").downcase
     (testpath/"test.pro").write <<~QMAKE
-      QT      += #{modules.join(" ").downcase}
+      QT      += #{qt_modules}
       TARGET   = test
       CONFIG  += console
       CONFIG  -= app_bundle
@@ -160,6 +162,7 @@ class Qt < Formula
       INCLUDEPATH += #{formula_opt_include("vulkan-headers")}
     QMAKE
 
+    webengine_include = "#include <QtWebEngineCore>" if webengine_supported?
     (testpath/"main.cpp").write <<~CPP
       #undef QT_NO_DEBUG
       #include <QCoreApplication>
@@ -171,7 +174,7 @@ class Qt < Formula
       #include <QtSvg>
       #include <QDebug>
       #include <QVulkanInstance>
-      #{"#include <QtWebEngineCore>" if webengine_supported?}
+      #{webengine_include}
       #include <iostream>
 
       int main(int argc, char *argv[])

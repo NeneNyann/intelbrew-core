@@ -7,6 +7,7 @@ class Pgroll < Formula
   head "https://github.com/xataio/pgroll.git", branch: "main"
 
   bottle do
+    manifest_sha256 "6fa0e8ba2ee9bd2cc5238e8d36d33a66941a43b44f8a045b63a22657db5aa60a"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e416b3be5b7a6b97fe695570b6d368f8fb3f14a472d770e7d13bccefdd766366"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4119e292ff7bb8f544116391f3b4b56e974b2df840e52e790084afd98f417bc5"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "258f31882d431af6aacf8c34ca71a39972c2c1ad8943e7974d12ecdf6e0086ad"
@@ -16,7 +17,7 @@ class Pgroll < Formula
   end
 
   depends_on "go" => :build
-  depends_on "postgresql@18" => :test
+  depends_on "postgresql@19" => :test
   depends_on "libpg_query"
 
   allow_network_access! :test
@@ -41,16 +42,13 @@ class Pgroll < Formula
 
     cp_r pkgshare/"01_create_tables.yaml", testpath
     ENV["LC_ALL"] = "C"
+    ENV["PGDATA"] = testpath/"test"
 
-    postgresql = Formula["postgresql@18"]
-    pg_ctl = postgresql.opt_bin/"pg_ctl"
+    pg_ctl = formula_opt_bin("postgresql@19")/"pg_ctl"
     port = free_port
 
-    system pg_ctl, "initdb", "-D", testpath/"test"
-    (testpath/"test/postgresql.conf").write <<~EOS, mode: "a+"
-      port = #{port}
-    EOS
-    system pg_ctl, "start", "-D", testpath/"test", "-l", testpath/"log"
+    system pg_ctl, "initdb", "--options=-c port=#{port}"
+    system pg_ctl, "start", "--log=#{testpath}/log"
 
     begin
       pg_uri = "postgres://#{ENV["USER"]}@localhost:#{port}/postgres?sslmode=disable"
@@ -64,7 +62,7 @@ class Pgroll < Formula
       complete_output = shell_output("#{bin}/pgroll --postgres-url #{pg_uri} complete 2>&1")
       assert_match "Migration successful", complete_output
     ensure
-      system pg_ctl, "stop", "-D", testpath/"test"
+      system pg_ctl, "stop"
     end
   end
 end

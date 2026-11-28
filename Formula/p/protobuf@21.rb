@@ -7,6 +7,7 @@ class ProtobufAT21 < Formula
   revision 1
 
   bottle do
+    manifest_sha256 "a8898fa03c8302ffb4c671a663f41b91bb80a80d640b53a1e0873faaec8e9aea"
     sha256 cellar: :any,                 arm64_tahoe:   "65023d2a73ac89c385ff14782c38c1f629828d753d880f8e910a7ee19fc35e47"
     sha256 cellar: :any,                 arm64_sequoia: "9a941768e6f914b2c5a412728f3794a49a53b894b3cbe637809df93bc9b521e3"
     sha256 cellar: :any,                 arm64_sonoma:  "a906fb18cfff9e07a71c34d01c74676ea28290fa6c4cfa26f68e48449abf242a"
@@ -28,7 +29,9 @@ class ProtobufAT21 < Formula
   depends_on "python@3.12" => [:build, :test]
   depends_on "python@3.13" => [:build, :test]
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   # Fix build with python@3.11
   patch do
@@ -38,11 +41,7 @@ class ProtobufAT21 < Formula
     resolves "https://github.com/protocolbuffers/protobuf/pull/10403"
   end
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.match?(/^python@\d\.\d+$/) }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
+  allow_network_access!
 
   def install
     cmake_args = %w[
@@ -66,7 +65,7 @@ class ProtobufAT21 < Formula
     ENV["PROTOC"] = bin/"protoc"
 
     pip_args = ["--config-settings=--build-option=--cpp_implementation"]
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       pyext_dir = prefix/Language::Python.site_packages(python)/"google/protobuf/pyext"
       with_env(LDFLAGS: "-Wl,-rpath,#{rpath(source: pyext_dir)} #{ENV.ldflags}".strip) do
         system python, "-m", "pip", "install", *pip_args, *std_pip_args(build_isolation: true), "./python"
@@ -96,7 +95,7 @@ class ProtobufAT21 < Formula
     (testpath/"test.proto").write testdata
     system bin/"protoc", "test.proto", "--cpp_out=."
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       with_env(PYTHONPATH: (prefix/Language::Python.site_packages(python)).to_s) do
         system python, "-c", "import google.protobuf"
       end

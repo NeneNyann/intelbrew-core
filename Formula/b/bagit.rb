@@ -11,10 +11,13 @@ class Bagit < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "90a564e004a07879b58cf63df3b4bc16f99a50682d62b6f5f59ce7c7d812c909"
     sha256 cellar: :any_skip_relocation, all: "f1972689eb820b705d5c000e3c041f662750cbe9eb9fcd50ddf12859f72f29a1"
   end
 
   depends_on "python@3.15"
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

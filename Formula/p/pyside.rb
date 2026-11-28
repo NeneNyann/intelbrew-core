@@ -22,6 +22,7 @@ class Pyside < Formula
   end
 
   bottle do
+    manifest_sha256 "d73d84bf02680def3c71605a7ce06063fe600070cee4610ff2c1d645f7d01a8c"
     sha256 cellar: :any, arm64_golden_gate: "db5a5b5b0d6f9f20b099688194281d94539c370c2e5e2bd8785fedfb0e9a2b38"
     sha256 cellar: :any, arm64_tahoe:       "6374395982fa25a68f17ba6249394369456f92c9d96f202b78078bc8f29908e0"
     sha256 cellar: :any, arm64_sequoia:     "62766c6015573b8c67125891accc889e18d0eae869d45aa56d6f8b8af6824ae5"
@@ -96,13 +97,14 @@ class Pyside < Formula
 
     shiboken6_module = prefix/Language::Python.site_packages(python3)/"shiboken6"
 
+    limited_api = OS.mac? ? "yes" : "no"
     system "cmake", "-S", ".", "-B", "build",
                     "-DCMAKE_MODULE_LINKER_FLAGS=-Wl,-rpath,#{rpath(source: shiboken6_module)}",
                     "-DPython_EXECUTABLE=#{python3}",
                     "-DBUILD_TESTS=OFF",
                     "-DNO_QT_TOOLS=yes",
                     # Limited API (maybe combined with keg relocation) breaks the Linux bottle
-                    "-DFORCE_LIMITED_API=#{OS.mac? ? "yes" : "no"}",
+                    "-DFORCE_LIMITED_API=#{limited_api}",
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"

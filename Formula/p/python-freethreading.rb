@@ -10,6 +10,7 @@ class PythonFreethreading < Formula
   end
 
   bottle do
+    manifest_sha256 "1364dfe3b3c59cad87ba351356224c84b6ccba445293b2d2d339382436015a71"
     sha256 arm64_golden_gate: "228972f878e65d12da8aa23f6346366c91e4b0bfd856e23e1be99811f295b6af"
     sha256 arm64_tahoe:       "e436f9ab36a0493cc1a84ddeb78c96b713aa2c8946b5bda87d989f71d988d77b"
     sha256 arm64_sequoia:     "a980fa806f1f154e714cc4c09b6a111698bf8e7125c7d1c42b55177596ae78ad"
@@ -79,7 +80,7 @@ class PythonFreethreading < Formula
   deny_network_access!
 
   def install
-    openssl = deps.find { |dep| dep.name.start_with?("openssl@") }.name
+    openssl = dep("openssl").name
     # Unset these so that installing pip and setuptools puts them where we want
     # and not into some other Python the user has installed.
     ENV["PYTHONHOME"] = nil
@@ -88,8 +89,10 @@ class PythonFreethreading < Formula
     # Override the auto-detection of libmpdec, which assumes a universal build.
     # This is currently an inreplace due to https://github.com/python/cpython/issues/98557.
     if OS.mac?
+      machine = Hardware::CPU.arm? ? "uint128" : "x64"
+      ENV["PYTHON_DECIMAL_WITH_MACHINE"] = machine
       inreplace "configure", "libmpdec_machine=universal",
-                "libmpdec_machine=#{ENV["PYTHON_DECIMAL_WITH_MACHINE"] = Hardware::CPU.arm? ? "uint128" : "x64"}"
+                "libmpdec_machine=#{machine}"
     end
 
     # The --enable-optimization and --with-lto flags diverge from what upstream
@@ -237,8 +240,9 @@ class PythonFreethreading < Formula
     end
 
     # Patch ensurepip to bootstrap our updated version of pip
+    pip_version = resource("pip").version
     inreplace lib_cellar/"ensurepip/__init__.py" do |s|
-      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{resource("pip").version}\"")
+      s.gsub!(/_PIP_VERSION = .*/, "_PIP_VERSION = \"#{pip_version}\"")
     end
 
     # Rename idle, pydoc to t variants
@@ -268,7 +272,7 @@ class PythonFreethreading < Formula
            "--upgrade",
            "--isolated",
            "--target=#{root_site_packages}",
-           bundled/"pip-#{resource("pip").version}-py3-none-any.whl"
+           bundled/"pip-#{pip_version}-py3-none-any.whl"
 
     # Use brewed ca-certificates PEM file instead of the bundled copy
     certifi = root_site_packages/"pip/_vendor/certifi"

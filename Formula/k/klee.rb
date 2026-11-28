@@ -11,6 +11,7 @@ class Klee < Formula
   head "https://github.com/klee/klee.git", branch: "master"
 
   bottle do
+    manifest_sha256 "51b41c3b76e0993e09ea222e2c7aa370bd55582a55a3c58e550e5ca6bb7d2635"
     sha256 arm64_golden_gate: "c1c591802a460aceae21559f6967749fad07b7fecd1168c090181fb3c271e4a6"
     sha256 arm64_tahoe:       "9b9d55f472d672d42a84f074c2601faccc3e8a9f4c2dcf564875a5b40f2eb46d"
     sha256 arm64_sequoia:     "36dbb1977c48ad8e5825d22f152ab0ff2360647890d3361c1a7891ed4323684b"
@@ -57,7 +58,7 @@ class Klee < Formula
   end
 
   def llvm
-    deps.map(&:to_formula).find { |f| f.name.match? "^llvm" }
+    dep("llvm").to_formula
   end
 
   def install
@@ -67,6 +68,7 @@ class Klee < Formula
 
     # Use build configuration at
     # https://github.com/klee/klee/blob/v#{version}/scripts/build/p-libcxx.inc
+    standalone = OS.mac? ? "OFF" : "ON"
     libcxx_args = std_cmake_args(install_prefix: libcxx_install_dir) + %W[
       -DRUNTIMES_CMAKE_ARGS=-DCMAKE_INSTALL_RPATH=#{rpath}
       -DLLVM_ENABLE_RUNTIMES=libcxx;libcxxabi;libunwind
@@ -77,7 +79,7 @@ class Klee < Formula
       -DLLVM_ENABLE_RTTI:BOOL=OFF
       -DLIBCXX_ENABLE_THREADS:BOOL=OFF
       -DLIBCXX_ENABLE_SHARED:BOOL=ON
-      -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY:BOOL=#{OS.mac? ? "OFF" : "ON"}
+      -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY:BOOL=#{standalone}
       -DLIBCXXABI_ENABLE_THREADS:BOOL=OFF
       -DLIBCXXABI_USE_LLVM_UNWINDER:BOOL=ON
     ]
@@ -130,7 +132,8 @@ class Klee < Formula
     system "cmake", "--install", "build"
 
     venv = virtualenv_create(libexec/"venv", python3)
-    venv.pip_install buildpath/"wheels/tabulate-#{resource("tabulate").version}-py3-none-any.whl"
+    tabulate_version = resource("tabulate").version
+    venv.pip_install buildpath/"wheels/tabulate-#{tabulate_version}-py3-none-any.whl"
     rewrite_shebang python_shebang_rewrite_info(venv.root/"bin/python"), *bin.children
   end
 

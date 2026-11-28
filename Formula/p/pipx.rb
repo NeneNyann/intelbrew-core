@@ -3,24 +3,25 @@ class Pipx < Formula
 
   desc "Execute binaries from Python packages in isolated environments"
   homepage "https://pipx.pypa.io"
-  url "https://files.pythonhosted.org/packages/5e/10/8f2e475617869a6c679e4a46df2e48ed26ae060b80e137adbb215a22dec5/pipx-1.18.19.tar.gz"
-  sha256 "2ee63572a0ba01ebb977781db3ece8df61c66b750b9ee9ced3effdbca34da861"
+  url "https://files.pythonhosted.org/packages/51/18/db2093a6337de90daad9937e9dce5e8bde7fe077cf678f75baa1111f3956/pipx-1.19.1.tar.gz"
+  sha256 "fd654c9468cf5238fae49bb0c924a863ebb8237dd4635855f08cbb010aec0196"
   license "MIT"
   head "https://github.com/pypa/pipx.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "5211d22386dd43dce6d6db37abd349dba30a8e950828eaa6a0efe41302749bad"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "5211d22386dd43dce6d6db37abd349dba30a8e950828eaa6a0efe41302749bad"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "5211d22386dd43dce6d6db37abd349dba30a8e950828eaa6a0efe41302749bad"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "9c66d1ef4af76af004c476f4ab853947cda04f5b0ddcc08079b1ea3f688f7404"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:      "9c66d1ef4af76af004c476f4ab853947cda04f5b0ddcc08079b1ea3f688f7404"
+    manifest_sha256 "2be84bec97e1f1e12b7f82475e9de938869d8c9ba1970de520aeab4fd6674fcf"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e1766d9a465f72b4e6e2758510abf4d36acb9246786840ebb58f4db1bed5fccb"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "e1766d9a465f72b4e6e2758510abf4d36acb9246786840ebb58f4db1bed5fccb"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e1766d9a465f72b4e6e2758510abf4d36acb9246786840ebb58f4db1bed5fccb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "f65914cd6f91b5e2a07cd9021cbdbcf1e5b696a863f8be2c5543b115c4632372"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:      "f65914cd6f91b5e2a07cd9021cbdbcf1e5b696a863f8be2c5543b115c4632372"
   end
 
   depends_on "python@3.15"
 
   resource "argcomplete" do
-    url "https://files.pythonhosted.org/packages/87/6f/5a73f04007ca950701765949209f068da628bd11f9c2da287278ce91e0ee/argcomplete-3.7.2.tar.gz"
-    sha256 "aad8b69a0b9969edb62db0d1752354c0d50717b10e0cbb00e2a958381b9fc6b9"
+    url "https://files.pythonhosted.org/packages/19/0d/ca63f1b8b706c70590d0a4acc9c3c94ea8ed4dd9c83b4f7af195868abe76/argcomplete-3.8.0.tar.gz"
+    sha256 "0114d634013e11ac92cc329b3a7d886c3506e98ddc7bb23c99b1782aacc8b8bd"
   end
 
   resource "click" do
@@ -29,18 +30,18 @@ class Pipx < Formula
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/bf/9d/7ec738e68764703d07eb4da4b43aabf0ae6f969f34cb3792a88af400abc5/filelock-4.2.11.tar.gz"
-    sha256 "0cb84119fb8dce17898e1f69c974d5019daa59c4d7656be390a5fa59ccced912"
+    url "https://files.pythonhosted.org/packages/e6/86/a5b9ec254b90efb180e390e31a4fa50a93b714d6e4174fa9a4ee25607159/filelock-4.3.1.tar.gz"
+    sha256 "4c5ee627c401f1863ac6a0de9a14a28d3bb5f8c730b45e2fd6e5dbc79cf34b9e"
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
-    sha256 "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+    url "https://files.pythonhosted.org/packages/c3/75/ffb1dc0ed12352139fb4ca0e3fde4325a23e3d0f3f40efe89717bc4f557b/packaging-26.4.tar.gz"
+    sha256 "c4b671c41ddb9bf26e543c37723610d28fb6bf7affc4da17cf048d419d2c062a"
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/d7/9a/8475be631fb33ca1466915e70fd594c42a4e84b512db650eaa14f90fe75d/platformdirs-4.14.5.tar.gz"
-    sha256 "32e9921db7385aa8169bee4fe9501923e5715ba9fb7ea3b9c69b0d8e0639f7a1"
+    url "https://files.pythonhosted.org/packages/71/18/0b0d99f5bf164f04a7a9534c3dbdbe4d5fd2b382667685ad40c192c4d3d1/platformdirs-4.14.8.tar.gz"
+    sha256 "96893d686e84e9e6f358a9ea41a8de544df66dbf2ba6cda250e7dc73acf85b9b"
   end
 
   resource "userpath" do
@@ -56,14 +57,10 @@ class Pipx < Formula
     inreplace "src/pipx/interpreter.py", "return str(Path(sys.executable).resolve())",
                                          "return '#{python3}'"
 
-    venv = virtualenv_install_with_resources
+    virtualenv_install_with_resources
 
     generate_completions_from_executable(libexec/"bin/register-python-argcomplete", "pipx",
                                          shell_parameter_format: :arg)
-
-    # Build an `:all` bottle by replacing comments
-    file = venv.site_packages.glob("argcomplete-*.dist-info/METADATA")
-    inreplace file, "/opt/homebrew/bin/bash", "$HOMEBREW_PREFIX/bin/bash"
   end
 
   test do

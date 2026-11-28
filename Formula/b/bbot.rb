@@ -10,6 +10,7 @@ class Bbot < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "21ba1b4df01b94e8ed524972f987d4dc38ed0c5e7b3186a45ab1879e6aad30b0"
     sha256 arm64_golden_gate: "1e93c53f92111d8b9844f2b874404e1081eebde52131c127c378a4b416986ae2"
     sha256 arm64_tahoe:       "20b68257841b50c34c595001ba9b90833698ebc23c66309dc1eab4de768fc81f"
     sha256 arm64_sequoia:     "d6ace740bd38cceae235ce3506b9ac89f2b71ed331b2254f1e004f03c897c185"
@@ -283,11 +284,13 @@ class Bbot < Formula
     sha256 "7713e1179d162cf5c7906da876ec2ccb9c3a9dcbdffef0cc7f70c3667a205f0b"
   end
 
+  allow_network_access! :build
+
   def install
     # Work around superenv breaking aws-lc-sys `-O0` needed to build CPU Jitter RNG
     ENV["AWS_LC_SYS_NO_JITTER_ENTROPY"] = "1"
     # Ensure that the `openssl` crate picks up the intended library.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
     ENV["XXHASH_LINK_SO"] = "1"
 
     venv = virtualenv_install_with_resources without: %w[yara-python zstandard]

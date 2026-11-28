@@ -11,6 +11,7 @@ class Bpython < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "2e362a3820502b900ab7be8b1d70b57bd0c22646c5b48240a20ee412e3d62db6"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "d834a4dcd3d9224e61586f28096dcd50b7faca39c8f34b25d422894481c119d3"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4c840c2926afa45a67ddf1822820c240be6a476e17aeb27e03cba6dfc4a79582"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "5ae74737656c5f59fe19db4b42c9d6fbe648a8e0a0ba73858023fd32fb2e1a41"
@@ -82,6 +83,8 @@ class Bpython < Formula
     url "https://files.pythonhosted.org/packages/f0/b4/7830542634bb2d3e62aa3b586a72d5b3b6c91c3168929e7000ef3fed041d/wcwidth-0.9.2.tar.gz"
     sha256 "ae0ef90b90f6af38b54f1fe6d58662ec33b3cb4b8391958a62416d654231727b"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

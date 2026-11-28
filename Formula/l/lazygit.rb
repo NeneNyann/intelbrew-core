@@ -12,6 +12,7 @@ class Lazygit < Formula
   end
 
   bottle do
+    manifest_sha256 "76baa60c6ff5ad743912cd5ab28dc4477bff289510995a2314187d682bb1d4a9"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "51a23984f012e2aa2f668cb04f83006e1c366a2b67859cfe1f00b8d96075cb66"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "51a23984f012e2aa2f668cb04f83006e1c366a2b67859cfe1f00b8d96075cb66"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "51a23984f012e2aa2f668cb04f83006e1c366a2b67859cfe1f00b8d96075cb66"
@@ -37,11 +38,9 @@ class Lazygit < Formula
     system "git", "init", "--initial-branch=main"
 
     s = testpath/"test.txt"
-    pid = spawn(bin/"lazygit", "-l", out: s.to_s, err: [:child, :out])
-    sleep 2
-    assert_match "Log file does not exist. Run `lazygit --debug` first to create the log file", s.read
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"lazygit", "-l", out: s.to_s, err: [:child, :out]) do
+      sleep 2
+      assert_match "Log file does not exist. Run `lazygit --debug` first to create the log file", s.read
+    end
   end
 end

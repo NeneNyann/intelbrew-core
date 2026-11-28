@@ -12,10 +12,13 @@ class Umlet < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "5d9d0c943682277d738dbe30dff25536c2110abbfc1191b4e1faa217b3793bed"
     sha256 cellar: :any_skip_relocation, all: "81e9e4e1e8f71f11e7ddc0468109c03b5fc37353620c24c34fca14eace0b1373"
   end
 
   depends_on "openjdk"
+
+  deny_network_access!
 
   def install
     rm Dir["*.{desktop,exe}"]
@@ -26,7 +29,7 @@ class Umlet < Formula
 
     chmod 0755, "#{libexec}/umlet.sh"
 
-    (bin/"umlet-#{version}").write_env_script "#{libexec}/umlet.sh", JAVA_HOME: formula_opt_prefix("openjdk")
+    (bin/"umlet-#{version}").write_env_script "#{libexec}/umlet.sh", JAVA_HOME: dep("openjdk").opt_prefix
     bin.install_symlink "umlet-#{version}" => "umlet"
   end
 

@@ -7,6 +7,7 @@ class Libgdata < Formula
   revision 2
 
   bottle do
+    manifest_sha256 "6a857e80b70072be21f1a3b87adc156f803b96f122bdfd6ce7ab470ebc89ac38"
     sha256 cellar: :any, arm64_tahoe:   "e14a620ed4e4745cdd03a4a29a8704eecfa725a8f1ea3807e8c2e2721573c165"
     sha256 cellar: :any, arm64_sequoia: "5768f5f98b620b962d800ec3eeac032546b5be0be8c78df288cec2a5b9e21d68"
     sha256 cellar: :any, arm64_sonoma:  "83575935d840f1863306d2114a51841316b7d6977130242e301f05ee9c9e4218"
@@ -43,8 +44,10 @@ class Libgdata < Formula
     depends_on "gettext"
   end
 
+  allow_network_access!
+
   def install
-    ENV.prepend_path "PKG_CONFIG_PATH", formula_opt_lib("libsoup@2")/"pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", dep("libsoup").opt_lib/"pkgconfig"
     ENV.prepend_path "XDG_DATA_DIRS", Formula["libsoup@2"].opt_share
     ENV.prepend_path "XDG_DATA_DIRS", HOMEBREW_PREFIX/"share"
 
@@ -77,7 +80,7 @@ class Libgdata < Formula
     C
 
     ENV.prepend_path "PKG_CONFIG_PATH", formula_opt_lib("icu4c")/"pkgconfig" if OS.mac?
-    ENV.prepend_path "PKG_CONFIG_PATH", formula_opt_lib("libsoup@2")/"pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", dep("libsoup").opt_lib/"pkgconfig"
     flags = shell_output("pkgconf --cflags --libs libgdata").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"

@@ -9,6 +9,7 @@ class VapoursynthImwri < Formula
   head "https://github.com/vapoursynth/vs-imwri.git", branch: "master"
 
   bottle do
+    manifest_sha256 "1fe9bec12eb2b707caa15d4537289e25d3ca80357f3ded688dc5671cbcfa2e24"
     sha256 cellar: :any, arm64_golden_gate: "cabbaa214eab04da81eaa2d838a89726f7712e6ae4a13b3ed4d5dfce430f1072"
     sha256 cellar: :any, arm64_tahoe:       "5b2981f5e1ad699181ba63885b46ca98920a3fe138a13e77a9e988051886f583"
     sha256 cellar: :any, arm64_sequoia:     "df76c6fcda88dd6ee3476480d529f03afe941fa72317dcf96b0274b8eccb74d6"
@@ -39,7 +40,7 @@ class VapoursynthImwri < Formula
     # prefix, but we want it in a Cellar location instead.
     inreplace "meson.build",
               "install_dir = vapoursynth_dep.get_variable(pkgconfig: 'libdir') / 'vapoursynth'",
-              "install_dir = '#{prefix/Language::Python.site_packages(python3)}/vapoursynth/plugins'"
+              "install_dir = '#{prefix}/#{Language::Python.site_packages(python3)}/vapoursynth/plugins'"
 
     system "meson", "setup", "build", *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"

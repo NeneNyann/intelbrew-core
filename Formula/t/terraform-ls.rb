@@ -12,6 +12,7 @@ class TerraformLs < Formula
   end
 
   bottle do
+    manifest_sha256 "f5a63c0bdf488ebe3494456c29fc72f89d140012aab8099e070b0e4c628811f2"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "ba2f4176cacf594d14d2b4659588041cc19d8a987c8e6da754ca0cbd25c9131f"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "ba2f4176cacf594d14d2b4659588041cc19d8a987c8e6da754ca0cbd25c9131f"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "ba2f4176cacf594d14d2b4659588041cc19d8a987c8e6da754ca0cbd25c9131f"
@@ -35,8 +36,7 @@ class TerraformLs < Formula
 
   test do
     port = free_port
-    pid = spawn bin/"terraform-ls", "serve", "-port", port.to_s, File::NULL
-    begin
+    with_test_process(bin/"terraform-ls", "serve", "-port", port.to_s, File::NULL, signal: "INT") do
       sleep 2
       tcp_socket = TCPSocket.new("localhost", port)
       tcp_socket.puts <<~EOF
@@ -45,9 +45,6 @@ class TerraformLs < Formula
         {"jsonrpc":"2.0","method":"initialize","params":{},"id":1}
       EOF
       assert_match "Content-Type", tcp_socket.gets("\n")
-    ensure
-      Process.kill("SIGINT", pid)
-      Process.wait(pid)
     end
   end
 end

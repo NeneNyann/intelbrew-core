@@ -22,6 +22,7 @@ class PerconaServer < Formula
   end
 
   bottle do
+    manifest_sha256 "927c57e57fa52ddea44aaeda5a7511da8048339375722b0e60e2395173c0cbb2"
     sha256 arm64_golden_gate: "ae0b47be8e9d412638196a528c6dd4d5eb4e08bcdba5c720d589b6582177e87c"
     sha256 arm64_tahoe:       "9566af6e35a5cc63a3f77b9d51839c378cb3499fc972e31405d7d05b5fb776f1"
     sha256 arm64_sequoia:     "008c4b37d4438429890b6bfce865c65eb8c8077d86b280530d3208a33b445ae0"
@@ -94,9 +95,9 @@ class PerconaServer < Formula
     # Disable ABI checking
     inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0" if OS.linux?
 
-    icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
-                .to_formula
     # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
+    openssl_prefix = dep("openssl").opt_prefix
+    icu4c_prefix = dep("icu4c").opt_prefix
     args = %W[
       -DCOMPILATION_COMMENT=Homebrew
       -DDEFAULT_CHARSET=utf8mb4
@@ -110,8 +111,8 @@ class PerconaServer < Formula
       -DMYSQL_DATADIR=#{var}/mysql
       -DSYSCONFDIR=#{etc}
       -DBISON_EXECUTABLE=#{formula_opt_bin("bison")}/bison
-      -DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}
-      -DWITH_ICU=#{icu4c.opt_prefix}
+      -DOPENSSL_ROOT_DIR=#{openssl_prefix}
+      -DWITH_ICU=#{icu4c_prefix}
       -DWITH_SYSTEM_LIBS=ON
       -DWITH_EDITLINE=system
       -DWITH_FIDO=system

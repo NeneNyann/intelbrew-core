@@ -7,6 +7,7 @@ class CargoUdeps < Formula
   revision 1
 
   bottle do
+    manifest_sha256 "7eb768e762fba49168d81220172cb14b64e44c68336cd6c9ba7dd9296dffdd63"
     sha256 cellar: :any, arm64_golden_gate: "2106e88f26c88f445e5d4bf658113459a29edc20c13202104385f0a8a3759782"
     sha256 cellar: :any, arm64_tahoe:       "45c4062d3480f18c3daccea786172f411867d17a7e1d23d52f03f48cb11019cb"
     sha256 cellar: :any, arm64_sequoia:     "936916be7035a4f7f72b80786586462c2668441b0ba7c33ffd0efb8ea8be8e05"
@@ -36,7 +37,7 @@ class CargoUdeps < Formula
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", "--no-default-features", *std_cargo_args
   end
@@ -70,7 +71,7 @@ class CargoUdeps < Formula
     [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libssl"),
     ].each do |library|
       assert Utils.binary_linked_to_library?(bin/"cargo-udeps", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."

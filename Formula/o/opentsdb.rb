@@ -12,6 +12,7 @@ class Opentsdb < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "feecc68653b6f6531f28963647baed38408cc758166f7f2ceae26c2d6be6e6a9"
     sha256 cellar: :any_skip_relocation, sonoma:       "1e94a2ce5cc95c944f5763df3442cc2fe71d12279f134b0a051549c6b4bd902a"
     sha256 cellar: :any_skip_relocation, ventura:      "022671a452bff9bacb3c84213f26adfb9d4fc50bdfbd28e2997262f6f5936607"
     sha256 cellar: :any_skip_relocation, arm64_linux:  "e3cb78193f508228b2918205e3c4303febb1c2dd525e4a6f8d503866b41407f4"
@@ -38,9 +39,11 @@ class Opentsdb < Formula
     depends_on arch: :x86_64 # openjdk@8 (needed to build) is not supported on ARM
   end
 
+  allow_network_access!
+
   def install
     with_env(JAVA_HOME: Language::Java.java_home("1.8")) do
-      ENV.prepend_path "PATH", formula_opt_libexec("python@3.13")/"bin"
+      ENV.prepend_path "PATH", dep("python").opt_libexec/"bin"
       system "autoreconf", "--force", "--install", "--verbose"
       system "./configure", "--disable-silent-rules",
                             "--localstatedir=#{var}/opentsdb",
@@ -57,7 +60,11 @@ class Opentsdb < Formula
     env["PATH"] = "$JAVA_HOME/bin:$PATH"
     env["HBASE_HOME"] = formula_opt_libexec("hbase")
     # We weren't able to get HBase native LZO compression working in Monterey
-    env["COMPRESSION"] = (OS.mac? && MacOS.version >= :monterey) ? "NONE" : "LZO"
+    env["COMPRESSION"] = if OS.mac? && MacOS.version >= :monterey
+      "NONE"
+    else
+      "LZO"
+    end
 
     create_table = pkgshare/"tools/create_table_with_env.sh"
     create_table.write_env_script pkgshare/"tools/create_table.sh", env

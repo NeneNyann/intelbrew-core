@@ -7,6 +7,7 @@ class ProcyonDecompiler < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "382821a9df0df6483021df7b1b8e07c07f4e62e35c0ce4d8dd8cffbeff58184f"
     sha256 cellar: :any_skip_relocation, all: "6d383fdfc3e0cd6e98271bc33299c2553943305e40c4cc48b127ab4157dff604"
   end
 
@@ -28,7 +29,7 @@ class ProcyonDecompiler < Formula
     JAVA
 
     (testpath/"T.java").write fixture
-    system formula_opt_bin("openjdk@21")/"javac", "T.java"
+    system dep("openjdk").opt_bin/"javac", "T.java"
     assert_match fixture, shell_output("#{bin}/procyon-decompiler T.class")
   end
 end

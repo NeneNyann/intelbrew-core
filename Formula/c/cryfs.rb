@@ -27,6 +27,7 @@ class Cryfs < Formula
   end
 
   bottle do
+    manifest_sha256 "ca2e4231e5d65b2408e891d4eb31d1861db7c86b9cdfcdf811f74d33f6d6921b"
     sha256 cellar: :any, arm64_linux:  "f37d5f9737038bc459af168ff87848d3c6385189cb4939c19b6b4136db4e547b"
     sha256 cellar: :any, x86_64_linux: "f1527479be0986f7cea6a71eb7e95522a9eb133a8dc7e2b697f7d689deb7fcf0"
   end
@@ -55,7 +56,7 @@ class Cryfs < Formula
 
   def install
     if build.head?
-      ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+      ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
       ENV["SODIUM_USE_PKG_CONFIG"] = "1"
 
       system "cargo", "install", "--no-default-features", *std_cargo_args(path: "crates/cryfs-cli")

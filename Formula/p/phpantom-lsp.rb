@@ -1,17 +1,17 @@
 class PhpantomLsp < Formula
   desc "Fast PHP language server written in Rust"
   homepage "https://github.com/PHPantom-dev/phpantom_lsp"
-  url "https://github.com/PHPantom-dev/phpantom_lsp/archive/refs/tags/0.11.1.tar.gz"
-  sha256 "c5a9b0e21eac77edacd56add5b46094fb2425435581f32ba574d25e1ff6b97df"
+  url "https://github.com/PHPantom-dev/phpantom_lsp/archive/refs/tags/1.1.0.tar.gz"
+  sha256 "b726026bacfa0214a9cace239c9265cd78e66821d25de40bb2abb7305703375a"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2947722dc0f320bf8278c7f1c6c02edee6bf75ac3cd26067add00717ff74db59"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "4922caa9bf3ef403d56e6fef64eeb2153cd792bd6b2378a81cc21df15d968192"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a0e17f27f74bd3b92ac52b7edff93bbf3bd0ec844901e1d603d391e52df93247"
-    sha256 cellar: :any,                 arm64_linux:       "f17603d6cd860421d70337aa07faf0a2e3e7b5eff595c56dd3df3639edec655f"
-    sha256 cellar: :any,                 x86_64_linux:      "1a083e44a4de8c4191248cda03b39ebd6105a398bf6ad79ff70787f2ca94f7ee"
+    manifest_sha256 "22e53ae92761ee38f2a0d401cb2e06beb694d3e378e2cbe8509956a960af87fb"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "fbac1e072fc717c8c8e2d56494b98506348a50bd059f66a3fa0d6e11f589d7a2"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "e1dc882b67f29f0bbbb32c59cfabd9ef18382a42c552e31166b44f619ddde1fb"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "cb47dbd5242dafb910ffcc2f42031bddfef55f209218ac615f965abd2307ca17"
+    sha256 cellar: :any,                 arm64_linux:       "1ecb9a9204010ea07afb800fe0dd0efc6c8a27b632c97b049a64bb71e53be21c"
+    sha256 cellar: :any,                 x86_64_linux:      "c07ef1297d7310e8f24617fc28464bd5f3868792e667429497c2f98bcd72c79a"
   end
 
   depends_on "rust" => :build
@@ -19,9 +19,9 @@ class PhpantomLsp < Formula
   # The PHP standard library stubs embedded into the binary, pinned in `stubs.lock`.
   # build.rs downloads them when they are missing, which the sandbox blocks.
   resource "phpstorm-stubs" do
-    url "https://github.com/JetBrains/phpstorm-stubs/archive/5f68c1021badebe34119fb8fa10ba7cc25de6c0c.tar.gz"
-    version "5f68c1021badebe34119fb8fa10ba7cc25de6c0c"
-    sha256 "8b9bf4b69196d9193f56a4a6ad88b9ff8a230e372312ae8a181c04df1972c4a1"
+    url "https://github.com/JetBrains/phpstorm-stubs/archive/2049ca3cfa1feabf52db074108fe776a5713cf02.tar.gz"
+    version "2049ca3cfa1feabf52db074108fe776a5713cf02"
+    sha256 "3ef62542d2f77ad30c7dab7dfa726e57e86dd5e3403780294119cf4f5ca6dcb7"
 
     livecheck do
       url "https://raw.githubusercontent.com/PHPantom-dev/phpantom_lsp/refs/tags/#{LATEST_VERSION}/stubs.lock"

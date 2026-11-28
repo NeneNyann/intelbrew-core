@@ -1,16 +1,17 @@
 class OpenclawCli < Formula
   desc "Your own personal AI assistant"
   homepage "https://openclaw.ai/"
-  url "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz"
-  sha256 "a57d1272b7d87bdbf2b0a0e18811dc1ca3ffc5de02229d1f9e2884bd38470794"
+  url "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.10.tgz"
+  sha256 "19c923bc781ea06de56888b2a4690967aaa641a4832d1f2112b3f779870cfc30"
   license "MIT"
 
   bottle do
-    sha256               arm64_golden_gate: "4280280dc3d7ddf7dcab876ee320d7ec75aeeb3c6dc20057757610739a603ee7"
-    sha256               arm64_tahoe:       "4280280dc3d7ddf7dcab876ee320d7ec75aeeb3c6dc20057757610739a603ee7"
-    sha256               arm64_sequoia:     "4280280dc3d7ddf7dcab876ee320d7ec75aeeb3c6dc20057757610739a603ee7"
-    sha256 cellar: :any, arm64_linux:       "9102c1212682fa325a71d1f2e895e14fd428c78c010d9a829682550d51654aaa"
-    sha256 cellar: :any, x86_64_linux:      "ed6467a5e61b3aee85b9ced947b79fa26f7e693a3a3fa7aca719dedf015894d7"
+    manifest_sha256 "3413ebdad3dfe3fd2152d9a9125a8e2f18aaa7b8819a30db987a1f4053bb4742"
+    sha256               arm64_golden_gate: "99bb890fa248839cd11d69fd3e85fc9a86b40bbfc475ec0dc59ddb00b4366dca"
+    sha256               arm64_tahoe:       "99bb890fa248839cd11d69fd3e85fc9a86b40bbfc475ec0dc59ddb00b4366dca"
+    sha256               arm64_sequoia:     "99bb890fa248839cd11d69fd3e85fc9a86b40bbfc475ec0dc59ddb00b4366dca"
+    sha256 cellar: :any, arm64_linux:       "f8dc20b8a9f915543ab4d449ff2755b51dedcdd99b33028dc98860b5dbbd0ab6"
+    sha256 cellar: :any, x86_64_linux:      "a13e385a57e3c900c30e01c0498ee12b7f73f761857ed045c337e5ba74535a0d"
   end
 
   depends_on "node"
@@ -35,7 +36,8 @@ class OpenclawCli < Formula
     # Remove incompatible pre-built binaries (non-native architectures
     # and GPU variants requiring CUDA/Vulkan)
     arch = Hardware::CPU.arm? ? "arm64" : "x64"
-    target = "#{OS.linux? ? "linux" : "mac"}-#{arch}"
+    platform = OS.linux? ? "linux" : "mac"
+    target = "#{platform}-#{arch}"
 
     node_modules.glob("tree-sitter-bash/prebuilds/*").each do |dir|
       rm_r(dir) if dir.basename.to_s != target

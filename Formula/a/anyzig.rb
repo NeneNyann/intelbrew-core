@@ -14,6 +14,7 @@ class Anyzig < Formula
   end
 
   bottle do
+    manifest_sha256 "9d3ba52a1ef0b11ecbc16c12ad48d494f640d8aa56719ff03aee8cd5bd4904b6"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "6004e78570797f615903092c18a3f5e8ba15ef1894514f0ebc2b528418179880"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "8c85a54f13e90b84484c214ad3413723c828c414aabbf41f08a7103c6db9cbe6"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "63a2f299e178d499dbce83ae53551ec92de8926585fd0f29ce8987d97813c306"
@@ -37,12 +38,14 @@ class Anyzig < Formula
     chmod_R "u+w", buildpath/"zig-lib"
     ENV["ZIG_LIB_DIR"] = buildpath/"zig-lib"
 
-    args = %W[-Dforce-version=v#{version.to_s.tr(".", "_")}]
+    archive_version = version.to_s.tr(".", "_")
+    args = %W[-Dforce-version=v#{archive_version}]
     system "zig", "build", *args, *std_zig_args
   end
 
   test do
-    assert_match "v#{version.to_s.tr(".", "_")}", shell_output("#{bin}/zig any version").strip
+    archive_version = version.to_s.tr(".", "_")
+    assert_match "v#{archive_version}", shell_output("#{bin}/zig any version").strip
     system bin/"zig", "any", "list-installed"
   end
 end

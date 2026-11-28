@@ -9,6 +9,7 @@ class Yamcha < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "5d7f3ec797a9323611ed252075778b2beae7652e3fd620a839fc735e682924ce"
     sha256 cellar: :any,                 arm64_golden_gate: "eaaef8f22bfab938d97e85e93f7d4ebadd9dd9d44681c4f0f5512176ba087aa8"
     sha256 cellar: :any,                 arm64_tahoe:       "f79875ac74e46f3087379d783513f73971707f8d0ff059e050f1256d5535a827"
     sha256 cellar: :any,                 arm64_sequoia:     "1291bdd640d66cfbbe073862038e660ada3fe9377d3386db32dd56967ee23d5f"
@@ -43,11 +44,14 @@ class Yamcha < Formula
     apply "patches/1011_fix_gcc7_compilation.patch"
   end
 
+  allow_network_access!
+
   def install
     if Hardware::CPU.arm?
       # Workaround for ancient config files not recognizing aarch64 macos.
+      automake = Formula["automake"]
       %w[config.guess config.sub].each do |fn|
-        cp Formula["automake"].share/"automake-#{Formula["automake"].version.major_minor}"/fn, fn
+        cp automake.share/"automake-#{automake.version.major_minor}"/fn, fn
       end
     end
 

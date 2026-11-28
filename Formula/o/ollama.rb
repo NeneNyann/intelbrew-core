@@ -2,8 +2,8 @@ class Ollama < Formula
   desc "Create, run, and share large language models (LLMs)"
   homepage "https://ollama.com/"
   url "https://github.com/ollama/ollama.git",
-      tag:      "v0.40.16",
-      revision: "d63b702609c4300a2ca07be2bdb0adb9834725e5"
+      tag:      "v0.40.19",
+      revision: "8ae8acb81afba9c3c67adf08190964eb7d1207ef"
   license "MIT"
   compatibility_version 1
   head "https://github.com/ollama/ollama.git", branch: "main"
@@ -17,11 +17,12 @@ class Ollama < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "1d34b7e0e53c93746f8c1ae7b821228c2f3018a4db32943e4385c08fb92b8619"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "148aa2dbbea7198381fb4b641bb9655c02d567426049b6281fda5c19895015b1"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e5e7ebbfd10902b16f1aae18313d48a5cf4c009cfe9da187ada97292f9ea042e"
-    sha256 cellar: :any,                 arm64_linux:       "3e3acf32a8a6f58b9830aab14c0fbdcbd01ac36e33a42926225ebed8eb1ddf24"
-    sha256 cellar: :any,                 x86_64_linux:      "0468cd180e9e74c6cdbd96f00667782f91194acc39f3b166bef0be22fd6c842d"
+    manifest_sha256 "d82a065f2683b191616506b7b386bd8e416ffdc73dea3438c0ab8320a5903d4c"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "36f170371d470f46c1369a842f45e79bf786967869c7857b5aeb46da2322159d"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "212874f7bea58aec849ac3f1b3e1a78f0899794303708fb03570380a87f4d4b5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "fb31057ff4b39d0fef7953069a235c76ab466b7364e4168364e13b38b88440c7"
+    sha256 cellar: :any,                 arm64_linux:       "5f6e5193ed680cec92b174a2bfe237adbe8fbb18f0499660c2f9b5f4d5c8356f"
+    sha256 cellar: :any,                 x86_64_linux:      "2947583ac47b9015b4f6ec1ce5ca681a6466bb1297073a604c52cbb8dd0c6f17"
   end
 
   depends_on "ccache" => :build
@@ -45,8 +46,8 @@ class Ollama < Formula
   # Pinned dependency required by llama-server
   resource "llama.cpp" do
     url "https://github.com/ggml-org/llama.cpp.git",
-        tag:      "b12177",
-        revision: "6c01da6278ab6c69ed67d9124806b50d2b299ba7"
+        tag:      "b12734",
+        revision: "52f6e0247a5a7b0aecaa8e70ac128f6942899c4c"
 
     livecheck do
       url "https://raw.githubusercontent.com/ollama/ollama/refs/tags/v#{LATEST_VERSION}/LLAMA_CPP_VERSION"
@@ -75,7 +76,11 @@ class Ollama < Formula
     llama_source_dir = buildpath/"llama.cpp"
     llama_source_dir.install resource("llama.cpp")
 
-    preset = (OS.mac? && Hardware::CPU.arm?) ? "darwin" : "cpu"
+    preset = if OS.mac? && Hardware::CPU.arm?
+      "darwin"
+    else
+      "cpu"
+    end
 
     args = %W[
       --preset #{preset}

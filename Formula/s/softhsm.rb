@@ -24,6 +24,7 @@ class Softhsm < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "e2f8b09d96086b87361aff3dfb28b421e7ef4fcabdaab9a7f777b893695094ae"
     sha256 arm64_golden_gate: "b9879d4e2e1afab76e20aad0009042903d3064ca7883ec16fd0d420c2176e326"
     sha256 arm64_tahoe:       "40d5a8ce7b320bb727da8ee48588382e910ba4592c76d55ca2ce99183ce37d64"
     sha256 arm64_sequoia:     "e9bd882bc09343a718f4a4447d4cf724388a9bf4f6e381761325bb4cd492fdc9"
@@ -41,11 +42,12 @@ class Softhsm < Formula
 
   def install
     system "./autogen.sh"
+    openssl_prefix = dep("openssl").opt_prefix
     system "./configure", "--disable-silent-rules",
                           "--localstatedir=#{var}",
                           "--sysconfdir=#{pkgetc}",
                           "--with-crypto-backend=openssl",
-                          "--with-openssl=#{formula_opt_prefix("openssl@4")}",
+                          "--with-openssl=#{openssl_prefix}",
                           "--disable-gost",
                           *std_configure_args
     system "make", "install"

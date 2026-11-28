@@ -7,6 +7,7 @@ class IosWebkitDebugProxy < Formula
   head "https://github.com/google/ios-webkit-debug-proxy.git", branch: "master"
 
   bottle do
+    manifest_sha256 "802ee33a204c40f204c7dd0b95ff5334347b006b8fca17c8ea6389a4fa5b5d6e"
     sha256 cellar: :any, arm64_golden_gate: "8319f0eacfb26bc45753c397eb037a6e0659c5b03ec732a76a042b39d183916e"
     sha256 cellar: :any, arm64_tahoe:       "01d5b391d3ae4280d072849ba8d75cf2875ef2844f9925823a63d0b6ad673658"
     sha256 cellar: :any, arm64_sequoia:     "5b1094c9c2ea6301ddf76bf9829843455eb5bbaf39f9cfed4bc1fefd549f5d36"
@@ -34,8 +35,10 @@ class IosWebkitDebugProxy < Formula
     assert_match version.to_s, shell_output("#{bin}/ios_webkit_debug_proxy --version")
 
     base_port = free_port
+    first_port = base_port + 1
+    last_port = base_port + 101
     (testpath/"config.csv").write <<~CSV
-      null:#{base_port},:#{base_port + 1}-#{base_port + 101}
+      null:#{base_port},:#{first_port}-#{last_port}
     CSV
 
     output_log = testpath/"output.log"

@@ -1,11 +1,11 @@
 class Openrtsp < Formula
   desc "Command-line RTSP client"
   homepage "http://www.live555.com/openRTSP"
-  url "https://download.live555.com/live.2026.11.08.tar.gz"
-  mirror "https://download.videolan.org/pub/videolan/testing/contrib/live555/live.2026.11.08.tar.gz"
-  mirror "https://pkg.freebsd.org/ports-distfiles/live.2026.11.08.tar.gz"
+  url "https://download.live555.com/live.2026.11.27.tar.gz"
+  mirror "https://download.videolan.org/pub/videolan/testing/contrib/live555/live.2026.11.27.tar.gz"
+  mirror "https://pkg.freebsd.org/ports-distfiles/live.2026.11.27.tar.gz"
   # Keep a mirror as upstream tarballs are removed after each version
-  sha256 "95eb2ad572a5f88d817717c00c534dbdfdeb2df0afaa0e0052a52c4f9f041a7c"
+  sha256 "b10f5f5ae768c2fa9c175d7ad31b2e17dcbde9598ef368f012921f55ad69c336"
   license "LGPL-3.0-or-later"
 
   livecheck do
@@ -14,11 +14,12 @@ class Openrtsp < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "d1cb86b55c8b6232323774328ad18098bdaf9594203cfb09233897427a32d1c7"
-    sha256 cellar: :any, arm64_tahoe:       "acad60ee5fe0c26edbaadcac332b619eaa0c2611205339f33d8777ffb8609b41"
-    sha256 cellar: :any, arm64_sequoia:     "3beb51433a1b1610876913eeccee781194137e676fc06d272d9b556d83b9aae2"
-    sha256 cellar: :any, arm64_linux:       "6543c13f6954113944e3c70aec5634ec187b023129e2a5fff238cd666aaec009"
-    sha256 cellar: :any, x86_64_linux:      "9a22c6adb434f7f6664eb80696f7f445d685f6f39f4e12e4835dc87a3e968e81"
+    manifest_sha256 "2b9c1f4b23b73c5140b52bb032096aaff206744ab01038029d070370cd4e9839"
+    sha256 cellar: :any, arm64_golden_gate: "750463352225383fff99830a671c0b8e945bbe47d3dcb5743a1b46e5eb77c09c"
+    sha256 cellar: :any, arm64_tahoe:       "4325aecec9ab02a8ca5ae3f6e7ee2c3736b81fbef4803dcdc6f84dd0ddadb21c"
+    sha256 cellar: :any, arm64_sequoia:     "d7035cbab6ef16a142fa53e4bf2a68e68a56e909bf7228c3723ed97cddee5a49"
+    sha256 cellar: :any, arm64_linux:       "eb0b6c43730d2e62604654f2778b0850495055199e369c69be04189155335b68"
+    sha256 cellar: :any, x86_64_linux:      "f6a85d483f27116becb7aa92899cd8e24d1aa267e4e9263b99ac619c34678b1f"
   end
 
   depends_on "openssl@4"
@@ -32,8 +33,8 @@ class Openrtsp < Formula
 
     # Avoid linkage to system OpenSSL
     libs = [
-      formula_opt_lib("openssl@4")/shared_library("libcrypto"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libcrypto"),
+      dep("openssl").opt_lib/shared_library("libssl"),
     ]
 
     os_flag = OS.mac? ? "macosx-bigsur" : "linux"

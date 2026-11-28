@@ -2,17 +2,18 @@ class Cosign < Formula
   desc "Container Signing"
   homepage "https://github.com/sigstore/cosign"
   url "https://github.com/sigstore/cosign.git",
-      tag:      "v3.1.4",
-      revision: "0e48502cf5ef34e2e60bbd3617aa19945712f705"
+      tag:      "v3.1.6",
+      revision: "252f10a80ba871152a12e5ee324ad1e02c85d079"
   license "Apache-2.0"
   head "https://github.com/sigstore/cosign.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2099621c47c489b056c108c4bb8812e948b1a1f3f3d357c1d71726b95cec5bad"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "2099621c47c489b056c108c4bb8812e948b1a1f3f3d357c1d71726b95cec5bad"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "2099621c47c489b056c108c4bb8812e948b1a1f3f3d357c1d71726b95cec5bad"
-    sha256 cellar: :any_skip_relocation, arm64_linux:       "05adf880a73f558f966887f686c576e17ac0f7e32e9ab16ff983e9c4867103cb"
-    sha256 cellar: :any,                 x86_64_linux:      "244270e61f1e9b55adeed61adeb85201272af0b040ebbd76ebbbd063050e756f"
+    manifest_sha256 "c19b4d38a9761b8312ba603fb10bdde9dc7243fede31abdc3c589c4e7e72127d"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "48551a51ac041e96a674992554f393815ba533b5b2cace343c0f32e014d93947"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "48551a51ac041e96a674992554f393815ba533b5b2cace343c0f32e014d93947"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "48551a51ac041e96a674992554f393815ba533b5b2cace343c0f32e014d93947"
+    sha256 cellar: :any_skip_relocation, arm64_linux:       "3aa3e7d393134b87e3240b70d16e96c8bf0c9cc846ed76d24ab255d9be1d854f"
+    sha256 cellar: :any,                 x86_64_linux:      "7cba90acb6001e949e3bf7c4595f326a814b63ad51c6129f8e61ca44ca8c5efc"
   end
 
   depends_on "go" => :build

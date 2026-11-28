@@ -12,6 +12,7 @@ class RedwaxTool < Formula
   end
 
   bottle do
+    manifest_sha256 "fdabd6b0161c3f55937e124b26f734beaaaf4ae96542992f96e865924145396a"
     sha256 arm64_golden_gate: "2dbfb18c11f58e80f03c0f09ae54005d772c981a0f6ce96836eb6a5ad1d2958c"
     sha256 arm64_tahoe:       "3c61abb87bbb843f3243dde3422e1c308c02e87b312b9c1067437ea92eb913c6"
     sha256 arm64_sequoia:     "62ac5472175c5d6f3eb0963f5b0e13c3f7d90ccd5021406b878a00968cedd500"
@@ -45,8 +46,6 @@ class RedwaxTool < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     args = %w[
       --disable-silent-rules
@@ -75,10 +74,11 @@ class RedwaxTool < Formula
       "emailAddress" => "hello@example.com",
     }
 
-    openssl_bin = formula_opt_bin(openssl)/"openssl"
+    openssl_bin = dep("openssl").opt_bin/"openssl"
+    subject = x509_args.map { |key, value| "#{key}=#{value}" }.join("/")
     system openssl_bin, "req", "-x509", "-newkey", "rsa:4096", "-days", "1", "-nodes",
            "-keyout", "key.pem", "-out", "cert.pem", "-sha256",
-           "-subj", "/#{x509_args.map { |key, value| "#{key}=#{value}" }.join("/")}"
+           "-subj", "/#{subject}"
 
     args = %w[
       --pem-in key.pem
@@ -87,11 +87,12 @@ class RedwaxTool < Formula
       --pem-out combined.pem
     ]
 
+    issuer = x509_args.map { |key, value| "#{key}=#{value}" }.reverse.join(",")
     expected_outputs = [
       "pem-in: private key: OpenSSL RSA implementation",
       "pem-out: private key: OpenSSL RSA implementation",
-      "pem-in: intermediate: #{x509_args.map { |key, value| "#{key}=#{value}" }.reverse.join(",")}",
-      "pem-out: intermediate: #{x509_args.map { |key, value| "#{key}=#{value}" }.reverse.join(",")}",
+      "pem-in: intermediate: #{issuer}",
+      "pem-out: intermediate: #{issuer}",
     ]
 
     output = shell_output("#{bin}/redwax-tool #{args.join(" ")} 2>&1")

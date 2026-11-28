@@ -1,17 +1,18 @@
 class Flow < Formula
   desc "Static type checker for JavaScript"
   homepage "https://flow.org/"
-  url "https://github.com/facebook/flow/archive/refs/tags/v0.340.0.tar.gz"
-  sha256 "278ea54ca9f93a1e6636baedafc2b96b32007b13fdeb50763b787988fe59d7a6"
+  url "https://github.com/meta/flow/archive/refs/tags/v0.343.0.tar.gz"
+  sha256 "fcc19bd507fa397fb30582fb068a2a0b2eae0f5b641e3ef47d330b4e30318230"
   license "MIT"
-  head "https://github.com/facebook/flow.git", branch: "main"
+  head "https://github.com/meta/flow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "0b1b5a66524cb7561826ec8f02835662fe1e77703c452362bd2cc8a4532597b4"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "3c18b10b8832ee75f725a09574562754b79ebf4ced6f262b784509a94e06a817"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "51f75107b8458939f3553fcd495c37e4045f7d6a4900e4eb72fec41c520ff802"
-    sha256 cellar: :any,                 arm64_linux:       "a9d97771a94430eb88bac250a419d4ba7382d3016e03351edc952e7e0e566a6f"
-    sha256 cellar: :any,                 x86_64_linux:      "84ce33d9a3b3b4f911e1584f861ad4dac809a3e688467427d105b2f2351834bd"
+    manifest_sha256 "85a9aec2197aa8a0011e8a4f186dec5722919d7eedcd82cb70de386ce4097d5f"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "cce29113494ba5799374e69514fdc9e9698885360df66375e93503ecc54e8038"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "f2d13b9543f75799fbfffaa69d7f8124dac78d13a02b0271b98a5c44ce24e29d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "57226639ce8508392f91d0bcdfeb85fd60ffdd9549912f0ba281d98a79f47dea"
+    sha256 cellar: :any,                 arm64_linux:       "15b8738759af663c4361097d28cbbe7e785fab50565c367171be783ed390ec12"
+    sha256 cellar: :any,                 x86_64_linux:      "63a0427aef67826c06774cc0eba11d0cbfc1979e63f8fc3a300cca2e2e66fb1c"
   end
 
   depends_on "rust" => :build
@@ -23,7 +24,7 @@ class Flow < Formula
     system "cargo", "install", *std_cargo_args(path: "rust_port/crates/flow_cli")
 
     # Resulting binary name is `flow_cli` but in the release artifacts it is renamed to `flow`
-    # https://github.com/facebook/flow/blob/main/.github/workflows/build_and_test.yml
+    # https://github.com/meta/flow/blob/main/.github/workflows/build_and_test.yml
     mv bin/"flow_cli", bin/"flow"
 
     bash_completion.install "resources/shell/bash-completion" => "flow-completion.bash"

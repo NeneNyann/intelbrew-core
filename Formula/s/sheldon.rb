@@ -15,6 +15,7 @@ class Sheldon < Formula
   end
 
   bottle do
+    manifest_sha256 "10ae310ce73d0020a6f6ac351b6d4b0ed567fbdc144e751a2df7eedecc0200d0"
     sha256 cellar: :any, arm64_golden_gate: "6673cece9d7a8cf47b5a942825ba4f926f64eddfad1ffe760110c5fcb1576e05"
     sha256 cellar: :any, arm64_tahoe:       "a20cb1247992a8d40185c0e7517cdc8d6d9e3f208efbfc952a3c62e92b1cfd80"
     sha256 cellar: :any, arm64_sequoia:     "880a8185076345b4f60261561624eefd5977e15a987d4062c62bc389d707afd2"
@@ -43,7 +44,7 @@ class Sheldon < Formula
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
     # Ensure the correct `openssl` will be picked up.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", "--no-default-features", *std_cargo_args
 
@@ -61,8 +62,8 @@ class Sheldon < Formula
     libraries = [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
-      formula_opt_lib("openssl@4")/shared_library("libcrypto"),
+      dep("openssl").opt_lib/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libcrypto"),
     ]
     libraries << (formula_opt_lib("curl")/shared_library("libcurl")) if OS.linux?
 

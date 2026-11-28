@@ -4,7 +4,7 @@ class Rtabmap < Formula
   url "https://github.com/introlab/rtabmap/archive/refs/tags/0.24.2.tar.gz"
   sha256 "96cca356c37d50609d7e1bc6379ce0ff3f66ecbd153583669bd0ba23b91ba969"
   license "BSD-3-Clause"
-  revision 1
+  revision 2
   head "https://github.com/introlab/rtabmap.git", branch: "master"
 
   # Upstream doesn't create releases for all tagged versions, so we use the
@@ -15,11 +15,13 @@ class Rtabmap < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "af0d41d1fdf50c62e10c342807be1db09107e5e4314582214ac81fbc9836d404"
-    sha256 cellar: :any, arm64_tahoe:       "46c35686c663d8dd60fb5996555cbe1538048d1f383db1f39c1a55b1254406f0"
-    sha256 cellar: :any, arm64_sequoia:     "e5fb69c572640e73ff8db09b9f38add435db9a190a81e256c47c48b99a45c7df"
-    sha256 cellar: :any, arm64_linux:       "dd1b9b4d8753e93eb12a06c6fb3cf2e73f747105b50e9a5be53c996be95c0c68"
-    sha256 cellar: :any, x86_64_linux:      "755d4de5a72fd886fbf8481ca74e78882dc8cd86b95d1c957b337db88f7d27de"
+    rebuild 1
+    manifest_sha256 "11d0a2674f4f3cb72a072dd1d7eb6681ae2c57618e5e377e26c54d30929e7586"
+    sha256 cellar: :any, arm64_golden_gate: "f773dd3ab09c09ca6e7011f9cd67d595c503de7a9a78f42a10b26ef657e1b4f5"
+    sha256 cellar: :any, arm64_tahoe:       "1b2c5df7ed307024da0444fd597ee9d0861b1444db0974047b626dfba721cff3"
+    sha256 cellar: :any, arm64_sequoia:     "049c72f18c35dc7a1cd60dd21148607063967db5958757a3283787307132c69c"
+    sha256 cellar: :any, arm64_linux:       "57e44009397643347f3814af4a1157f10d73c26d4fbc1165ed22342820861f12"
+    sha256 cellar: :any, x86_64_linux:      "fad7f2e32803a15daec98b2961f37ac8afab823a428f047f33a3eaf103ae85fc"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -35,16 +37,7 @@ class Rtabmap < Formula
   depends_on "vtk"
 
   on_macos do
-    depends_on "boost"
-    depends_on "flann"
-    depends_on "freetype"
-    depends_on "glew"
-    depends_on "libfreenect"
     depends_on "libomp"
-    depends_on "libpcap"
-    depends_on "libpng"
-    depends_on "lz4"
-    depends_on "qhull"
   end
 
   on_linux do
@@ -59,22 +52,37 @@ class Rtabmap < Formula
     resolves "https://github.com/introlab/rtabmap/pull/1836"
   end
 
+  deny_network_access!
+
   def install
     # Use eigen's cmake configuration to support eigen 5.0.0
     rm "cmake_modules/FindEigen3.cmake"
 
-    system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_RPATH=#{rpath}", *std_cmake_args
+    # Toro license is CC-BY-NC-SA-3.0 which is DFSG-incompatible
+    rm_r "corelib/src/optimizer/toro3d"
+    args = %w[-DWITH_TORO=OFF]
+
+    if OS.mac?
+      args += %W[
+        -DCMAKE_INSTALL_RPATH=#{rpath}
+        -DCMAKE_EXE_LINKER_FLAGS=-Wl,-dead_strip_dylibs
+        -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-dead_strip_dylibs
+      ]
+    end
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
     # Replace reference to OpenCV's Cellar path
-    opencv = Formula["opencv"]
-    inreplace lib.glob("rtabmap-*/RTABMap_coreTargets.cmake"), opencv.prefix.realpath, opencv.opt_prefix
+    opencv_prefix = formula_opt_prefix("opencv")
+    inreplace lib.glob("rtabmap-*/RTABMap_coreTargets.cmake"), opencv_prefix.realpath, opencv_prefix
 
     return unless OS.mac?
 
     # Remove SDK include paths from CMake config files to avoid requiring specific SDK version
-    sdk_include_regex = Regexp.escape("#{MacOS.sdk_for_formula(self).path}/usr/include")
+    sdk_path = MacOS.sdk_for_formula(self).path
+    sdk_include_regex = Regexp.escape("#{sdk_path}/usr/include")
     inreplace lib.glob("rtabmap-*/RTABMap_{core,utilite}Targets.cmake"), /;#{sdk_include_regex}([;"])/, "\\1"
   end
 

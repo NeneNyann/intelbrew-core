@@ -9,6 +9,7 @@ class Nbdime < Formula
   revision 11
 
   bottle do
+    manifest_sha256 "35f3ded62861192893789734542ec087b69040897e896a0809d963fd049e07dd"
     sha256 cellar: :any_skip_relocation, all: "aab36f5cb0fd79a6e740257fb5de98a16825e067fb41198c8c7792196610835a"
   end
 
@@ -63,7 +64,7 @@ class Nbdime < Formula
 
     # Provide an exception to avoid dealing with `jupyterlab` dependency tree
     site_packages = Language::Python.site_packages(venv.root/"bin/python3")
-    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("jupyterlab")/site_packages}')\n"
+    pth_contents = "import site; site.addsitedir('#{formula_opt_libexec("jupyterlab")}/#{site_packages}')\n"
     (venv.site_packages/"homebrew-jupyterlab.pth").write pth_contents
   end
 

@@ -6,6 +6,7 @@ class Clean < Formula
   license :public_domain
 
   bottle do
+    manifest_sha256 "9f9b09d8c8ae0ff09d9baa80747b3a59bac22650a739f7ea4fc6382e461d28be"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "f7da70f4a4ea4e76ae4926aa9d2754e4a540863b621117ae352f5bd3502d0095"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "bc6ccc5a72395c51b6aebf78f3301e538b0c8d4ee67f42943cd4d0e15354b842"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a1e4fead81bdadea6bd617523d7628f215ae6ee6a440a761d9a8b93348471ed8"
@@ -20,6 +21,8 @@ class Clean < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "266d2fa27082248fc098a2be833381912903c104ee4e95f2461b8d75736dfc63"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "68f82459bafc17933f5010fe2f35355f8d967809ae62d1ac91e13409f7baec88"
   end
+
+  deny_network_access!
 
   def install
     system "make"

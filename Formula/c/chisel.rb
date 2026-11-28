@@ -1,13 +1,14 @@
 class Chisel < Formula
   desc "Collection of LLDB commands to assist debugging iOS apps"
-  homepage "https://github.com/facebook/chisel"
-  url "https://github.com/facebook/chisel/archive/refs/tags/2.0.1.tar.gz"
+  homepage "https://github.com/meta/chisel"
+  url "https://github.com/meta/chisel/archive/refs/tags/2.0.1.tar.gz"
   sha256 "6f019d5e7ab5eb06542a9eccbbe29e7d26165d3676828a32e143575ff102d5f9"
   license "MIT"
-  head "https://github.com/facebook/chisel.git", branch: "main"
+  head "https://github.com/meta/chisel.git", branch: "main"
 
   bottle do
     rebuild 1
+    manifest_sha256 "e3504614a0d182d3b0a2a464db4685220e178f537891a2b55845561a97223d51"
     sha256 cellar: :any, arm64_golden_gate: "e08544b4aeb29c969ff159278ada6409af23b3ae9539d507e2926e08cbe1cf5e"
     sha256 cellar: :any, arm64_tahoe:       "077677ceec6cb1ffb4894e5db11e46e3668ea3ac438c63662e0de6aa5aeea590"
     sha256 cellar: :any, arm64_sequoia:     "d4afda45323f2c83fd95744680fd3c925b3a1fa4a6dd003e70daf27610b17e1d"
@@ -15,6 +16,8 @@ class Chisel < Formula
 
   depends_on xcode: :build
   depends_on :macos
+
+  deny_network_access!
 
   def install
     libexec.install Dir["*.py", "commands"]

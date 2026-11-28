@@ -12,6 +12,7 @@ class Anubis < Formula
   end
 
   bottle do
+    manifest_sha256 "7ff4fe696375a6d81e9a1f43f8591c424c760cca131ca10a0816bda69ad236eb"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "2e0e14ba5ae7c2f87d3b348eb7504d1492d7e7b61b176720b969cf2ac82cc5c8"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "befcb52ce0812d942de5b755e43194e34ca88463e3dc825465fc8bac8544a5ea"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "ee6312e6d5c412be2b8acfd189f58f0877ab9b311ff471028bd6c529f073c6e8"
@@ -50,24 +51,19 @@ class Anubis < Formula
   test do
     webify_port = free_port
     anubis_port = free_port
-
-    webify_pid = spawn formula_opt_bin("webify")/"webify", "-addr", ":#{webify_port}", "echo", "Homebrew"
-    anubis_pid = spawn bin/"anubis", "-bind", ":#{anubis_port}", "-target", "http://localhost:#{webify_port}",
-      "-serve-robots-txt", "-use-remote-address", "127.0.0.1"
-
-    assert_includes shell_output("curl --silent --retry 5 --retry-connrefused http://localhost:#{anubis_port}"),
-      "Homebrew"
-
-    expected_robots_txt = <<~EOS
+    expected_robots_txt = <<~EOS.strip
       User-agent: *
       Disallow: /
     EOS
-    assert_includes shell_output("curl --silent http://localhost:#{anubis_port}/robots.txt"),
-      expected_robots_txt.strip
-  ensure
-    Process.kill "TERM", anubis_pid
-    Process.kill "TERM", webify_pid
-    Process.wait anubis_pid
-    Process.wait webify_pid
+
+    with_test_process(formula_opt_bin("webify")/"webify", "-addr", ":#{webify_port}", "echo", "Homebrew") do
+      with_test_process(bin/"anubis", "-bind", ":#{anubis_port}", "-target", "http://localhost:#{webify_port}",
+                        "-serve-robots-txt", "-use-remote-address", "127.0.0.1") do
+        output = shell_output("curl --silent --retry 5 --retry-connrefused http://localhost:#{anubis_port}")
+        assert_match "Homebrew", output
+        output = shell_output("curl --silent http://localhost:#{anubis_port}/robots.txt")
+        assert_match expected_robots_txt, output
+      end
+    end
   end
 end

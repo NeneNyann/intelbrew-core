@@ -25,6 +25,7 @@ class Dovecot < Formula
   end
 
   bottle do
+    manifest_sha256 "91a0574eba63a8af2eaa356d65f49d148c084e9da74d16ff5a62c806d4683d8c"
     sha256 arm64_golden_gate: "89a75374ef14cde4deefe941de542d357a0bcb6636d37904b0b305d0c863d2cd"
     sha256 arm64_tahoe:       "08f27f366e57bde9ca31919a00c50e7d36b763400c0d331e6b6e837359e61225"
     sha256 arm64_sequoia:     "f7dc6857fe2cab49800f04cb4a1dd7437d140eb73fd72fd05c98c1830d6b9233"
@@ -133,6 +134,7 @@ class Dovecot < Formula
 
     port = free_port.to_s
     cp_r share/"doc/dovecot/example-config", testpath/"config"
+    internal_group = Etc.getgrgid(Process.egid).name
     (testpath/"config/dovecot.conf").write <<~EOS
       dovecot_config_version = #{version}
       dovecot_storage_version = #{version}
@@ -150,20 +152,16 @@ class Dovecot < Formula
 
       default_login_user = #{ENV["USER"]}
       default_internal_user = #{ENV["USER"]}
-      default_internal_group = #{Etc.getgrgid(Process.egid).name}
+      default_internal_group = #{internal_group}
       auth_mechanisms = plain
       log_path = #{testpath}/dovecot.log
     EOS
 
     system bin/"doveconf", "-c", testpath/"config/dovecot.conf"
 
-    pid = spawn sbin/"dovecot", "-c", testpath/"config/dovecot.conf", "-F"
-    begin
+    with_test_process(sbin/"dovecot", "-c", testpath/"config/dovecot.conf", "-F") do
       sleep 5
       system "nc", "-z", "localhost", port
-    ensure
-      Process.kill "TERM", pid
-      Process.wait pid
     end
   end
 end

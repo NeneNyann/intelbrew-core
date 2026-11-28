@@ -8,6 +8,7 @@ class Prr < Formula
   head "https://github.com/danobi/prr.git", branch: "master"
 
   bottle do
+    manifest_sha256 "bef41632bdd99313c8b17f5c2ea3a63fe7cdf3713a8d8337c3d92b9436fbaab8"
     sha256 cellar: :any, arm64_golden_gate: "24efacbb035270ba41aefb9298868d351f09c11589f430527c5b21e5258e3a36"
     sha256 cellar: :any, arm64_tahoe:       "f1d54ebcee2b12a89ebdcdcab4f3a9a1a0ae1f215e1b51185164572c7570886a"
     sha256 cellar: :any, arm64_sequoia:     "53b7727e39b3fbec7ef98c7297990de92cd34f6ca2f25d63a4b8c475fdcc0fa4"
@@ -38,7 +39,7 @@ class Prr < Formula
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
     # Ensure the correct `openssl` will be picked up.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     # Specify GEN_DIR for shell completions and manpage generation
     ENV["GEN_DIR"] = buildpath
@@ -59,8 +60,8 @@ class Prr < Formula
     [
       formula_opt_lib("libgit2")/shared_library("libgit2"),
       formula_opt_lib("libssh2")/shared_library("libssh2"),
-      formula_opt_lib("openssl@4")/shared_library("libssl"),
-      formula_opt_lib("openssl@4")/shared_library("libcrypto"),
+      dep("openssl").opt_lib/shared_library("libssl"),
+      dep("openssl").opt_lib/shared_library("libcrypto"),
     ].each do |library|
       assert Utils.binary_linked_to_library?(bin/"prr", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."

@@ -7,6 +7,7 @@ class Ncnn < Formula
   head "https://github.com/Tencent/ncnn.git", branch: "master"
 
   bottle do
+    manifest_sha256 "c6659774d3986ebfd97e104453c78e44dc27a58a90138ab04a90ce4afeef8b85"
     sha256 cellar: :any, arm64_golden_gate: "8bcf7a7a39a4161194131eee348bd22d34f40991472e39e63418c27211c302e4"
     sha256 cellar: :any, arm64_tahoe:       "1e6e67fe148fa5fb4430bb4972ed2a38246368c72d6ade6cd30cef4b24c95bf6"
     sha256 cellar: :any, arm64_sequoia:     "647393223448ac8f41320d7e57c77dc4d576c447eb3129f664ff4d6f8c372966"
@@ -49,7 +50,7 @@ class Ncnn < Formula
     if OS.mac?
       args += %W[
         -DVulkan_INCLUDE_DIR=#{formula_opt_include("molten-vk")}
-        -DVulkan_LIBRARY=#{formula_opt_lib("molten-vk")/shared_library("libMoltenVK")}
+        -DVulkan_LIBRARY=#{formula_opt_lib("molten-vk")}/#{shared_library("libMoltenVK")}
       ]
 
       # Apple Clang 16 crashes compiling AVX-VNNI(-INT8) and AVX-512(BF16/FP16) intrinsics.

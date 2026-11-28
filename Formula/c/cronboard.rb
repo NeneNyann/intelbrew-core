@@ -3,17 +3,17 @@ class Cronboard < Formula
 
   desc "Terminal-based dashboard for managing cron jobs locally and on servers"
   homepage "https://cronboard.dev/"
-  url "https://github.com/antoniorodr/cronboard/archive/refs/tags/v1.2.1.tar.gz"
-  sha256 "af60bc6ee7894e527e59d4efa5374eaff6d5bb61d45afdb4ad614ae65b44a310"
+  url "https://github.com/antoniorodr/cronboard/archive/refs/tags/v1.4.0.tar.gz"
+  sha256 "1a44df3ff95dcf6bf415ec0eee82f551e74d6bc2ee292d1ddbb531e5cd04ff0d"
   license "Apache-2.0"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, arm64_golden_gate: "4bf0bc406a8146a250dca354d6a84c494de76086497f5a9868d4c72e4764a3be"
-    sha256 cellar: :any, arm64_tahoe:       "9680c04bc41a86bb9970573159b67e8046959d71b8446fafeba9936b4d26937b"
-    sha256 cellar: :any, arm64_sequoia:     "3906a076b723db3a708cb5ebad6096ac5af055d4b5837f4bc9cbf88e0e5c4305"
-    sha256 cellar: :any, arm64_linux:       "6f9a934a22a187b8969ac09f15c74091a6853ce9c22929895bea5f1730891de6"
-    sha256 cellar: :any, x86_64_linux:      "4ca80a0e4cdc74039a121aa8fd8f094ec63e53f2c5d20bc12bb05a26c8fd38f8"
+    manifest_sha256 "c9ab16d7b74cebf91de9525575a9482d618cf1ef8cd1092969c06444618e0973"
+    sha256 cellar: :any, arm64_golden_gate: "6f9d18abbd8e4e04a78e38871ad9527f2083dc39382766185f3bb3bcbdfa5d73"
+    sha256 cellar: :any, arm64_tahoe:       "993ab54a88e792f297be3cb26b4256dfd9af50c2495b6b93cd79236bc8bd0ff3"
+    sha256 cellar: :any, arm64_sequoia:     "5547a4c0eb60b363341ef4f5a450eba149443a8cb5d1d291ff968ee05d614d07"
+    sha256 cellar: :any, arm64_linux:       "56cadd4170eca9e5a60a3754b09127dacf12bce22733847e0a203ce9de759af8"
+    sha256 cellar: :any, x86_64_linux:      "341fde4f6b647ad23b01acaff713b91728909e173f5a4d8e0175764c70889c01"
   end
 
   # `pkgconf` and `rust` are for bcrypt
@@ -25,19 +25,24 @@ class Cronboard < Formula
 
   pypi_packages exclude_packages: "cryptography"
 
+  resource "babel" do
+    url "https://files.pythonhosted.org/packages/32/44/744169ce3677a541439bc9506ef08bd85674e9d6e3895ebe5a87ff65fb7a/babel-2.19.0.tar.gz"
+    sha256 "fddd2cbbbac7c299af3c2880be23609c331bd94f0912baca6cb0abfe054dfc27"
+  end
+
   resource "bcrypt" do
     url "https://files.pythonhosted.org/packages/d4/36/3329e2518d70ad8e2e5817d5a4cac6bba05a47767ec416c7d020a965f408/bcrypt-5.0.0.tar.gz"
     sha256 "f748f7c2d6fd375cc93d3fba7ef4a9e3a092421b8dbf34d8d4dc06be9492dfdd"
   end
 
   resource "cron-descriptor" do
-    url "https://files.pythonhosted.org/packages/2f/51/7c6b4dc9a0f1db6a22cbdfb7a674c8ded4e6aab40531afa7d912a060f08f/cron_descriptor-2.1.1.tar.gz"
-    sha256 "0f55b469bb81f8c60602baebc08a78fc3b1eb234805793a08a4862f336760390"
+    url "https://files.pythonhosted.org/packages/b9/89/f8910574c6153a808bb70ca4975c8d5c9f5e3d9782a93d0bfef1053763c5/cron_descriptor-2.3.5.tar.gz"
+    sha256 "63fe96544d8a7fe6d6e655b87abc3cbac9e76fd404fb9834c3fc2696d2e665fd"
   end
 
   resource "croniter" do
-    url "https://files.pythonhosted.org/packages/37/57/2e2a65aee2a70483cb28e2b7e15a072d00a523207593b44400d4717bb100/croniter-6.2.4.tar.gz"
-    sha256 "fc124f751b1b04805c2a04b061898b436b45ab2320b045e1e052ea895de65189"
+    url "https://files.pythonhosted.org/packages/54/17/3c60d4cf8c8768f8a116328f94ddb2f205e64d5afbb1bcb85f315bfbbf42/croniter-7.0.0.tar.gz"
+    sha256 "a0b2568303c774f6a4ea2d4ce2e72b1ee911029c7070d64a1befe05cdb107f5a"
   end
 
   resource "invoke" do
@@ -51,13 +56,13 @@ class Cronboard < Formula
   end
 
   resource "markdown-it-py" do
-    url "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz"
-    sha256 "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
+    url "https://files.pythonhosted.org/packages/16/fc/cee2c45553c9a9bf77d8b0c391560c556d7ed756b1f0bb35eb5d48db09ea/markdown_it_py-4.3.0.tar.gz"
+    sha256 "91a58fa5b72c71a40cf7177250fd767480d7a2bb3ac426ccfb76fb90305fdaaa"
   end
 
   resource "mdit-py-plugins" do
-    url "https://files.pythonhosted.org/packages/59/fc/f8d0863f8862f25602c0404d75568e89fb6b4109804645e5cdfb1be5cf56/mdit_py_plugins-0.6.1.tar.gz"
-    sha256 "a2bca0f039f39dbd35fb74ae1b5f998608c437463371f0ff7f49a19a17a114d0"
+    url "https://files.pythonhosted.org/packages/ad/a4/77a4e1be19fd9b08993c76d5e54979ac836b327754f1f5fecfed1b56cc67/mdit_py_plugins-0.7.0.tar.gz"
+    sha256 "26d2179227aaf4d1dc7acffe7a738cbd15cade6b5a61cff0a2cbf9fed93efede"
   end
 
   resource "mdurl" do
@@ -66,13 +71,13 @@ class Cronboard < Formula
   end
 
   resource "paramiko" do
-    url "https://files.pythonhosted.org/packages/62/93/dcc25d52f49022ae6175d15e6bd751f1acc99b98bc61fc55e5155a7be2e7/paramiko-5.0.0.tar.gz"
-    sha256 "36763b5b95c2a0dcfdf1abc48e48156ee425b21efe2f0e787c2dd5a95c0e5e79"
+    url "https://files.pythonhosted.org/packages/76/cb/b1fde76618d84b1acf54d3d03d2b833ba5878afd12b9899346cc080f209d/paramiko-5.1.0.tar.gz"
+    sha256 "239b5f9b2a53006cd54f83cf8495ee742083708ead947882c8dd2786de79f39b"
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/80/a8/66d45abadff219e36e2a824181b8f6a67e7ed4572934d6252c71c29d5731/platformdirs-4.13.0.tar.gz"
-    sha256 "1aa0b0d3f224c1f07c295121e312a5a24a180d6ae5a8425ea1784b3e3863e9c0"
+    url "https://files.pythonhosted.org/packages/71/18/0b0d99f5bf164f04a7a9534c3dbdbe4d5fd2b382667685ad40c192c4d3d1/platformdirs-4.14.8.tar.gz"
+    sha256 "96893d686e84e9e6f358a9ea41a8de544df66dbf2ba6cda250e7dc73acf85b9b"
   end
 
   resource "pygments" do
@@ -91,18 +96,13 @@ class Cronboard < Formula
   end
 
   resource "python-dateutil" do
-    url "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz"
-    sha256 "37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3"
+    url "https://files.pythonhosted.org/packages/18/39/b3927f3616f6223832f9b760e4208e8a7c7e1dea2b4d9ad7d32a5d214c3a/python_dateutil-4.0.0.tar.gz"
+    sha256 "d7295ff14fdc0f92f662100bfb6c551d160ca090f2939f1ec5b9794265c03f06"
   end
 
   resource "rich" do
     url "https://files.pythonhosted.org/packages/c0/8f/0722ca900cc807c13a6a0c696dacf35430f72e0ec571c4275d2371fca3e9/rich-15.0.0.tar.gz"
     sha256 "edd07a4824c6b40189fb7ac9bc4c52536e9780fbbfbddf6f1e2502c31b068c36"
-  end
-
-  resource "six" do
-    url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
-    sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
 
   resource "textual" do
@@ -116,13 +116,18 @@ class Cronboard < Formula
   end
 
   resource "tomlkit" do
-    url "https://files.pythonhosted.org/packages/94/96/e07752635b98536177fa1f37671c8f3cdde2e724c6bcf6034b2cfb571565/tomlkit-0.15.1.tar.gz"
-    sha256 "e25bbf38843005246210a12982776f27f99cb9be67160e14434d0c0d21ee1e97"
+    url "https://files.pythonhosted.org/packages/c9/85/4a7c68111c057a6498f5bc721ef93b388b420bb31d7020759f18a5f0c2ec/tomlkit-0.15.3.tar.gz"
+    sha256 "b3c3020ec1a4bd469d12e31fb4da938e7f6ba758cdbec3fd9047db63120eaf81"
   end
 
   resource "typing-extensions" do
     url "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz"
     sha256 "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"
+  end
+
+  resource "tzdata" do
+    url "https://files.pythonhosted.org/packages/7a/29/6a1391d31cd00ff9e927215a224a880e1e84e826b64ba80a499e51c074d8/tzdata-2026.6.tar.gz"
+    sha256 "85d2cd9c09f81f0bb29db27759fc83af4f1e620efb814f8c5bf8b4cc4feece6d"
   end
 
   def install

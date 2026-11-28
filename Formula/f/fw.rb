@@ -16,6 +16,7 @@ class Fw < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "75161025ce27eb2d5021366d5604b05d99f064b90103afe4be3eb75b20bd241d"
     sha256 cellar: :any, arm64_golden_gate: "dc4c1ec645f55270517cdf132ff267beb18bc35a156b91b3e9690e17e6bb227a"
     sha256 cellar: :any, arm64_tahoe:       "1fb2b437ff237ac4fa943a4d9adb5cc7f05e61f1edb233e7b2bafedf386c5c23"
     sha256 cellar: :any, arm64_sequoia:     "d7f33f20be35a9b61b687cbb6473d10b1273f03a384f2b37953843689a935f4d"
@@ -51,7 +52,7 @@ class Fw < Formula
     ENV["LIBGIT2_NO_VENDOR"] = "1"
     ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
     # Ensure that the `openssl` crate picks up the intended library.
-    ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@4")
+    ENV["OPENSSL_DIR"] = dep("openssl").opt_prefix
 
     system "cargo", "install", *std_cargo_args
     man1.install resource("fw.1")

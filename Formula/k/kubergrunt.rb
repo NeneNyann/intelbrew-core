@@ -15,12 +15,16 @@ class Kubergrunt < Formula
   end
 
   bottle do
+    manifest_sha256 "63cf0a80fdc1f2e39007648662f9676f48b8af8783c6db11949c010dcd2da449"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a13c8fcad11d51a882e4f087a168e5064d3d8b938608df1aa620be374c9ff67b"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a13c8fcad11d51a882e4f087a168e5064d3d8b938608df1aa620be374c9ff67b"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a13c8fcad11d51a882e4f087a168e5064d3d8b938608df1aa620be374c9ff67b"
     sha256 cellar: :any_skip_relocation, arm64_linux:       "284f6cfb48cd1bb11b0506a59bf68ae0ea73ce947ba063447bde6dd6d1153309"
     sha256 cellar: :any,                 x86_64_linux:      "ef45fedb7add395cec5ee1160aeb7bc21bb2ff7af3c48121385e015c2d64ef43"
   end
+
+  deprecate! date: "2026-11-24", because: :repo_archived
+  disable! date: "2027-05-24", because: :repo_archived
 
   depends_on "go" => :build
 

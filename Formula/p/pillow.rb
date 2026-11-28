@@ -8,6 +8,7 @@ class Pillow < Formula
   head "https://github.com/python-pillow/Pillow.git", branch: "main"
 
   bottle do
+    manifest_sha256 "089e39b8a2220813bb8228e4f120697b536bb23f6b1195c4ab8ac685e6d7d878"
     sha256 cellar: :any, arm64_golden_gate: "95f2ea71a71bb7bdd7452dccb088b26b92786f7eb72331e5971be97a2170deb1"
     sha256 cellar: :any, arm64_tahoe:       "d681aa28322831e580d8711e1e2108b32267d637fc556ed84bbd5f679c7e769d"
     sha256 cellar: :any, arm64_sequoia:     "0f5d9c2f49e51771b595f75ee188894c68068b26038f6bbd0bec566b6156a866"
@@ -49,22 +50,16 @@ class Pillow < Formula
 
   deny_network_access!
 
-  def pythons
-    deps.map(&:to_formula)
-        .select { |f| f.name.match?(/^python@\d\.\d+$/) }
-        .map { |f| f.opt_libexec/"bin/python" }
-  end
-
   def install
     ENV["MAX_CONCURRENCY"] = ENV.make_jobs.to_s
     deps.each do |dep|
       next if dep.build? || dep.test?
 
-      ENV.prepend "CPPFLAGS", "-I#{dep.to_formula.opt_include}"
-      ENV.prepend "LDFLAGS", "-L#{dep.to_formula.opt_lib}"
+      ENV.prepend "CPPFLAGS", "-I#{dep.opt_include}"
+      ENV.prepend "LDFLAGS", "-L#{dep.opt_lib}"
     end
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       system python, "-m", "pip", "install", *std_pip_args,
                      "-C", "debug=true", # Useful in case of build failures.
                      "-C", "tiff=enable",
@@ -84,7 +79,7 @@ class Pillow < Formula
       print(im.format, im.size, im.mode)
     PYTHON
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       assert_equal "JPEG (1, 1) RGB", shell_output("#{python} test.py").chomp
     end
 
@@ -96,7 +91,7 @@ class Pillow < Formula
       print(im.format, im.size, im.mode)
     PYTHON
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       assert_equal "WEBP (480, 360) RGB", shell_output("#{python} test_webp.py").chomp
     end
 
@@ -108,7 +103,7 @@ class Pillow < Formula
       print(im.format, im.size, im.mode)
     PYTHON
 
-    pythons.each do |python|
+    python3_interpreters.each do |python|
       assert_equal "AVIF (512, 512) RGB", shell_output("#{python} test_avif.py").chomp
     end
   end

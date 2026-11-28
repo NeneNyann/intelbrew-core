@@ -9,6 +9,7 @@ class Ant < Formula
   head "https://git-wip-us.apache.org/repos/asf/ant.git", branch: "master"
 
   bottle do
+    manifest_sha256 "30bfd2d84025792d59a6cd47f75e51fdbd092e16e22c35d93f35815c3a4f350d"
     sha256 cellar: :any_skip_relocation, all: "b8d23835511c9f5ba4fa46fb17691a09cdce2e73ae8134679858b33afcf28d31"
   end
 
@@ -44,12 +45,13 @@ class Ant < Formula
     end
 
     resource("bcel").stage do
-      (libexec/"lib").install "bcel-#{resource("bcel").version}.jar"
+      bcel_version = resource("bcel").version
+      (libexec/"lib").install "bcel-#{bcel_version}.jar"
 
       # Ensure bcel jar is readable by world, see https://github.com/Homebrew/homebrew-core/issues/203905
       # Fixed upstream in https://github.com/apache/commons-bcel/commit/3afa84f8cc19e56ea550ae743ce0693f4c7d8ec5,
       # remove on next update of bcel resource.
-      chmod 0644, libexec/"lib/bcel-#{resource("bcel").version}.jar"
+      chmod 0644, libexec/"lib/bcel-#{bcel_version}.jar"
     end
   end
 

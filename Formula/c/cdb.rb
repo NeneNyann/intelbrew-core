@@ -18,6 +18,7 @@ class Cdb < Formula
   end
 
   bottle do
+    manifest_sha256 "3177c5e96ae7f88f09c4f1c5b1d475890c76cf70903c668a50ba40b91edcf324"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e1e4bcae6399ce1cfd150168a75cab0478fe45814dba2b0b39dbbc36d6767227"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "e3a5fc9ffe9771eda7b963529031a5e4b057107986e82f4eb308598dc5b1b2f6"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "1a197b2cfa575c457c471b9350275722af1df1e8069dff1f9882e7bbf38de11b"
@@ -26,6 +27,8 @@ class Cdb < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "64b825a879f207b859eec04f96b8ad373848526285e9ef3279ba044b79bf969d"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "867db4ee654eb1fac410de5933f2ea5b98d18efd6c3e2d293fb15f3886633a01"
   end
+
+  deny_network_access!
 
   def install
     inreplace "conf-home", "/usr/local", prefix

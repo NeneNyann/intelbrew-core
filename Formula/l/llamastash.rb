@@ -1,8 +1,8 @@
 class Llamastash < Formula
   desc "Terminal-native local LLM orchestrator and proxy"
   homepage "https://github.com/llamastash/llamastash"
-  url "https://github.com/llamastash/llamastash/archive/refs/tags/v0.11.0.tar.gz"
-  sha256 "af28a44b2356d93e834da3eb189f79bb375b35e60bf6f684fe657547b01dd08e"
+  url "https://github.com/llamastash/llamastash/archive/refs/tags/v0.12.1.tar.gz"
+  sha256 "62668a7feb4ef361f4754de8bf951b32e78bbe45dec501d07640a97216c68b04"
   license "MIT"
   head "https://github.com/llamastash/llamastash.git", branch: "main"
 
@@ -12,11 +12,12 @@ class Llamastash < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "e527e5367e39ebe7fa3ab5ba391fccc5c9ec58f98ff7a9417e88bc1b4a323835"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "7bad7753c48fb6162b2ec8bd32a30879e9fc75e871da42fd820d56202a4bf8ba"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "5eb788ec18484323aa60d58bceac2519fe90160664469afd0b61f02b4173bf51"
-    sha256 cellar: :any,                 arm64_linux:       "eba71178bf5ed50c660dff62c5fd3a789904499374b02500b99e5d3a80baf330"
-    sha256 cellar: :any,                 x86_64_linux:      "9dd26f71d6e4f27888d259624172c0ec8e1b89a70189a7f38a84721e6dc13c18"
+    manifest_sha256 "e50987e4a7feed4d9adef7916c79463612ba1784411b63fd8a4f46805f9207ae"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a5d70fce706189f96a7dc36bbf8b0a7b5d2a973e7e1a07debe588a89e52a5beb"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "6037f9ff7a8a98fee33c9db2e20036d2a64fa84a762f7eafd8bf3f78260d89dc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "a36b93299b65fb1bb6d5462b4cde1be57ca2a76703cb5fd6e3fe3b12f2cd7c7f"
+    sha256 cellar: :any,                 arm64_linux:       "7cfc49a765ba723ee00be9146745dfd4ac482cae83acc9979a4e1f564f3e2b69"
+    sha256 cellar: :any,                 x86_64_linux:      "e6b055ab96f55012a0e4d6af2ea7e9209f2c07d8db4789b802f9a29d937caa20"
   end
 
   depends_on "pkgconf" => :build

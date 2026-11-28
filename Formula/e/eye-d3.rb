@@ -11,6 +11,7 @@ class EyeD3 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "f88aed1bbb505543ca28f991962eace1c8c5b778b663845b91c8dcaf990cf27c"
     sha256 cellar: :any_skip_relocation, all: "142ba7fcb3a819564420acfff7c4c0eca80fab07ab32a5bc2d78cf699a2fe9d3"
   end
 
@@ -30,6 +31,8 @@ class EyeD3 < Formula
     url "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
     sha256 "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

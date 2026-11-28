@@ -11,6 +11,7 @@ class Shyaml < Formula
 
   bottle do
     rebuild 7
+    manifest_sha256 "e718e356490a586026ba454cea24e9b214a76b4789042aac9a93147c745dabb5"
     sha256 cellar: :any, arm64_golden_gate: "9ae8c668000d8e7533dd4d9b9e48fd5b92024f25749f680c45811e4818935715"
     sha256 cellar: :any, arm64_tahoe:       "113b6daed19d8f34cbeb793f290066781d77945a3810ae0549e47d9c0d1b7ded"
     sha256 cellar: :any, arm64_sequoia:     "2e54da490b82bc88dbb9ff3f2f9cf4f57ade4390b7e31d44d560193db98a2afe"
@@ -29,6 +30,8 @@ class Shyaml < Formula
     url "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-6.0.3.tar.gz"
     sha256 "d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"
   end
+
+  allow_network_access!
 
   def install
     # Remove unneeded/broken d2to1: https://github.com/0k/shyaml/pull/67

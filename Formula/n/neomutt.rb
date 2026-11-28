@@ -9,6 +9,7 @@ class Neomutt < Formula
   head "https://github.com/neomutt/neomutt.git", branch: "main"
 
   bottle do
+    manifest_sha256 "70552209ecd6f9458e66d0d43a256c961683bc23638732dc856c27f01754a5b3"
     sha256 arm64_golden_gate: "5173b952bc1f24dfc797e20e20748e002087fa28ddedf7fc983555f7d4b2208d"
     sha256 arm64_tahoe:       "99038bb9acdd3523a94f5168141194b5400fef2ace84bb4897809847c28e77f3"
     sha256 arm64_sequoia:     "17f2345222b4a25cea3ca155ffa9d9b29d19da5af5476f682237bf7ab1a992c7"
@@ -55,11 +56,10 @@ class Neomutt < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --sysconfdir=#{etc}
       --autocrypt
@@ -76,7 +76,7 @@ class Neomutt < Formula
       --with-idn2=#{formula_opt_prefix("libidn2")}
       --with-lua=#{formula_opt_prefix("lua")}
       --with-ncurses=#{formula_opt_prefix("ncurses")}
-      --with-ssl=#{formula_opt_prefix(openssl)}
+      --with-ssl=#{openssl_prefix}
       --with-sqlite=#{formula_opt_prefix("sqlite")}
     ]
 

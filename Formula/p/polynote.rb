@@ -27,6 +27,7 @@ class Polynote < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "1e04a53caf9f47de315596fd3ddcb0d7e58ff91f8658ecf45cfbf5adacde1b9f"
     sha256 cellar: :any, arm64_golden_gate: "56198e1f17cb8971b8a0ebc92aeb1631aafc6973a26f9fb6958e32e154c195c6"
     sha256 cellar: :any, arm64_tahoe:       "c4fb116bffc7612087967855144b11af3e742a5524b0a61ee63798360272a706"
     sha256 cellar: :any, arm64_sequoia:     "9ae73b23ad747fc483de5d6ad3dc1987b255c6bef3295011935fd37d8c8dd317"
@@ -70,7 +71,7 @@ class Polynote < Formula
     end
 
     env = Language::Java.overridable_java_home_env(java_version)
-    env[:PYTHONPATH] = "#{pip_install_prefix/Language::Python.site_packages(python3)}:${PYTHONPATH}"
+    env[:PYTHONPATH] = "#{pip_install_prefix}/#{Language::Python.site_packages(python3)}:${PYTHONPATH}"
     env[:LD_LIBRARY_PATH] = lib.to_s
     (bin/"polynote").write_env_script libexec/"polynote.py", env
   end
@@ -93,13 +94,9 @@ class Polynote < Formula
         dir: #{testpath}/notebooks
     YAML
 
-    pid = spawn bin/"polynote", "--config", testpath/"config.yml"
-    begin
+    with_test_process(bin/"polynote", "--config", testpath/"config.yml") do
       sleep 5
       assert_match "<title>Polynote</title>", shell_output("curl -s 127.0.0.1:#{port}")
-    ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
     end
   end
 end

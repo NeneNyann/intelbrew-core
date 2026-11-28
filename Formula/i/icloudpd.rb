@@ -5,21 +5,23 @@ class Icloudpd < Formula
   homepage "https://github.com/icloud-photos-downloader/icloud_photos_downloader"
   # We use a git checkout as scripts/patch_version runs git commands to update SHA
   url "https://github.com/icloud-photos-downloader/icloud_photos_downloader.git",
-      tag:      "v1.33.1",
-      revision: "33805aea4cc212f26b1298951c2abf553c0acab2"
+      tag:      "v1.34.0",
+      revision: "47039b6ec264f03ec55083eb8d8d6063a1d8f4fa"
   license "MIT"
   head "https://github.com/icloud-photos-downloader/icloud_photos_downloader.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "831d759bed802e5e30aa85f08262b8950722b6e7b5981e25d2f47dd61b9a548c"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "1967a3b47ed98c1809c42f35cff71346c6f5f8065e7d7b488cc8b1ddbcb91560"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "fd3f9d941a0aad26ee14eb507ab946fad5d6750403ad7db862486f18e536562f"
-    sha256 cellar: :any,                 arm64_linux:       "402e5d99749e34bb53e0716d99306f365409b27a283f4ac33684f773d1921686"
-    sha256 cellar: :any,                 x86_64_linux:      "5fd80bae03dda07da91ffe36d15d14a1fea07c690e6c4078ef71e37e91668a97"
+    rebuild 1
+    manifest_sha256 "ac3785d92c96dad9c884a361e00263e4ae5a379e1c89ba84e52b5bafbabe0fe9"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "5ca2b2b888220b6a1991209f1a8ca6165e477c7a8a562c23416dc82fe41a7664"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "fb3d2fc23258fb72a3d7ef6db712e10bfb43405541aa00256a502d9cc5d208a1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "0e6931a32f50011d3690c3a77975c04e50b5856bff4507a0a832b9ae123316b6"
+    sha256 cellar: :any,                 arm64_linux:       "32cc2df93a4dfa545cc4f2c85777dfaa13182a6bcb2992348bf39a23fb3e143b"
+    sha256 cellar: :any,                 x86_64_linux:      "fb2b25f3bf45db825d7b5d2f142844efb6050172966c17d5083a276eb658331c"
   end
 
   depends_on "certifi" => :no_linkage
-  depends_on "python@3.14"
+  depends_on "python@3.15"
 
   on_macos do
     depends_on "gnu-sed" => :build

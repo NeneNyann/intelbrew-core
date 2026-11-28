@@ -19,6 +19,7 @@ class Tcc < Formula
   end
 
   bottle do
+    manifest_sha256 "fe5674122912e7174207750ba6b3f15dce5aa0607432cab1d3879b9be6a09653"
     sha256 x86_64_linux: "053f79a5752554e18ecba168184e48481bce8a2db418a3f9b0de094f9e6d0e4d"
   end
 
@@ -26,6 +27,8 @@ class Tcc < Formula
   # The HEAD mob branch unmoderated so not ideal to use an arbitrary commit.
   deprecate! date: "2025-09-16", because: :unsupported
   disable! date: "2026-09-16", because: :unsupported
+
+  allow_network_access!
 
   def install
     # Add appropriate include paths for macOS or Linux.

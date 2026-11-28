@@ -12,6 +12,7 @@ class NodeAT20 < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "914936e9cb9013e9516f1daab085233b974f1db074d42295d90a70e83ca93586"
     sha256 arm64_golden_gate: "b4624bbdb59e4e18d60d66c18e37035c37692eae8b8caf55e6b2c5c63378afdd"
     sha256 arm64_tahoe:       "ecdcb6357c02e973fe7bed1b85fa142166e743aecde394046a4278e8d7acfa65"
     sha256 arm64_sequoia:     "76829440870e8535079d7b600a15e3c2c66f31499981ac91bd4f6b7a10af91ed"
@@ -42,6 +43,8 @@ class NodeAT20 < Formula
     depends_on "zlib-ng-compat"
   end
 
+  allow_network_access!
+
   def install
     # The new linker crashed during LTO due to high memory usage.
     ENV.append "LDFLAGS", "-Wl,-ld_classic" if DevelopmentTools.clang_build_version >= 1500
@@ -49,6 +52,7 @@ class NodeAT20 < Formula
     # make sure subprocesses spawned by make are using our Python 3
     ENV["PYTHON"] = python3
 
+    openssl = dep("openssl")
     args = %W[
       --prefix=#{prefix}
       --with-intl=system-icu
@@ -62,8 +66,8 @@ class NodeAT20 < Formula
       --shared-libuv-libpath=#{formula_opt_lib("libuv")}
       --shared-nghttp2-includes=#{formula_opt_include("libnghttp2")}
       --shared-nghttp2-libpath=#{formula_opt_lib("libnghttp2")}
-      --shared-openssl-includes=#{formula_opt_include("openssl@3")}
-      --shared-openssl-libpath=#{formula_opt_lib("openssl@3")}
+      --shared-openssl-includes=#{openssl.opt_include}
+      --shared-openssl-libpath=#{openssl.opt_lib}
       --shared-brotli-includes=#{formula_opt_include("brotli")}
       --shared-brotli-libpath=#{formula_opt_lib("brotli")}
       --shared-cares-includes=#{formula_opt_include("c-ares")}

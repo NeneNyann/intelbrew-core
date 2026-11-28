@@ -13,6 +13,7 @@ class Embulk < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "c589e9333abab940f32d66409a50652969576d563df698c0d6c5160196704f50"
     sha256 cellar: :any_skip_relocation, all: "fc718acf04dd0ffd6e04dc816490ba13bc8af9b0de9d45b169cc6b55a9e936f7"
   end
 
@@ -33,6 +34,8 @@ class Embulk < Formula
     sha256 "ce537f21a2cfc34cf91fc834d8d1c663c6f3b5bca57cacd45fd4c47ede71c303"
   end
 
+  allow_network_access!
+
   def install
     libexec.install "embulk-#{version}.jar"
     bin.write_jar_script libexec/"embulk-#{version}.jar", "embulk", java_version: "21"
@@ -40,7 +43,8 @@ class Embulk < Formula
 
   test do
     testpath.install resource("jruby-complete")
-    jruby = "jruby=file://#{testpath}/jruby-complete-#{resource("jruby-complete").version}.jar"
+    jruby_complete_version = resource("jruby-complete").version
+    jruby = "jruby=file://#{testpath}/jruby-complete-#{jruby_complete_version}.jar"
 
     (testpath/"config.yml").write <<~YAML
       in:

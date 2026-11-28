@@ -1,19 +1,19 @@
 class Eigenpy < Formula
   desc "Python bindings of Eigen library with Numpy support"
   homepage "https://github.com/stack-of-tasks/eigenpy"
-  url "https://github.com/stack-of-tasks/eigenpy/releases/download/v3.13.0/eigenpy-3.13.0.tar.gz"
-  sha256 "4e5f05ffa68a299732c6284348486d1f0c364e7f2a2bce0f14afa93780226d0b"
+  url "https://github.com/stack-of-tasks/eigenpy/archive/refs/tags/v4.0.0.tar.gz"
+  sha256 "4cdd66deb0002506ad38502b11db0f49510170e36d29f06b3252c8a731b4dc4e"
   license "BSD-2-Clause"
-  revision 2
   compatibility_version 1
   head "https://github.com/stack-of-tasks/eigenpy.git", branch: "devel"
 
   bottle do
-    sha256 cellar: :any, arm64_golden_gate: "d0c2c855c546ecf2b8f270cd9ca31529b9bc80916b38168b5545129e165506e6"
-    sha256 cellar: :any, arm64_tahoe:       "5c4af6d007e93211474e05015e5aa7c7cac8370935e34703d94285eec9d59a1a"
-    sha256 cellar: :any, arm64_sequoia:     "8b8ec75b0e074d80280f9fb365c1bfdf089592626a278740aec671d68e188d21"
-    sha256 cellar: :any, arm64_linux:       "4fca656801acf74db450d5a8f67700bc624d1d11d7535c42699c38911b9b1144"
-    sha256 cellar: :any, x86_64_linux:      "31224136a476e7e02d6f4b6667062ea247bcc96d74e5694c719e7290528ac82b"
+    manifest_sha256 "e458340e0b89dd1cd191009ffa7608fac565c5fdfd24a7913007313df63c0510"
+    sha256 cellar: :any, arm64_golden_gate: "50e656ffc3c683f51c76ffd8c0078687dda1c3f2b0464d8af115fd607656e41a"
+    sha256 cellar: :any, arm64_tahoe:       "026c9ea4e0d6240a03d579a75f2350851268f9d982aa86bd16fe2ccfba52e486"
+    sha256 cellar: :any, arm64_sequoia:     "4d3310fccbbf81a96822680ea39789c2cb743067661a0deef9839c8f094ab0a9"
+    sha256 cellar: :any, arm64_linux:       "0a319310197cbb87b9b875291501c658b1d088f7ea26c58a72c127586f6ce6ed"
+    sha256 cellar: :any, x86_64_linux:      "08cc4a1c93643717dfeb2e8fdc7eec87acde5096de06bd8af3218fa4f35a942a"
   end
 
   depends_on "boost" => :build
@@ -26,13 +26,27 @@ class Eigenpy < Formula
   depends_on "python@3.15"
   depends_on "scipy"
 
+  resource "jrl-cmakemodules" do
+    url "https://github.com/jrl-umi3218/jrl-cmakemodules/archive/refs/tags/v2.4.0.tar.gz"
+    sha256 "1e810d43d471e9a172458187fd5ec0746d3155e173f4fb387e6c7fb56906d359"
+
+    livecheck do
+      url :url
+    end
+  end
+
+  deny_network_access!
+
   def install
+    resource("jrl-cmakemodules").stage buildpath/"jrl-cmakemodules"
+
     ENV.prepend_path "PYTHONPATH", formula_opt_prefix("numpy")/Language::Python.site_packages(python3)
     ENV.prepend_path "Eigen3_DIR", Formula["eigen"].opt_share/"eigen3/cmake"
 
     args = %W[
       -DPYTHON_EXECUTABLE=#{python3}
       -DBUILD_UNIT_TESTS=OFF
+      -DJRL_CMAKEMODULES_SOURCE_DIR=#{buildpath}/jrl-cmakemodules
     ]
     # Avoid linkage to boost container and graph modules
     # Issue ref: https://github.com/boostorg/boost/issues/985

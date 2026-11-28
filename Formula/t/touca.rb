@@ -10,6 +10,7 @@ class Touca < Formula
 
   bottle do
     rebuild 4
+    manifest_sha256 "123caec74b3c927cd026ba93239c388fea7f0eab6b76df0f62e88847776d3f7d"
     sha256 cellar: :any_skip_relocation, all: "2aef71401d6fa95a1c2a1d9ce7ccf63c49e0131602a7876914ddbb373246b6f3"
   end
 
@@ -50,6 +51,8 @@ class Touca < Formula
     url "https://files.pythonhosted.org/packages/e4/e8/6ff5e6bc22095cfc59b6ea711b687e2b7ed4bdb373f7eeec370a97d7392f/urllib3-1.26.20.tar.gz"
     sha256 "40c2dc0c681e47eb8f90e7e27bf6ff7df2e677421fd46756da1161c39ca70d32"
   end
+
+  allow_network_access!
 
   def install
     # Allow latest `certifi`: https://github.com/trytouca/trytouca/pull/663

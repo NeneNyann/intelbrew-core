@@ -7,6 +7,7 @@ class Bgrep < Formula
   head "https://github.com/tmbinc/bgrep.git", branch: "main"
 
   bottle do
+    manifest_sha256 "6fb0652cafc4a5f435979f74ea6c5658e5ad4b0dc4c6b6a8478da6549ad32c0f"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "d4e44b6fb58fd83d7145003a6f5816882cd7101e9b3b486e829c96952b4cd40a"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "65a1d9a13a91fbdb792336d6a550ae4e5c4b84975926082c64727d8a28533107"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "c81e8fda28328340dc30f6e6f6ab96c389b5634b81a42b834e33a12203e91f65"
@@ -15,6 +16,8 @@ class Bgrep < Formula
     sha256 cellar: :any,                 arm64_linux:       "ac85e305579a4ae6e25580ce8d260908aef34ac33d683ff3476eaa743ab31220"
     sha256 cellar: :any,                 x86_64_linux:      "f6dfa7034085b0560b2a86a28db8b4de0c55a4efcc8c2112d9560e04dfe72130"
   end
+
+  deny_network_access!
 
   def install
     args = %w[bgrep.c -o bgrep]

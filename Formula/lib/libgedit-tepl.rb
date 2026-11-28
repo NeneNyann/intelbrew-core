@@ -9,6 +9,7 @@ class LibgeditTepl < Formula
   head "https://gitlab.gnome.org/World/gedit/libgedit-tepl.git", branch: "main"
 
   bottle do
+    manifest_sha256 "dc6e09498cf38c330d4e1ffd12e1c22cc52cde67cde0527f6f86ebea11922fc5"
     sha256               arm64_golden_gate: "5b5e4885d4eb2a754306e1f1f564c629bd19eddec17a48d236bb573bab055470"
     sha256               arm64_tahoe:       "f845f65a33fc4cff6bed23e2bb65a8b20380b7152b202b9d10ef4543d17a09fc"
     sha256               arm64_sequoia:     "f7cea21d25beee0ca848651f3b3f30e84216c06cb800cc48483c3ef648037c7f"
@@ -53,8 +54,7 @@ class LibgeditTepl < Formula
       }
     C
 
-    icu4c_dep = deps.find { |d| d.name.match? Version.formula_optionally_versioned_regex(:icu4c) }
-    ENV.prepend_path "PKG_CONFIG_PATH", formula_opt_lib(icu4c_dep.name)/"pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", dep("icu4c").opt_lib/"pkgconfig"
     flags = shell_output("pkgconf --cflags --libs libgedit-tepl-6").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"

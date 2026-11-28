@@ -20,6 +20,7 @@ class Tor < Formula
   end
 
   bottle do
+    manifest_sha256 "9531eff77a8aec7e2cfb184847ee288dff992a7beb1d7aed6cb0be5f251fb5b1"
     sha256 arm64_golden_gate: "6a2c803b6dc0bfdf4596e9d7a53e9bafc5a46a1fe6a92deaa7e5f0de7dbeb9d2"
     sha256 arm64_tahoe:       "fa68f18066ea0309400af8bd6e23a91fd0c5540c1ae16869e3756ad28eb94931"
     sha256 arm64_sequoia:     "9364972fd66247bde591aa1d3207d07091d484a0aa30c9e887cbe074f18c783e"
@@ -38,14 +39,13 @@ class Tor < Formula
 
   deny_network_access!
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
-
   def install
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       --disable-silent-rules
       --sysconfdir=#{etc}
       --localstatedir=#{var}
-      --with-openssl-dir=#{formula_opt_prefix(openssl)}
+      --with-openssl-dir=#{openssl_prefix}
     ]
 
     system "./configure", *args, *std_configure_args

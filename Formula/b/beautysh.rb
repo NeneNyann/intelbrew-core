@@ -9,6 +9,7 @@ class Beautysh < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "62cf06b3dd5677b73e51aa318498e43b2df429bd5874d07d46a926985480c6a8"
     sha256 cellar: :any_skip_relocation, all: "bd087a1c69b02c1665640295280af9881b6b0fddbf8fe27408846552c1702988"
   end
 
@@ -23,6 +24,8 @@ class Beautysh < Formula
     url "https://files.pythonhosted.org/packages/88/3a/a61d9a1f319a186b05d14df17daea42fcddea63c213bcd61a929fb3a6796/editorconfig-0.17.1.tar.gz"
     sha256 "23c08b00e8e08cc3adcddb825251c497478df1dada6aefeb01e626ad37303745"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

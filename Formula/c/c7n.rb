@@ -14,6 +14,7 @@ class C7n < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "9ac407696867e53f194acad74d1d92d3c997a7f04401f7ee8440323e61d7acc1"
     sha256 cellar: :any, arm64_golden_gate: "d8bfb1bd8df74b73afd88e2a33fde9fd4d1fdb42b7a677a9d1e17b81fdcf2174"
     sha256 cellar: :any, arm64_tahoe:       "0ac26c46b65095f865d3314ffffeb66776871c93c0a7153fc207a46a898f9801"
     sha256 cellar: :any, arm64_sequoia:     "01108cb118124a596c55911adcf461fb4b9af32d107ba47c7be6b3ae23c9474d"
@@ -97,6 +98,8 @@ class C7n < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

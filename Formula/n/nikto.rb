@@ -13,6 +13,7 @@ class Nikto < Formula
 
   bottle do
     rebuild 1
+    manifest_sha256 "b29d193741d6cf64e322d91d375f34453db57f243aaed21ab0652bceb943deeb"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "7c35f535d8885c015724569ceb2757ecb3b175f2d53f65e38aac053c73984c5b"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "7c35f535d8885c015724569ceb2757ecb3b175f2d53f65e38aac053c73984c5b"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "7c35f535d8885c015724569ceb2757ecb3b175f2d53f65e38aac053c73984c5b"
@@ -72,7 +73,7 @@ class Nikto < Formula
     if OS.linux?
       ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
       ENV["PERL_MM_USE_DEFAULT"] = "1"
-      ENV["OPENSSL_PREFIX"] = formula_opt_prefix("openssl@4")
+      ENV["OPENSSL_PREFIX"] = dep("openssl").opt_prefix
 
       resources.each do |r|
         r.stage do

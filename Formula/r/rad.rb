@@ -7,6 +7,7 @@ class Rad < Formula
   head "https://github.com/amterp/rad.git", branch: "main"
 
   bottle do
+    manifest_sha256 "0fffd842bbe531fa94f04450bd49802a25bf0b6056ba175c07b7b09d48aef05f"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "85e2ae6d41e7102363db880cef8181f748970091509c79698b70b23293723580"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "eb296a183ab58ee5ec13af9d735651f12d6033615effe7b6d7800fa71b209dd0"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "e8419fba4cd5a145380279f6de6d7bc2f1e7f5d78ed7a1637d2eec44282dbf04"
@@ -48,11 +49,9 @@ class Rad < Formula
     assert_match "Hello, Homebrew!\nHello, Homebrew!", shell_output("#{testpath}/test 2")
 
     output_log = testpath/"output.log"
-    pid = spawn bin/"radls", [:out, :err] => output_log.to_s
-    sleep 2
-    assert_match "Spinning up Rad LSP server", output_log.read
-  ensure
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    with_test_process(bin/"radls", [:out, :err] => output_log.to_s) do
+      sleep 2
+      assert_match "Spinning up Rad LSP server", output_log.read
+    end
   end
 end

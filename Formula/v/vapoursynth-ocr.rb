@@ -9,6 +9,7 @@ class VapoursynthOcr < Formula
   head "https://github.com/vapoursynth/vs-ocr.git", branch: "master"
 
   bottle do
+    manifest_sha256 "115db9e5da989fa64fe840291ffd535cef848a9a3bcbdc9057e4b57209f01e81"
     sha256 cellar: :any, arm64_golden_gate: "1fd7b4b155da4e95c9923f3d211ecf67d05b0aef9f6b4571399e97fa45ec42b4"
     sha256 cellar: :any, arm64_tahoe:       "c968f89e3c811a95fa7bfdefd19866ee5ddea675e9563a91454ebcd99ef0ecc8"
     sha256 cellar: :any, arm64_sequoia:     "3e12656a5afcb516b4aa9a93046623cb1ff03e01ba67be4ff49f8a8946204e6a"
@@ -28,7 +29,7 @@ class VapoursynthOcr < Formula
     # prefix, but we want it in a Cellar location instead.
     inreplace "meson.build",
               "install_dir : join_paths(vapoursynth_dep.get_pkgconfig_variable('libdir'), 'vapoursynth')",
-              "install_dir : '#{prefix/Language::Python.site_packages(python3)}/vapoursynth/plugins'"
+              "install_dir : '#{prefix}/#{Language::Python.site_packages(python3)}/vapoursynth/plugins'"
 
     system "meson", "setup", "build", *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"

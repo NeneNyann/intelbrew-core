@@ -10,6 +10,7 @@ class Brpc < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "420d45aaad9f1c96ac3b2d22190a0760a308ad120d6f626e5683a49510bf4de4"
     sha256 cellar: :any, arm64_golden_gate: "674826278d5fd23ec322f14a494ee28884663dc548ace8a2362b1d107cdf9927"
     sha256 cellar: :any, arm64_tahoe:       "c3ff2d5a555aa3001f0dc4e29c634c3e291e329eef0625c2628a8f3ee670520c"
     sha256 cellar: :any, arm64_sequoia:     "5430935e44918fafa8b2745d45e64784595da8fb95cd9f7b70b030c09578d626"
@@ -31,13 +32,14 @@ class Brpc < Formula
   allow_network_access! :test
 
   def install
+    openssl_prefix = dep("openssl").opt_prefix
     args = %W[
       -DBUILD_SHARED_LIBS=ON
       -DBUILD_UNIT_TESTS=OFF
       -DDOWNLOAD_GTEST=OFF
       -DWITH_DEBUG_SYMBOLS=OFF
       -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-      -DOPENSSL_ROOT_DIR=#{formula_opt_prefix("openssl@4")}
+      -DOPENSSL_ROOT_DIR=#{openssl_prefix}
     ]
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args

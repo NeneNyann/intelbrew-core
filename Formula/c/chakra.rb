@@ -39,6 +39,7 @@ class Chakra < Formula
   end
 
   bottle do
+    manifest_sha256 "808132ccd088cf409d34ee0022556214f207c81851a7799cfb0b0f2be60acb04"
     sha256 cellar: :any,                 sonoma:       "7b16aa6c8b2677f2dba55987d78f4cc867d357aeba2b6b3d97e76e42c6c69c4b"
     sha256 cellar: :any,                 ventura:      "dc7589f199baf02f63525cd1b5adb4e971d87b9c2369eb3e031dd4234acefac6"
     sha256 cellar: :any_skip_relocation, x86_64_linux: "cb090973883ca8832598f8d020bb6c3454567a7a1dd8537325a636be45fb0300"
@@ -58,15 +59,17 @@ class Chakra < Formula
     cause "requires Clang, see https://github.com/chakra-core/ChakraCore/issues/2038"
   end
 
+  allow_network_access!
+
   def install
     # Use ld_classic to work around 'ld: Assertion failed: (0 && "lto symbol should not be in layout")'
     ENV.append "LDFLAGS", "-Wl,-ld_classic" if DevelopmentTools.clang_build_version >= 1500
     # Workaround to build with ICU 76+
     ENV.append_to_cflags "-DU_SHOW_CPLUSPLUS_HEADER_API=0"
 
-    icu4c_dep = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
+    icu4c_include = dep("icu4c").opt_include
     args = %W[
-      --custom-icu=#{icu4c_dep.to_formula.opt_include}
+      --custom-icu=#{icu4c_include}
       --jobs=#{ENV.make_jobs}
       -y
     ]

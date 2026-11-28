@@ -16,6 +16,7 @@ class Tmpwatch < Formula
 
   bottle do
     rebuild 2
+    manifest_sha256 "167d3739e5e4ebd5b1418c50b4533e8dcc4b88dcf763bbf159a58345741bc5aa"
     sha256 cellar: :any_skip_relocation, arm64_golden_gate: "181be67fbd409b3e3ba297e1ac286da60b00edba99c1d647f55c89b3bd64dbce"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:       "60ee1cc81b639e95ae3d7dd8ec82c30aca2f4ee7ad84a94bfec4e2ebcb1e184c"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:     "593b95beea81c8d5c890fd6bba09e14033619d8d7cdd7de4fe3d703040cbdd72"
@@ -30,6 +31,10 @@ class Tmpwatch < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:       "caa859a2ada543faf06353b9023dd1ffb11c3d9afbcfce55079ea2a8a0a480ec"
     sha256 cellar: :any_skip_relocation, x86_64_linux:      "2741db5b51e3d5cce2e16a2e200a5ac071d8ddb76255a3a4ae5b1752ec9cb33b"
   end
+
+  # `pagure.io` became read-only, release tarball is no longer available
+  deprecate! date: "2026-11-24", because: :repo_archived
+  disable! date: "2027-11-24", because: :repo_archived
 
   def install
     system "./configure", "--disable-dependency-tracking",

@@ -16,6 +16,7 @@ class MinimalRacket < Formula
   end
 
   bottle do
+    manifest_sha256 "af85fd4440d368dacb864ac14560d5b5fc492a1b435ead8a7001b8bd40064dac"
     sha256 arm64_golden_gate: "b2348768dd8bf3c68b2d0809d00ba96c282db1bffd28e9f48ded2229cd17ce3d"
     sha256 arm64_tahoe:       "3479008f05780ee8b5512897c73df988f1744dc88ca782fe94c23fa1346b0e33"
     sha256 arm64_sequoia:     "ac8f242e9b8601b3c4b2a89314f2bb24c7d73b8d58071ab739c6e7f97d2548bc"
@@ -37,7 +38,7 @@ class MinimalRacket < Formula
   # Formula needs to download bootstrap resources
   allow_network_access! :build
 
-  def openssl = deps.map(&:name).find { |d| d.match?(/^openssl(@\d+(\.\d+)*)?$/) }
+  def openssl = dep("openssl").name
 
   def install
     openssl_version = Formula[openssl].version.major
@@ -130,7 +131,7 @@ class MinimalRacket < Formula
       assert_match(%r{.*#{Regexp.escape(openssl)}/.*/libssl.*\.dylib}, output)
     else
       output = shell_output("LD_DEBUG=libs #{bin}/racket -e '(require openssl)' 2>&1")
-      assert_match "init: #{formula_opt_lib(openssl)/shared_library("libssl")}", output
+      assert_match "init: #{formula_opt_lib(openssl)}/#{shared_library("libssl")}", output
     end
   end
 end

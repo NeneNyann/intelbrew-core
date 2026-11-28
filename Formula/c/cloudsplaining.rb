@@ -10,6 +10,7 @@ class Cloudsplaining < Formula
   head "https://github.com/salesforce/cloudsplaining.git", branch: "master"
 
   bottle do
+    manifest_sha256 "330d1ef49076e75e9224a1631f56ea53ada268cf5acd86cc5ddd6a08b2e63f65"
     sha256 cellar: :any, arm64_golden_gate: "2c42862d6c2c204bdec821b241322c7aee058b644dd992315f235d77da8404f6"
     sha256 cellar: :any, arm64_tahoe:       "f652c0c8e81031b86f2e7be763ac613887003c8e7be51720beed998200eac0a3"
     sha256 cellar: :any, arm64_sequoia:     "b8a57c10b1754b4bc0f59b6bb14f4a4d75c2abcf1343b783fe01aa0e4a2fff7c"
@@ -128,6 +129,8 @@ class Cloudsplaining < Formula
     url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
     sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
+
+  allow_network_access! :build
 
   def install
     virtualenv_install_with_resources

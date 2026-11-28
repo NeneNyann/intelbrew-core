@@ -20,6 +20,7 @@ class Netatalk < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
+    manifest_sha256 "ca1fc6baacfe44b81fcf3b35d5bc0d2300caf9b1ec3e41c4ab7630cc8519435a"
     sha256 arm64_golden_gate: "08c2caee748401e936f474aef60e3bd0d4dbc59bd6a5112e5ed3ddd533f99c0e"
     sha256 arm64_tahoe:       "8fbac1d7eb89c27713d3c95128842b857a8f209e03f0277d33a7a67967239813"
     sha256 arm64_sequoia:     "5822fc3d52d64a08cdbef179387a9e45203d03f506fffbc6f2169c74996c4093"
@@ -61,11 +62,12 @@ class Netatalk < Formula
     inreplace "distrib/initscripts/macos.netatalk.plist.in", "@bindir@", opt_bin
     inreplace "distrib/initscripts/macos.netatalk.plist.in", "@sbindir@", opt_sbin
     inreplace "distrib/initscripts/systemd.netatalk.service.in", "@sbindir@", opt_sbin
-    bdb5_rpath = rpath(target: formula_opt_lib("berkeley-db@5"))
+    bdb5_rpath = rpath(target: dep("berkeley-db").opt_lib)
     ENV.append "LDFLAGS", "-Wl,-rpath,#{bdb5_rpath}" if OS.linux?
+    berkeley_db_prefix = dep("berkeley-db").opt_prefix
     args = [
       "-Dwith-appletalk=#{OS.linux?}", # macOS doesn't have an AppleTalk stack
-      "-Dwith-bdb-path=#{formula_opt_prefix("berkeley-db@5")}",
+      "-Dwith-bdb-path=#{berkeley_db_prefix}",
       "-Dwith-cups-libdir-path=#{libexec}",
       "-Dwith-cups-pap-backend=#{OS.linux?}",
       "-Dwith-docs=man,readmes,html_manual",
@@ -109,7 +111,8 @@ class Netatalk < Formula
   end
 
   test do
-    pidfile = var/"run/netatalk#{".pid" if OS.mac?}"
+    pid_suffix = ".pid" if OS.mac?
+    pidfile = var/"run/netatalk#{pid_suffix}"
     port = free_port
     (testpath/"afp.conf").write <<~CONF
       [Global]
